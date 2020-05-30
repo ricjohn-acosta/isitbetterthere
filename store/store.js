@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
-import reducers from './reducers'
+import reducers from './reducers/reducers'
 
 // CREATING INITIAL STORE
 export default function getStore(initialState) {
@@ -13,8 +13,8 @@ export default function getStore(initialState) {
 
   // IF REDUCERS WERE CHANGED, RELOAD WITH INITIAL STATE
   if (module.hot) {
-    module.hot.accept('./reducers', () => {
-      const createNextReducer = require('./reducers').default
+    module.hot.accept('./reducers/reducers', () => {
+      const createNextReducer = require('./reducers/reducers').default
 
       store.replaceReducer(createNextReducer(initialState))
     })
