@@ -35,16 +35,18 @@ const UserButtons = styled(Button)`
   }
 `;
 
-const TestBtn = styled.div`
+// Contains the Drawer component
+const DrawerContainer = styled.div`
   color: #404040;
   position: relative;
   float: right;
   height: 100%;
-  
+
   ${(props) => props.theme.breakpoints.up("md")} {
     display: none;
   }
 `;
+
 // Buttons on the left hand side of the navbar (next to the brand logo)
 const MiscButtons = styled(Button)`
   color: #404040;
@@ -56,9 +58,6 @@ const MiscButtons = styled(Button)`
     display: none;
   }
 `;
-
-// Menu drawer
-const Test = styled.div``;
 
 // Container for the grid
 const Container = styled.div`
@@ -80,21 +79,18 @@ const StyledLowerNavbar = () => {
         <Grid container direction="row">
           <Grid item container xs={6} sm={6}>
             <Brand variant="h4" component="span">
-              ThisJobOrThat
+              IsItBetterThere
             </Brand>
             <MiscButtons disableRipple>Learn </MiscButtons>
             <MiscButtons disableRipple>Contribute </MiscButtons>
           </Grid>
-
-          <Grid item xs={6} sm={6} >
+          <Grid item xs={6} sm={6}>
             <UserButtons disableRipple>Account</UserButtons>
             <UserButtons disableRipple>Signup</UserButtons>
             <UserButtons disableRipple>Login</UserButtons>
-            <TestBtn>
-              <Test>
-                <Drawer />
-              </Test>
-            </TestBtn>
+            <DrawerContainer>
+              <Drawer />
+            </DrawerContainer>
           </Grid>
         </Grid>
       </Container>
