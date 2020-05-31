@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import { Typography } from "@material-ui/core";
+import { Typography, Fade } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -32,7 +32,7 @@ const InputForm = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 25%;
+  margin-left: 30%;
   ${(props) => props.theme.breakpoints.down("sm")} {
     margin-left: 0;
     margin-bottom: 50px;
@@ -58,11 +58,13 @@ const WelcomeMessage = styled(Typography)`
   justify-content: center;
   align-items: center;
   margin-bottom: 10vh;
-  margin-left: 23.5vw;
+  margin-left: 25vw;
   ${(props) => props.theme.breakpoints.down("sm")} {
-    margin-bottom: 10px;
-    margin-left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 3rem;
+    margin-left: 20vw
   }
 `;
 
@@ -82,18 +84,20 @@ const MainSection = () => {
     <Wrapper component="div">
       <Grid container direction="row">
         <InputContainer item xs={12} sm={9} component="div">
-          <WelcomeMessage variant="h1"><FadeInAnimation>Know your destination</FadeInAnimation></WelcomeMessage>
+          <WelcomeMessage variant="h1">
+            <FadeInAnimation>Know your destination</FadeInAnimation>
+          </WelcomeMessage>
           <InputForm>
             Choose a category: &nbsp;
-            <Select value={category} variant="outlined">
+            <Select value={category} variant="standard">
               <MenuItem value={"CAREERS"}>Jobs</MenuItem>
               <MenuItem value={"UNIVERSITIES"}>Universities</MenuItem>
               <MenuItem value={"COUNTRIES"}>Countries</MenuItem>
             </Select>
-            &nbsp; FROM &nbsp;
-            <TextField variant="outlined"></TextField>
+            &nbsp; TRANSITION &nbsp; 
+            <TextField variant="filled"></TextField>
             &nbsp;TO&nbsp;
-            <TextField variant="outlined"></TextField>
+            <TextField variant="filled"></TextField>
             &nbsp;
             <Button variant="contained" size="large" disableElevation>
               GO

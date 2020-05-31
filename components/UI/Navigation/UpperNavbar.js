@@ -7,7 +7,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 
 const UpperNavbar = styled(AppBar)`
-  background-color: #33CCCC;
+  background-color: #33cccc;
   display: flex;
   ${(props) => props.theme.breakpoints.down("sm")} {
     display: none;
@@ -36,6 +36,7 @@ const StyledUpperNavbar = () => {
   return (
     <UpperNavbar elevation={0} position="static">
       <Container>
+        <StyledButton disableRipple>Meet the team</StyledButton>
         <StyledButton disableRipple>About</StyledButton>
         <StyledButton disableRipple>Contact</StyledButton>
       </Container>

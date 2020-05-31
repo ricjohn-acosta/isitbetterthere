@@ -8,7 +8,7 @@ const Layout = (props) => {
         <Header />
       </header>
       {props.children}
-      <footer>footer</footer>
+      <footer></footer>
     </React.Fragment>
   );
 };

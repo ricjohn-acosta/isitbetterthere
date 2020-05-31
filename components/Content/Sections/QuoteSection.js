@@ -4,6 +4,7 @@ import { Typography } from "@material-ui/core";
 const Wrapper = styled.div`
   margin-top: 5vh;
   margin-bottom: 7.5vh;
+  padding-left: 8vw
 `;
 const AimContainer = styled(Typography)`
   display: flex;
@@ -24,6 +25,7 @@ const QuoteSection = () => {
         <AimContainer variant="h4">
           Let us help you make an informed decision.
         </AimContainer>
+        <br/>
         <QuoteContainer variant="h5">
           “You can't make decisions based on fear and the possibility of what
           might happen.” ― Michelle Obama
