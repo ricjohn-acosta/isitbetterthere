@@ -93,6 +93,7 @@ const MainSection = () => {
               <MenuItem value={"CAREERS"}>Jobs</MenuItem>
               <MenuItem value={"UNIVERSITIES"}>Universities</MenuItem>
               <MenuItem value={"COUNTRIES"}>Countries</MenuItem>
+              <MenuItem value={"CULTURES"}>Cultures</MenuItem>
             </Select>
             &nbsp; TRANSITION &nbsp; 
             <TextField variant="filled"></TextField>

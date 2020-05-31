@@ -7,6 +7,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
+import Link from "@material-ui/core/Link";
 
 // Main wrapper
 const LowerNavbar = styled(AppBar)`
@@ -84,7 +85,14 @@ const StyledLowerNavbar = () => {
             <Brand variant="h4" component="span">
               IsItBetterThere
             </Brand>
-            <MiscButtons disableRipple>How it works </MiscButtons>
+            <Link
+              component={MiscButtons}
+              href="#HowItWorks"
+              style={{ textDecoration: "none" }}
+              disableRipple
+            >
+              How it works
+            </Link>
             <MiscButtons disableRipple>Learn </MiscButtons>
             <MiscButtons disableRipple>Contribute </MiscButtons>
           </Grid>

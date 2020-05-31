@@ -4,13 +4,15 @@ import { Typography } from "@material-ui/core";
 const Wrapper = styled.div`
   margin-top: 5vh;
   margin-bottom: 7.5vh;
-  padding-left: 8vw
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    margin-left: 7.5vw;
+  }
 `;
 const AimContainer = styled(Typography)`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold
+  font-weight: bold;
 `;
 
 const QuoteContainer = styled(Typography)`
