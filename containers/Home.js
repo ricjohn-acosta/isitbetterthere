@@ -1,17 +1,20 @@
 import React from "react";
-import Layout from "../components/Layout/Layout";
 import MainSection from "../components/Content/Sections/MainSection";
+import QuoteSection from "../components/Content/Sections/QuoteSection";
+import StyledLowerNavbar from "../components/UI/Navigation/LowerNavbar";
 
 const Home = () => {
   return (
-    <Layout>
+    <>
+    <StyledLowerNavbar />
       <MainSection />
+      <QuoteSection/>
       {/**
        * <MainSection/>
        * <LearnSection/>
        * <TestimonialSection/>
        */}
-    </Layout>
+    </>
   );
 };
 

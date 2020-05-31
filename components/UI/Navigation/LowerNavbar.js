@@ -14,9 +14,12 @@ const LowerNavbar = styled(AppBar)`
   color: black
   display: flex;
   height: 8vh;
-`;
 
-// jobsa2b brand logo
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    background-color: #33CCCC;
+  }
+`;
+// Brand logo
 const Brand = styled(Typography)`
   color: black;
   margin-right: 1.5vw;
@@ -74,17 +77,18 @@ const Container = styled.div`
 
 const StyledLowerNavbar = () => {
   return (
-    <LowerNavbar elevation={0} position="static">
+    <LowerNavbar elevation={0} position="sticky" component="div">
       <Container>
         <Grid container direction="row">
-          <Grid item container xs={6} sm={6}>
+          <Grid item container xs={6} sm={6} md={8}>
             <Brand variant="h4" component="span">
               IsItBetterThere
             </Brand>
+            <MiscButtons disableRipple>How it works </MiscButtons>
             <MiscButtons disableRipple>Learn </MiscButtons>
             <MiscButtons disableRipple>Contribute </MiscButtons>
           </Grid>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={6} sm={6} md={4}>
             <UserButtons disableRipple>Account</UserButtons>
             <UserButtons disableRipple>Signup</UserButtons>
             <UserButtons disableRipple>Login</UserButtons>
