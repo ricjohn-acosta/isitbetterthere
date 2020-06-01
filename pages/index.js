@@ -3,11 +3,9 @@ import Layout from "../components/Layout/Layout";
 
 const Index = () => {
   return (
-    <>
-      <Layout>
-        <Home />
-      </Layout>
-    </>
+    <Layout>
+      <Home />
+    </Layout>
   );
 };
 

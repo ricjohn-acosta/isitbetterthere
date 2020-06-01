@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { Typography } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import LearnCards from "../Cards/LearnCards";
+import Button from "@material-ui/core/Button";
+import Paper from '@material-ui/core/Paper';
 
 const Wrapper = styled.div`
-  height: 100vh;
+  overflow:hidden;
   padding: 5% 5% 5% 5%;
 `;
 
@@ -26,7 +28,21 @@ const LearnIcon = styled.img`
 `;
 
 const LearnCardsContainer = styled.div`
-  padding: 5%;
+  padding: 5% 5% 3.5% 5%;
+`;
+
+const ResourcesButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const ResourcesButton = styled(Button)`
+  border-radius: 25px;
+`;
+
+const ResourcesButtonText = styled(Typography)`
+  font-weight: 700;
+  color: #565d56;
 `;
 
 const LearnSection = () => {
@@ -39,6 +55,19 @@ const LearnSection = () => {
       <LearnCardsContainer>
         <LearnCards />
       </LearnCardsContainer>
+      <ResourcesButtonContainer>
+        <ResourcesButton
+          color="primary"
+          size="large"
+          variant="contained"
+          href="resources"
+          disableRipple
+        >
+          <ResourcesButtonText variant="subtitle1">
+            See more resources
+          </ResourcesButtonText>
+        </ResourcesButton>
+      </ResourcesButtonContainer>
     </Wrapper>
   );
 };
