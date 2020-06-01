@@ -18,6 +18,7 @@ const StyledLowerNavbar = styled(AppBar)`
 
   ${(props) => props.theme.breakpoints.down("sm")} {
     background-color: #33CCCC;
+    padding-left: 10px
   }
 `;
 // Brand logo
@@ -25,6 +26,7 @@ const Brand = styled(Typography)`
   color: black;
   margin-right: 1.5vw;
   margin-top: 1.5vh;
+  font-weight: bold
 `;
 // Buttons on the right hand side of the navbar
 const UserButtons = styled(Button)`
@@ -101,7 +103,6 @@ const LowerNavbar = () => {
             >
               Learn
             </Link>
-            <MiscButtons disableRipple>Contribute </MiscButtons>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>
             <UserButtons disableRipple>Account</UserButtons>
