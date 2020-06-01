@@ -2,7 +2,7 @@ import styled, { keyframes } from "styled-components";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import { Typography, Fade } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -63,8 +63,8 @@ const WelcomeMessage = styled(Typography)`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 3rem;
-    margin-left: 20vw
+    font-size: 2.5rem;
+    margin-left: 5vw
   }
 `;
 
@@ -83,7 +83,7 @@ const MainSection = () => {
   return (
     <Wrapper component="div">
       <Grid container direction="row">
-        <InputContainer item xs={12} sm={9} component="div">
+        <InputContainer item xs={12} sm={12} md={9}component="div">
           <WelcomeMessage variant="h1">
             <FadeInAnimation>Know your destination</FadeInAnimation>
           </WelcomeMessage>
@@ -105,7 +105,7 @@ const MainSection = () => {
             </Button>
           </InputForm>
         </InputContainer>
-        <ImageContainer item xs={12} sm={3}>
+        <ImageContainer item xs={12} sm={12} md={3}>
           <StyledImage src="/decision.png"></StyledImage>
         </ImageContainer>
       </Grid>

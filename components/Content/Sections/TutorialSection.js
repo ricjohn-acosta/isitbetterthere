@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const Wrapper = styled.div`
   background-color: #e6ffff;
-  height: 100%;
+  min-height: 200vh;
 `;
 
 const TutorialHeader = styled(Typography)`
@@ -59,7 +59,7 @@ const TutorialSection = () => {
 
   return (
     <>
-      <Wrapper id="HowItWorks">
+      <Wrapper id="/howitworks">
         {console.log(matches)}
         <br />
         <TutorialHeaderContainer elevation={1}>
@@ -85,7 +85,7 @@ const TutorialSection = () => {
             <Grid container item>
               <Grid item xs={12} sm={12}>
                 <Text variant="h4">
-                  Start here. Choose a category that relates to your situation,
+                  Start <Link href="/"><a>here</a></Link>. Choose a category that relates to your situation,
                   where you are planning to transition from and where you want
                   to be.
                 </Text>
@@ -99,7 +99,7 @@ const TutorialSection = () => {
           <Grid container item>
             <Grid item xs={12} sm={matches ? 6 : 12}>
               <MiddleTextContainer variant="h4">
-                Gather information through personal experiences from other
+                Build confidence. Gather information through personal experiences from other
                 people who have done the transition that you are thinking of
                 going through!
               </MiddleTextContainer>

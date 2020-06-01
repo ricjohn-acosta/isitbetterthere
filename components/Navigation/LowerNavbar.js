@@ -10,7 +10,7 @@ import Drawer from "./Drawer";
 import Link from "@material-ui/core/Link";
 
 // Main wrapper
-const LowerNavbar = styled(AppBar)`
+const StyledLowerNavbar = styled(AppBar)`
   background-color: white;
   color: black
   display: flex;
@@ -76,9 +76,9 @@ const Container = styled.div`
   }
 `;
 
-const StyledLowerNavbar = () => {
+const LowerNavbar = () => {
   return (
-    <LowerNavbar elevation={0} position="sticky" component="div">
+    <StyledLowerNavbar elevation={0} position="sticky" component="div">
       <Container>
         <Grid container direction="row">
           <Grid item container xs={6} sm={6} md={8}>
@@ -87,13 +87,20 @@ const StyledLowerNavbar = () => {
             </Brand>
             <Link
               component={MiscButtons}
-              href="#HowItWorks"
+              href="#/howitworks"
               style={{ textDecoration: "none" }}
               disableRipple
             >
               How it works
             </Link>
-            <MiscButtons disableRipple>Learn </MiscButtons>
+            <Link
+              component={MiscButtons}
+              href="#/learn"
+              style={{ textDecoration: "none" }}
+              disableRipple
+            >
+              Learn
+            </Link>
             <MiscButtons disableRipple>Contribute </MiscButtons>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>
@@ -106,8 +113,8 @@ const StyledLowerNavbar = () => {
           </Grid>
         </Grid>
       </Container>
-    </LowerNavbar>
+    </StyledLowerNavbar>
   );
 };
 
-export default StyledLowerNavbar;
+export default LowerNavbar;
