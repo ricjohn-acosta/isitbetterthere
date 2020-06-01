@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import LearnCard from "./LearnCard";
 import Grid from "@material-ui/core/Grid";
 
@@ -8,9 +9,14 @@ import Grid from "@material-ui/core/Grid";
 const Wrapper = styled(Grid)`
   padding-left: 5vw;
 `;
+
+
+// only wrap if under md
 const LearnCards = () => {
+  const matches = useMediaQuery("(min-width:1280px)");
+
   return (
-    <Wrapper container direction="row" spacing={3} alignContent="center">
+    <Wrapper container  wrap={matches ? "nowrap" : "wrap"}direction="row" spacing={3} alignContent="center">
       <Grid item>
         <LearnCard
           image="/resource1.png"
@@ -34,7 +40,7 @@ const LearnCards = () => {
           image="/resource3.png"
           title="How to Stop Worrying About the Future: 8 Practical Techniques"
           description="While we may never learn how to stop worrying about the future completely, there are ways to help us better manage that worry, so we can save ourselves some time."
-          label={["Mental Health", "Self-growth", "Article"]}
+          label={["Mental Health", "Article"]}
           link="https://www.lifehack.org/703099/stop-worrying-about-your-future"
         />
       </Grid>

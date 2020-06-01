@@ -63,7 +63,7 @@ const WelcomeMessage = styled(Typography)`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     margin-left: 5vw
   }
 `;

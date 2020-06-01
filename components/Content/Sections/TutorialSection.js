@@ -51,7 +51,7 @@ const MiddleImageContainer = styled(Grid)`
 `;
 
 const MiddleTextContainer = styled(Typography)`
-  padding: 20vh 0 0 15vw;
+  padding: 15vh 0 0 15vw;
 `;
 
 const TutorialSection = () => {
@@ -84,7 +84,7 @@ const TutorialSection = () => {
           ) : (
             <Grid container item>
               <Grid item xs={12} sm={12}>
-                <Text variant="h4">
+                <Text variant="h5">
                   Start <Link href="/"><a>here</a></Link>. Choose a category that relates to your situation,
                   where you are planning to transition from and where you want
                   to be.
@@ -98,7 +98,7 @@ const TutorialSection = () => {
 
           <Grid container item>
             <Grid item xs={12} sm={matches ? 6 : 12}>
-              <MiddleTextContainer variant="h4">
+              <MiddleTextContainer variant={matches? "h4" : "h5"}>
                 Build confidence. Gather information through personal experiences from other
                 people who have done the transition that you are thinking of
                 going through!
@@ -124,7 +124,7 @@ const TutorialSection = () => {
           ) : (
             <Grid container item>
               <Grid item xs={12} sm={12}>
-                <Text variant="h4">
+                <Text variant="h5">
                   This step is all up to you! Make an informed decision based on
                   what you've learned from other people's experiences and take action!
                 </Text>

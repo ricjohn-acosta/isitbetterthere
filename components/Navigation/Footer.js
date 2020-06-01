@@ -80,7 +80,6 @@ const Footer = () => {
             <RightContainer>
               <SocialMediaIcon src="/facebook.png" />
               <SocialMediaIcon src="/linkedin.png" />
-              <SocialMediaIcon src="/github.png" />
             </RightContainer>
           </Grid>
         </Grid>
