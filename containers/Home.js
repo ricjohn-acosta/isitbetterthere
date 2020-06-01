@@ -2,15 +2,17 @@ import React from "react";
 import MainSection from "../components/Content/Sections/MainSection";
 import QuoteSection from "../components/Content/Sections/QuoteSection";
 import TutorialSection from "../components/Content/Sections/TutorialSection";
-import StyledLowerNavbar from "../components/UI/Navigation/LowerNavbar";
+import LearnSection from "../components/Content/Sections/LearnSection";
+import LowerNavbar from "../components/Navigation/LowerNavbar";
 
 const Home = () => {
   return (
     <>
-      <StyledLowerNavbar />
+      <LowerNavbar />
       <MainSection />
       <QuoteSection />
       <TutorialSection />
+      <LearnSection/>
     </>
   );
 };

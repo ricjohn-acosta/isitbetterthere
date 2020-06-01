@@ -1,5 +1,5 @@
-import Header from "../UI/Navigation/Header";
-import Footer from "../UI/Navigation/Footer";
+import Header from "../Navigation/Header";
+import Footer from "../Navigation/Footer";
 
 const Layout = (props) => {
   return (
