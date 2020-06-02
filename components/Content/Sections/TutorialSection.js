@@ -45,7 +45,7 @@ const TopText = styled(Typography)`
 const Text = styled(Typography)`
   padding: 32.5vh 20vw 0 50px;
   ${(props) => props.theme.breakpoints.down("md")} {
-    padding: 15vh 10% 5% 10%;
+    padding: 10vh 10% 5% 10%;
   }
 `;
 

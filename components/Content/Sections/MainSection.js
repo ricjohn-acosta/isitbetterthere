@@ -1,13 +1,17 @@
 import styled, { keyframes } from "styled-components";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Box from "@material-ui/core/Box";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import AutocompleteField from "./MainSection/AutocompleteField";
+import IconButton from "@material-ui/core/IconButton";
+import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
+import SwapVertIcon from "@material-ui/icons/SwapVert";
+import { jobCategory } from "../../../lib/categories";
+import { educationCategory } from "../../../lib/categories";
 
 const Wrapper = styled(Box)`
   background: rgb(144, 144, 209);
@@ -100,8 +104,9 @@ const ImageContainer = styled(Grid)`
 `;
 
 const MainSection = () => {
-  const [category, setCategory] = React.useState("CAREERS");
+  const [categories, setCategory] = React.useState(jobCategory);
   const resizeInputForm = useMediaQuery("(max-width:730px)");
+  const changeSwapIcon = useMediaQuery("(max-width:960px)");
 
   //750
 
@@ -121,30 +126,52 @@ const MainSection = () => {
               onChange={(e) => {
                 setCategory(e.target.value);
               }}
-              value={category}
+              value={categories}
               variant="standard"
             >
-              <MenuItem value={"CAREERS"}>Careers</MenuItem>
-              <MenuItem value={"EDUCATION"}>Education</MenuItem>
-              <MenuItem value={"UNIVERSITIES"}>Universities</MenuItem>
-              <MenuItem value={"COUNTRIES"}>Countries</MenuItem>
-              <MenuItem value={"CULTURES"}>Cultures</MenuItem>
-              <MenuItem value={"GADGETS"}>Gadgets</MenuItem>
+              <MenuItem value={jobCategory}>Careers</MenuItem>
+              <MenuItem value={"asd"}>Jobs</MenuItem>
+              <MenuItem value={educationCategory}>Tertiary Courses</MenuItem>
+              <MenuItem value={"uniCategory"}>Universities</MenuItem>
+              <MenuItem value={"countryCategory"}>Countries</MenuItem>
+              <MenuItem value={"cultureCategory"}>Cultures</MenuItem>
+              <MenuItem value={"lifestyleCategory"}>Life Style</MenuItem>
             </Select>
             &nbsp;
             <div>
-              <b>TRANSITION FROM</b>
+              <b>TRANSITION</b>
             </div>{" "}
             &nbsp;
-            <AutocompleteField variant="filled" />
+            <AutocompleteField
+              variant="filled"
+              label={"from"}
+              categories={categories}
+            />
             &nbsp;
             <div>
-              <b>TO</b>
+              {changeSwapIcon ? (
+                <IconButton>
+                  <SwapVertIcon fontSize="small" />
+                </IconButton>
+              ) : (
+                <IconButton>
+                  <SwapHorizIcon fontSize="small" />
+                </IconButton>
+              )}
             </div>
             &nbsp;
-            <AutocompleteField variant="filled" />
+            <AutocompleteField
+              variant="filled"
+              label={"to"}
+              categories={categories}
+            />
             &nbsp;
-            <Button variant="contained" size="large" disableElevation>
+            <Button
+              color="secondary"
+              variant="contained"
+              size="large"
+              disableElevation
+            >
               GO
             </Button>
           </InputForm>
