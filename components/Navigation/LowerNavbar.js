@@ -14,16 +14,15 @@ const StyledLowerNavbar = styled(AppBar)`
   background-color: white;
   color: black
   display: flex;
-  height: 8vh;
-
   ${(props) => props.theme.breakpoints.down("sm")} {
-    background-color: #33CCCC;
-    padding-left: 10px
+    background: rgb(91,184,209);
+    background: linear-gradient(270deg, rgba(91,184,209,1) 0%, rgba(21,215,215,1) 100%);
+    padding-left: 1vw
   }
 `;
 // Brand logo
 const Brand = styled(Typography)`
-  color: black;
+  color: #484848;
   margin-right: 1.5vw;
   margin-top: 1.5vh;
   font-weight: bold
@@ -46,8 +45,7 @@ const DrawerContainer = styled.div`
   color: #404040;
   position: relative;
   float: right;
-  height: 100%;
-
+  height: 50%;
   ${(props) => props.theme.breakpoints.up("md")} {
     display: none;
   }

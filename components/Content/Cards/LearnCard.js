@@ -68,7 +68,7 @@ export default function MediaCard({ image, title, description, label, link }) {
           Learn more
         </Link>
         {label.map((label) => {
-          return <Chip className={classes.chip} label={label} />;
+          return <Chip className={classes.chip} label={label} key={label}/>;
         })}
       </CardActions>
     </Card>

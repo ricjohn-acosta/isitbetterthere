@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -6,6 +7,7 @@ import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import AutocompleteField from "./MainSection/AutocompleteField";
 
 const Wrapper = styled(Box)`
   background: rgb(144, 144, 209);
@@ -29,14 +31,25 @@ const InputContainer = styled(Grid)`
 `;
 
 const InputForm = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 30%;
   ${(props) => props.theme.breakpoints.down("sm")} {
-    margin-left: 0;
-    margin-bottom: 50px;
-    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  ${(props) => props.theme.breakpoints.up("md")} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0%;
+  }
+
+  ${(props) => props.theme.breakpoints.up("lg")} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30%;
   }
 `;
 
@@ -60,25 +73,25 @@ const WelcomeMessage = styled(Typography)`
   margin-bottom: 10vh;
   margin-left: 25vw;
 
-
-  ${(props) => props.theme.breakpoints.down("sm")} {
+  ${(props) => props.theme.breakpoints.down("md")} {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2.2rem;
-    margin-left: 5vw
+    margin-left: 1vw;
   }
   ${(props) => props.theme.breakpoints.between("1287", "1870")} {
     font-size: 4rem;
   }
   ${(props) => props.theme.breakpoints.between("sm", "1287")} {
-    font-size: 3rem;
+    font-size: 2.2rem;
   }
 `;
 
 const StyledImage = styled.img`
   width: 100%;
   height: 100%;
+  margin-top: 5vh
 }
 `;
 
@@ -88,32 +101,55 @@ const ImageContainer = styled(Grid)`
 
 const MainSection = () => {
   const [category, setCategory] = React.useState("CAREERS");
+  const resizeInputForm = useMediaQuery("(max-width:730px)");
+
+  //750
+
   return (
     <Wrapper component="div">
       <Grid container direction="row">
-        <InputContainer item xs={12} sm={12} md={9}component="div">
+        <InputContainer item xs={12} sm={12} md={12} lg={9} component="div">
           <WelcomeMessage variant="h1">
             <FadeInAnimation>Know your destination</FadeInAnimation>
           </WelcomeMessage>
+          {/* <div style={{marginLeft: "30vw"}}>test</div> */}
+
           <InputForm>
-            Choose a category: &nbsp;
-            <Select value={category} variant="standard">
-              <MenuItem value={"CAREERS"}>Jobs</MenuItem>
+            <div>Choose a category: &nbsp;</div>
+            <br />
+            <Select
+              onChange={(e) => {
+                setCategory(e.target.value);
+              }}
+              value={category}
+              variant="standard"
+            >
+              <MenuItem value={"CAREERS"}>Careers</MenuItem>
+              <MenuItem value={"EDUCATION"}>Education</MenuItem>
               <MenuItem value={"UNIVERSITIES"}>Universities</MenuItem>
               <MenuItem value={"COUNTRIES"}>Countries</MenuItem>
               <MenuItem value={"CULTURES"}>Cultures</MenuItem>
+              <MenuItem value={"GADGETS"}>Gadgets</MenuItem>
             </Select>
-            &nbsp; TRANSITION &nbsp; 
-            <TextField variant="filled"></TextField>
-            &nbsp;TO&nbsp;
-            <TextField variant="filled"></TextField>
+            &nbsp;
+            <div>
+              <b>TRANSITION FROM</b>
+            </div>{" "}
+            &nbsp;
+            <AutocompleteField variant="filled" />
+            &nbsp;
+            <div>
+              <b>TO</b>
+            </div>
+            &nbsp;
+            <AutocompleteField variant="filled" />
             &nbsp;
             <Button variant="contained" size="large" disableElevation>
               GO
             </Button>
           </InputForm>
         </InputContainer>
-        <ImageContainer item xs={12} sm={12} md={3}>
+        <ImageContainer item xs={12} sm={12} md={12} lg={3}>
           <StyledImage src="/decision.png"></StyledImage>
         </ImageContainer>
       </Grid>

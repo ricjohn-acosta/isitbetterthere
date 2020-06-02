@@ -65,10 +65,10 @@ const Footer = () => {
                 Community
               </ListItem>
               <ListItem>
-                <Link href="contact">Contact</Link>
+                <Link href="about">About</Link>
               </ListItem>
               <ListItem>
-                <Link href="about">About</Link>
+                <Link href="contact">Contact</Link>
               </ListItem>
               <ListItem>
                 <Link href="ourteam">Meet the team</Link>
