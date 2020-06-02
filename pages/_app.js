@@ -8,13 +8,13 @@ import App from "next/app";
 import withReduxStore from "../lib/with-redux-store";
 
 class MyApp extends App {
-  componentDidMount() {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector("#jss-server-side");
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }
+  // componentDidMount() {
+  //   // Remove the server-side injected CSS.
+  //   const jssStyles = document.querySelector("#jss-server-side");
+  //   if (jssStyles) {
+  //     jssStyles.parentElement.removeChild(jssStyles);
+  //   }
+  // }
   render() {
     const { Component, pageProps, store } = this.props;
     return (

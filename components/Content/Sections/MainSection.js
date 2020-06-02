@@ -59,12 +59,20 @@ const WelcomeMessage = styled(Typography)`
   align-items: center;
   margin-bottom: 10vh;
   margin-left: 25vw;
+
+
   ${(props) => props.theme.breakpoints.down("sm")} {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2.2rem;
     margin-left: 5vw
+  }
+  ${(props) => props.theme.breakpoints.between("1287", "1870")} {
+    font-size: 4rem;
+  }
+  ${(props) => props.theme.breakpoints.between("sm", "1287")} {
+    font-size: 3rem;
   }
 `;
 
