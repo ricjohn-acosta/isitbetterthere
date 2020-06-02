@@ -27,7 +27,6 @@ const LeftContainer = styled(Grid)``;
 const RightContainer = styled.div`
   float: right;
   padding: 4px 16px 0 0;
-
 `;
 
 const SocialMediaIcon = styled.img`
@@ -86,7 +85,7 @@ const Footer = () => {
         <Divider />
         <br />
         <Copyright>IsItBetterThere © 2020 Ricjohn Genoguin</Copyright>
-        <div>v0.0.1</div>
+        <div style={{ float: "right" }}>v0.0.1</div>
       </Container>
     </Wrapper>
   );
