@@ -12,6 +12,8 @@ import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
 import { jobCategory } from "../../../lib/categories";
 import { educationCategory } from "../../../lib/categories";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@material-ui/core/TextField";
 
 const Wrapper = styled(Box)`
   background: rgb(144, 144, 209);
@@ -105,10 +107,22 @@ const ImageContainer = styled(Grid)`
 
 const MainSection = () => {
   const [categories, setCategory] = React.useState(jobCategory);
+  const [toValue, setToValue] = React.useState("");
+  const [toInputValue, setToInputValue] = React.useState("");
+  const [fromValue, setFromValue] = React.useState("");
+  const [fromInputValue, setFromInputValue] = React.useState("");
+  const [isSelected, setSelected] = React.useState(false);
+  const [isSwapping, setSwapping] = React.useState(false);
   const resizeInputForm = useMediaQuery("(max-width:730px)");
   const changeSwapIcon = useMediaQuery("(max-width:960px)");
 
-  //750
+  const options = categories.map((option) => {
+    const firstLetter = option.category[0].toUpperCase();
+    return {
+      firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+      ...option,
+    };
+  });
 
   return (
     <Wrapper component="div">
@@ -117,14 +131,21 @@ const MainSection = () => {
           <WelcomeMessage variant="h1">
             <FadeInAnimation>Know your destination</FadeInAnimation>
           </WelcomeMessage>
-          {/* <div style={{marginLeft: "30vw"}}>test</div> */}
-
+          {console.log("is selected? ", isSelected)}
           <InputForm>
             <div>Choose a category: &nbsp;</div>
             <br />
             <Select
               onChange={(e) => {
                 setCategory(e.target.value);
+                setSelected(true);
+                setToValue("");
+                setFromValue("");
+                setToInputValue("");
+                setFromInputValue("");
+              }}
+              onOpen={(e) => {
+                setSelected(false);
               }}
               value={categories}
               variant="standard"
@@ -142,10 +163,40 @@ const MainSection = () => {
               <b>TRANSITION</b>
             </div>{" "}
             &nbsp;
-            <AutocompleteField
+            {/* <AutocompleteField
               variant="filled"
               label={"from"}
               categories={categories}
+              onFromValueChange={(value) => {
+                setFromValue(value);
+              }}
+              parentFromValue={fromValue}
+              isSelected={isSelected}
+              isSwapping={isSwapping}
+            /> */}
+            <Autocomplete
+            key="test"
+              options={options.sort(
+                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+              )}
+              groupBy={(option) => option.firstLetter}
+              getOptionLabel={(option) => option.category}
+              getOptionSelected={(option, value) =>
+                option.category === value.category
+              }
+              getOptionDisabled={(option) => option.category === toInputValue}
+              onChange={(event, value) => {
+                value === null ? setFromValue("") : setFromValue(value.category);
+              }}
+              onInputChange={(event, value) => {
+                setFromInputValue(value);
+              }}
+              inputValue={fromValue}
+              variant="filled"
+              style={{ width: 200 }}
+              renderInput={(params) => (
+                <TextField {...params} label={"from"} variant="outlined" />
+              )}
             />
             &nbsp;
             <div>
@@ -154,16 +205,52 @@ const MainSection = () => {
                   <SwapVertIcon fontSize="small" />
                 </IconButton>
               ) : (
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    setFromValue(toValue);
+                    setToValue(fromValue);
+                    setFromInputValue(toValue);
+                    setToInputValue(fromValue);
+                  }}
+                >
                   <SwapHorizIcon fontSize="small" />
                 </IconButton>
               )}
             </div>
             &nbsp;
-            <AutocompleteField
+            {/* <AutocompleteField
               variant="filled"
               label={"to"}
               categories={categories}
+              onToValueChange={(value) => {
+                setToValue(value);
+              }}
+              parentToValue={toValue}
+              isSelected={isSelected}
+              isSwapping={isSwapping}
+            /> */}
+            <Autocomplete
+              options={options.sort(
+                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+              )}
+              groupBy={(option) => option.firstLetter}
+              getOptionLabel={(option) => option.category}
+              getOptionSelected={(option, value) =>
+                option.category === value.category
+              }
+              getOptionDisabled={(option) => option.category === fromInputValue}
+              onChange={(event, value) => {
+                value === null ? setToValue("") : setToValue(value.category);
+              }}
+              onInputChange={(event, value) => {
+                setToInputValue(value);
+              }}
+              inputValue={toValue}
+              variant="filled"
+              style={{ width: 200 }}
+              renderInput={(params) => (
+                <TextField {...params} label={"to"} variant="outlined" />
+              )}
             />
             &nbsp;
             <Button
@@ -171,6 +258,11 @@ const MainSection = () => {
               variant="contained"
               size="large"
               disableElevation
+              disabled={
+                toValue === fromValue && toValue !== "" && fromValue !== ""
+                  ? true
+                  : false
+              }
             >
               GO
             </Button>
@@ -179,6 +271,8 @@ const MainSection = () => {
         <ImageContainer item xs={12} sm={12} md={12} lg={3}>
           <StyledImage src="/decision.png"></StyledImage>
         </ImageContainer>
+        {console.log("TO VALUE, ", toValue, toInputValue)}
+        {console.log("FROM VALUE, ", fromValue, fromInputValue)}
       </Grid>
     </Wrapper>
   );
