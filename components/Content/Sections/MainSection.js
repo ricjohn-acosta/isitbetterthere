@@ -164,20 +164,12 @@ const MainSection = () => {
               <b>TRANSITION</b>
             </div>{" "}
             &nbsp;
-            {/* <AutocompleteField
-              variant="filled"
-              label={"from"}
-              categories={categories}
-              onFromValueChange={(value) => {
-                setFromValue(value);
-              }}
-              parentFromValue={fromValue}
-              isSelected={isSelected}
-              isSwapping={isSwapping}
-            /> */}
+            {/**
+             * IF SWAPPING SHOW "FROM" FIELD AND IF NOT SHOW "TO" FIELD AND VICE-VERSA
+             */}
             {isSwapping ? (
               <Autocomplete
-              inputValue={toInputValue}
+                inputValue={toInputValue}
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
                 )}
@@ -199,12 +191,12 @@ const MainSection = () => {
                 variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"from"} variant="outlined" />
+                  <TextField {...params} label={"to"} variant="outlined" />
                 )}
               />
             ) : (
               <Autocomplete
-              inputValue={fromInputValue}
+                inputValue={fromInputValue}
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
                 )}
@@ -232,7 +224,15 @@ const MainSection = () => {
             &nbsp;
             <div>
               {changeSwapIcon ? (
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    setFromValue(toValue);
+                    setToValue(fromValue);
+                    setFromInputValue(toInputValue);
+                    setToInputValue(fromInputValue);
+                    setSwapping(!isSwapping);
+                  }}
+                >
                   <SwapVertIcon fontSize="small" />
                 </IconButton>
               ) : (
@@ -240,8 +240,8 @@ const MainSection = () => {
                   onClick={() => {
                     setFromValue(toValue);
                     setToValue(fromValue);
-                    setFromInputValue(fromInputValue);
-                    setToInputValue(toInputValue);
+                    setFromInputValue(toInputValue);
+                    setToInputValue(fromInputValue);
                     setSwapping(!isSwapping);
                   }}
                 >
@@ -250,20 +250,9 @@ const MainSection = () => {
               )}
             </div>
             &nbsp;
-            {/* <AutocompleteField
-              variant="filled"
-              label={"to"}
-              categories={categories}
-              onToValueChange={(value) => {
-                setToValue(value);
-              }}
-              parentToValue={toValue}
-              isSelected={isSelected}
-              isSwapping={isSwapping}
-            /> */}
             {!isSwapping ? (
               <Autocomplete
-              inputValue={toInputValue}
+                inputValue={toInputValue}
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
                 )}
@@ -290,7 +279,7 @@ const MainSection = () => {
               />
             ) : (
               <Autocomplete
-              inputValue={fromInputValue}
+                inputValue={fromInputValue}
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
                 )}
@@ -311,7 +300,7 @@ const MainSection = () => {
                 variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"to"} variant="outlined" />
+                  <TextField {...params} label={"from"} variant="outlined" />
                 )}
               />
             )}
