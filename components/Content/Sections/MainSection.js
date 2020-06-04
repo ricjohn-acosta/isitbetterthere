@@ -199,7 +199,7 @@ const MainSection = () => {
                 variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"from"} variant="outlined" />
+                  <TextField {...params} label={"to"} variant="outlined" />
                 )}
               />
             ) : (
@@ -240,8 +240,8 @@ const MainSection = () => {
                   onClick={() => {
                     setFromValue(toValue);
                     setToValue(fromValue);
-                    setFromInputValue(fromInputValue);
-                    setToInputValue(toInputValue);
+                    setFromInputValue(toInputValue);
+                    setToInputValue(fromInputValue);
                     setSwapping(!isSwapping);
                   }}
                 >
@@ -311,7 +311,7 @@ const MainSection = () => {
                 variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"to"} variant="outlined" />
+                  <TextField {...params} label={"from"} variant="outlined" />
                 )}
               />
             )}
