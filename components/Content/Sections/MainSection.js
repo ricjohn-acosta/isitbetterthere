@@ -199,7 +199,7 @@ const MainSection = () => {
                 variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"to"} variant="outlined" />
+                  <TextField {...params} label={"from"} variant="outlined" />
                 )}
               />
             ) : (
@@ -311,7 +311,7 @@ const MainSection = () => {
                 variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"from"} variant="outlined" />
+                  <TextField {...params} label={"to"} variant="outlined" />
                 )}
               />
             )}
