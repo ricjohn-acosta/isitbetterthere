@@ -16,15 +16,15 @@ const generateClassName = createGenerateClassName({
 });
 
 class MyApp extends App {
-  constructor(props) {
-    super(props);
-    this.state = { key: 0 };
-    this.setKey = this.setKey.bind(this);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { key: 0 };
+  //   this.setKey = this.setKey.bind(this);
+  // }
 
-  setKey(key) {
-    this.setState({ key: key });
-  }
+  // setKey(key) {
+  //   this.setState({ key: key });
+  // }
 
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -32,17 +32,13 @@ class MyApp extends App {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
-    this.setKey(1);
+    // this.setKey(1);
   }
   render() {
     const { Component, pageProps, store } = this.props;
     return (
       <Provider store={store}>
-        <StylesProvider
-          injectFirst
-          key={this.state.key}
-          generateClassName={generateClassName}
-        >
+        <StylesProvider injectFirst>
           <MuiThemeProvider theme={theme}>
             <ThemeProvider theme={theme}>
               <CssBaseline />
