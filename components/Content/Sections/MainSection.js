@@ -94,13 +94,6 @@ const WelcomeMessage = styled(Typography)`
   }
 `;
 
-const StyledImage = styled.img`
-  width: 100%;
-  height: 100%;
-  margin-top: 5vh
-}
-`;
-
 const ImageContainer = styled(Grid)`
   padding-right: 50px;
 `;
@@ -320,7 +313,10 @@ const MainSection = () => {
           </InputForm>
         </InputContainer>
         <ImageContainer item xs={12} sm={12} md={12} lg={3}>
-          <StyledImage src="/decision.png"></StyledImage>
+          <img
+            style={{ width: "100%", height: "100%", marginTop: "5vh" }}
+            src="/decision.png"
+          />
         </ImageContainer>
         {console.log("TO VALUE, ", toValue, toInputValue)}
         {console.log("FROM VALUE, ", fromValue, fromInputValue)}
