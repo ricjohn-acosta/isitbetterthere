@@ -31,27 +31,37 @@ const StyledImage = styled.img`
 `;
 
 const ImageContainer = styled(Grid)`
-  padding-left: 20vw;
-  padding-top: 20vh;
+  padding-left: 15vw;
+  padding-top: 15vh;
   ${(props) => props.theme.breakpoints.down("md")} {
-    padding: 5vh 10% 10% 10%;
+    padding: 1vh 10% 10% 10%;
   }
 `;
 
+const TopText = styled(Typography)`
+  padding: 35vh 20vw 0 50px;
+`;
+
 const Text = styled(Typography)`
-  padding: 20vh 20vw 0 50px;
+  padding: 32.5vh 20vw 0 50px;
+  ${(props) => props.theme.breakpoints.down("md")} {
+    padding: 10vh 10% 5% 10%;
+  }
 `;
 
 const MiddleImageContainer = styled(Grid)`
   padding-right: 8.5vw;
-  padding-top: 15vh;
+  padding-top: 12.5vh;
   ${(props) => props.theme.breakpoints.down("md")} {
-    padding: 5vh 10% 10% 10%;
+    padding: 6.5vh 10% 10% 10%;
   }
 `;
 
 const MiddleTextContainer = styled(Typography)`
   padding: 15vh 0 0 15vw;
+  ${(props) => props.theme.breakpoints.down("md")} {
+    padding: 10vh 0 0 15vw;
+  }
 `;
 
 const TutorialSection = () => {
@@ -64,7 +74,7 @@ const TutorialSection = () => {
         <br />
         <TutorialHeaderContainer elevation={1}>
           <TutorialHeader variant="h6">
-            How we can help you prepare for your next big transition in life
+            How we can help you prepare for your next transition in life
           </TutorialHeader>
         </TutorialHeaderContainer>
         <Grid container direction="column">
@@ -74,21 +84,21 @@ const TutorialSection = () => {
                 <StyledImage src="/target.png" />
               </ImageContainer>
               <Grid item xs={12} sm={6}>
-                <Text variant="h4">
+                <TopText variant="h4">
                   Start <Link href="/"><a>here</a></Link>. Choose a category that relates to your situation,
                   where you are planning to transition from and where you want
                   to be.
-                </Text>
+                </TopText>
               </Grid>
             </Grid>
           ) : (
             <Grid container item>
               <Grid item xs={12} sm={12}>
-                <Text variant="h5">
+                <TopText variant="h5">
                   Start <Link href="/"><a>here</a></Link>. Choose a category that relates to your situation,
                   where you are planning to transition from and where you want
                   to be.
-                </Text>
+                </TopText>
               </Grid>
               <ImageContainer item xs={12} sm={12}>
                 <StyledImage src="/target.png" />

@@ -37,8 +37,8 @@ const StyledUpperNavbar = () => {
     <UpperNavbar elevation={0} position="static">
       <Container>
         <StyledButton disableRipple>Meet the team</StyledButton>
-        <StyledButton disableRipple>About</StyledButton>
         <StyledButton disableRipple>Contact</StyledButton>
+        <StyledButton disableRipple>About</StyledButton>
       </Container>
     </UpperNavbar>
   );
