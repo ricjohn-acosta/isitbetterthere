@@ -6,7 +6,6 @@ import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import AutocompleteField from "./MainSection/AutocompleteField";
 import IconButton from "@material-ui/core/IconButton";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import SwapVertIcon from "@material-ui/icons/SwapVert";

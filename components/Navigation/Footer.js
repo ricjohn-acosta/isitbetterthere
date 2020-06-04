@@ -84,7 +84,7 @@ const Footer = () => {
         </Grid>
         <Divider />
         <br />
-        <Copyright>IsItBetterThere © 2020 Ricjohn Genoguin</Copyright>
+        <Copyright>IsItBetterThere © 2020</Copyright>
         <div style={{ float: "right" }}>v0.0.1</div>
       </Container>
     </Wrapper>
