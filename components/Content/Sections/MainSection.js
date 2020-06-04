@@ -14,6 +14,7 @@ import { jobCategory } from "../../../lib/categories";
 import { educationCategory } from "../../../lib/categories";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
+import { useEffect } from "react";
 
 const Wrapper = styled(Box)`
   background: rgb(144, 144, 209);
@@ -174,30 +175,60 @@ const MainSection = () => {
               isSelected={isSelected}
               isSwapping={isSwapping}
             /> */}
-            <Autocomplete
-            key="test"
-              options={options.sort(
-                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-              )}
-              groupBy={(option) => option.firstLetter}
-              getOptionLabel={(option) => option.category}
-              getOptionSelected={(option, value) =>
-                option.category === value.category
-              }
-              getOptionDisabled={(option) => option.category === toInputValue}
-              onChange={(event, value) => {
-                value === null ? setFromValue("") : setFromValue(value.category);
-              }}
-              onInputChange={(event, value) => {
-                setFromInputValue(value);
-              }}
-              inputValue={fromValue}
-              variant="filled"
-              style={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label={"from"} variant="outlined" />
-              )}
-            />
+            {isSwapping ? (
+              <Autocomplete
+              inputValue={toInputValue}
+                options={options.sort(
+                  (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+                )}
+                groupBy={(option) => option.firstLetter}
+                getOptionLabel={(option) => option.category}
+                getOptionSelected={(option, value) =>
+                  option.category === value.category
+                }
+                getOptionDisabled={(option) =>
+                  option.category === fromInputValue
+                }
+                // C
+                onChange={(event, value) => {
+                  value === null ? setToValue("") : setToValue(value.category);
+                }}
+                onInputChange={(event, value) => {
+                  setToInputValue(value);
+                }}
+                variant="filled"
+                style={{ width: 200 }}
+                renderInput={(params) => (
+                  <TextField {...params} label={"to"} variant="outlined" />
+                )}
+              />
+            ) : (
+              <Autocomplete
+              inputValue={fromInputValue}
+                options={options.sort(
+                  (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+                )}
+                groupBy={(option) => option.firstLetter}
+                getOptionLabel={(option) => option.category}
+                getOptionSelected={(option, value) =>
+                  option.category === value.category
+                }
+                getOptionDisabled={(option) => option.category === toInputValue}
+                onChange={(event, value) => {
+                  value === null
+                    ? setFromValue("")
+                    : setFromValue(value.category);
+                }}
+                onInputChange={(event, value) => {
+                  setFromInputValue(value);
+                }}
+                variant="filled"
+                style={{ width: 200 }}
+                renderInput={(params) => (
+                  <TextField {...params} label={"from"} variant="outlined" />
+                )}
+              />
+            )}
             &nbsp;
             <div>
               {changeSwapIcon ? (
@@ -209,8 +240,9 @@ const MainSection = () => {
                   onClick={() => {
                     setFromValue(toValue);
                     setToValue(fromValue);
-                    setFromInputValue(toValue);
-                    setToInputValue(fromValue);
+                    setFromInputValue(fromInputValue);
+                    setToInputValue(toInputValue);
+                    setSwapping(!isSwapping);
                   }}
                 >
                   <SwapHorizIcon fontSize="small" />
@@ -229,29 +261,60 @@ const MainSection = () => {
               isSelected={isSelected}
               isSwapping={isSwapping}
             /> */}
-            <Autocomplete
-              options={options.sort(
-                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-              )}
-              groupBy={(option) => option.firstLetter}
-              getOptionLabel={(option) => option.category}
-              getOptionSelected={(option, value) =>
-                option.category === value.category
-              }
-              getOptionDisabled={(option) => option.category === fromInputValue}
-              onChange={(event, value) => {
-                value === null ? setToValue("") : setToValue(value.category);
-              }}
-              onInputChange={(event, value) => {
-                setToInputValue(value);
-              }}
-              inputValue={toValue}
-              variant="filled"
-              style={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField {...params} label={"to"} variant="outlined" />
-              )}
-            />
+            {!isSwapping ? (
+              <Autocomplete
+              inputValue={toInputValue}
+                options={options.sort(
+                  (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+                )}
+                groupBy={(option) => option.firstLetter}
+                getOptionLabel={(option) => option.category}
+                getOptionSelected={(option, value) =>
+                  option.category === value.category
+                }
+                getOptionDisabled={(option) =>
+                  option.category === fromInputValue
+                }
+                // C
+                onChange={(event, value) => {
+                  value === null ? setToValue("") : setToValue(value.category);
+                }}
+                onInputChange={(event, value) => {
+                  setToInputValue(value);
+                }}
+                variant="filled"
+                style={{ width: 200 }}
+                renderInput={(params) => (
+                  <TextField {...params} label={"to"} variant="outlined" />
+                )}
+              />
+            ) : (
+              <Autocomplete
+              inputValue={fromInputValue}
+                options={options.sort(
+                  (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+                )}
+                groupBy={(option) => option.firstLetter}
+                getOptionLabel={(option) => option.category}
+                getOptionSelected={(option, value) =>
+                  option.category === value.category
+                }
+                getOptionDisabled={(option) => option.category === toInputValue}
+                onChange={(event, value) => {
+                  value === null
+                    ? setFromValue("")
+                    : setFromValue(value.category);
+                }}
+                onInputChange={(event, value) => {
+                  setFromInputValue(value);
+                }}
+                variant="filled"
+                style={{ width: 200 }}
+                renderInput={(params) => (
+                  <TextField {...params} label={"from"} variant="outlined" />
+                )}
+              />
+            )}
             &nbsp;
             <Button
               color="secondary"
