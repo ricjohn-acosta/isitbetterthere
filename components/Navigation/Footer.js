@@ -13,11 +13,11 @@ const Wrapper = styled.div`
     rgba(0, 61, 77, 1) 50%,
     rgba(48, 86, 105, 1) 98%
   );
-  min-height: 30vh;
+  min-height: 40vh;
 `;
 
 const Container = styled.div`
-  padding: 5vh 15vw 5vh 15vw;
+  padding: 10vh 15vw 5vh 15vw;
   color: #e0e0eb;
   ${(props) => props.theme.breakpoints.down("sm")} {
     padding: 5vh 0 0 0;
@@ -84,7 +84,7 @@ const Footer = () => {
         </Grid>
         <Divider />
         <br />
-        <Copyright>IsItBetterThere © 2020</Copyright>
+        <Copyright>© IsItBetterThere 2020</Copyright>
         <div style={{ float: "right" }}>v0.0.1</div>
       </Container>
     </Wrapper>

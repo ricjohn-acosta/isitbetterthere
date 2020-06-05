@@ -15,6 +15,12 @@ import { jobCategory } from "../../../lib/categories";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import { useEffect } from "react";
+import Router from "next/router";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  popper: { width: 400 },
+});
 
 const Wrapper = styled(Box)`
   background: rgb(144, 144, 209);
@@ -37,7 +43,7 @@ const InputContainer = styled(Grid)`
   width: 100%;
 `;
 
-const InputForm = styled.div`
+const InputForm = styled.form`
   ${(props) => props.theme.breakpoints.down("sm")} {
     display: flex;
     justify-content: center;
@@ -61,13 +67,26 @@ const InputForm = styled.div`
 `;
 
 const fadeInText = keyframes`
-from {
-    opacity: 0
+  from {
+    margin-left: -5%;
   }
+
+  to {
+    margin-left: 0%;
+  }
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
 
   to {
     opacity: 1;
   }
+`;
+
+const FadeIn = styled.span`
+  animation: ${fadeIn} 2s;
 `;
 
 const FadeInAnimation = styled.span`
@@ -100,6 +119,7 @@ const ImageContainer = styled(Grid)`
 `;
 
 const MainSection = () => {
+  const classes = useStyles();
   const [categories, setCategory] = React.useState(careersCategory);
   const [toValue, setToValue] = React.useState(null);
   const [toInputValue, setToInputValue] = React.useState("");
@@ -107,6 +127,7 @@ const MainSection = () => {
   const [fromInputValue, setFromInputValue] = React.useState("");
   const [isSelected, setSelected] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
+  const [isEmptyField, setEmptyFields] = React.useState(false);
   const resizeInputForm = useMediaQuery("(max-width:730px)");
   const changeSwapIcon = useMediaQuery("(max-width:960px)");
 
@@ -136,15 +157,35 @@ const MainSection = () => {
     }
   });
 
+  const handleForm = (e) => {
+    e.preventDefault();
+    if (fromValue === null || toValue === null) {
+      setEmptyFields(true);
+      return console.log("ERROR");
+    } else {
+      Router.push({
+        pathname: "/transition",
+        query: {
+          from: fromInputValue,
+          to: toInputValue,
+        },
+      });
+      setEmptyFields(false);
+      return console.log("NO ERROR");
+    }
+  };
+
   return (
     <Wrapper component="div">
       <Grid container direction="row">
         <InputContainer item xs={12} sm={12} md={12} lg={9} component="div">
           <WelcomeMessage variant="h1">
-            <FadeInAnimation>Know your destination</FadeInAnimation>
+            <FadeInAnimation>
+              <FadeIn>Know your destination</FadeIn>
+            </FadeInAnimation>
           </WelcomeMessage>
           {console.log("is selected? ", isSelected)}
-          <InputForm>
+          <InputForm onSubmit={handleForm}>
             <div>Choose a category: &nbsp;</div>
             <br />
             <Select
@@ -178,58 +219,10 @@ const MainSection = () => {
             {/**
              * IF SWAPPING SHOW "FROM" FIELD AND IF NOT SHOW "TO" FIELD AND VICE-VERSA
              */}
-            {/* {isSwapping ? (
-              <Autocomplete
-                options={options.sort(
-                  (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-                )}
-                groupBy={(option) => option.firstLetter}
-                getOptionLabel={(option) => option.category}
-                getOptionSelected={(option, value) =>
-                  option.category === value.category
-                }
-                getOptionDisabled={(option) =>
-                  option.category === fromInputValue
-                }
-                value={toValue}
-                onChange={(event, newValue) => {
-                  setToValue(newValue);
-                }}
-                inputValue={toInputValue}
-                onInputChange={(event, newInputValue) => {
-                  setToInputValue(newInputValue);
-                }}
-                style={{ width: 200 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="to" variant="outlined" />
-                )}
-              />
-            ) : (
-              <Autocomplete
-                options={options.sort(
-                  (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-                )}
-                groupBy={(option) => option.firstLetter}
-                getOptionLabel={(option) => option.category}
-                getOptionSelected={(option, value) =>
-                  option.category === value.category
-                }
-                getOptionDisabled={(option) => option.category === toInputValue}
-                value={fromValue}
-                onChange={(event, newValue) => {
-                  setFromValue(newValue);
-                }}
-                inputValue={fromInputValue}
-                onInputChange={(event, newInputValue) => {
-                  setFromInputValue(newInputValue);
-                }}
-                style={{ width: 200 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="from" variant="outlined" />
-                )}
-              />
-            )} */}
             <Autocomplete
+              classes={{
+                paper: classes.popper,
+              }}
               options={options.sort(
                 (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
               )}
@@ -259,6 +252,10 @@ const MainSection = () => {
                   {...params}
                   label={isSwapping ? "to" : "from"}
                   variant="outlined"
+                  error={isEmptyField}
+                  helperText={
+                    isEmptyField ? "Please don't leave these blank :)" : null
+                  }
                 />
               )}
             />
@@ -291,58 +288,10 @@ const MainSection = () => {
               )}
             </div>
             &nbsp;
-            {/* {!isSwapping ? (
-              <Autocomplete
-                options={options.sort(
-                  (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-                )}
-                groupBy={(option) => option.firstLetter}
-                getOptionLabel={(option) => option.category}
-                getOptionSelected={(option, value) =>
-                  option.category === value.category
-                }
-                getOptionDisabled={(option) =>
-                  option.category === fromInputValue
-                }
-                value={toValue}
-                onChange={(event, newValue) => {
-                  setToValue(newValue);
-                }}
-                inputValue={toInputValue}
-                onInputChange={(event, newInputValue) => {
-                  setToInputValue(newInputValue);
-                }}
-                style={{ width: 200 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="to" variant="outlined" />
-                )}
-              />
-            ) : (
-              <Autocomplete
-                options={options.sort(
-                  (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-                )}
-                groupBy={(option) => option.firstLetter}
-                getOptionLabel={(option) => option.category}
-                getOptionSelected={(option, value) =>
-                  option.category === value.category
-                }
-                getOptionDisabled={(option) => option.category === toInputValue}
-                value={fromValue}
-                onChange={(event, newValue) => {
-                  setFromValue(newValue);
-                }}
-                inputValue={fromInputValue}
-                onInputChange={(event, newInputValue) => {
-                  setFromInputValue(newInputValue);
-                }}
-                style={{ width: 200 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="from" variant="outlined" />
-                )}
-              />
-            )} */}
             <Autocomplete
+              classes={{
+                paper: classes.popper,
+              }}
               options={options.sort(
                 (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
               )}
@@ -372,11 +321,16 @@ const MainSection = () => {
                   {...params}
                   label={!isSwapping ? "to" : "from"}
                   variant="outlined"
+                  error={isEmptyField}
+                  helperText={
+                    isEmptyField ? "Please don't leave these blank :)" : null
+                  }
                 />
               )}
             />
             &nbsp;
             <Button
+              type="submit"
               color="secondary"
               variant="contained"
               size="large"
