@@ -9,8 +9,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
-import { jobCategory } from "../../../lib/categories";
+import { careersCategory } from "../../../lib/categories";
 import { educationCategory } from "../../../lib/categories";
+import { jobCategory } from "../../../lib/categories";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import { useEffect } from "react";
@@ -99,22 +100,41 @@ const ImageContainer = styled(Grid)`
 `;
 
 const MainSection = () => {
-  const [categories, setCategory] = React.useState(jobCategory);
-  const [toValue, setToValue] = React.useState("");
+  const [categories, setCategory] = React.useState(careersCategory);
+  const [toValue, setToValue] = React.useState(null);
   const [toInputValue, setToInputValue] = React.useState("");
-  const [fromValue, setFromValue] = React.useState("");
+  const [fromValue, setFromValue] = React.useState(null);
   const [fromInputValue, setFromInputValue] = React.useState("");
   const [isSelected, setSelected] = React.useState(false);
+  const [test, setTest] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
   const resizeInputForm = useMediaQuery("(max-width:730px)");
   const changeSwapIcon = useMediaQuery("(max-width:960px)");
 
   const options = categories.map((option) => {
-    const firstLetter = option.category[0].toUpperCase();
-    return {
-      firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-      ...option,
-    };
+    if (categories == careersCategory) {
+      const firstLetter = option.category[0].toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+        ...option,
+      };
+    }
+
+    if (categories == educationCategory) {
+      const firstLetter = option.field.toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+        ...option,
+      };
+    }
+
+    if (categories == jobCategory) {
+      const firstLetter = option.field.toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+        ...option,
+      };
+    }
   });
 
   return (
@@ -132,20 +152,22 @@ const MainSection = () => {
               onChange={(e) => {
                 setCategory(e.target.value);
                 setSelected(true);
-                setToValue("");
-                setFromValue("");
+                setTest(true);
+                setToValue(null);
+                setFromValue(null);
                 setToInputValue("");
                 setFromInputValue("");
               }}
               onOpen={(e) => {
                 setSelected(false);
+                setTest(false);
               }}
               value={categories}
               variant="standard"
             >
-              <MenuItem value={jobCategory}>Careers</MenuItem>
-              <MenuItem value={"asd"}>Jobs</MenuItem>
-              <MenuItem value={educationCategory}>Tertiary Courses</MenuItem>
+              <MenuItem value={careersCategory}>Careers</MenuItem>
+              <MenuItem value={jobCategory}>Jobs</MenuItem>
+              <MenuItem value={educationCategory}>Tertiary Education</MenuItem>
               <MenuItem value={"uniCategory"}>Universities</MenuItem>
               <MenuItem value={"countryCategory"}>Countries</MenuItem>
               <MenuItem value={"cultureCategory"}>Cultures</MenuItem>
@@ -161,7 +183,6 @@ const MainSection = () => {
              */}
             {isSwapping ? (
               <Autocomplete
-                inputValue={toInputValue}
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
                 )}
@@ -173,22 +194,21 @@ const MainSection = () => {
                 getOptionDisabled={(option) =>
                   option.category === fromInputValue
                 }
-                // C
-                onChange={(event, value) => {
-                  value === null ? setToValue("") : setToValue(value.category);
+                value={toValue}
+                onChange={(event, newValue) => {
+                  setToValue(newValue);
                 }}
-                onInputChange={(event, value) => {
-                  setToInputValue(value);
+                inputValue={toInputValue}
+                onInputChange={(event, newInputValue) => {
+                  setToInputValue(newInputValue);
                 }}
-                variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"to"} variant="outlined" />
+                  <TextField {...params} label="to" variant="outlined" />
                 )}
               />
             ) : (
               <Autocomplete
-                inputValue={fromInputValue}
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
                 )}
@@ -198,18 +218,17 @@ const MainSection = () => {
                   option.category === value.category
                 }
                 getOptionDisabled={(option) => option.category === toInputValue}
-                onChange={(event, value) => {
-                  value === null
-                    ? setFromValue("")
-                    : setFromValue(value.category);
+                value={fromValue}
+                onChange={(event, newValue) => {
+                  setFromValue(newValue);
                 }}
-                onInputChange={(event, value) => {
-                  setFromInputValue(value);
+                inputValue={fromInputValue}
+                onInputChange={(event, newInputValue) => {
+                  setFromInputValue(newInputValue);
                 }}
-                variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"from"} variant="outlined" />
+                  <TextField {...params} label="from" variant="outlined" />
                 )}
               />
             )}
@@ -244,7 +263,6 @@ const MainSection = () => {
             &nbsp;
             {!isSwapping ? (
               <Autocomplete
-                inputValue={toInputValue}
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
                 )}
@@ -256,22 +274,21 @@ const MainSection = () => {
                 getOptionDisabled={(option) =>
                   option.category === fromInputValue
                 }
-                // C
-                onChange={(event, value) => {
-                  value === null ? setToValue("") : setToValue(value.category);
+                value={toValue}
+                onChange={(event, newValue) => {
+                  setToValue(newValue);
                 }}
-                onInputChange={(event, value) => {
-                  setToInputValue(value);
+                inputValue={toInputValue}
+                onInputChange={(event, newInputValue) => {
+                  setToInputValue(newInputValue);
                 }}
-                variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"to"} variant="outlined" />
+                  <TextField {...params} label="to" variant="outlined" />
                 )}
               />
             ) : (
               <Autocomplete
-                inputValue={fromInputValue}
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
                 )}
@@ -281,18 +298,17 @@ const MainSection = () => {
                   option.category === value.category
                 }
                 getOptionDisabled={(option) => option.category === toInputValue}
-                onChange={(event, value) => {
-                  value === null
-                    ? setFromValue("")
-                    : setFromValue(value.category);
+                value={fromValue}
+                onChange={(event, newValue) => {
+                  setFromValue(newValue);
                 }}
-                onInputChange={(event, value) => {
-                  setFromInputValue(value);
+                inputValue={fromInputValue}
+                onInputChange={(event, newInputValue) => {
+                  setFromInputValue(newInputValue);
                 }}
-                variant="filled"
                 style={{ width: 200 }}
                 renderInput={(params) => (
-                  <TextField {...params} label={"from"} variant="outlined" />
+                  <TextField {...params} label="from" variant="outlined" />
                 )}
               />
             )}
@@ -303,7 +319,11 @@ const MainSection = () => {
               size="large"
               disableElevation
               disabled={
-                toValue === fromValue && toValue !== "" && fromValue !== ""
+                toValue === fromValue &&
+                toValue !== "" &&
+                fromValue !== "" &&
+                toValue !== null &&
+                fromValue !== null
                   ? true
                   : false
               }
