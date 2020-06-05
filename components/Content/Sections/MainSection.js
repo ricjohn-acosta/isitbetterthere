@@ -106,7 +106,6 @@ const MainSection = () => {
   const [fromValue, setFromValue] = React.useState(null);
   const [fromInputValue, setFromInputValue] = React.useState("");
   const [isSelected, setSelected] = React.useState(false);
-  const [test, setTest] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
   const resizeInputForm = useMediaQuery("(max-width:730px)");
   const changeSwapIcon = useMediaQuery("(max-width:960px)");
@@ -152,7 +151,6 @@ const MainSection = () => {
               onChange={(e) => {
                 setCategory(e.target.value);
                 setSelected(true);
-                setTest(true);
                 setToValue(null);
                 setFromValue(null);
                 setToInputValue("");
@@ -160,7 +158,6 @@ const MainSection = () => {
               }}
               onOpen={(e) => {
                 setSelected(false);
-                setTest(false);
               }}
               value={categories}
               variant="standard"
@@ -181,7 +178,7 @@ const MainSection = () => {
             {/**
              * IF SWAPPING SHOW "FROM" FIELD AND IF NOT SHOW "TO" FIELD AND VICE-VERSA
              */}
-            {isSwapping ? (
+            {/* {isSwapping ? (
               <Autocomplete
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
@@ -231,7 +228,40 @@ const MainSection = () => {
                   <TextField {...params} label="from" variant="outlined" />
                 )}
               />
-            )}
+            )} */}
+            <Autocomplete
+              options={options.sort(
+                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+              )}
+              groupBy={(option) => option.firstLetter}
+              getOptionLabel={(option) => option.category}
+              getOptionSelected={(option, value) =>
+                option.category === value.category
+              }
+              getOptionDisabled={(option) =>
+                !isSwapping
+                  ? option.category === toInputValue
+                  : option.category === fromInputValue
+              }
+              value={isSwapping ? toValue : fromValue}
+              onChange={(event, newValue) => {
+                isSwapping ? setToValue(newValue) : setFromValue(newValue);
+              }}
+              inputValue={isSwapping ? toInputValue : fromInputValue}
+              onInputChange={(event, newInputValue) => {
+                isSwapping
+                  ? setToInputValue(newInputValue)
+                  : setFromInputValue(newInputValue);
+              }}
+              style={{ width: 200 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={isSwapping ? "to" : "from"}
+                  variant="outlined"
+                />
+              )}
+            />
             &nbsp;
             <div>
               {changeSwapIcon ? (
@@ -261,7 +291,7 @@ const MainSection = () => {
               )}
             </div>
             &nbsp;
-            {!isSwapping ? (
+            {/* {!isSwapping ? (
               <Autocomplete
                 options={options.sort(
                   (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
@@ -311,7 +341,40 @@ const MainSection = () => {
                   <TextField {...params} label="from" variant="outlined" />
                 )}
               />
-            )}
+            )} */}
+            <Autocomplete
+              options={options.sort(
+                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+              )}
+              groupBy={(option) => option.firstLetter}
+              getOptionLabel={(option) => option.category}
+              getOptionSelected={(option, value) =>
+                option.category === value.category
+              }
+              getOptionDisabled={(option) =>
+                !isSwapping
+                  ? option.category === fromInputValue
+                  : option.category === toInputValue
+              }
+              value={!isSwapping ? toValue : fromValue}
+              onChange={(event, newValue) => {
+                !isSwapping ? setToValue(newValue) : setFromValue(newValue);
+              }}
+              inputValue={!isSwapping ? toInputValue : fromInputValue}
+              onInputChange={(event, newInputValue) => {
+                !isSwapping
+                  ? setToInputValue(newInputValue)
+                  : setFromInputValue(newInputValue);
+              }}
+              style={{ width: 200 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label={!isSwapping ? "to" : "from"}
+                  variant="outlined"
+                />
+              )}
+            />
             &nbsp;
             <Button
               color="secondary"
