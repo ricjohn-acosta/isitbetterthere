@@ -71,8 +71,8 @@ const Container = styled.div`
   margin-right: 15vw;
   color: black;
   ${(props) => props.theme.breakpoints.down("md")} {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 `;
 

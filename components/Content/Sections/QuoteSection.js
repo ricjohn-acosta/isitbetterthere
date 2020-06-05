@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   margin-bottom: 7.5vh;
   ${(props) => props.theme.breakpoints.down("sm")} {
     margin-left: 7.5vw;
+    margin-right: 7.5vw
   }
 `;
 const AimContainer = styled(Typography)`

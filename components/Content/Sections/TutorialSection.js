@@ -60,7 +60,7 @@ const MiddleImageContainer = styled(Grid)`
 const MiddleTextContainer = styled(Typography)`
   padding: 15vh 0 0 15vw;
   ${(props) => props.theme.breakpoints.down("md")} {
-    padding: 10vh 0 0 15vw;
+    padding: 10vh 5vw 0 15vw;
   }
 `;
 
