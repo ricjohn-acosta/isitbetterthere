@@ -24,7 +24,7 @@ const StyledButton = styled(Button)`
 
 const Container = styled.div`
   position: relative;
-  margin-right: 15vw;
+  margin-right: 13vw;
   margin-left: 13vw;
   ${(props) => props.theme.breakpoints.down("md")} {
     margin-left: 0;
