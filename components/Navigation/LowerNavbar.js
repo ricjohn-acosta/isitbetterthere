@@ -84,7 +84,7 @@ const LowerNavbar = ({ session }) => {
       <Container>
         <Grid container direction="row">
           <Grid item container xs={6} sm={6} md={8}>
-            <Brand variant="h4" component="span">
+            <Brand variant="h4" component={Link} href="/" underline="none">
               IsItBetterThere
             </Brand>
             <Link
