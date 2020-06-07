@@ -44,12 +44,14 @@ const OdometerContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
+  font-size: 1.5rem;
 `;
 
 const LinkContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  
 `;
 
 const HeaderSection = ({ from, to }) => {
@@ -74,7 +76,7 @@ const HeaderSection = ({ from, to }) => {
         <b>
           <CountUp start={0} end={81} />
         </b>
-        &nbsp;PEOPLE HAVE WENT THROUGH THIS TRANSITION
+        &nbsp;people have went through this transition
       </OdometerContainer>
       <LinkContainer>
         <Link

@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
 const options = {
-  site: "http://isitbetterthere.herokuapp.com",
+  site: "http://localhost:3000",
   providers: [
     Providers.Email({
       // SMTP connection string or nodemailer configuration object https://nodemailer.com/
@@ -38,7 +38,7 @@ const options = {
   // Use JSON Web Tokens instead of database sessions
   jwt: true,
   pages: {
-    signin:"http://isitbetterthere.herokuapp.com/signup"
+    signin:"http://localhost:3000/signup"
   }
 
   // Additional options

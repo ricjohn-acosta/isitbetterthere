@@ -31,7 +31,7 @@ const ExperienceIcon = styled.img`
 const ExperienceContainer = styled(Paper)`
   margin: 5vh 0 0 4.5vw;
   padding: 5% 8.5% 8.5% 8.5%;
-  min-height: 100vh;
+  min-height: 50vh;
   max-width: 50vw;
 `;
 
