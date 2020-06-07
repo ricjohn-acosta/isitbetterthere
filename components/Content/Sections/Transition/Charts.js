@@ -21,13 +21,13 @@ const Charts = () => {
           item
           style={{ display: "flex", alignItems: "center" }}
           xs={12}
-          sm={6}
+          sm={12} md={6}
         >
-          <Typography variant="h2" component="span">
+          <Typography variant="h4" component="span">
             How many people found this transition fulfilling?
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <Pie data={data} />
         </Grid>
       </Grid>
@@ -37,13 +37,13 @@ const Charts = () => {
           item
           style={{ display: "flex", alignItems: "center" }}
           xs={12}
-          sm={6}
+          sm={12} md={6}
         >
-          <Typography variant="h2" component="span">
-            How many people thought this transition was challenging?
+          <Typography variant="h4" component="span">
+            How many people thought this transition was a challenging task?
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <Pie data={data} />
         </Grid>
       </Grid>
@@ -53,13 +53,13 @@ const Charts = () => {
           style={{ display: "flex", alignItems: "center" }}
           item
           xs={12}
-          sm={6}
+          sm={12} md={6}
         >
-          <Typography variant="h2" component="span">
-            How many people wishes they had not done the transition?
+          <Typography variant="h4" component="span">
+            How many people wish they had not done the transition?
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <Pie data={data} />
         </Grid>
       </Grid>
@@ -69,13 +69,13 @@ const Charts = () => {
           style={{ display: "flex", alignItems: "center" }}
           item
           xs={12}
-          sm={6}
+          sm={12} md={6}
         >
-          <Typography variant="h2" component="span">
+          <Typography variant="h4" component="span">
             Where is everyone from?
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <Pie data={data} />
         </Grid>
       </Grid>

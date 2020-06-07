@@ -108,7 +108,7 @@ const LowerNavbar = ({ session }) => {
               style={{ textDecoration: "none" }}
               disableRipple
             >
-              Contribute
+              Share your story
             </Link>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>

@@ -8,7 +8,7 @@ import Charts from "./Charts";
 import Grid from "@material-ui/core/Grid";
 
 const Wrapper = styled.div`
-  min-height: 80vh;
+  min-height: 10vh;
   padding: 0 50px 0 50px;
 `;
 
@@ -44,19 +44,19 @@ const OverviewSection = () => {
           <GridItems item xs={12} sm={12} md={4} align="center">
             <StyledImage src="fulfillment.png" />
             <TransitionQualities>
-              12% found this transition fulfilling
+              79% found this transition fulfilling
             </TransitionQualities>
           </GridItems>
           <GridItems item xs={12} sm={12} md={4} align="center">
             <StyledImage src="easeoftransition.png" />
             <TransitionQualities>
-              35% people consider this an easy transition{" "}
+              48% consider this an easy transition{" "}
             </TransitionQualities>
           </GridItems>
           <GridItems item xs={12} sm={12} md={4} align="center">
             <StyledImage src="regret.png" />
             <TransitionQualities>
-              1% regret undertaking this transition{" "}
+              1% regret going through this transition{" "}
             </TransitionQualities>
           </GridItems>
         </Container>
@@ -77,7 +77,7 @@ const OverviewSection = () => {
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </Test>
-        
+
       </Wrapper>
     </>
   );
