@@ -29,14 +29,14 @@ const TransitionQualities = styled.span`
   color: grey;
 `;
 
-const Test = styled.div`
-  width: 70%;
-  margin-left: 16%;
-  margin-right: 16%;
-`
+const ExpansionContainer = styled.div`
+  // width: 70%;
+  // margin-left: 16%;
+  // margin-right: 16%;
+`;
 
 const OverviewSection = () => {
-  const [expanded, setExpanded] = React.useState(true);
+  const [expanded, setExpanded] = React.useState(false);
   return (
     <>
       <Wrapper>
@@ -60,7 +60,7 @@ const OverviewSection = () => {
             </TransitionQualities>
           </GridItems>
         </Container>
-        <Test>
+        <ExpansionContainer>
           <ExpansionPanel
             expanded={expanded}
             onChange={() => setExpanded(!expanded)}
@@ -70,14 +70,13 @@ const OverviewSection = () => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>{expanded ? "Hide data" : "Show data"}</Typography>
+              <Typography>{expanded ? "Hide details" : "Show details"}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Charts />
             </ExpansionPanelDetails>
           </ExpansionPanel>
-        </Test>
-
+        </ExpansionContainer>
       </Wrapper>
     </>
   );

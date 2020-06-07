@@ -19,7 +19,7 @@ const Charts = () => {
       <Grid item container direction="row">
         <Grid
           item
-          style={{ display: "flex", alignItems: "center" }}
+          style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
           xs={12}
           sm={12} md={6}
         >
@@ -35,7 +35,7 @@ const Charts = () => {
       <Grid item container direction="row">
         <Grid
           item
-          style={{ display: "flex", alignItems: "center" }}
+          style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
           xs={12}
           sm={12} md={6}
         >
@@ -50,7 +50,7 @@ const Charts = () => {
 
       <Grid item container direction="row">
         <Grid
-          style={{ display: "flex", alignItems: "center" }}
+          style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
           item
           xs={12}
           sm={12} md={6}
@@ -66,7 +66,7 @@ const Charts = () => {
 
       <Grid item container direction="row">
         <Grid
-          style={{ display: "flex", alignItems: "center" }}
+          style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
           item
           xs={12}
           sm={12} md={6}
