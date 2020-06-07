@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
+import Button from "@material-ui/core/Button";
+import Router from 'next/router'
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -26,6 +28,10 @@ const ChipsContainer = styled.div`
 `;
 const Content = styled(Grid)`
   margin-top: 2.5vh;
+`;
+
+const ButtonGroup = styled.div`
+  float: right;
 `;
 const Experience = () => {
   return (
@@ -66,6 +72,10 @@ const Experience = () => {
           occaecat cupidatat non proident, sunt in culpa qui officia deserunt
           mollit anim id est laborum."
           <hr style={{ marginTop: "5vh" }} />
+          <ButtonGroup>
+            <Button>SEE COMMENTS (0)</Button>
+            <Button>COMMENT</Button>
+          </ButtonGroup>
         </Content>
       </Grid>
     </Wrapper>

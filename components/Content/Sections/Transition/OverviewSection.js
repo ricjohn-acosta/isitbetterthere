@@ -27,6 +27,7 @@ const StyledImage = styled.img`
 
 const TransitionQualities = styled.span`
   color: grey;
+  font-size: 1rem;
 `;
 
 const ExpansionContainer = styled.div`
