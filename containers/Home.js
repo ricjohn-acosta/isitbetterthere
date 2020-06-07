@@ -1,18 +1,17 @@
-import React from "react";
-import MainSection from "../components/Content/Sections/MainSection";
-import QuoteSection from "../components/Content/Sections/QuoteSection";
-import TutorialSection from "../components/Content/Sections/TutorialSection";
-import LearnSection from "../components/Content/Sections/LearnSection";
+import MainSection from "../components/Content/Sections/Home/MainSection";
+import QuoteSection from "../components/Content/Sections/Home/QuoteSection";
+import TutorialSection from "../components/Content/Sections/Home/TutorialSection";
+import LearnSection from "../components/Content/Sections/Home/LearnSection";
 import LowerNavbar from "../components/Navigation/LowerNavbar";
 
-const Home = () => {
+const Home = ({session}) => {
   return (
     <>
-    <LowerNavbar />
+      <LowerNavbar session={session}/>
       <MainSection />
       <QuoteSection />
       <TutorialSection />
-      <LearnSection/>
+      <LearnSection />
     </>
   );
 };

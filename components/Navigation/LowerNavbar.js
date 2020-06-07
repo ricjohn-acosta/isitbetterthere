@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
 import Link from "@material-ui/core/Link";
+import { signout} from "next-auth/client";
 
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
@@ -25,7 +26,7 @@ const Brand = styled(Typography)`
   color: #484848;
   margin-right: 1.5vw;
   margin-top: 1.5vh;
-  font-weight: bold
+  font-weight: bold;
 `;
 // Buttons on the right hand side of the navbar
 const UserButtons = styled(Button)`
@@ -76,13 +77,14 @@ const Container = styled.div`
   }
 `;
 
-const LowerNavbar = () => {
+const LowerNavbar = ({ session }) => {
   return (
     <StyledLowerNavbar elevation={0} position="sticky" component="div">
+      {console.log(session)}
       <Container>
         <Grid container direction="row">
           <Grid item container xs={6} sm={6} md={8}>
-            <Brand variant="h4" component="span">
+            <Brand variant="h4" component={Link} href="/" underline="none">
               IsItBetterThere
             </Brand>
             <Link
@@ -101,11 +103,28 @@ const LowerNavbar = () => {
             >
               Learn
             </Link>
+            <Link
+              component={MiscButtons}
+              style={{ textDecoration: "none" }}
+              disableRipple
+            >
+              Share your story
+            </Link>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>
             <UserButtons disableRipple>Account</UserButtons>
-            <UserButtons disableRipple>Signup</UserButtons>
-            <UserButtons disableRipple>Login</UserButtons>
+            {session ? (
+              <UserButtons
+                onClick={(e) => {
+                  signout();
+                }}
+              >
+                Sign out
+              </UserButtons>
+            ) : (
+              <UserButtons href={"/signup"}>Sign up | Login</UserButtons>
+            )}
+            {/* {session ? null : <UserButtons disableRipple>Login</UserButtons>} */}
             <DrawerContainer>
               <Drawer />
             </DrawerContainer>

@@ -1,14 +1,28 @@
-import React from "react";
 import { useRouter } from "next/router";
+import Transition from "../containers/Transition";
+import Layout from "../components/Layout/Layout";
+import LowerNavbar from "../components/Navigation/LowerNavbar";
+import PageNotFound from "../containers/PageNotFound"
 
 const transition = () => {
   const router = useRouter();
   const { from, to } = router.query;
-  return (
-    <>
-      transitioning from: {from} to: {to}
-    </>
-  );
+
+  if (Object.keys(router.query).length === 0) {
+    return (
+      <Layout>
+        <PageNotFound/>
+      </Layout>
+    );
+  } else {
+    return (
+      <>
+        <Layout>
+          <Transition from={from} to={to} />
+        </Layout>
+      </>
+    );
+  }
 };
 
 export default transition;

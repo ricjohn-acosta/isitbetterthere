@@ -1,12 +1,23 @@
 import Home from "../containers/Home";
 import Layout from "../components/Layout/Layout";
+import { session } from 'next-auth/client'
 
-const Index = () => {
+const Index = ({session}) => {
   return (
     <Layout>
-      <Home />
+      {console.log(session)}
+      <Home session={session}/>
     </Layout>
   );
 };
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      session: await session(context)
+    }
+  }
+}
+
 
 export default Index;

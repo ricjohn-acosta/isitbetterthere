@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Provider as AuthProvider } from "next-auth/client";
 import { ThemeProvider } from "styled-components";
 import {
   MuiThemeProvider,
@@ -35,17 +36,19 @@ class MyApp extends App {
     // this.setKey(1);
   }
   render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps, store, session } = this.props;
     return (
       <Provider store={store}>
-        <StylesProvider injectFirst>
-          <MuiThemeProvider theme={theme}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <Component {...pageProps} />
-            </ThemeProvider>
-          </MuiThemeProvider>
-        </StylesProvider>
+        <AuthProvider session={session}>
+          <StylesProvider injectFirst>
+            <MuiThemeProvider theme={theme}>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Component {...pageProps} />
+              </ThemeProvider>
+            </MuiThemeProvider>
+          </StylesProvider>
+        </AuthProvider>
       </Provider>
     );
   }
