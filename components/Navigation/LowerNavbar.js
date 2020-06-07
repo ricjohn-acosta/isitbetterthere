@@ -103,6 +103,13 @@ const LowerNavbar = ({ session }) => {
             >
               Learn
             </Link>
+            <Link
+              component={MiscButtons}
+              style={{ textDecoration: "none" }}
+              disableRipple
+            >
+              Contribute
+            </Link>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>
             <UserButtons disableRipple>Account</UserButtons>

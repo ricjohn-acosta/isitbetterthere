@@ -4,12 +4,16 @@ import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import CountUp from "react-countup";
+import Link from "next/link";
 
 const Wrapper = styled.div`
-  min-height: 40vh;
-  background: rgb(92,154,247);
-  background: linear-gradient(180deg, rgba(92,154,247,1) 0%, rgba(50,156,156,1) 88%);
-  
+  min-height: 45vh;
+  background: rgb(92, 186, 247);
+  background: linear-gradient(
+    180deg,
+    rgba(92, 186, 247, 1) 0%,
+    rgba(0, 159, 185, 1) 88%
+  );
 `;
 
 const Container = styled(Grid)`
@@ -42,24 +46,44 @@ const OdometerContainer = styled.div`
   color: white;
 `;
 
+const LinkContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const HeaderSection = ({ from, to }) => {
   return (
     <Wrapper>
       <Container container direction="row">
         <FromText item xs={12} sm={12} md={5}>
-          <Typography variant="h2">{from}</Typography>
+          <Typography variant="h2" style={{ fontWeight: "normal" }}>
+            {from}
+          </Typography>
         </FromText>
         <MiddleIcon item xs={12} sm={12} md={2}>
           <ArrowForwardIcon fontSize="large" />
         </MiddleIcon>
         <ToText item xs={12} sm={12} md={5}>
-          {<Typography variant="h2">{to}</Typography>}
+          <Typography variant="h2" style={{ fontWeight: "normal" }}>
+            {to}
+          </Typography>
         </ToText>
       </Container>
       <OdometerContainer>
-        <b><CountUp start={0} end={81} /></b>
+        <b>
+          <CountUp start={0} end={81} />
+        </b>
         &nbsp;PEOPLE HAVE WENT THROUGH THIS TRANSITION
       </OdometerContainer>
+      <LinkContainer>
+        <Link
+          href={{ pathname: "/transition", query: { from: to, to: from } }}
+          passHref
+        >
+          <a style={{ color: "white" }}>See inverse?</a>
+        </Link>
+      </LinkContainer>
     </Wrapper>
   );
 };

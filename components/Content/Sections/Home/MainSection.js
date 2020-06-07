@@ -135,7 +135,7 @@ const MainSection = () => {
     if (categories == careersCategory) {
       const firstLetter = option.category[0].toUpperCase();
       return {
-        firstLetter: /[0-9]/.test(firstLetter) || option.category === "Unemployed" ? "" : firstLetter,
+        firstLetter: /[0-9]/.test(firstLetter) || option.category === "Unemployed / Graduate" ? "" : firstLetter,
         ...option,
       };
     }

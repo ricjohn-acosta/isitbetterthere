@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  padding: 10vh 15vw 5vh 15vw;
+  padding: 8.5vh 15vw 5vh 15vw;
   color: #e0e0eb;
   ${(props) => props.theme.breakpoints.down("sm")} {
     padding: 5vh 0 0 0;
