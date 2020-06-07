@@ -33,6 +33,7 @@ const options = {
   // configuration object https://typeorm.io/#/connection-options
   //
   // Note: You need to install an appropriate node_module for your database
+  database: process.env.DATABASE_URL,
 
   // Use JSON Web Tokens instead of database sessions
   jwt: true,
