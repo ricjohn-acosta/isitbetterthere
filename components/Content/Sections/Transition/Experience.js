@@ -3,7 +3,10 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
-import Router from 'next/router'
+import Router from "next/router";
+import WorkIcon from "@material-ui/icons/Work";
+import PersonIcon from "@material-ui/icons/Person";
+import EmailIcon from "@material-ui/icons/Email";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -24,7 +27,7 @@ const UserInfo = styled.div`
 `;
 
 const ChipsContainer = styled.div`
-  padding-top: 5px;
+  padding-top: 10px;
 `;
 const Content = styled(Grid)`
   margin-top: 2.5vh;
@@ -37,13 +40,22 @@ const Experience = () => {
   return (
     <Wrapper>
       <Grid container drection="column">
-        <ProfileContainer item xs={6} sm={6} md={12}>
+        <ProfileContainer item xs={12} sm={6} md={12}>
           <ProfileDetails>
             <Avatar style={{ marginTop: "5px" }} />
             <UserInfo>
-              <div>John G. Doe</div>
-              <div>john@gmail.com</div>
-              <div>Senior nurse at Auckland Hospital</div>
+              <div style={{ display: "flex" }}>
+                <PersonIcon style={{ color: "#1a8cff" }} fontSize="small" />
+                &nbsp;John G. Doe
+              </div>
+              <div style={{ display: "flex" }}>
+                <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />
+                &nbsp;john@gmail.com
+              </div>
+              <div style={{ display: "flex" }}>
+                <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
+                &nbsp;Senior nurse at Auckland Hospital
+              </div>
             </UserInfo>
           </ProfileDetails>
 
@@ -56,7 +68,7 @@ const Experience = () => {
             &nbsp;
           </ChipsContainer>
         </ProfileContainer>
-        <Content item xs={6} sm={6} md={12}>
+        <Content item xs={12} sm={6} md={12}>
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut

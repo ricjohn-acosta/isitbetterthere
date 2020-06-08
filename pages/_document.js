@@ -10,8 +10,8 @@ export default class MyDocument extends Document {
         lang="en"
         style={{
           scrollBehavior: "smooth",
-          padding: "0",
-          margin: "0",
+          padding: "0px",
+          margin: "0px",
           height: "100vh",
           minHeight: "100vh",
         }}

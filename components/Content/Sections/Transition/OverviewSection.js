@@ -18,6 +18,10 @@ const Container = styled(Grid)`
 
 const GridItems = styled(Grid)`
   padding: 0 50px 50px 50px;
+
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    padding: 0 30px 30px 30px;
+  }
 `;
 
 const StyledImage = styled.img`
@@ -34,6 +38,14 @@ const ExpansionContainer = styled.div`
   // width: 70%;
   // margin-left: 16%;
   // margin-right: 16%;
+`;
+
+const ExpansionPanelDetailsContainer = styled(ExpansionPanelDetails)`
+  padding: 0 200px 0 200px;
+
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    padding: 0;
+  }
 `;
 
 const OverviewSection = () => {
@@ -71,11 +83,13 @@ const OverviewSection = () => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>{expanded ? "Hide details" : "Show details"}</Typography>
+              <Typography>
+                {expanded ? "Hide details" : "Show details"}
+              </Typography>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            <ExpansionPanelDetailsContainer>
               <Charts />
-            </ExpansionPanelDetails>
+            </ExpansionPanelDetailsContainer>
           </ExpansionPanel>
         </ExpansionContainer>
       </Wrapper>
