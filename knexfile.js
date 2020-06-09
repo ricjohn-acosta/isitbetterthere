@@ -13,6 +13,7 @@ module.exports = {
         conn.run('PRAGMA foreign_keys = ON', cb)
     }
   },
+  
 
   staging: {
     client: 'postgresql',
