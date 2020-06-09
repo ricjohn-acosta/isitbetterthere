@@ -36,7 +36,7 @@ This project is ultimately going to be a CRUD app that utilises secured api rout
 
 # Set up a local working environment
 1. Create a folder in your pc where you want the project to be in.
-2. Using git bash, navigate through the folder you just created using `cd <folder name>`. 
+2. Using git bash, navigate to the folder you just created using `cd <folder name>`. 
 > NOTE: If you can't see your folder run the command `ls` in git bash to see where you currently are.
 
 > HINT: You can use `cd ..` to move up a directory.
