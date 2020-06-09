@@ -46,7 +46,7 @@ This project is ultimately going to be a CRUD app that utilises secured api rout
 # Contribution workflow
 Once you have a local working environment set up:
 
-1. In git bash, run the command `git checkout -b dev-<name-of-feature>` to create a new local branch for you to work in.
+1. In git bash, run the command `git checkout -b "dev-<name-of-feature>"` to create a new local branch for you to work in.
 2. After you've finished making changes in files in your branch run the following commands
    * `git add .` - stage your changes
    * `git commit -m <your message>` - commit your changes
