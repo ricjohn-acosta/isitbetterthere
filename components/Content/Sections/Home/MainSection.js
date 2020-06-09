@@ -18,9 +18,13 @@ import { useEffect } from "react";
 import Router from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   popper: { width: 400 },
-});
+
+  [theme.breakpoints.down("sm")]: {
+    popper: { width: 250 },
+  },
+}));
 
 const Wrapper = styled(Box)`
   background: rgb(144, 144, 209);
@@ -135,7 +139,11 @@ const MainSection = () => {
     if (categories == careersCategory) {
       const firstLetter = option.category[0].toUpperCase();
       return {
-        firstLetter: /[0-9]/.test(firstLetter) || option.category === "Unemployed / Graduate" ? "" : firstLetter,
+        firstLetter:
+          /[0-9]/.test(firstLetter) ||
+          option.category === "Unemployed / Graduate"
+            ? ""
+            : firstLetter,
         ...option,
       };
     }

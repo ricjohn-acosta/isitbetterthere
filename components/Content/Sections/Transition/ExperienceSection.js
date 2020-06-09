@@ -43,6 +43,7 @@ const ExperienceContainer = styled(Paper)`
 
   ${(props) => props.theme.breakpoints.down("md")} {
     max-width: 100vw;
+    padding: 5% 6.5% 8.5% 6.5%;
     margin: 0;
   }
 `;
@@ -69,7 +70,7 @@ const ShareExperienceBtn = styled(Button)`
 const SearchToolsMobileContainer = styled(SearchToolsMobile)``;
 const ExperienceSection = () => {
   const isSM = useMediaQuery("(max-width:600px)");
-  const isMD = useMediaQuery("(max-width:960px)");
+  const isMD = useMediaQuery("(max-width:1199px)");
 
   return (
     <Wrapper>
@@ -78,7 +79,7 @@ const ExperienceSection = () => {
         <SectionTitle variant="h4">People's experiences</SectionTitle>
       </SectionHeader>
       <Grid container direction="row">
-        <Grid item xs={12} sm={12} md={8}>
+        <Grid item xs={12} sm={12} md={isMD ? 12 : 8}>
           <ShareExperienceBtnContainer>
             <ShareExperienceBtn variant="contained">
               Share your experience
@@ -87,12 +88,15 @@ const ExperienceSection = () => {
           </ShareExperienceBtnContainer>
           <ExperienceContainer>
             <Experience />
+            <br />
             <Experience />
+            <br />
             <Experience />
+            <br />
           </ExperienceContainer>
         </Grid>
         {isMD ? null : (
-          <Grid item xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={3}>
             <SearchtoolsContainer>
               <Typography variant="h4">Search tools</Typography>
               <SearchTools />
