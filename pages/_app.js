@@ -11,21 +11,13 @@ import theme from "../lib/theme";
 import { Provider } from "react-redux";
 import App from "next/app";
 import withReduxStore from "../lib/with-redux-store";
+import wrapper from "../store/store"
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "myclasses-",
 });
 
 class MyApp extends App {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { key: 0 };
-  //   this.setKey = this.setKey.bind(this);
-  // }
-
-  // setKey(key) {
-  //   this.setState({ key: key });
-  // }
 
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -33,23 +25,22 @@ class MyApp extends App {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
-    // this.setKey(1);
   }
   render() {
-    const { Component, pageProps, store, session } = this.props;
+    const { Component, pageProps, session } = this.props;
     return (
-      <Provider store={store}>
-        <AuthProvider session={session}>
-          <StylesProvider injectFirst>
-            <MuiThemeProvider theme={theme}>
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Component {...pageProps} />
-              </ThemeProvider>
-            </MuiThemeProvider>
-          </StylesProvider>
-        </AuthProvider>
-      </Provider>
+      // <Provider store={store}>
+      <AuthProvider session={session}>
+        <StylesProvider injectFirst>
+          <MuiThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </StylesProvider>
+      </AuthProvider>
+      // </Provider>
     );
   }
 }
@@ -59,4 +50,4 @@ MyApp.propTypes = {
   pageProps: PropTypes.object.isRequired,
 };
 
-export default withReduxStore(MyApp);
+export default wrapper.withRedux(MyApp);

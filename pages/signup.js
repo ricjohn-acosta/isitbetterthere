@@ -24,7 +24,13 @@ export default ({ csrfToken, providers }) => {
       {Object.values(providers).map((provider) =>
         provider.name === "Email" ? null : (
           <p key={provider.name}>
-            <Button href={`/api/auth/signin/${provider.name.toLowerCase()}`}>
+            <Button
+              href={`/api/auth/signin/${provider.name.toLowerCase()}?callbackUrl=${
+                process.env.NODE_ENV !== "production"
+                  ? "http://localhost:3000/about"
+                  : process.env.SITE
+              }`}
+            >
               Sign in with {provider.name}
             </Button>
           </p>

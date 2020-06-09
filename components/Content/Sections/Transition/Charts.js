@@ -19,9 +19,15 @@ const Charts = () => {
       <Grid item container direction="row">
         <Grid
           item
-          style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
           xs={12}
-          sm={12} md={6}
+          sm={12}
+          md={6}
         >
           <Typography variant="h4" component="span">
             How many people found this transition fulfilling?
@@ -35,9 +41,15 @@ const Charts = () => {
       <Grid item container direction="row">
         <Grid
           item
-          style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
           xs={12}
-          sm={12} md={6}
+          sm={12}
+          md={6}
         >
           <Typography variant="h4" component="span">
             How many people thought this transition was a challenging task?
@@ -50,10 +62,16 @@ const Charts = () => {
 
       <Grid item container direction="row">
         <Grid
-          style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
           item
           xs={12}
-          sm={12} md={6}
+          sm={12}
+          md={6}
         >
           <Typography variant="h4" component="span">
             How many people wish they had not done the transition?
@@ -66,10 +84,16 @@ const Charts = () => {
 
       <Grid item container direction="row">
         <Grid
-          style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
           item
           xs={12}
-          sm={12} md={6}
+          sm={12}
+          md={6}
         >
           <Typography variant="h4" component="span">
             Where is everyone from?

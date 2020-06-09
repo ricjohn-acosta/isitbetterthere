@@ -8,7 +8,9 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
 import Link from "@material-ui/core/Link";
-import { signout} from "next-auth/client";
+import { signout } from "next-auth/client";
+import { addUser } from "../../store/actions/users";
+import { connect } from "react-redux";
 
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
@@ -71,13 +73,13 @@ const Container = styled.div`
   margin-left: 10vw;
   margin-right: 15vw;
   color: black;
-  ${(props) => props.theme.breakpoints.down("md")} {
+  ${(props) => props.theme.breakpoints.down(1300)} {
     margin-left: 10px;
     margin-right: 10px;
   }
 `;
 
-const LowerNavbar = ({ session }) => {
+const LowerNavbar = ({ session, addUser }) => {
   return (
     <StyledLowerNavbar elevation={0} position="sticky" component="div">
       {console.log(session)}
@@ -107,6 +109,9 @@ const LowerNavbar = ({ session }) => {
               component={MiscButtons}
               style={{ textDecoration: "none" }}
               disableRipple
+              onClick={() => {
+                addUser({ name: "works", email: "works" });
+              }}
             >
               Share your story
             </Link>
@@ -135,4 +140,10 @@ const LowerNavbar = ({ session }) => {
   );
 };
 
-export default LowerNavbar;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addUser: (user) => dispatch(addUser(user)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(LowerNavbar);
