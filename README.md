@@ -1,64 +1,53 @@
-# Redux Thunk example
+# Tooling
+This project is using the following tools: 
 
-This example shows how to integrate Redux and Redux Thunk in Next.js.
+1. VS code - text editor
+2. Git - version control
+3. Github - codebase repository
+4. Git bash - source control management system
 
-Usually splitting your app state into `pages` feels natural but sometimes you'll want to have global state for your app. This is an example on how you can use redux that also works with Next.js's universal rendering approach.
+# Tech stack
+This project uses the following web technologies: 
 
-## Deploy your own
+## Front-end technologies
+1. React.js - A javascript library for building user interfaces
+> https://reactjs.org/
+2. Next.js - A framework for statically generated and server-rendered react applications (uses Node.js under the hood)
+> https://nextjs.org/
+3. Redux - A state container for js apps. We'll be using React bindings for redux which is React-redux
+> https://redux.js.org/
+> https://react-redux.js.org/
+4. Material-UI - A UI styling framework for react that follows Google's design language, Material design.
+> https://material-ui.com/
+5. Styled-components - A styling tool for component based user interfaces (e.g: React, Vue)
+> https://styled-components.com/
 
-Deploy the example using [Vercel](https://vercel.com):
+## Back-end technologies
+1. Knex.js - SQL query builder for databases. We'll be using sqlite3 for development environment and postgreSQL (Relational databases) for production environment
+> http://knexjs.org/
+2. Next-auth - An authentication library for Next.js
+> https://next-auth.js.org/
+3. Heroku - platform as a service
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/with-redux-thunk)
 
-## How to use
+# Set up a local working environment
+1. Create a folder in your pc where you want the project to be in.
+2. Using git bash, navigate through the folder you just created using `cd <folder name>`. Moving u
+> NOTE: If you can't see your folder run the command `ls` in git bash to see where you currently are
+> HINT: You can use `cd ..` to move up a directory.
+3. Open git bash and run this command: `git clone https://github.com/ricjohn-acosta/isitbetterthere.git`
+4. Run `npm install` to install dependencies
+5. Run `npm run dev` and check localhost:3000 if it works
 
-### Using `create-next-app`
+# Contribution workflow
+Once you have a local working environment set up:
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+1. In git bash, run the command `git checkout -b <name-of-feature>` to create a new local branch for you to work in.
+2. After you've finished making changes in files in your branch run the following commands
+   * `git add .` - stage your changes
+   * `git commit -m <your message>` - commit your changes
+   * `git push origin <current-branch-name>` - push your branch into this repository
+3. After you've pushed your branch in this repository, go to the branch you've pushed `(e.g: https://github.com/ricjohn-acosta/isitbetterthere/tree/<your-branch-name>)`, make a pull request and I'll check your work.
 
-```bash
-npm init next-app --example with-redux-thunk with-redux-thunk-app
-# or
-yarn create next-app --example with-redux-thunk with-redux-thunk-app
-```
-
-### Download manually
-
-Download the example:
-
-```bash
-curl https://codeload.github.com/vercel/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/with-redux-thunk
-cd with-redux-thunk
-```
-
-Install it and run:
-
-```bash
-npm install
-npm run dev
-# or
-yarn
-yarn dev
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-## Notes
-
-The Redux `Provider` is implemented in `pages/_app.js`. The `MyApp` component is wrapped in a `withReduxStore` function, the redux `store` will be initialized in the function and then passed down to `MyApp` as `this.props.initialReduxState`, which will then be utilized by the `Provider` component.
-
-Every initial server-side request will utilize a new `store`. However, every `Router` or `Link` action will persist the same `store` as a user navigates through the `pages`. To demonstrate this example, we can navigate back and forth to `/show-redux-state` using the provided `Link`s. However, if we navigate directly to `/show-redux-state` (or refresh the page), this will cause a server-side render, which will then utilize a new store.
-
-In the `clock` component, we are going to display a digital clock that updates every second. The first render is happening on the server and then the browser will take over. To illustrate this, the server rendered clock will initially have a black background; then, once the component has been mounted in the browser, it changes from black to a grey background.
-
-In the `counter` component, we are going to display a user-interactive counter that can be increased or decreased when the provided buttons are pressed.
-
-This example includes two different ways to access the `store` or to `dispatch` actions:
-
-1.) `pages/index.js` will utilize `connect` from `react-redux` to `dispatch` the `startClock` redux action once the component has been mounted in the browser.
-
-2.) `components/counter.js` and `components/examples.js` have access to the redux store using `useSelector` and can dispatch actions using `useDispatch` from `react-redux@^7.1.0`
-
-You can either use the `connect` function to access redux state and/or dispatch actions or use the hook variations: `useSelector` and `useDispatch`. It's up to you.
-
-This example also includes hot-reloading when one of the `reducers` has changed. However, there is one caveat with this implementation: If you're using the `Redux DevTools` browser extension, then all previously recorded actions will be recreated when a reducer has changed (in other words, if you increment the counter by 1 using the `+1` button, and then change the increment action to add 10 in the reducer, Redux DevTools will playback all actions and adjust the counter state by 10 to reflect the reducer change). Therefore, to avoid this issue, the store has been set up to reset back initial state upon a reducer change. If you wish to persist redux state regardless (or you don't have the extension installed), then in `store.js` change (line 19) `store.replaceReducer(createNextReducer(initialState))` to `store.replaceReducer(createNextReducer)`.
+# Resources:
+Trello: https://trello.com/b/JJfXtDPY/isitbetterthere
