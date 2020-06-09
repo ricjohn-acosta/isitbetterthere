@@ -35,13 +35,16 @@ export const addUser = (user) => {
         dispatch({ type: actions.ADD_USER_SUCCESS });
       })
       .catch((res) => {
-        if (!res) {
-          console.log("USER ADD FAILED")
+        console.log(res.status)
+        if (res.status === 405) {
+          console.log("USER ADD FLOW FAILED")
           dispatch({ type: actions.ADD_USER_FAIL });
         } else {
-          console.log("USER ADDED")
+          console.log("USER ADD FLOW ENDED")
           dispatch({ type: actions.ADD_USER_END });
         }
       });
   };
 };
+
+
