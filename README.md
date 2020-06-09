@@ -1,3 +1,6 @@
+# About 
+IsItBetterThere is a platform where people can connect and gather relevant information about what it is like to transition to the next phase of their life from other people's personal experiences. 
+
 # Tooling
 This project is using the following tools: 
 
@@ -29,6 +32,7 @@ This project uses the following web technologies:
 > https://next-auth.js.org/
 3. Heroku - platform as a service
 
+This website is ultimately going to be a CRUD app that utilises secured api routes for creating and fetching data.
 
 # Set up a local working environment
 1. Create a folder in your pc where you want the project to be in.
