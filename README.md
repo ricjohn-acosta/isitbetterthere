@@ -8,6 +8,8 @@ This project is using the following tools:
 2. Git - version control
 3. Github - codebase repository
 4. Git bash - source control management system
+5. NPM - node package module
+6. Node.js - javascript runtime environment
 
 # Tech stack
 This project is ultimately going to be a CRUD app that utilises secured api routes for creating and fetching data. This project uses the following web technologies: 
