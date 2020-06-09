@@ -2,7 +2,7 @@
 IsItBetterThere is a platform where people can connect and gather relevant information about what it is like to transition to the next phase of their life from other people's personal experiences. 
 
 # Tooling
-This project is using the following tools: 
+First install these tools required for the project:
 
 1. VS code - text editor
 2. Git - version control
