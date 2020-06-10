@@ -9,9 +9,15 @@ import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
-import { careersCategory } from "../../../../lib/categories";
-import { educationCategory } from "../../../../lib/categories";
-import { jobCategory } from "../../../../lib/categories";
+import {
+  careersCategory,
+  educationCategory,
+  jobCategory,
+  uniCategory,
+  countryCategory,
+  cultureCategory,
+  lifeCategory,
+} from "../../../../lib/categories";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import { useEffect } from "react";
@@ -148,6 +154,22 @@ const MainSection = () => {
       };
     }
 
+    if (categories == jobCategory) {
+      const firstLetter = option.field.toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "" : firstLetter,
+        ...option,
+      };
+    }
+
+    if (categories == uniCategory) {
+      const firstLetter = option.field.toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "" : firstLetter,
+        ...option,
+      };
+    }
+
     if (categories == educationCategory) {
       const firstLetter = option.field.toUpperCase();
       return {
@@ -156,13 +178,31 @@ const MainSection = () => {
       };
     }
 
-    if (categories == jobCategory) {
-      const firstLetter = option.field.toUpperCase();
+    if (categories == countryCategory) {
+      const firstLetter = option.category[0].toUpperCase();
       return {
-        firstLetter: /[0-9]/.test(firstLetter) ? "" : firstLetter,
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
         ...option,
       };
     }
+
+    if (categories == cultureCategory) {
+      const firstLetter = option.field.toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+        ...option,
+      };
+    }
+
+    if (categories == lifeCategory) {
+      const firstLetter = option.field.toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+        ...option,
+      };
+    }
+
+
   });
 
   const handleForm = (e) => {
@@ -213,11 +253,11 @@ const MainSection = () => {
             >
               <MenuItem value={careersCategory}>Careers</MenuItem>
               <MenuItem value={jobCategory}>Jobs</MenuItem>
+              <MenuItem value={uniCategory}>Universities</MenuItem>
               <MenuItem value={educationCategory}>Tertiary Education</MenuItem>
-              <MenuItem value={"uniCategory"}>Universities</MenuItem>
-              <MenuItem value={"countryCategory"}>Countries</MenuItem>
-              <MenuItem value={"cultureCategory"}>Cultures</MenuItem>
-              <MenuItem value={"lifestyleCategory"}>Life Style</MenuItem>
+              <MenuItem value={countryCategory}>Countries</MenuItem>
+              <MenuItem value={cultureCategory}>Cultures</MenuItem>
+              <MenuItem value={lifeCategory}>Life</MenuItem>
             </Select>
             &nbsp;
             <div>

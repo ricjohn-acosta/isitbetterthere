@@ -11,6 +11,7 @@ import Link from "@material-ui/core/Link";
 import { signout } from "next-auth/client";
 import { addUser } from "../../store/actions/users";
 import { connect } from "react-redux";
+import { useRouter } from 'next/router'
 
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
@@ -80,9 +81,11 @@ const Container = styled.div`
 `;
 
 const LowerNavbar = ({ session, addUser }) => {
+  const router = useRouter()
+
   return (
     <StyledLowerNavbar elevation={0} position="sticky" component="div">
-      {console.log(session)}
+      {console.log(router)}
       <Container>
         <Grid container direction="row">
           <Grid item container xs={6} sm={6} md={8}>
@@ -91,7 +94,7 @@ const LowerNavbar = ({ session, addUser }) => {
             </Brand>
             <Link
               component={MiscButtons}
-              href="#/howitworks"
+              href={router.pathname === "/" ? "#/howitworks" : "http://localhost:3000/#/howitworks"}
               style={{ textDecoration: "none" }}
               disableRipple
             >
@@ -99,7 +102,7 @@ const LowerNavbar = ({ session, addUser }) => {
             </Link>
             <Link
               component={MiscButtons}
-              href="#/learn"
+              href={router.pathname === "/" ? "#/learn" : "http://localhost:3000/#/learn"}
               style={{ textDecoration: "none" }}
               disableRipple
             >
