@@ -27,7 +27,7 @@ export default ({ csrfToken, providers }) => {
             <Button
               href={`/api/auth/signin/${provider.name.toLowerCase()}?callbackUrl=${
                 process.env.NODE_ENV !== "production"
-                  ? "http://localhost:3000/about"
+                  ? "http://localhost:3000/profile-details"
                   : process.env.SITE
               }`}
             >
