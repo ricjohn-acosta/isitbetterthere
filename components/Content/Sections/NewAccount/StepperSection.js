@@ -28,7 +28,7 @@ const StepperSection = () => {
   const [hideOccupation, setHideOccupation] = React.useState(false);
   const [hideCompany, setHideCompany] = React.useState(false);
   const [hideLocation, setHideLocation] = React.useState(false);
-  const [emptyFields, setEmptyFields]= React.useState(null)
+  const [emptyFields, setEmptyFields] = React.useState(null);
 
   const getSteps = () => {
     return [
@@ -90,8 +90,8 @@ const StepperSection = () => {
   };
 
   const getEmptyFields = () => {
-    return emptyFields
-  }
+    return emptyFields;
+  };
 
   const fieldToString = (field) => {
     return Object.keys(field)[0];
@@ -105,7 +105,7 @@ const StepperSection = () => {
       position === "" ||
       location === ""
     ) {
-      setEmptyFields(findEmptyFields())
+      setEmptyFields(findEmptyFields());
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
@@ -127,7 +127,7 @@ const StepperSection = () => {
         setCompany={setCompany}
         setPosition={setPosition}
         setLocation={setLocation}
-        emptyFields={getEmptyFields}
+        emptyFields={emptyFields}
       />
     );
   }, []);
@@ -148,7 +148,18 @@ const StepperSection = () => {
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
             <StepContent>
-              {index === 0 ? stepContent : getStepContent(index)}
+              {index === 0 ? (
+                <PersonalDetails
+                  setDescription={setDescription}
+                  setOccupationState={setOccupation}
+                  setCompany={setCompany}
+                  setPosition={setPosition}
+                  setLocation={setLocation}
+                  emptyFields={emptyFields}
+                />
+              ) : (
+                getStepContent(index)
+              )}
               <div>
                 <div>
                   <Button disabled={activeStep === 0} onClick={handleBack}>

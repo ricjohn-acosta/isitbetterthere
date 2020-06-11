@@ -47,7 +47,7 @@ const PersonalDetails = ({
 
   return (
     <Wrapper>
-      {console.log("test", emptyFields())}
+      {console.log(emptyFields)}
       <Typography variant="h5">
         This information will be shown in your profile dashboard and in your
         contributed experiences
@@ -63,7 +63,13 @@ const PersonalDetails = ({
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
               variant="outlined"
-              error={emptyFields !== null ? true : false}
+              error={
+                emptyFields
+                  ? emptyFields.find((e) => e === "description") !== undefined
+                    ? true
+                    : false
+                  : false
+              }
             />
           </Grid>
         </Grid>
@@ -82,6 +88,13 @@ const PersonalDetails = ({
                   : handleValues(e.target.value);
               }}
               value={occupation}
+              error={
+                emptyFields
+                  ? emptyFields.find((e) => e === "occupation") !== undefined
+                    ? true
+                    : false
+                  : false
+              }
             >
               <MenuItem value="Student">Student</MenuItem>
               <MenuItem value="Employed">Employed</MenuItem>
@@ -103,6 +116,13 @@ const PersonalDetails = ({
                   setPosition(e.target.value);
                 }}
                 disabled={isUnemployed}
+                error={
+                  emptyFields
+                    ? emptyFields.find((e) => e === "position") !== undefined
+                      ? true
+                      : false
+                    : false
+                }
               />
             </Grid>
           </Grid>
@@ -122,6 +142,13 @@ const PersonalDetails = ({
                   setCompany(e.target.value);
                 }}
                 disabled={isUnemployed}
+                error={
+                  emptyFields
+                    ? emptyFields.find((e) => e === "company") !== undefined
+                      ? true
+                      : false
+                    : false
+                }
               />
             </Grid>
           </Grid>
@@ -139,6 +166,13 @@ const PersonalDetails = ({
                 setLocation(e.target.value);
               }}
               variant="outlined"
+              error={
+                emptyFields
+                  ? emptyFields.find((e) => e === "location") !== undefined
+                    ? true
+                    : false
+                  : false
+              }
             />
           </Grid>
         </Grid>
