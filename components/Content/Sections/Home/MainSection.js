@@ -133,6 +133,7 @@ const ImageContainer = styled(Grid)`
 const MainSection = () => {
   const classes = useStyles();
   const [categories, setCategory] = React.useState(careersCategory);
+  const [currentCategory, setCurrentCategory] = React.useState("careers");
   const [toValue, setToValue] = React.useState(null);
   const [toInputValue, setToInputValue] = React.useState("");
   const [fromValue, setFromValue] = React.useState(null);
@@ -152,6 +153,7 @@ const MainSection = () => {
       Router.push({
         pathname: "/transition",
         query: {
+          category: currentCategory,
           from: fromInputValue,
           to: toInputValue,
         },
@@ -161,32 +163,108 @@ const MainSection = () => {
     }
   };
 
-  const uniDirectional = (option) => {
+  const handleCategories = (value) => {
+    switch (value) {
+      case "secondaryEducation":
+        setCategory(secondaryEducationCategory);
+        setCurrentCategory(value);
+        return;
+
+      case "tertiaryEducation":
+        setCategory(tertiaryEducationCategory);
+        setCurrentCategory(value);
+        return;
+
+      case "universities":
+        setCategory(uniCategory);
+        setCurrentCategory(value);
+        return;
+
+      case "careers":
+        setCategory(careersCategory);
+        setCurrentCategory(value);
+        return;
+
+      case "jobs":
+        setCategory(jobCategory);
+        setCurrentCategory(value);
+        return;
+
+      case "countries":
+        setCategory(countryCategory);
+        setCurrentCategory(value);
+        return;
+
+      case "cultures":
+        setCategory(cultureCategory);
+        setCurrentCategory(value);
+        return;
+
+      case "life":
+        setCategory(lifeCategory);
+        setCurrentCategory(value);
+        return;
+
+      default:
+        break;
+    }
+  };
+
+  const fieldToString = (variable) => {
+    return Object.keys(variable)[0];
+  };
+
+  const uniDirectionFrom = (option) => {
     console.log(option);
-    if (fromInputValue === "YEAR 10" || toInputValue === "YEAR 10" && fromInputValue !== "" || toInputValue !== "") {
+    if (fromInputValue === "YEAR 10" && fromInputValue !== "") {
       return option.level <= 10;
     }
 
-    if (fromInputValue === "YEAR 11" || toInputValue === "YEAR 11" && fromInputValue !== "" || toInputValue !== "") {
+    if (fromInputValue === "YEAR 11" && fromInputValue !== "") {
       return option.level < 11;
     }
 
-    if (fromInputValue === "YEAR 12" || toInputValue === "YEAR 12" && fromInputValue !== "" || toInputValue !== "") {
+    if (fromInputValue === "YEAR 12" && fromInputValue !== "") {
       return option.level < 12;
     }
 
-    if (fromInputValue === "YEAR 13" || toInputValue === "YEAR 13" && fromInputValue !== "" || toInputValue !== "") {
+    if (fromInputValue === "YEAR 13" && fromInputValue !== "") {
       return option.level < 13;
     }
 
     if (
-      fromInputValue === "University" || fromInputValue === "Trades" && fromInputValue !== ""
+      fromInputValue === "University" ||
+      (fromInputValue === "Trades" && fromInputValue !== "")
     ) {
       return option.level < 14;
     }
   };
 
+  const uniDirectionTo = (option) => {
+    console.log(option);
+    if (toInputValue === "YEAR 10" && toInputValue !== "") {
+      return option.level > 10;
+    }
 
+    if (toInputValue === "YEAR 11" && toInputValue !== "") {
+      return option.level > 11;
+    }
+
+    if (toInputValue === "YEAR 12" && toInputValue !== "") {
+      return option.level > 12;
+    }
+
+    if (toInputValue === "YEAR 13" && toInputValue !== "") {
+      return option.level > 13;
+    }
+
+    if (
+      toInputValue === "University" ||
+      (toInputValue === "Trades" && toInputValue !== "")
+    ) {
+      return option.level < 14;
+    }
+  };
 
   return (
     <Wrapper component="div">
@@ -203,7 +281,8 @@ const MainSection = () => {
             <br />
             <Select
               onChange={(e) => {
-                setCategory(e.target.value);
+                // setCategory(e.target.value);
+                handleCategories(e.target.value);
                 setSelected(true);
                 setToValue(null);
                 setFromValue(null);
@@ -213,10 +292,10 @@ const MainSection = () => {
               onOpen={(e) => {
                 setSelected(false);
               }}
-              value={categories}
+              value={currentCategory}
               variant="standard"
             >
-              <MenuItem value={secondaryEducationCategory}>
+              {/* <MenuItem value={secondaryEducationCategory}>
                 Secondary Education
               </MenuItem>
               <MenuItem value={tertiaryEducationCategory}>
@@ -227,7 +306,20 @@ const MainSection = () => {
               <MenuItem value={jobCategory}>Jobs</MenuItem>
               <MenuItem value={countryCategory}>Countries</MenuItem>
               <MenuItem value={cultureCategory}>Cultures</MenuItem>
-              <MenuItem value={lifeCategory}>Life</MenuItem>
+              <MenuItem value={lifeCategory}>Life</MenuItem> */}
+
+              <MenuItem value={"secondaryEducation"}>
+                Secondary Education
+              </MenuItem>
+              <MenuItem value={"tertiaryEducation"}>
+                Tertiary Education
+              </MenuItem>
+              <MenuItem value={"universities"}>Universities</MenuItem>
+              <MenuItem value={"careers"}>Careers</MenuItem>
+              <MenuItem value={"jobs"}>Jobs</MenuItem>
+              <MenuItem value={"countries"}>Countries</MenuItem>
+              <MenuItem value={"cultures"}>Cultures</MenuItem>
+              <MenuItem value={"life"}>Life</MenuItem>
             </Select>
             &nbsp;
             <div>
@@ -251,8 +343,8 @@ const MainSection = () => {
               }
               getOptionDisabled={(option) =>
                 !isSwapping
-                  ? option.category === toInputValue || uniDirectional(option)
-                  : option.category === fromInputValue 
+                  ? option.category === toInputValue || uniDirectionTo(option)
+                  : option.category === fromInputValue
               }
               value={isSwapping ? toValue : fromValue}
               onChange={(event, newValue) => {
@@ -288,6 +380,7 @@ const MainSection = () => {
                     setToInputValue(fromInputValue);
                     setSwapping(!isSwapping);
                   }}
+                  disabled={currentCategory === "secondaryEducation"}
                 >
                   <SwapVertIcon fontSize="small" />
                 </IconButton>
@@ -300,6 +393,7 @@ const MainSection = () => {
                     setToInputValue(fromInputValue);
                     setSwapping(!isSwapping);
                   }}
+                  disabled={currentCategory === "secondaryEducation"}
                 >
                   <SwapHorizIcon fontSize="small" />
                 </IconButton>
@@ -320,7 +414,8 @@ const MainSection = () => {
               }
               getOptionDisabled={(option) =>
                 !isSwapping
-                  ? option.category === fromInputValue || uniDirectional(option)
+                  ? option.category === fromInputValue ||
+                    uniDirectionFrom(option)
                   : option.category === toInputValue
               }
               value={!isSwapping ? toValue : fromValue}

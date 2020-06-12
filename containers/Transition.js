@@ -3,11 +3,11 @@ import HeaderSection from "../components/Content/Sections/Transition/HeaderSecti
 import OverviewSection from "../components/Content/Sections/Transition/OverviewSection";
 import ExperienceSection from "../components/Content/Sections/Transition/ExperienceSection";
 
-const Transition = ({ from, to }) => {
+const Transition = ({ from, to, category }) => {
   return (
     <>
       <LowerNavbar />
-      <HeaderSection from={from} to={to} />
+      <HeaderSection from={from} to={to} category={category} />
       <OverviewSection/>
       <ExperienceSection/>
     </>

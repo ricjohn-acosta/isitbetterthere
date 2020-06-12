@@ -6,7 +6,7 @@ import PageNotFound from "../containers/PageNotFound"
 
 const transition = () => {
   const router = useRouter();
-  const { from, to } = router.query;
+  const { from, to, category } = router.query;
 
   if (Object.keys(router.query).length === 0) {
     return (
@@ -18,7 +18,7 @@ const transition = () => {
     return (
       <>
         <Layout>
-          <Transition from={from} to={to} />
+          <Transition from={from} to={to} category={category} />
         </Layout>
       </>
     );

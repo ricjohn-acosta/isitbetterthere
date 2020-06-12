@@ -73,10 +73,10 @@ const LinkContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2.5vh
+  margin-bottom: 2.5vh;
 `;
 
-const HeaderSection = ({ from, to }) => {
+const HeaderSection = ({ from, to, category }) => {
   const isSM = useMediaQuery("(max-width:600px)");
   const downMD = useMediaQuery("(max-width:959px)");
 
@@ -113,14 +113,16 @@ const HeaderSection = ({ from, to }) => {
         </b>
         &nbsp;people have went through this transition
       </OdometerContainer>
-      <LinkContainer>
-        <Link
-          href={{ pathname: "/transition", query: { from: to, to: from } }}
-          passHref
-        >
-          <a style={{ color: "white" }}>See inverse?</a>
-        </Link>
-      </LinkContainer>
+      {category === "secondaryEducation" ? null : (
+        <LinkContainer>
+          <Link
+            href={{ pathname: "/transition", query: { from: to, to: from } }}
+            passHref
+          >
+            <a style={{ color: "white" }}>See inverse?</a>
+          </Link>
+        </LinkContainer>
+      )}
     </Wrapper>
   );
 };
