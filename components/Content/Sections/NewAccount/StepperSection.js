@@ -47,6 +47,7 @@ const StepperSection = () => {
             setHideOccupation={setHideOccupation}
             setHideCompany={setHideCompany}
             setHideLocation={setHideLocation}
+            emptyFields={emptyFields}
           />
         );
       case 2:
@@ -89,10 +90,6 @@ const StepperSection = () => {
     return emptyFields;
   };
 
-  const getEmptyFields = () => {
-    return emptyFields;
-  };
-
   const fieldToString = (field) => {
     return Object.keys(field)[0];
   };
@@ -105,9 +102,18 @@ const StepperSection = () => {
       position === "" ||
       location === ""
     ) {
-      setEmptyFields(findEmptyFields());
-    } else {
+      if (occupation === "Unemployed") {
+        console.log("test")
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      } else {
+        console.log("test");
+        setEmptyFields(findEmptyFields());
+      }
+    } else if (findEmptyFields().length === 0) {
+      // setCompany("");
+      // setPosition("");
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setEmptyFields(findEmptyFields());
     }
   };
 
@@ -119,24 +125,11 @@ const StepperSection = () => {
     setActiveStep(0);
   };
 
-  useEffect(() => {
-    setStepContent(
-      <PersonalDetails
-        setDescription={setDescription}
-        setOccupationState={setOccupation}
-        setCompany={setCompany}
-        setPosition={setPosition}
-        setLocation={setLocation}
-        emptyFields={emptyFields}
-      />
-    );
-  }, []);
-
   const steps = getSteps();
 
   return (
     <Wrapper>
-      {console.log(emptyFields)}
+      {console.log(description, occupation, position, company, location)}
       <Typography
         variant="h3"
         style={{ marginBottom: "5vh", fontWeight: "bold" }}
@@ -155,6 +148,11 @@ const StepperSection = () => {
                   setCompany={setCompany}
                   setPosition={setPosition}
                   setLocation={setLocation}
+                  description={description}
+                  occupationState={occupation}
+                  company={company}
+                  position={position}
+                  location={location}
                   emptyFields={emptyFields}
                 />
               ) : (

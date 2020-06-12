@@ -24,6 +24,7 @@ const PrivacyDetails = ({
   setHideOccupation,
   setHideCompany,
   setHideLocation,
+  emptyFields
 }) => {
   const [isChecked, setChecked] = React.useState(false);
 
@@ -56,6 +57,7 @@ const PrivacyDetails = ({
 
   return (
     <Wrapper>
+      {console.log(emptyFields)}
       <Typography variant="h5">
         Hide your information when you share your experience in the experience
         section

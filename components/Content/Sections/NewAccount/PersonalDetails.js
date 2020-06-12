@@ -28,19 +28,23 @@ const PersonalDetails = ({
   setCompany,
   setPosition,
   setLocation,
+  description,
+  occupationState,
+  company,
+  position,
+  location,
   emptyFields,
 }) => {
-  const [isUnemployed, setIsUnemployed] = React.useState(false);
   const [occupation, setOccupation] = React.useState("");
 
   const handleValues = (value) => {
     if (value !== "Unemployed") {
-      setIsUnemployed(false);
       setOccupation(value);
       setOccupationState(value);
     } else {
-      setIsUnemployed(true);
       setOccupation(value);
+      setPosition("")
+      setCompany("")
       setOccupationState(value);
     }
   };
@@ -60,6 +64,7 @@ const PersonalDetails = ({
           </Labels>
           <Grid item xs={12} sm={12} md={4}>
             <TextField
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
               variant="outlined"
@@ -87,7 +92,7 @@ const PersonalDetails = ({
                   ? handleValues(e.target.value)
                   : handleValues(e.target.value);
               }}
-              value={occupation}
+              value={occupationState}
               error={
                 emptyFields
                   ? emptyFields.find((e) => e === "occupation") !== undefined
@@ -103,19 +108,19 @@ const PersonalDetails = ({
           </Grid>
         </Grid>
 
-        {isUnemployed ? null : (
+        {occupationState === "Unemployed" ? null : (
           <Grid item container direction="row">
             <Labels item xs={12} sm={12} md={3}>
               Position: &nbsp;
             </Labels>
             <Grid item xs={12} sm={12} md={2}>
               <TextField
+                value={position}
                 fullWidth
                 variant="outlined"
                 onChange={(e) => {
                   setPosition(e.target.value);
                 }}
-                disabled={isUnemployed}
                 error={
                   emptyFields
                     ? emptyFields.find((e) => e === "position") !== undefined
@@ -127,21 +132,20 @@ const PersonalDetails = ({
             </Grid>
           </Grid>
         )}
-        {console.log(isUnemployed)}
 
-        {isUnemployed ? null : (
+        {occupationState === "Unemployed" ? null : (
           <Grid item container direction="row">
             <Labels item xs={12} sm={12} md={3}>
               Company: &nbsp;
             </Labels>
             <Grid item xs={12} sm={12} md={2}>
               <TextField
+                value={company}
                 fullWidth
                 variant="outlined"
                 onChange={(e) => {
                   setCompany(e.target.value);
                 }}
-                disabled={isUnemployed}
                 error={
                   emptyFields
                     ? emptyFields.find((e) => e === "company") !== undefined
@@ -153,7 +157,6 @@ const PersonalDetails = ({
             </Grid>
           </Grid>
         )}
-        {console.log(isUnemployed)}
 
         <Grid item container direction="row">
           <Labels item xs={12} sm={12} md={3}>
@@ -161,6 +164,7 @@ const PersonalDetails = ({
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
             <TextField
+              value={location}
               fullWidth
               onChange={(e) => {
                 setLocation(e.target.value);

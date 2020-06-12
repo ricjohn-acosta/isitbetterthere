@@ -11,13 +11,15 @@ import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
 import {
   careersCategory,
-  educationCategory,
+  tertiaryEducationCategory,
   jobCategory,
   uniCategory,
   countryCategory,
   cultureCategory,
   lifeCategory,
+  secondaryEducationCategory,
 } from "../../../../lib/categories";
+import { options } from "../../../utils";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import { useEffect } from "react";
@@ -72,7 +74,7 @@ const InputForm = styled.form`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 30%;
+    margin-left: 33.5%;
   }
 `;
 
@@ -141,70 +143,6 @@ const MainSection = () => {
   const resizeInputForm = useMediaQuery("(max-width:730px)");
   const changeSwapIcon = useMediaQuery("(max-width:960px)");
 
-  const options = categories.map((option) => {
-    if (categories == careersCategory) {
-      const firstLetter = option.category[0].toUpperCase();
-      return {
-        firstLetter:
-          /[0-9]/.test(firstLetter) ||
-          option.category === "Unemployed / Graduate"
-            ? ""
-            : firstLetter,
-        ...option,
-      };
-    }
-
-    if (categories == jobCategory) {
-      const firstLetter = option.field.toUpperCase();
-      return {
-        firstLetter: /[0-9]/.test(firstLetter) ? "" : firstLetter,
-        ...option,
-      };
-    }
-
-    if (categories == uniCategory) {
-      const firstLetter = option.field.toUpperCase();
-      return {
-        firstLetter: /[0-9]/.test(firstLetter) ? "" : firstLetter,
-        ...option,
-      };
-    }
-
-    if (categories == educationCategory) {
-      const firstLetter = option.field.toUpperCase();
-      return {
-        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-        ...option,
-      };
-    }
-
-    if (categories == countryCategory) {
-      const firstLetter = option.category[0].toUpperCase();
-      return {
-        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-        ...option,
-      };
-    }
-
-    if (categories == cultureCategory) {
-      const firstLetter = option.field.toUpperCase();
-      return {
-        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-        ...option,
-      };
-    }
-
-    if (categories == lifeCategory) {
-      const firstLetter = option.field.toUpperCase();
-      return {
-        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-        ...option,
-      };
-    }
-
-
-  });
-
   const handleForm = (e) => {
     e.preventDefault();
     if (fromValue === null || toValue === null) {
@@ -222,6 +160,33 @@ const MainSection = () => {
       return console.log("NO ERROR");
     }
   };
+
+  const uniDirectional = (option) => {
+    console.log(option);
+    if (fromInputValue === "YEAR 10" || toInputValue === "YEAR 10" && fromInputValue !== "" || toInputValue !== "") {
+      return option.level <= 10;
+    }
+
+    if (fromInputValue === "YEAR 11" || toInputValue === "YEAR 11" && fromInputValue !== "" || toInputValue !== "") {
+      return option.level < 11;
+    }
+
+    if (fromInputValue === "YEAR 12" || toInputValue === "YEAR 12" && fromInputValue !== "" || toInputValue !== "") {
+      return option.level < 12;
+    }
+
+    if (fromInputValue === "YEAR 13" || toInputValue === "YEAR 13" && fromInputValue !== "" || toInputValue !== "") {
+      return option.level < 13;
+    }
+
+    if (
+      fromInputValue === "University" || fromInputValue === "Trades" && fromInputValue !== ""
+    ) {
+      return option.level < 14;
+    }
+  };
+
+
 
   return (
     <Wrapper component="div">
@@ -251,10 +216,15 @@ const MainSection = () => {
               value={categories}
               variant="standard"
             >
+              <MenuItem value={secondaryEducationCategory}>
+                Secondary Education
+              </MenuItem>
+              <MenuItem value={tertiaryEducationCategory}>
+                Tertiary Education
+              </MenuItem>
+              <MenuItem value={uniCategory}>Universities</MenuItem>
               <MenuItem value={careersCategory}>Careers</MenuItem>
               <MenuItem value={jobCategory}>Jobs</MenuItem>
-              <MenuItem value={uniCategory}>Universities</MenuItem>
-              <MenuItem value={educationCategory}>Tertiary Education</MenuItem>
               <MenuItem value={countryCategory}>Countries</MenuItem>
               <MenuItem value={cultureCategory}>Cultures</MenuItem>
               <MenuItem value={lifeCategory}>Life</MenuItem>
@@ -271,7 +241,7 @@ const MainSection = () => {
               classes={{
                 paper: classes.popper,
               }}
-              options={options.sort(
+              options={options(categories).sort(
                 (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
               )}
               groupBy={(option) => option.firstLetter}
@@ -281,8 +251,8 @@ const MainSection = () => {
               }
               getOptionDisabled={(option) =>
                 !isSwapping
-                  ? option.category === toInputValue
-                  : option.category === fromInputValue
+                  ? option.category === toInputValue || uniDirectional(option)
+                  : option.category === fromInputValue 
               }
               value={isSwapping ? toValue : fromValue}
               onChange={(event, newValue) => {
@@ -340,7 +310,7 @@ const MainSection = () => {
               classes={{
                 paper: classes.popper,
               }}
-              options={options.sort(
+              options={options(categories).sort(
                 (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
               )}
               groupBy={(option) => option.firstLetter}
@@ -350,7 +320,7 @@ const MainSection = () => {
               }
               getOptionDisabled={(option) =>
                 !isSwapping
-                  ? option.category === fromInputValue
+                  ? option.category === fromInputValue || uniDirectional(option)
                   : option.category === toInputValue
               }
               value={!isSwapping ? toValue : fromValue}
