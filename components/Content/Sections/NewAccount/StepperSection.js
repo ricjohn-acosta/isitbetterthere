@@ -102,9 +102,10 @@ const StepperSection = () => {
       position === "" ||
       location === ""
     ) {
-      if (occupation === "Unemployed") {
+      if (occupation === "Unemployed" && location !== "") {
         console.log("test")
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setEmptyFields(findEmptyFields());
       } else {
         console.log("test");
         setEmptyFields(findEmptyFields());
@@ -129,7 +130,7 @@ const StepperSection = () => {
 
   return (
     <Wrapper>
-      {console.log(description, occupation, position, company, location)}
+      {console.log(hideCompany)}
       <Typography
         variant="h3"
         style={{ marginBottom: "5vh", fontWeight: "bold" }}
