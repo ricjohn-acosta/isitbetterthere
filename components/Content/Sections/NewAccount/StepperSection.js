@@ -28,6 +28,7 @@ const StepperSection = () => {
   const [hideOccupation, setHideOccupation] = React.useState(false);
   const [hideCompany, setHideCompany] = React.useState(false);
   const [hideLocation, setHideLocation] = React.useState(false);
+  const [siteSource, setSiteSource] = React.useState("");
   const [emptyFields, setEmptyFields] = React.useState(null);
 
   const getSteps = () => {
@@ -47,11 +48,15 @@ const StepperSection = () => {
             setHideOccupation={setHideOccupation}
             setHideCompany={setHideCompany}
             setHideLocation={setHideLocation}
+            hideName={hideName}
+            hideOccupation={hideOccupation}
+            hideCompany={hideCompany}
+            hideLocation={hideLocation}
             emptyFields={emptyFields}
           />
         );
       case 2:
-        return <ConfirmDetails />;
+        return <ConfirmDetails setSiteSource={setSiteSource} siteSource={siteSource}/>;
       default:
         return "Unknown step";
     }
@@ -64,6 +69,7 @@ const StepperSection = () => {
       "company",
       "position",
       "location",
+      "siteSource"
     ];
     let emptyFields = [];
 
@@ -100,22 +106,27 @@ const StepperSection = () => {
       occupation === "" ||
       company === "" ||
       position === "" ||
-      location === ""
+      location === "" 
     ) {
-      if (occupation === "Unemployed" && location !== "") {
-        console.log("test")
+      if (occupation === "Unemployed" && location !== "" ) {
+        console.log("test");
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setEmptyFields(findEmptyFields());
       } else {
-        console.log("test");
+        console.log("tesasdt");
         setEmptyFields(findEmptyFields());
       }
+
+    } else if (activeStep === 2 && siteSource === "") {
+      setEmptyFields(["siteSource"]);
     } else if (findEmptyFields().length === 0) {
       // setCompany("");
       // setPosition("");
+      console.log("test")
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setEmptyFields(findEmptyFields());
     }
+
   };
 
   const handleBack = () => {
@@ -130,7 +141,7 @@ const StepperSection = () => {
 
   return (
     <Wrapper>
-      {console.log(hideCompany)}
+      {console.log(hideOccupation)}
       <Typography
         variant="h3"
         style={{ marginBottom: "5vh", fontWeight: "bold" }}

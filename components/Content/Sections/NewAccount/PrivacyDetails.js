@@ -24,29 +24,33 @@ const PrivacyDetails = ({
   setHideOccupation,
   setHideCompany,
   setHideLocation,
+  hideName,
+  hideOccupation,
+  hideCompany,
+  hideLocation,
 }) => {
   const [isChecked, setChecked] = React.useState(false);
 
   const handleChange = (target) => {
     switch (target) {
       case "name":
-        setChecked(!isChecked);
-        setHideName(!isChecked);
+        // setChecked(!isChecked);
+        setHideName(!hideName);
         break;
 
       case "occupation":
-        setChecked(!isChecked);
-        setHideOccupation(!isChecked);
+        // setChecked(!isChecked);
+        setHideOccupation(!hideOccupation);
         break;
 
       case "company":
-        setChecked(!isChecked);
-        setHideCompany(!isChecked);
+        // setChecked(!isChecked);
+        setHideCompany(!hideCompany);
         break;
 
       case "location":
-        setChecked(!isChecked);
-        setHideLocation(!isChecked);
+        // setChecked(!isChecked);
+        setHideLocation(!hideLocation);
         break;
 
       default:
@@ -67,7 +71,13 @@ const PrivacyDetails = ({
             Hide name? &nbsp;
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
-            <Checkbox onChange={(e) => handleChange("name")} color="default" />
+            <Checkbox
+              checked={hideName}
+              onChange={(e) => handleChange("name")}
+              // onChange={(e) => setHideName(!hideName)}
+
+              color="default"
+            />
           </Grid>
         </Grid>
 
@@ -77,6 +87,7 @@ const PrivacyDetails = ({
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
             <Checkbox
+              checked={hideOccupation}
               onChange={(e) => handleChange("occupation")}
               color="default"
             />
@@ -89,6 +100,7 @@ const PrivacyDetails = ({
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
             <Checkbox
+              checked={hideCompany}
               onChange={(e) => handleChange("company")}
               color="default"
             />
@@ -101,6 +113,7 @@ const PrivacyDetails = ({
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
             <Checkbox
+              checked={hideLocation}
               onChange={(e) => handleChange("location")}
               color="default"
             />

@@ -10,17 +10,23 @@ const Wrapper = styled.div`
   margin: 5vh 10vw 2.5vh 2.5vw;
 `;
 
-const ConfirmDetails = () => {
+const ConfirmDetails = ({ setSiteSource, siteSource }) => {
   return (
     <Wrapper>
       <Typography variant="h5">
         How did you find out about this website?
       </Typography>
       <br />
-      <Select fullWidth variant="outlined">
+      <Select
+        value={siteSource}
+        onChange={(e) => setSiteSource(e.target.value)}
+        fullWidth
+        variant="outlined"
+      >
         <MenuItem value="Word of mouth">Word of mouth</MenuItem>
         <MenuItem value="Instagram">Instagram</MenuItem>
         <MenuItem value="LinkedIn">LinkedIn</MenuItem>
+        <MenuItem value="Search Engine">Search Engine</MenuItem>
       </Select>
     </Wrapper>
   );
