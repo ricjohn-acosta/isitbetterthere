@@ -34,13 +34,21 @@ const options = {
   //
   // Note: You need to install an appropriate node_module for your database
   database: process.env.DATABASE_URL,
-
   // Use JSON Web Tokens instead of database sessions
-  jwt: true,
+  session: {
+    jwt: true,
+    maxAge: 30 * 24 * 60 * 60,
+    updateAge: 24 * 60 * 60,
+    get: async (session, jwt) => {
+      console.log(JSON.parse(JSON.stringify({ jwt })));
+      const jwtObject = JSON.parse(JSON.stringify({ jwt }));
+      session.user.uid = jwtObject.jwt.account.id;
+      return session;
+    },
+  },
   pages: {
-    signin:"http://localhost:3000/signup"
-  }
-
+    signin: "http://localhost:3000/signup",
+  },
   // Additional options
   //
   // secret: 'abcdef123456789' // Recommended. Used to encode data and to sign cookies. Auto-generated if not specified.

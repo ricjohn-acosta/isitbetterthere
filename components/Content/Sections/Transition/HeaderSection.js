@@ -116,7 +116,7 @@ const HeaderSection = ({ from, to, category }) => {
       {category === "secondaryEducation" ? null : (
         <LinkContainer>
           <Link
-            href={{ pathname: "/transition", query: { from: to, to: from } }}
+            href={{ pathname: "/transition", query: {category, from: to, to: from } }}
             passHref
           >
             <a style={{ color: "white" }}>See inverse?</a>

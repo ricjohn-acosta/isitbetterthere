@@ -29,7 +29,7 @@ export const addUser = (user) => {
   return (dispatch) => {
     dispatch({ type: actions.ADD_USER_START });
     return request
-      .post(process.env.ADD_USER || "http://localhost:3000/api/user")
+      .post(process.env.ADD_USER || "http://localhost:3000/api/users")
       .send(user)
       .then((res) => {
         dispatch({ type: actions.ADD_USER_SUCCESS });

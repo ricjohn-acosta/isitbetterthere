@@ -3,8 +3,9 @@ import Transition from "../containers/Transition";
 import Layout from "../components/Layout/Layout";
 import LowerNavbar from "../components/Navigation/LowerNavbar";
 import PageNotFound from "../containers/PageNotFound"
+import { session } from "next-auth/client";
 
-const transition = () => {
+const transition = ({ session }) => {
   const router = useRouter();
   const { from, to, category } = router.query;
 
@@ -18,11 +19,19 @@ const transition = () => {
     return (
       <>
         <Layout>
-          <Transition from={from} to={to} category={category} />
+          <Transition from={from} to={to} category={category} session={session}/>
         </Layout>
       </>
     );
   }
 };
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      session: await session(context),
+    },
+  };
+}
 
 export default transition;

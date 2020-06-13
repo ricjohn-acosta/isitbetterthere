@@ -210,10 +210,6 @@ const MainSection = () => {
     }
   };
 
-  const fieldToString = (variable) => {
-    return Object.keys(variable)[0];
-  };
-
   const uniDirectionFrom = (option) => {
     console.log(option);
     if (fromInputValue === "YEAR 10" && fromInputValue !== "") {
@@ -343,7 +339,7 @@ const MainSection = () => {
               }
               getOptionDisabled={(option) =>
                 !isSwapping
-                  ? option.category === toInputValue || uniDirectionTo(option)
+                  ? option.category === toInputValue || uniDirectionTo(option) 
                   : option.category === fromInputValue
               }
               value={isSwapping ? toValue : fromValue}
@@ -415,7 +411,7 @@ const MainSection = () => {
               getOptionDisabled={(option) =>
                 !isSwapping
                   ? option.category === fromInputValue ||
-                    uniDirectionFrom(option)
+                    uniDirectionFrom(option) || option.category === "YEAR 9"
                   : option.category === toInputValue
               }
               value={!isSwapping ? toValue : fromValue}

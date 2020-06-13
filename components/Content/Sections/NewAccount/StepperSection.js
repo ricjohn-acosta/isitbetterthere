@@ -10,13 +10,15 @@ import Typography from "@material-ui/core/Typography";
 import PersonalDetails from "./PersonalDetails";
 import PrivacyDetails from "./PrivacyDetails";
 import ConfirmDetails from "./ConfirmDetails";
+import { addUser } from "../../../../store/actions/users";
+import { connect } from "react-redux";
 
 const Wrapper = styled.div`
   min-height: 60vh;
   margin: 5vh 15vw 0 15vw;
 `;
 
-const StepperSection = () => {
+const StepperSection = ({ addUser, session }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [stepContent, setStepContent] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -30,6 +32,25 @@ const StepperSection = () => {
   const [hideLocation, setHideLocation] = React.useState(false);
   const [siteSource, setSiteSource] = React.useState("");
   const [emptyFields, setEmptyFields] = React.useState(null);
+
+  const handleCreateUser = () => {
+    addUser({
+      uid: session.user.uid,
+      name: session.user.name,
+      email: session.user.email,
+      bio: description,
+      occupation,
+      position,
+      company,
+      location,
+      hide_name: hideName,
+      hide_occupation: hideOccupation,
+      hide_company: hideCompany,
+      hide_location: hideLocation,
+      comes_from: siteSource,
+      date_created: Date.now()
+    });
+  };
 
   const getSteps = () => {
     return [
@@ -56,7 +77,12 @@ const StepperSection = () => {
           />
         );
       case 2:
-        return <ConfirmDetails setSiteSource={setSiteSource} siteSource={siteSource}/>;
+        return (
+          <ConfirmDetails
+            setSiteSource={setSiteSource}
+            siteSource={siteSource}
+          />
+        );
       default:
         return "Unknown step";
     }
@@ -69,7 +95,7 @@ const StepperSection = () => {
       "company",
       "position",
       "location",
-      "siteSource"
+      "siteSource",
     ];
     let emptyFields = [];
 
@@ -82,12 +108,12 @@ const StepperSection = () => {
         emptyFields.push(element);
       }
 
-      if (element === fieldToString({ company }) && company === "") {
-        emptyFields.push(element);
-      }
-      if (element === fieldToString({ position }) && position === "") {
-        emptyFields.push(element);
-      }
+      // if (element === fieldToString({ company }) && company === "") {
+      //   emptyFields.push(element);
+      // }
+      // if (element === fieldToString({ position }) && position === "") {
+      //   emptyFields.push(element);
+      // }
       if (element === fieldToString({ location }) && location === "") {
         emptyFields.push(element);
       }
@@ -104,11 +130,11 @@ const StepperSection = () => {
     if (
       (activeStep === 0 && description === "") ||
       occupation === "" ||
-      company === "" ||
-      position === "" ||
-      location === "" 
+      // company === "" ||
+      // position === "" ||
+      location === ""
     ) {
-      if (occupation === "Unemployed" && location !== "" ) {
+      if (occupation === "Unemployed" && location !== "") {
         console.log("test");
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setEmptyFields(findEmptyFields());
@@ -116,17 +142,15 @@ const StepperSection = () => {
         console.log("tesasdt");
         setEmptyFields(findEmptyFields());
       }
-
     } else if (activeStep === 2 && siteSource === "") {
       setEmptyFields(["siteSource"]);
     } else if (findEmptyFields().length === 0) {
       // setCompany("");
       // setPosition("");
-      console.log("test")
+      console.log("test");
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setEmptyFields(findEmptyFields());
     }
-
   };
 
   const handleBack = () => {
@@ -141,7 +165,6 @@ const StepperSection = () => {
 
   return (
     <Wrapper>
-      {console.log(hideOccupation)}
       <Typography
         variant="h3"
         style={{ marginBottom: "5vh", fontWeight: "bold" }}
@@ -192,10 +215,17 @@ const StepperSection = () => {
         <Paper square elevation={0}>
           <Typography>All steps completed - you&apos;re finished</Typography>
           <Button onClick={handleReset}>Reset</Button>
+          <Button onClick={handleCreateUser}>Create account</Button>
         </Paper>
       )}
     </Wrapper>
   );
 };
 
-export default StepperSection;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addUser: (user) => dispatch(addUser(user)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(StepperSection);

@@ -111,6 +111,31 @@ const PersonalDetails = ({
         {occupationState === "Unemployed" ? null : (
           <Grid item container direction="row">
             <Labels item xs={12} sm={12} md={3}>
+              Company:* &nbsp;
+            </Labels>
+            <Grid item xs={12} sm={12} md={2}>
+              <TextField
+                value={company}
+                fullWidth
+                variant="outlined"
+                onChange={(e) => {
+                  setCompany(e.target.value);
+                }}
+                error={
+                  emptyFields
+                    ? emptyFields.find((e) => e === "company") !== undefined
+                      ? true
+                      : false
+                    : false
+                }
+              />
+            </Grid>
+          </Grid>
+        )}
+
+        {occupationState === "Unemployed" ? null : (
+          <Grid item container direction="row">
+            <Labels item xs={12} sm={12} md={3}>
               Position: &nbsp;
             </Labels>
             <Grid item xs={12} sm={12} md={2}>
@@ -133,34 +158,9 @@ const PersonalDetails = ({
           </Grid>
         )}
 
-        {occupationState === "Unemployed" ? null : (
-          <Grid item container direction="row">
-            <Labels item xs={12} sm={12} md={3}>
-              Company: &nbsp;
-            </Labels>
-            <Grid item xs={12} sm={12} md={2}>
-              <TextField
-                value={company}
-                fullWidth
-                variant="outlined"
-                onChange={(e) => {
-                  setCompany(e.target.value);
-                }}
-                error={
-                  emptyFields
-                    ? emptyFields.find((e) => e === "company") !== undefined
-                      ? true
-                      : false
-                    : false
-                }
-              />
-            </Grid>
-          </Grid>
-        )}
-
         <Grid item container direction="row">
           <Labels item xs={12} sm={12} md={3}>
-            Location: &nbsp;
+            Country: &nbsp;
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
             <TextField

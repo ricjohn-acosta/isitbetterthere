@@ -7,7 +7,7 @@ import LowerNavbar from "../components/Navigation/LowerNavbar";
 const Home = ({session}) => {
   return (
     <>
-      <LowerNavbar session={session}/>
+      <LowerNavbar session={session} />
       <MainSection />
       <QuoteSection />
       <TutorialSection />

@@ -1,11 +1,11 @@
 import LowerNavbar from "../components/Navigation/LowerNavbar";
 import StepperSection from "../components/Content/Sections/NewAccount/StepperSection";
 
-const AccountSetup = () => {
+const AccountSetup = ({session}) => {
   return (
     <>
-      <LowerNavbar />
-      <StepperSection />
+      <LowerNavbar session={session}/>
+      <StepperSection session={session}/>
     </>
   );
 };

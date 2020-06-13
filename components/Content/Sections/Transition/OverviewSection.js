@@ -6,6 +6,14 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Charts from "./Charts";
 import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  expansionPanelSummaryContent: {
+    display: "flex",
+    justifyContent:"center"
+  },
+});
 
 const Wrapper = styled.div`
   min-height: 10vh;
@@ -49,6 +57,7 @@ const ExpansionPanelDetailsContainer = styled(ExpansionPanelDetails)`
 `;
 
 const OverviewSection = () => {
+  const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   return (
     <>
@@ -79,13 +88,16 @@ const OverviewSection = () => {
             onChange={() => setExpanded(!expanded)}
           >
             <ExpansionPanelSummary
+              classes={{ content: classes.expansionPanelSummaryContent }}
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>
-                {expanded ? "Hide details" : "Show details"}
-              </Typography>
+              <div style={{ textAlign: "center" }}>
+                <Typography>
+                  {expanded ? "Hide details" : "Show details"}
+                </Typography>
+              </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetailsContainer>
               <Charts />
