@@ -3,12 +3,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import IconButton from "@material-ui/core/IconButton";
-import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
-import SwapVertIcon from "@material-ui/icons/SwapVert";
 import {
   careersCategory,
   tertiaryEducationCategory,
@@ -19,12 +13,9 @@ import {
   lifeCategory,
   secondaryEducationCategory,
 } from "../../../../lib/categories";
-import { options } from "../../../utils";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import TextField from "@material-ui/core/TextField";
-import { useEffect } from "react";
 import Router from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
+import CategoryForm from "./CategoryForm";
 
 const useStyles = makeStyles((theme) => ({
   popper: { width: 400 },
@@ -141,8 +132,7 @@ const MainSection = () => {
   const [isSelected, setSelected] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
   const [isEmptyField, setEmptyFields] = React.useState(false);
-  const resizeInputForm = useMediaQuery("(max-width:730px)");
-  const changeSwapIcon = useMediaQuery("(max-width:960px)");
+  const downMD = useMediaQuery("(max-width:959px)");
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -210,58 +200,6 @@ const MainSection = () => {
     }
   };
 
-  const uniDirectionFrom = (option) => {
-    console.log(option);
-    if (fromInputValue === "YEAR 10" && fromInputValue !== "") {
-      return option.level <= 10;
-    }
-
-    if (fromInputValue === "YEAR 11" && fromInputValue !== "") {
-      return option.level < 11;
-    }
-
-    if (fromInputValue === "YEAR 12" && fromInputValue !== "") {
-      return option.level < 12;
-    }
-
-    if (fromInputValue === "YEAR 13" && fromInputValue !== "") {
-      return option.level < 13;
-    }
-
-    if (
-      fromInputValue === "University" ||
-      (fromInputValue === "Trades" && fromInputValue !== "")
-    ) {
-      return option.level < 14;
-    }
-  };
-
-  const uniDirectionTo = (option) => {
-    console.log(option);
-    if (toInputValue === "YEAR 10" && toInputValue !== "") {
-      return option.level > 10;
-    }
-
-    if (toInputValue === "YEAR 11" && toInputValue !== "") {
-      return option.level > 11;
-    }
-
-    if (toInputValue === "YEAR 12" && toInputValue !== "") {
-      return option.level > 12;
-    }
-
-    if (toInputValue === "YEAR 13" && toInputValue !== "") {
-      return option.level > 13;
-    }
-
-    if (
-      toInputValue === "University" ||
-      (toInputValue === "Trades" && toInputValue !== "")
-    ) {
-      return option.level < 14;
-    }
-  };
-
   return (
     <Wrapper component="div">
       <Grid container direction="row">
@@ -272,191 +210,24 @@ const MainSection = () => {
             </FadeInAnimation>
           </WelcomeMessage>
           {console.log("is selected? ", isSelected)}
-          <InputForm onSubmit={handleForm}>
-            <div>Choose a category: &nbsp;</div>
-            <br />
-            <Select
-              onChange={(e) => {
-                // setCategory(e.target.value);
-                handleCategories(e.target.value);
-                setSelected(true);
-                setToValue(null);
-                setFromValue(null);
-                setToInputValue("");
-                setFromInputValue("");
-              }}
-              onOpen={(e) => {
-                setSelected(false);
-              }}
-              value={currentCategory}
-              variant="standard"
-            >
-              {/* <MenuItem value={secondaryEducationCategory}>
-                Secondary Education
-              </MenuItem>
-              <MenuItem value={tertiaryEducationCategory}>
-                Tertiary Education
-              </MenuItem>
-              <MenuItem value={uniCategory}>Universities</MenuItem>
-              <MenuItem value={careersCategory}>Careers</MenuItem>
-              <MenuItem value={jobCategory}>Jobs</MenuItem>
-              <MenuItem value={countryCategory}>Countries</MenuItem>
-              <MenuItem value={cultureCategory}>Cultures</MenuItem>
-              <MenuItem value={lifeCategory}>Life</MenuItem> */}
-
-              <MenuItem value={"secondaryEducation"}>
-                Secondary Education
-              </MenuItem>
-              <MenuItem value={"tertiaryEducation"}>
-                Tertiary Education
-              </MenuItem>
-              <MenuItem value={"universities"}>Universities</MenuItem>
-              <MenuItem value={"careers"}>Careers</MenuItem>
-              <MenuItem value={"jobs"}>Jobs</MenuItem>
-              <MenuItem value={"countries"}>Countries</MenuItem>
-              <MenuItem value={"cultures"}>Cultures</MenuItem>
-              <MenuItem value={"life"}>Life</MenuItem>
-            </Select>
-            &nbsp;
-            <div>
-              <b>TRANSITION</b>
-            </div>{" "}
-            &nbsp;
-            {/**
-             * IF SWAPPING SHOW "FROM" FIELD AND IF NOT SHOW "TO" FIELD AND VICE-VERSA
-             */}
-            <Autocomplete
-              classes={{
-                paper: classes.popper,
-              }}
-              options={options(categories).sort(
-                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-              )}
-              groupBy={(option) => option.firstLetter}
-              getOptionLabel={(option) => option.category}
-              getOptionSelected={(option, value) =>
-                option.category === value.category
-              }
-              getOptionDisabled={(option) =>
-                !isSwapping
-                  ? option.category === toInputValue || uniDirectionTo(option) 
-                  : option.category === fromInputValue
-              }
-              value={isSwapping ? toValue : fromValue}
-              onChange={(event, newValue) => {
-                isSwapping ? setToValue(newValue) : setFromValue(newValue);
-              }}
-              inputValue={isSwapping ? toInputValue : fromInputValue}
-              onInputChange={(event, newInputValue) => {
-                isSwapping
-                  ? setToInputValue(newInputValue)
-                  : setFromInputValue(newInputValue);
-              }}
-              style={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={isSwapping ? "to" : "from"}
-                  variant="outlined"
-                  error={isEmptyField}
-                  helperText={
-                    isEmptyField ? "Please don't leave these blank :)" : null
-                  }
-                />
-              )}
-            />
-            &nbsp;
-            <div>
-              {changeSwapIcon ? (
-                <IconButton
-                  onClick={() => {
-                    setFromValue(toValue);
-                    setToValue(fromValue);
-                    setFromInputValue(toInputValue);
-                    setToInputValue(fromInputValue);
-                    setSwapping(!isSwapping);
-                  }}
-                  disabled={currentCategory === "secondaryEducation"}
-                >
-                  <SwapVertIcon fontSize="small" />
-                </IconButton>
-              ) : (
-                <IconButton
-                  onClick={() => {
-                    setFromValue(toValue);
-                    setToValue(fromValue);
-                    setFromInputValue(toInputValue);
-                    setToInputValue(fromInputValue);
-                    setSwapping(!isSwapping);
-                  }}
-                  disabled={currentCategory === "secondaryEducation"}
-                >
-                  <SwapHorizIcon fontSize="small" />
-                </IconButton>
-              )}
-            </div>
-            &nbsp;
-            <Autocomplete
-              classes={{
-                paper: classes.popper,
-              }}
-              options={options(categories).sort(
-                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-              )}
-              groupBy={(option) => option.firstLetter}
-              getOptionLabel={(option) => option.category}
-              getOptionSelected={(option, value) =>
-                option.category === value.category
-              }
-              getOptionDisabled={(option) =>
-                !isSwapping
-                  ? option.category === fromInputValue ||
-                    uniDirectionFrom(option) || option.category === "YEAR 9"
-                  : option.category === toInputValue
-              }
-              value={!isSwapping ? toValue : fromValue}
-              onChange={(event, newValue) => {
-                !isSwapping ? setToValue(newValue) : setFromValue(newValue);
-              }}
-              inputValue={!isSwapping ? toInputValue : fromInputValue}
-              onInputChange={(event, newInputValue) => {
-                !isSwapping
-                  ? setToInputValue(newInputValue)
-                  : setFromInputValue(newInputValue);
-              }}
-              style={{ width: 200 }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={!isSwapping ? "to" : "from"}
-                  variant="outlined"
-                  error={isEmptyField}
-                  helperText={
-                    isEmptyField ? "Please don't leave these blank :)" : null
-                  }
-                />
-              )}
-            />
-            &nbsp;
-            <Button
-              type="submit"
-              color="secondary"
-              variant="contained"
-              size="large"
-              disableElevation
-              disabled={
-                toValue === fromValue &&
-                toValue !== "" &&
-                fromValue !== "" &&
-                toValue !== null &&
-                fromValue !== null
-                  ? true
-                  : false
-              }
-            >
-              GO
-            </Button>
-          </InputForm>
+          <CategoryForm
+            categories={categories}
+            currentCategory={currentCategory}
+            handleCategories={handleCategories}
+            handleForm={handleForm}
+            setToValue={setToValue}
+            setToInputValue={setToInputValue}
+            setFromValue={setFromValue}
+            setFromInputValue={setFromInputValue}
+            setSelected={setSelected}
+            setSwapping={setSwapping}
+            toValue={toValue}
+            toInputValue={toInputValue}
+            fromValue={fromValue}
+            fromInputValue={fromInputValue}
+            isSwapping={isSwapping}
+            isEmptyField={isEmptyField}
+          />
         </InputContainer>
         <ImageContainer item xs={12} sm={12} md={12} lg={3}>
           <img

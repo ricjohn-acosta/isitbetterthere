@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles  } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -7,6 +7,31 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import ChooseCategory from "./ChooseCategory";
+import StepConnector from '@material-ui/core/StepConnector';
+
+// OVERRIDING DEFAULT MATERIAL-UI STYLING
+const StyledConnector = withStyles({
+  alternativeLabel: {
+    top: 10,
+    left: 'calc(-50% + 16px)',
+    right: 'calc(50% + 16px)',
+  },
+  active: {
+    '& $line': {
+      borderColor: '#00CCFF',
+    },
+  },
+  completed: {
+    '& $line': {
+      borderColor: '#00CCFF',
+    },
+  },
+  line: {
+    borderColor: '#eaeaf0',
+    borderTopWidth: 3,
+    borderRadius: 1,
+  },
+})(StepConnector);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// COMPONENT LEVEL STYLING
 const Wrapper = styled.div`
   margin: 5vh 10vw 50vh 10vw;
 `;
@@ -97,7 +123,7 @@ const ShareStepperSection = () => {
   return (
     <Wrapper>
       <div className={classes.root}>
-        <Stepper alternativeLabel activeStep={activeStep}>
+        <Stepper alternativeLabel activeStep={activeStep} connector={<StyledConnector/>}>
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
@@ -137,21 +163,23 @@ const ShareStepperSection = () => {
               >
                 {getStepContent(activeStep)}
               </Typography>
-              <div style={{ float: "right" }}>
+              <div>
                 <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                >
-                  Back
-                </Button>
-                <Button
+                  style={{ float: "right" }}
                   variant="contained"
                   color="primary"
                   onClick={handleNext}
                   className={classes.button}
                 >
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+                <Button
+                  style={{ float: "right" }}
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Back
                 </Button>
               </div>
             </div>

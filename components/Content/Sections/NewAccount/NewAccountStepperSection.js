@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   margin: 5vh 15vw 0 15vw;
 `;
 
-const StepperSection = ({ addUser, session }) => {
+const NewAccountStepperSection = ({ addUser, session }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [stepContent, setStepContent] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -228,4 +228,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(StepperSection);
+export default connect(null, mapDispatchToProps)(NewAccountStepperSection);
