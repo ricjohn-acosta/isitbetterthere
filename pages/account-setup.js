@@ -1,34 +1,11 @@
 import AccountSetup from "../containers/AccountSetup";
 import Layout from "../components/Layout/Layout";
-import { session } from "next-auth/client";
+import { session, getSession } from "next-auth/client";
 import PageNotFound from "../containers/PageNotFound";
 import { getUsers } from "../server/db";
-import Router from "next/router";
-import { useEffect } from "react";
 
+// CLIENT SIDE
 const accountSetup = ({ session, users }) => {
-  // const findUserInDatabase = () => {
-  //   let found = false;
-  //   console.log("test");
-  //   users.forEach((user) => {
-  //     if (user.uid === session.user.uid) {
-  //       found = true;
-  //     }
-  //   });
-  //   return found;
-  // };
-
-  // console.log(findUserInDatabase());
-
-  useEffect(() => {
-    if (session && users) {
-      users.forEach((user) => {
-        if (user.uid === session.user.uid) {
-          Router.push("/")
-        }
-      });
-    }
-  }, []);
 
   if (!session) {
     return (
@@ -45,12 +22,32 @@ const accountSetup = ({ session, users }) => {
   }
 };
 
+// SERVER SIDE
 export async function getServerSideProps(context) {
+  const session = await getSession(context);
   const users = await getUsers();
+
+  const findUserInDatabase = () => {
+    let found = false;
+    console.log("test");
+    users.forEach((user) => {
+      if (user.uid === session.user.uid) {
+        found = true;
+      }
+    });
+    return found;
+  };
+
+  if (typeof window === "undefined" && context.res.writeHead) {
+    if(findUserInDatabase()) {
+      context.res.writeHead(302, {Location: "/"})
+      context.res.end()
+    }
+  }
 
   return {
     props: {
-      session: await session(context),
+      session,
       users,
     },
   };

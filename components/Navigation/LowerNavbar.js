@@ -116,7 +116,7 @@ const LowerNavbar = ({ session, addUser }) => {
                 addUser({ name: "works", email: "works" });
               }}
             >
-              Share your story
+              Share your experience
             </Link>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>

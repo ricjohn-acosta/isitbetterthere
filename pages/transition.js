@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import Transition from "../containers/Transition";
 import Layout from "../components/Layout/Layout";
-import LowerNavbar from "../components/Navigation/LowerNavbar";
 import PageNotFound from "../containers/PageNotFound"
 import { session } from "next-auth/client";
 
