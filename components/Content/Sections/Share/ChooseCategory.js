@@ -10,6 +10,7 @@ import {
   secondaryEducationCategory,
 } from "../../../../lib/categories";
 
+
 const Wrapper = styled.div`
   margin: 5%;
 `;

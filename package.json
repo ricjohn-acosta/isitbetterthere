@@ -17,6 +17,8 @@
     "bootstrap": "^4.5.0",
     "chart.js": "^2.9.3",
     "draft-js": "^0.11.6",
+    "draftjs-to-html": "^0.9.1",
+    "html-to-react": "^1.4.3",
     "knex": "^0.21.1",
     "mssql": "^6.2.0",
     "next": "latest",

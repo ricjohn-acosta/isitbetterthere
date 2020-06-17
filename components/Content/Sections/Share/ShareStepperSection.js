@@ -8,8 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import ChooseCategory from "./ChooseCategory";
 import ShareStory from "./ShareStory";
+import Preview from "./Preview";
 import StepConnector from "@material-ui/core/StepConnector";
 import { careersCategory } from "../../../../lib/categories";
+import { EditorState } from "draft-js";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -50,7 +52,12 @@ const useStyles = makeStyles((theme) => ({
 
 // COMPONENT LEVEL STYLING
 const Wrapper = styled.div`
-  margin: 5vh 10vw 50vh 10vw;
+  min-height: 110vh;
+  margin-top: 5vh;
+  padding: 0 5% 0 5%;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(211,252,252,1) 100%);
+
 `;
 
 function getSteps() {
@@ -74,6 +81,9 @@ const ShareStepperSection = () => {
   const [isEmptyField, setEmptyFields] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [editorState, setEditorState] = React.useState(
+    EditorState.createEmpty()
+  );
   const steps = getSteps();
 
   const getStepContent = (step) => {
@@ -100,15 +110,19 @@ const ShareStepperSection = () => {
           />
         );
       case 1:
-        return <ShareStory/>;
+        return (
+          <ShareStory
+            editorState={editorState}
+            setEditorState={setEditorState}
+            toValue={toInputValue}
+            fromValue={fromInputValue}
+          />
+        );
       case 2:
-        return "This is the bit I really care about!";
+        return <Preview editorState={editorState} />;
       default:
         return "Unknown step";
     }
-  };
-  const isStepOptional = (step) => {
-    return step === 1;
   };
 
   const isStepSkipped = (step) => {
