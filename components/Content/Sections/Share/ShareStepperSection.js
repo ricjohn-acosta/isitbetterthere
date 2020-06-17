@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, withStyles  } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -7,27 +7,29 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import ChooseCategory from "./ChooseCategory";
-import StepConnector from '@material-ui/core/StepConnector';
+import ShareStory from "./ShareStory";
+import StepConnector from "@material-ui/core/StepConnector";
+import { careersCategory } from "../../../../lib/categories";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
   alternativeLabel: {
     top: 10,
-    left: 'calc(-50% + 16px)',
-    right: 'calc(50% + 16px)',
+    left: "calc(-50% + 16px)",
+    right: "calc(50% + 16px)",
   },
   active: {
-    '& $line': {
-      borderColor: '#00CCFF',
+    "& $line": {
+      borderColor: "#00CCFF",
     },
   },
   completed: {
-    '& $line': {
-      borderColor: '#00CCFF',
+    "& $line": {
+      borderColor: "#00CCFF",
     },
   },
   line: {
-    borderColor: '#eaeaf0',
+    borderColor: "#eaeaf0",
     borderTopWidth: 3,
     borderRadius: 1,
   },
@@ -54,30 +56,57 @@ const Wrapper = styled.div`
 function getSteps() {
   return [
     "What transition would you like to talk about?",
-    "Describe how it went",
+    "Explain how the transition went!",
     "Preview",
   ];
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <ChooseCategory />;
-    case 1:
-      return "What is an ad group anyways?";
-    case 2:
-      return "This is the bit I really care about!";
-    default:
-      return "Unknown step";
-  }
-}
-
 const ShareStepperSection = () => {
   const classes = useStyles();
+  const [categories, setCategory] = React.useState(careersCategory);
+  const [currentCategory, setCurrentCategory] = React.useState("careers");
+  const [toValue, setToValue] = React.useState(null);
+  const [toInputValue, setToInputValue] = React.useState("");
+  const [fromValue, setFromValue] = React.useState(null);
+  const [fromInputValue, setFromInputValue] = React.useState("");
+  const [isSelected, setSelected] = React.useState(false);
+  const [isSwapping, setSwapping] = React.useState(false);
+  const [isEmptyField, setEmptyFields] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return (
+          <ChooseCategory
+            categories={categories}
+            setCategory={setCategory}
+            currentCategory={currentCategory}
+            setCurrentCategory={setCurrentCategory}
+            setToValue={setToValue}
+            setToInputValue={setToInputValue}
+            setFromValue={setFromValue}
+            setFromInputValue={setFromInputValue}
+            setSelected={setSelected}
+            setSwapping={setSwapping}
+            toValue={toValue}
+            toInputValue={toInputValue}
+            fromValue={fromValue}
+            fromInputValue={fromInputValue}
+            isSwapping={isSwapping}
+            isEmptyField={isEmptyField}
+          />
+        );
+      case 1:
+        return <ShareStory/>;
+      case 2:
+        return "This is the bit I really care about!";
+      default:
+        return "Unknown step";
+    }
+  };
   const isStepOptional = (step) => {
     return step === 1;
   };
@@ -101,29 +130,20 @@ const ShareStepperSection = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
   const handleReset = () => {
     setActiveStep(0);
   };
 
   return (
     <Wrapper>
+      {console.log("TO VALUE, ", toValue, toInputValue)}
+      {console.log("FROM VALUE, ", fromValue, fromInputValue)}
       <div className={classes.root}>
-        <Stepper alternativeLabel activeStep={activeStep} connector={<StyledConnector/>}>
+        <Stepper
+          alternativeLabel
+          activeStep={activeStep}
+          connector={<StyledConnector />}
+        >
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
@@ -141,12 +161,12 @@ const ShareStepperSection = () => {
         <div>
           {activeStep === steps.length ? (
             <div>
-              <Typography
+              <div
                 style={{ display: "flex", justifyContent: "center" }}
                 className={classes.instructions}
               >
                 All steps completed - you&apos;re finished
-              </Typography>
+              </div>
               <Button
                 style={{ float: "right" }}
                 onClick={handleReset}
@@ -157,12 +177,12 @@ const ShareStepperSection = () => {
             </div>
           ) : (
             <div>
-              <Typography
+              <div
                 style={{ display: "flex", justifyContent: "center" }}
                 className={classes.instructions}
               >
                 {getStepContent(activeStep)}
-              </Typography>
+              </div>
               <div>
                 <Button
                   style={{ float: "right" }}

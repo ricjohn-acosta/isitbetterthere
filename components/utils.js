@@ -134,24 +134,6 @@ export const uniDirectionTo = (option, toInputValue) => {
   }
 };
 
-export const handleForm = (e, setEmptyFields) => {
-  e.preventDefault();
-  if (fromValue === null || toValue === null) {
-    setEmptyFields(true);
-    return console.log("ERROR");
-  } else {
-    Router.push({
-      pathname: "/transition",
-      query: {
-        category: currentCategory,
-        from: fromInputValue,
-        to: toInputValue,
-      },
-    });
-    setEmptyFields(false);
-    return console.log("NO ERROR");
-  }
-};
 
 
 

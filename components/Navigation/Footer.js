@@ -23,7 +23,7 @@ const Container = styled.div`
     padding: 5vh 0 0 0;
   }
 `;
-const LeftContainer = styled(Grid)``;
+
 const RightContainer = styled.div`
   float: right;
   padding: 4px 16px 0 0;
@@ -46,14 +46,16 @@ const Divider = styled.hr`
 const ListHeader = styled(Typography)`
   color: #9494b8;
 `;
+
+const StyledLinks = styled(Link)`
+  color: grey;
+`;
 const Copyright = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-// Social media
-// copyright
-// Contact, meet the team, about
+
 const Footer = () => {
   return (
     <Wrapper>
@@ -65,13 +67,13 @@ const Footer = () => {
                 Community
               </ListItem>
               <ListItem>
-                <Link href="about">About</Link>
+                <StyledLinks href="about">About</StyledLinks>
               </ListItem>
               <ListItem>
-                <Link href="contact">Contact</Link>
+                <StyledLinks href="contact">Contact</StyledLinks>
               </ListItem>
               <ListItem>
-                <Link href="ourteam">Meet the team</Link>
+                <StyledLinks href="ourteam">Meet the team</StyledLinks>
               </ListItem>
             </List>
           </Grid>

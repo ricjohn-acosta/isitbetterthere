@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import CategoryForm from "../Home/CategoryForm";
 import {
-  careersCategory,
   tertiaryEducationCategory,
   jobCategory,
   uniCategory,
@@ -15,16 +14,25 @@ const Wrapper = styled.div`
   margin: 5%;
 `;
 
-const ChooseCategory = () => {
-  const [categories, setCategory] = React.useState(careersCategory);
-  const [currentCategory, setCurrentCategory] = React.useState("careers");
-  const [toValue, setToValue] = React.useState(null);
-  const [toInputValue, setToInputValue] = React.useState("");
-  const [fromValue, setFromValue] = React.useState(null);
-  const [fromInputValue, setFromInputValue] = React.useState("");
-  const [isSelected, setSelected] = React.useState(false);
-  const [isSwapping, setSwapping] = React.useState(false);
-  const [isEmptyField, setEmptyFields] = React.useState(false);
+const ChooseCategory = ({
+  categories,
+  setCategory,
+  currentCategory,
+  setCurrentCategory,
+  toValue,
+  setToValue,
+  toInputValue,
+  setToInputValue,
+  fromValue,
+  setFromValue,
+  fromInputValue,
+  setFromInputValue,
+  setSelected,
+  isSwapping,
+  setSwapping,
+  isEmptyField,
+}) => {
+
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -32,14 +40,6 @@ const ChooseCategory = () => {
       setEmptyFields(true);
       return console.log("ERROR");
     } else {
-      Router.push({
-        pathname: "/transition",
-        query: {
-          category: currentCategory,
-          from: fromInputValue,
-          to: toInputValue,
-        },
-      });
       setEmptyFields(false);
       return console.log("NO ERROR");
     }

@@ -209,7 +209,6 @@ const MainSection = () => {
               <FadeIn>Know your destination</FadeIn>
             </FadeInAnimation>
           </WelcomeMessage>
-          {console.log("is selected? ", isSelected)}
           <CategoryForm
             categories={categories}
             currentCategory={currentCategory}
