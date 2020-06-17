@@ -11,7 +11,7 @@ export default async function addUser(req, res) {
     });
     res.status(200).end()
   } else {
-    res.setHeader("Allow", ["GET", "PUT"]);
+    res.setHeader("Allow", ["GET"]);
     res.status(405).end(`Method  Not Allowed`);
   }
 }

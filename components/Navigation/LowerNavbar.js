@@ -1,9 +1,6 @@
 import styled from "styled-components";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
@@ -11,7 +8,8 @@ import Link from "@material-ui/core/Link";
 import { signout } from "next-auth/client";
 import { addUser } from "../../store/actions/users";
 import { connect } from "react-redux";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
+import BrandLogo from "./BrandLogo";
 
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
@@ -24,13 +22,7 @@ const StyledLowerNavbar = styled(AppBar)`
     padding-left: 1vw
   }
 `;
-// Brand logo
-const Brand = styled(Typography)`
-  color: #484848;
-  margin-right: 1.5vw;
-  margin-top: 1.5vh;
-  font-weight: bold;
-`;
+
 // Buttons on the right hand side of the navbar
 const UserButtons = styled(Button)`
   color: #404040;
@@ -81,7 +73,7 @@ const Container = styled.div`
 `;
 
 const LowerNavbar = ({ session, addUser }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <StyledLowerNavbar elevation={0} position="sticky" component="div">
@@ -89,12 +81,14 @@ const LowerNavbar = ({ session, addUser }) => {
       <Container>
         <Grid container direction="row">
           <Grid item container xs={6} sm={6} md={8}>
-            <Brand variant="h4" component={Link} href="/" underline="none">
-              IsItBetterThere
-            </Brand>
+            <BrandLogo>IsItBetterThere</BrandLogo>
             <Link
               component={MiscButtons}
-              href={router.pathname === "/" ? "#/howitworks" : "http://localhost:3000/#/howitworks"}
+              href={
+                router.pathname === "/"
+                  ? "#/howitworks"
+                  : "http://localhost:3000/#/howitworks"
+              }
               style={{ textDecoration: "none" }}
               disableRipple
             >
@@ -102,7 +96,11 @@ const LowerNavbar = ({ session, addUser }) => {
             </Link>
             <Link
               component={MiscButtons}
-              href={router.pathname === "/" ? "#/learn" : "http://localhost:3000/#/learn"}
+              href={
+                router.pathname === "/"
+                  ? "#/learn"
+                  : "http://localhost:3000/#/learn"
+              }
               style={{ textDecoration: "none" }}
               disableRipple
             >
@@ -110,13 +108,14 @@ const LowerNavbar = ({ session, addUser }) => {
             </Link>
             <Link
               component={MiscButtons}
+              href={"/share"}
               style={{ textDecoration: "none" }}
               disableRipple
               onClick={() => {
                 addUser({ name: "works", email: "works" });
               }}
             >
-              Share your story
+              Share your experience
             </Link>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>

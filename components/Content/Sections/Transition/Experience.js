@@ -7,6 +7,7 @@ import Router from "next/router";
 import WorkIcon from "@material-ui/icons/Work";
 import PersonIcon from "@material-ui/icons/Person";
 import EmailIcon from "@material-ui/icons/Email";
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -55,6 +56,10 @@ const Experience = () => {
               <div style={{ display: "flex" }}>
                 <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
                 &nbsp;Senior nurse at Auckland Hospital
+              </div>
+              <div style={{ display: "flex" }}>
+                <ChatBubbleIcon style={{ color: "#1a8cff" }} fontSize="small" />
+                &nbsp;Saving lives is my passion
               </div>
             </UserInfo>
           </ProfileDetails>

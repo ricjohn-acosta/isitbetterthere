@@ -6,13 +6,14 @@ const Wrapper = styled.div`
   min-height: 50vh;
 `;
 
-const pagenotfound = () => {
+const PageNotFound = ({ session }) => {
+
   return (
     <>
-      <LowerNavbar />
+      <LowerNavbar session={session} />
       <Wrapper>"Could not find page"</Wrapper>
     </>
   );
 };
 
-export default pagenotfound;
+export default PageNotFound;

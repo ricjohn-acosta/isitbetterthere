@@ -85,7 +85,7 @@ const TutorialSection = () => {
               </ImageContainer>
               <Grid item xs={12} sm={6}>
                 <TopText variant="h4">
-                  Start <Link href="/"><a>here</a></Link>. Choose a category that relates to your situation,
+                  Start <Link href="/"><a>here</a></Link>. Choose a category that best suit your situation,
                   where you are planning to transition from and where you want
                   to be.
                 </TopText>
@@ -95,7 +95,7 @@ const TutorialSection = () => {
             <Grid container item>
               <Grid item xs={12} sm={12}>
                 <TopText variant="h5">
-                  Start <Link href="/"><a>here</a></Link>. Choose a category that relates to your situation,
+                  Start <Link href="/"><a>here</a></Link>. Choose a category that best suit your situation,
                   where you are planning to transition from and where you want
                   to be.
                 </TopText>

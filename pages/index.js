@@ -5,7 +5,6 @@ import { session } from 'next-auth/client'
 const Index = ({session}) => {
   return (
     <Layout>
-      {console.log(session)}
       <Home session={session}/>
     </Layout>
   );
@@ -14,10 +13,9 @@ const Index = ({session}) => {
 export async function getServerSideProps(context) {
   return {
     props: {
-      session: await session(context)
-    }
-  }
+      session: await session(context),
+    },
+  };
 }
-
 
 export default Index;

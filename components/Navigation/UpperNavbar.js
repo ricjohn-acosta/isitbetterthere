@@ -5,6 +5,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
+import BrandLogo from "./BrandLogo";
+import { useRouter } from "next/router";
 
 const UpperNavbar = styled(AppBar)`
   background-color: #33cccc;
@@ -33,9 +35,15 @@ const Container = styled.div`
 `;
 
 const StyledUpperNavbar = () => {
+  const router = useRouter();
+
   return (
     <UpperNavbar elevation={0} position="static">
       <Container>
+        {router.pathname !== "/share" ? null : (
+          <BrandLogo>IsItBetterThere</BrandLogo>
+        )}
+
         <StyledButton disableRipple>Meet the team</StyledButton>
         <StyledButton disableRipple>Contact</StyledButton>
         <StyledButton disableRipple>About</StyledButton>
