@@ -32,6 +32,7 @@ const ChooseCategory = ({
   isSwapping,
   setSwapping,
   isEmptyField,
+  setEmptyFields
 }) => {
 
 

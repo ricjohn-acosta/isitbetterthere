@@ -12,6 +12,7 @@ import Preview from "./Preview";
 import StepConnector from "@material-ui/core/StepConnector";
 import { careersCategory } from "../../../../lib/categories";
 import { EditorState } from "draft-js";
+import { convertToRaw } from "draft-js";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -55,9 +56,12 @@ const Wrapper = styled.div`
   min-height: 110vh;
   margin-top: 5vh;
   padding: 0 5% 0 5%;
-  background: rgb(255,255,255);
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(211,252,252,1) 100%);
-
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(211, 252, 252, 1) 100%
+  );
 `;
 
 function getSteps() {
@@ -84,6 +88,7 @@ const ShareStepperSection = () => {
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty()
   );
+  const editorContent = convertToRaw(editorState.getCurrentContent());
   const steps = getSteps();
 
   const getStepContent = (step) => {
@@ -107,6 +112,7 @@ const ShareStepperSection = () => {
             fromInputValue={fromInputValue}
             isSwapping={isSwapping}
             isEmptyField={isEmptyField}
+            setEmptyFields={setEmptyFields}
           />
         );
       case 1:
@@ -130,14 +136,37 @@ const ShareStepperSection = () => {
   };
 
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
+    if (checkIfEmpty(0) && activeStep === 0) {
+      console.log("empty first step");
+    } else if (checkIfEmpty(1) && activeStep === 1) {
+      console.log("empty second step")
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+  };
+
+  const checkIfEmpty = (step) => {
+    switch (step) {
+      case 0:
+        if (!toValue || !fromValue) {
+          setEmptyFields(true);
+          return true
+        } else {
+          setEmptyFields(false);
+
+          return false
+        }
+
+      case 1:
+        if(editorContent.blocks[0].text === "" && editorContent.blocks.length === 1) {
+          return true
+        } else {
+          return false
+        }
+      default:
+        break;
+    }
   };
 
   const handleBack = () => {
@@ -152,6 +181,8 @@ const ShareStepperSection = () => {
     <Wrapper>
       {console.log("TO VALUE, ", toValue, toInputValue)}
       {console.log("FROM VALUE, ", fromValue, fromInputValue)}
+      {console.log(editorContent)}
+      {console.log(editorContent.blocks[0].text)}
       <div className={classes.root}>
         <Stepper
           alternativeLabel
