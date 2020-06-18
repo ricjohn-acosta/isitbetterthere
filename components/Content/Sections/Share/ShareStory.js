@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "../../../../public/editor.css"
 import Typography from "@material-ui/core/Typography";
 
 const Wrapper = styled.div`
@@ -13,16 +14,16 @@ const Editor = dynamic(() => import("./Editor"), {
 });
 
 const ShareStory = ({ editorState, setEditorState, toValue, fromValue }) => {
-
   return (
     <Wrapper>
       <Typography component="div" variant="h5">
-        Share what you felt about transitioning from <b>{fromValue}</b> to <b>{toValue}</b>
+        Share what you felt about transitioning from <b>{fromValue}</b> to{" "}
+        <b>{toValue}</b>
       </Typography>
       <br />
       <Typography variant="subtitle1">
-        The more detailed it is the more impact you could make to someone's life
-        😉
+        The more detailed your story is the more impact you could make to someone's life
+        😊
       </Typography>
       <br />
       <Editor editorState={editorState} setEditorState={setEditorState} />
