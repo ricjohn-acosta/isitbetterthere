@@ -40,9 +40,9 @@ const StyledUpperNavbar = () => {
   return (
     <UpperNavbar elevation={0} position="static">
       <Container>
-        {router.pathname !== "/share" ? null : (
+        {/* {router.pathname !== "/share" ? null : (
           <BrandLogo>IsItBetterThere</BrandLogo>
-        )}
+        )} */}
 
         <StyledButton disableRipple>Meet the team</StyledButton>
         <StyledButton disableRipple>Contact</StyledButton>
