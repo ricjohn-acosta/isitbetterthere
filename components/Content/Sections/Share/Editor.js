@@ -33,6 +33,22 @@ const EditorConvertToHTML = ({ editorState, setEditorState }) => {
             return "not-handled";
           }
         }}
+        toolbar={{
+          options: [
+            "inline",
+            "blockType",
+            "fontFamily",
+            "list",
+            "textAlign",
+            "colorPicker",
+            "link",
+            "embedded",
+            "emoji",
+            "image",
+            "remove",
+            "history",
+          ],
+        }}
       />
     </div>
   );

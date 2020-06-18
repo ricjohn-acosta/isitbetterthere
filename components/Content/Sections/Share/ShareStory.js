@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 
 const Wrapper = styled.div`
   min-height: 50vh;
+  margin-top: 5vh;
 `;
 
 const Editor = dynamic(() => import("./Editor"), {
@@ -21,7 +22,7 @@ const ShareStory = ({ editorState, setEditorState, toValue, fromValue }) => {
         <b>{toValue}</b>
       </Typography>
       <br />
-      <Typography variant="subtitle1">
+      <Typography variant="subtitle2">
         The more detailed your story is the more impact you could make to someone's life
         😊
       </Typography>

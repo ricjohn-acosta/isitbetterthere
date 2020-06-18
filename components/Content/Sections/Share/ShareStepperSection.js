@@ -137,13 +137,12 @@ const ShareStepperSection = () => {
 
   const handleNext = () => {
     if (checkIfEmpty(0) && activeStep === 0) {
-      console.log("empty first step");
+      return;
     } else if (checkIfEmpty(1) && activeStep === 1) {
-      console.log("empty second step")
+      return;
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
-
   };
 
   const checkIfEmpty = (step) => {
@@ -151,18 +150,21 @@ const ShareStepperSection = () => {
       case 0:
         if (!toValue || !fromValue) {
           setEmptyFields(true);
-          return true
+          return true;
         } else {
           setEmptyFields(false);
 
-          return false
+          return false;
         }
 
       case 1:
-        if(editorContent.blocks[0].text === "" && editorContent.blocks.length === 1) {
-          return true
+        if (
+          editorContent.blocks[0].text === "" &&
+          editorContent.blocks.length === 1
+        ) {
+          return true;
         } else {
-          return false
+          return false;
         }
       default:
         break;
