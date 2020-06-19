@@ -1,7 +1,7 @@
 import { getUsers, registerUser } from "../../server/db";
 import { getSession } from "next-auth/client";
 
-export default async function addUser(req, res) {
+export default async function users(req, res) {
   const session = await getSession({ req })
 
   if (req.method === "POST" && session) {

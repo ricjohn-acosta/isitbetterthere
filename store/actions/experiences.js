@@ -24,4 +24,27 @@ export const addExperience = (experience) => {
   };
 };
 
+export const getExperiences = (from, to) => {
+    return (dispatch) => {
+      dispatch({ type: actions.GET_EXPERIENCES_START });
+      return request
+        .get("/api/experiences")
+        .query({from, to})
+        .then((res) => {
+          console.log("req")
+          dispatch({ type: actions.GET_EXPERIENCES_SUCCESS, payload: "test" });
+        })
+        .catch((res) => {
+          console.log(res.status)
+          if (res.status === 405) {
+            console.log("GET EXPERIENCE FLOW FAILED")
+            dispatch({ type: actions.GET_EXPERIENCES_FAIL });
+          } else {
+            console.log("GET EXPERIENCE FLOW ENDED")
+            dispatch({ type: actions.GET_EXPERIENCES_END});
+          }
+        });
+    };
+  };
+
 

@@ -7,11 +7,13 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Charts from "./Charts";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import { getExperiences } from "../../../../store/actions/experiences";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles({
   expansionPanelSummaryContent: {
     display: "flex",
-    justifyContent:"center"
+    justifyContent: "center",
   },
 });
 
@@ -56,12 +58,13 @@ const ExpansionPanelDetailsContainer = styled(ExpansionPanelDetails)`
   }
 `;
 
-const OverviewSection = () => {
+const OverviewSection = ({ from, to, getExperiences }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   return (
     <>
       <Wrapper>
+        {console.log(getExperiences(from, to))}
         <Container container direction="row">
           <GridItems item xs={12} sm={12} md={4} align="center">
             <StyledImage src="fulfillment.png" />
@@ -109,4 +112,10 @@ const OverviewSection = () => {
   );
 };
 
-export default OverviewSection;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getExperiences: (from, to) => dispatch(getExperiences(from, to)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(OverviewSection);

@@ -16,7 +16,7 @@ const test = ({ users, noAuth }) => {
 
 export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
-  console.log("testt", session)
+  console.log("testt", ctx)
   if (session) {
     const users = await getUsers();
     return { props: { users } };
