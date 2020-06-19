@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -13,6 +14,9 @@ import StepConnector from "@material-ui/core/StepConnector";
 import { careersCategory } from "../../../../lib/categories";
 import { EditorState } from "draft-js";
 import { convertToRaw } from "draft-js";
+import { grey } from "@material-ui/core/colors";
+import { addExperience } from "../../../../store/actions/experiences";
+import draftToHtml from "draftjs-to-html";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -41,6 +45,7 @@ const StyledConnector = withStyles({
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+    backgroundColor: grey,
   },
   button: {
     marginRight: theme.spacing(1),
@@ -71,8 +76,10 @@ function getSteps() {
     "Preview",
   ];
 }
+const HtmlToReactParser = require("html-to-react").Parser;
+const htmlToReactParser = new HtmlToReactParser();
 
-const ShareStepperSection = () => {
+const ShareStepperSection = ({ addExperience, session }) => {
   const classes = useStyles();
   const [categories, setCategory] = React.useState(careersCategory);
   const [currentCategory, setCurrentCategory] = React.useState("careers");
@@ -88,7 +95,12 @@ const ShareStepperSection = () => {
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty()
   );
+
+
   const editorContent = convertToRaw(editorState.getCurrentContent());
+  const story = JSON.stringify(editorState, null, 4);
+
+  console.log("STORY ", story)
   const steps = getSteps();
 
   const getStepContent = (step) => {
@@ -133,6 +145,17 @@ const ShareStepperSection = () => {
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addExperience({
+      uid: session.user.uid,
+      category: currentCategory,
+      from: fromInputValue,
+      to: toInputValue,
+      story,
+    });
   };
 
   const handleNext = () => {
@@ -212,8 +235,17 @@ const ShareStepperSection = () => {
                 style={{ display: "flex", justifyContent: "center" }}
                 className={classes.instructions}
               >
-                All steps completed - you&apos;re finished
+                All done! Thanks for contributing.
               </div>
+              <Button
+                color="primary"
+                variant="contained"
+                style={{ float: "right" }}
+                onClick={handleSubmit}
+                className={classes.button}
+              >
+                Submit
+              </Button>
               <Button
                 style={{ float: "right" }}
                 onClick={handleReset}
@@ -238,7 +270,7 @@ const ShareStepperSection = () => {
                   onClick={handleNext}
                   className={classes.button}
                 >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                  {activeStep === steps.length - 1 ? "Confirm" : "Next"}
                 </Button>
                 <Button
                   style={{ float: "right" }}
@@ -257,4 +289,10 @@ const ShareStepperSection = () => {
   );
 };
 
-export default ShareStepperSection;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addExperience: (experience) => dispatch(addExperience(experience)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ShareStepperSection);

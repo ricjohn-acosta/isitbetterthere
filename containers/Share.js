@@ -10,7 +10,7 @@ const Share = ({session}) => {
       
 
       <LowerNavbar session={session} />
-      <ShareStepperSection />
+      <ShareStepperSection session={session}/>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-// import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../../../../public/editor.css"
 import Typography from "@material-ui/core/Typography";
 

@@ -6,6 +6,7 @@ module.exports = {
   getUser,
   getUsers,
   registerUser,
+  addExperience,
 };
 
 function getUsers(db = connection) {
@@ -16,7 +17,10 @@ function getUser(id, db = connection) {
   return db("users").where("id", id).first();
 }
 
-function registerUser (user, db = connection) {
-  return db('users')
-    .insert(user)
+function registerUser(user, db = connection) {
+  return db("users").insert(user);
+}
+
+function addExperience(experience, db = connection) {
+  return db("experiences").insert(experience);
 }

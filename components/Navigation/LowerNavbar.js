@@ -111,9 +111,6 @@ const LowerNavbar = ({ session, addUser }) => {
               href={"/share"}
               style={{ textDecoration: "none" }}
               disableRipple
-              onClick={() => {
-                addUser({ name: "works", email: "works" });
-              }}
             >
               Share your experience
             </Link>
