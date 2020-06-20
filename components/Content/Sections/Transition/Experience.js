@@ -7,7 +7,7 @@ import Router from "next/router";
 import WorkIcon from "@material-ui/icons/Work";
 import PersonIcon from "@material-ui/icons/Person";
 import EmailIcon from "@material-ui/icons/Email";
-import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -37,7 +37,7 @@ const Content = styled(Grid)`
 const ButtonGroup = styled.div`
   float: right;
 `;
-const Experience = ({test}) => {
+const Experience = ({ experience, name, company, position, email, bio }) => {
   return (
     <Wrapper>
       <Grid container drection="column">
@@ -47,19 +47,19 @@ const Experience = ({test}) => {
             <UserInfo>
               <div style={{ display: "flex" }}>
                 <PersonIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;John G. Doe
+                &nbsp;{name}
               </div>
               <div style={{ display: "flex" }}>
                 <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;john@gmail.com
+                &nbsp;{email}
               </div>
               <div style={{ display: "flex" }}>
                 <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;Senior nurse at Auckland Hospital
+                &nbsp;{position} at {company}
               </div>
               <div style={{ display: "flex" }}>
                 <ChatBubbleIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;Saving lives is my passion
+                &nbsp;{bio}
               </div>
             </UserInfo>
           </ProfileDetails>
@@ -74,11 +74,11 @@ const Experience = ({test}) => {
           </ChipsContainer>
         </ProfileContainer>
         <Content item xs={12} sm={6} md={12}>
-          {test}
+          {experience}
           <hr style={{ marginTop: "5vh" }} />
           <ButtonGroup>
-            <Button>SEE COMMENTS (0)</Button>
-            <Button>COMMENT</Button>
+            <Button>Relatable</Button>
+            <Button>Not relatable</Button>
           </ButtonGroup>
         </Content>
       </Grid>

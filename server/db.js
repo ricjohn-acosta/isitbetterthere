@@ -28,7 +28,11 @@ function registerUser(user, db = connection) {
 
 // Change this to return db("experiences").where({from,to}).join("users", "experiences.eid", "=", "users.uid").select()
 function getExperiences(from, to, db = connection) {
-  return db("experiences").where({ from, to }).select();
+  // return db("experiences").where({ from, to }).select();
+  return db("experiences")
+    .where({ from, to })
+    .join("users", "experiences.eid", "=", "users.uid")
+    .select();
 }
 
 function getUserExperiences(uid, db = connection) {

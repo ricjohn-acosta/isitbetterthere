@@ -7,11 +7,10 @@ import Experience from "./Experience";
 import SearchTools from "./SearchTools";
 import Button from "@material-ui/core/Button";
 import SearchToolsMobile from "./SearchToolsMobile";
-import { convertFromRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 
 const Wrapper = styled.div`
-  min-height: 75vh;
+  min-height: 80vh;
   padding: 5% 5% 5% 5%;
   margin-top: 2.5%;
   background-color: #e6f2ff;
@@ -86,7 +85,12 @@ const ExperienceSection = ({ experiences }) => {
         {experiences.length === 0 ? "none" : experiences.map((e) => (
           <>
             <Experience
-              test={convertToReact(e.story)}
+              name={e.name}
+              email={e.email}
+              position={e.position}
+              company={e.company}
+              bio={e.bio}
+              experience={convertToReact(e.story)}
             />
             <br />
           </>
