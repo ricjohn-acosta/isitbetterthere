@@ -7,6 +7,8 @@ import Experience from "./Experience";
 import SearchTools from "./SearchTools";
 import Button from "@material-ui/core/Button";
 import SearchToolsMobile from "./SearchToolsMobile";
+import { convertFromRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
 
 const Wrapper = styled.div`
   min-height: 75vh;
@@ -68,12 +70,43 @@ const ShareExperienceBtn = styled(Button)`
 `;
 
 const SearchToolsMobileContainer = styled(SearchToolsMobile)``;
-const ExperienceSection = () => {
+
+const HtmlToReactParser = require("html-to-react").Parser;
+const htmlToReactParser = new HtmlToReactParser();
+
+const ExperienceSection = ({ experiences }) => {
   const isSM = useMediaQuery("(max-width:600px)");
   const isMD = useMediaQuery("(max-width:1199px)");
 
+  const testData = experiences;
+
+  const displayExperiences = () => {
+    return (
+      <>
+        {experiences.length === 0 ? "none" : experiences.map((e) => (
+          <>
+            <Experience
+              test={convertToReact(e.story)}
+            />
+            <br />
+          </>
+        ))}
+      </>
+    );
+  };
+
+  const convertToReact = (story) => {
+    const test = htmlToReactParser.parse(
+      draftToHtml(JSON.parse(story))
+    );
+
+    return test
+  };
+
   return (
     <Wrapper>
+      {/* {console.log(JSON.parse(testData[1].story))} */}
+      {console.log(testData)}
       <SectionHeader>
         <ExperienceIcon src="/experience.png" />
         <SectionTitle variant="h4">People's experiences</SectionTitle>
@@ -87,12 +120,13 @@ const ExperienceSection = () => {
             {isMD ? <SearchToolsMobileContainer /> : null}
           </ShareExperienceBtnContainer>
           <ExperienceContainer>
-            <Experience />
+            {/* <Experience test={test} />
             <br />
             <Experience />
             <br />
             <Experience />
-            <br />
+            <br /> */}
+            {displayExperiences()}
           </ExperienceContainer>
         </Grid>
         {isMD ? null : (

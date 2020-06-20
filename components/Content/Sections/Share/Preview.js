@@ -14,7 +14,7 @@ const Preview = ({ editorState }) => {
   const htmlInput = draftToHtml(convertToRaw(editorState.getCurrentContent()));
   const preview = htmlToReactParser.parse(htmlInput);
 
-  return <Wrapper>{preview}</Wrapper>;
+  return <Wrapper>{console.log(convertToRaw(editorState.getCurrentContent()))} {preview}</Wrapper>;
 };
 
 export default Preview;

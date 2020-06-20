@@ -11,7 +11,6 @@ module.exports = {
   addExperience,
 };
 
-
 // USERS
 function getUsers(db = connection) {
   return db("users").select();
@@ -26,15 +25,14 @@ function registerUser(user, db = connection) {
 }
 
 // EXPERIENCES
+
+// Change this to return db("experiences").where({from,to}).join("users", "experiences.eid", "=", "users.uid").select()
 function getExperiences(from, to, db = connection) {
   return db("experiences").where({ from, to }).select();
 }
-// function getExperiences(db = connection) {
-//   return db("experiences").select;
-// }
 
 function getUserExperiences(uid, db = connection) {
-  return db("experiences").where('uid', uid);
+  return db("experiences").where("uid", uid);
 }
 
 function addExperience(experience, db = connection) {

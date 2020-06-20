@@ -98,9 +98,9 @@ const ShareStepperSection = ({ addExperience, session }) => {
 
 
   const editorContent = convertToRaw(editorState.getCurrentContent());
-  const story = JSON.stringify(editorState, null, 4);
+  const story = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 
-  console.log("STORY ", story)
+  console.log("STORY ", editorContent)
   const steps = getSteps();
 
   const getStepContent = (step) => {
@@ -206,7 +206,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
     <Wrapper>
       {console.log("TO VALUE, ", toValue, toInputValue)}
       {console.log("FROM VALUE, ", fromValue, fromInputValue)}
-      {console.log(editorContent)}
+      {console.log(story)}
       {console.log(editorContent.blocks[0].text)}
       <div className={classes.root}>
         <Stepper
