@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 const Wrapper = styled.div`
   min-height: 50vh;
   margin-top: 5vh;
+  margin-left: 20%;
+  margin-right: 20%;
 `;
 
 const Editor = dynamic(() => import("./Editor"), {
@@ -17,7 +19,7 @@ const ShareStory = ({ editorState, setEditorState, toValue, fromValue }) => {
   return (
     <Wrapper>
       <Typography component="div" variant="h5">
-        Share what you felt about transitioning from <b>{fromValue}</b> to{" "}
+        Share your experience transitioning from <b>{fromValue}</b> to{" "}
         <b>{toValue}</b>
       </Typography>
       <br />

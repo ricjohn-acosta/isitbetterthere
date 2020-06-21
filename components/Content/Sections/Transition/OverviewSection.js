@@ -30,7 +30,7 @@ const GridItems = styled(Grid)`
   padding: 0 50px 50px 50px;
 
   ${(props) => props.theme.breakpoints.down("sm")} {
-    padding: 0 30px 30px 30px;
+    padding: 0 30px 50px 30px;
   }
 `;
 

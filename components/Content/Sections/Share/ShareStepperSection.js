@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import ChooseCategory from "./ChooseCategory";
 import ShareStory from "./ShareStory";
-import Preview from "./Preview";
+import Preview from "./ExtraInformation";
 import StepConnector from "@material-ui/core/StepConnector";
 import { careersCategory } from "../../../../lib/categories";
 import { EditorState } from "draft-js";
@@ -17,6 +17,7 @@ import { convertToRaw } from "draft-js";
 import { grey } from "@material-ui/core/colors";
 import { addExperience } from "../../../../store/actions/experiences";
 import draftToHtml from "draftjs-to-html";
+import ExtraInformation from "./ExtraInformation";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -67,13 +68,14 @@ const Wrapper = styled.div`
     rgba(255, 255, 255, 1) 0%,
     rgba(211, 252, 252, 1) 100%
   );
+  overflow: auto;
 `;
 
 function getSteps() {
   return [
     "What transition would you like to talk about?",
-    "Explain how the transition went!",
-    "Preview",
+    "Share your story!",
+    "Extra information",
   ];
 }
 const HtmlToReactParser = require("html-to-react").Parser;
@@ -137,7 +139,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
           />
         );
       case 2:
-        return <Preview editorState={editorState} />;
+        return <ExtraInformation editorState={editorState} />;
       default:
         return "Unknown step";
     }
@@ -255,14 +257,14 @@ const ShareStepperSection = ({ addExperience, session }) => {
               </Button>
             </div>
           ) : (
-            <div>
+            <div >
               <div
-                style={{ display: "flex", justifyContent: "center" }}
+                // style={{ display: "flex", justifyContent: "center" }}
                 className={classes.instructions}
               >
                 {getStepContent(activeStep)}
               </div>
-              <div>
+              <div >
                 <Button
                   style={{ float: "right" }}
                   variant="contained"
