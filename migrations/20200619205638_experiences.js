@@ -5,6 +5,9 @@ exports.up = (knex, Promise) => {
     table.string("category");
     table.string("from");
     table.string("to");
+    table.string("fulfillment");
+    table.string("ease_of_transition");
+    table.string("regret");
     table.string("story");
   });
 };

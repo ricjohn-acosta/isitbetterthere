@@ -92,17 +92,19 @@ const ShareStepperSection = ({ addExperience, session }) => {
   const [isSelected, setSelected] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
   const [isEmptyField, setEmptyFields] = React.useState(false);
+  const [fulfillment, setFulfillment] = React.useState("");
+  const [easeOfTransition, setEaseOfTransition] = React.useState("");
+  const [regret, setRegret] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty()
   );
 
-
   const editorContent = convertToRaw(editorState.getCurrentContent());
   const story = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 
-  console.log("STORY ", editorContent)
+  console.log("STORY ", editorContent);
   const steps = getSteps();
 
   const getStepContent = (step) => {
@@ -139,7 +141,17 @@ const ShareStepperSection = ({ addExperience, session }) => {
           />
         );
       case 2:
-        return <ExtraInformation editorState={editorState} />;
+        return (
+          <ExtraInformation
+            editorState={editorState}
+            setFulfillment={setFulfillment}
+            fulfillment={fulfillment}
+            setEaseOfTransition={setEaseOfTransition}
+            easeOfTransition={easeOfTransition}
+            setRegret={setRegret}
+            regret={regret}
+          />
+        );
       default:
         return "Unknown step";
     }
@@ -156,6 +168,9 @@ const ShareStepperSection = ({ addExperience, session }) => {
       category: currentCategory,
       from: fromInputValue,
       to: toInputValue,
+      fulfillment,
+      ease_of_transition: easeOfTransition,
+      regret,
       story,
     });
   };
@@ -206,10 +221,11 @@ const ShareStepperSection = ({ addExperience, session }) => {
 
   return (
     <Wrapper>
-      {console.log("TO VALUE, ", toValue, toInputValue)}
+      {/* {console.log("TO VALUE, ", toValue, toInputValue)}
       {console.log("FROM VALUE, ", fromValue, fromInputValue)}
       {console.log(story)}
-      {console.log(editorContent.blocks[0].text)}
+      {console.log(editorContent.blocks[0].text)} */}
+      {console.log(fulfillment, easeOfTransition, regret)}
       <div className={classes.root}>
         <Stepper
           alternativeLabel
@@ -257,14 +273,14 @@ const ShareStepperSection = ({ addExperience, session }) => {
               </Button>
             </div>
           ) : (
-            <div >
+            <div>
               <div
                 // style={{ display: "flex", justifyContent: "center" }}
                 className={classes.instructions}
               >
                 {getStepContent(activeStep)}
               </div>
-              <div >
+              <div>
                 <Button
                   style={{ float: "right" }}
                   variant="contained"

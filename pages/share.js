@@ -1,6 +1,6 @@
 import Share from "../containers/Share";
 import Layout from "../components/Layout/Layout";
-import { session } from "next-auth/client";
+import { getSession } from "next-auth/client";
 
 const share = ({ session }) => {
   return (
@@ -11,9 +11,18 @@ const share = ({ session }) => {
 };
 
 export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (typeof window === "undefined" && context.res.writeHead) {
+    if(!session) {
+      context.res.writeHead(302, {Location: "/signup"})
+      context.res.end()
+    }
+  }
+
   return {
     props: {
-      session: await session(context),
+      session: session,
     },
   };
 }

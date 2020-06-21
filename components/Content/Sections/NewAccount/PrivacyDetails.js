@@ -29,7 +29,6 @@ const PrivacyDetails = ({
   hideCompany,
   hideLocation,
 }) => {
-  const [isChecked, setChecked] = React.useState(false);
 
   const handleChange = (target) => {
     switch (target) {

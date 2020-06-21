@@ -82,29 +82,33 @@ const ExperienceSection = ({ experiences }) => {
   const displayExperiences = () => {
     return (
       <>
-        {experiences.length === 0 ? "none" : experiences.map((e) => (
-          <>
-            <Experience
-              name={e.name}
-              email={e.email}
-              position={e.position}
-              company={e.company}
-              bio={e.bio}
-              experience={convertToReact(e.story)}
-            />
-            <br />
-          </>
-        ))}
+        {console.log(experiences)}
+        {experiences.length === 0
+          ? "none"
+          : experiences.map((e) => (
+              <>
+                <Experience
+                  name={e.name}
+                  email={e.email}
+                  position={e.position}
+                  company={e.company}
+                  bio={e.bio}
+                  fulfillment={e.fulfillment}
+                  easeOfTransition={e.ease_of_transition}
+                  regret={e.regret}
+                  experience={convertToReact(e.story)}
+                />
+                <br />
+              </>
+            ))}
       </>
     );
   };
 
   const convertToReact = (story) => {
-    const test = htmlToReactParser.parse(
-      draftToHtml(JSON.parse(story))
-    );
+    const test = htmlToReactParser.parse(draftToHtml(JSON.parse(story)));
 
-    return test
+    return test;
   };
 
   return (

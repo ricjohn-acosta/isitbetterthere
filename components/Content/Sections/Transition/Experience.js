@@ -37,7 +37,42 @@ const Content = styled(Grid)`
 const ButtonGroup = styled.div`
   float: right;
 `;
-const Experience = ({ experience, name, company, position, email, bio }) => {
+const Experience = ({
+  experience,
+  name,
+  company,
+  position,
+  email,
+  bio,
+  fulfillment,
+  easeOfTransition,
+  regret,
+}) => {
+  const renderChips = () => {
+    const chips = [fulfillment, easeOfTransition, regret];
+    console.log(chips);
+    return chips.map((e, i) => (
+      <>
+        <Chip label={e} color={checkColor(i)} />
+        &nbsp;
+      </>
+    ));
+  };
+
+  const checkColor = (index) => {
+    if (index === 0) {
+      return "secondary";
+    }
+
+    if (index === 1) {
+      return "primary";
+    }
+
+    if (index === 2) {
+      return "default";
+    }
+  };
+
   return (
     <Wrapper>
       <Grid container drection="column">
@@ -65,12 +100,13 @@ const Experience = ({ experience, name, company, position, email, bio }) => {
           </ProfileDetails>
 
           <ChipsContainer>
-            <Chip label="Fulfilled" color="secondary" />
+            {/* <Chip label="Fulfilled" color="secondary" />
             &nbsp;
             <Chip label="Easily transitioned" color="primary" />
             &nbsp;
             <Chip label="Did not regret" color="default" />
-            &nbsp;
+            &nbsp; */}
+            {renderChips()}
           </ChipsContainer>
         </ProfileContainer>
         <Content item xs={12} sm={6} md={12}>
