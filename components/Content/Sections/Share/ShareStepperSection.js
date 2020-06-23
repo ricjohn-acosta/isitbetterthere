@@ -164,7 +164,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addExperience({
-      eid: session.user.uid,
+      eid: session.account.id,
       category: currentCategory,
       from: fromInputValue,
       to: toInputValue,

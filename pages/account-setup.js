@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
     let found = false;
     console.log("test");
     users.forEach((user) => {
-      if (user.uid === session.user.uid) {
+      if (user.uid === session.account.id) {
         found = true;
       }
     });
