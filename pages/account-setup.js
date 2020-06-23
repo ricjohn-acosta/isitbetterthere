@@ -40,7 +40,7 @@ export async function getServerSideProps(context) {
 
   if (typeof window === "undefined" && context.res.writeHead) {
     if(findUserInDatabase()) {
-      context.res.writeHead(302, {Location: "/"})
+      context.res.writeHead(302, {Location: "http://localhost:3000/"})
       context.res.end()
     }
   }

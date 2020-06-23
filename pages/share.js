@@ -15,7 +15,7 @@ export async function getServerSideProps(context) {
 
   if (typeof window === "undefined" && context.res.writeHead) {
     if(!session) {
-      context.res.writeHead(302, {Location: "/signup"})
+      context.res.writeHead(302, {Location: "http://localhost:3000/signup"})
       context.res.end()
     }
   }

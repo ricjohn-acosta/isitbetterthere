@@ -5,11 +5,11 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
 import Link from "@material-ui/core/Link";
-import { signout } from "next-auth/client";
 import { addUser } from "../../store/actions/users";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import BrandLogo from "./BrandLogo";
+import { signin, signout, useSession } from "next-auth/client";
 
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
@@ -126,7 +126,17 @@ const LowerNavbar = ({ session, addUser }) => {
                 Sign out
               </UserButtons>
             ) : (
-              <UserButtons href={"/signup"}>Sign up | Login</UserButtons>
+              // Add custom signup page when next-auth is stable
+              // <UserButtons href={"/signup"}>Sign up | Login</UserButtons>
+              <UserButtons
+                href={"/api/auth/signin"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  signin();
+                }}
+              >
+                Sign up | Login
+              </UserButtons>
             )}
             {/* {session ? null : <UserButtons disableRipple>Login</UserButtons>} */}
             <DrawerContainer>
