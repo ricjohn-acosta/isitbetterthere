@@ -3,12 +3,14 @@ import dynamic from "next/dynamic";
 import "../../../../public/editor.css";
 import Typography from "@material-ui/core/Typography";
 import Subheaders from "./common/Subheaders";
+import PaperWrapper from "./common/PaperWrapper";
+import HeaderDivider from "./common/HeaderDivider";
 
 const Wrapper = styled.div`
-  min-height: 50vh;
-  margin-top: 5vh;
-  margin-left: 20%;
-  margin-right: 20%;
+  // min-height: 50vh;
+  // margin-top: 5vh;
+  // margin-left: 20%;
+  // margin-right: 20%;
 `;
 
 const Editor = dynamic(() => import("./Editor"), {
@@ -16,11 +18,17 @@ const Editor = dynamic(() => import("./Editor"), {
   ssr: false,
 });
 
-const ShareStory = ({ editorState, setEditorState, toValue, fromValue }) => {
+const ShareStory = ({
+  editorState,
+  setEditorState,
+  toValue,
+  fromValue,
+  shareEmptyState,
+}) => {
   return (
-    <>
+    <PaperWrapper>
       <Subheaders icon={"/shareExperience.png"}>Share your story!</Subheaders>
-      <hr/>
+      <HeaderDivider />
       <Wrapper>
         <Typography component="div" variant="h5">
           Share your experience transitioning from <b>{fromValue}</b> to{" "}
@@ -31,10 +39,19 @@ const ShareStory = ({ editorState, setEditorState, toValue, fromValue }) => {
           The more detailed your story is the more impact you could make to
           someone's life 😊
         </Typography>
+        {shareEmptyState ? (
+          <Typography
+            style={{ color: "red" }}
+            component="span"
+            variant="subtitle2"
+          >
+            (required)
+          </Typography>
+        ) : null}
         <br />
         <Editor editorState={editorState} setEditorState={setEditorState} />
       </Wrapper>
-    </>
+    </PaperWrapper>
   );
 };
 

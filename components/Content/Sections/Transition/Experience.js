@@ -8,6 +8,9 @@ import WorkIcon from "@material-ui/icons/Work";
 import PersonIcon from "@material-ui/icons/Person";
 import EmailIcon from "@material-ui/icons/Email";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { IconButton } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -36,6 +39,10 @@ const Content = styled(Grid)`
 
 const ButtonGroup = styled.div`
   float: right;
+`;
+
+const HelpfulCount = styled(Typography)`
+  color: grey;
 `;
 const Experience = ({
   experience,
@@ -73,10 +80,19 @@ const Experience = ({
     }
   };
 
+  const checkIfEmpty = () => {
+    return fulfillment === "" && easeOfTransition === "" && regret === "";
+  };
+
   return (
     <Wrapper>
       <Grid container drection="column">
         <ProfileContainer item xs={12} sm={6} md={12}>
+          <div style={{ float: "right" }}>
+            <IconButton>
+              <MoreVertIcon />
+            </IconButton>
+          </div>
           <ProfileDetails>
             <Avatar style={{ marginTop: "5px" }} />
             <UserInfo>
@@ -100,21 +116,18 @@ const Experience = ({
           </ProfileDetails>
 
           <ChipsContainer>
-            {/* <Chip label="Fulfilled" color="secondary" />
-            &nbsp;
-            <Chip label="Easily transitioned" color="primary" />
-            &nbsp;
-            <Chip label="Did not regret" color="default" />
-            &nbsp; */}
-            {renderChips()}
+            {checkIfEmpty() ? null : renderChips()}
           </ChipsContainer>
         </ProfileContainer>
         <Content item xs={12} sm={6} md={12}>
           {experience}
           <hr style={{ marginTop: "5vh" }} />
+          <HelpfulCount component="span" variant="caption">
+            123 people have found this helpful
+          </HelpfulCount>
           <ButtonGroup>
-            <Button>Relatable</Button>
-            <Button>Not relatable</Button>
+            <Button>Helpful</Button>
+            <Button>Not helpful</Button>
           </ButtonGroup>
         </Content>
       </Grid>

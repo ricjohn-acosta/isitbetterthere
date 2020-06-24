@@ -11,6 +11,9 @@ import {
 } from "../../../../lib/categories";
 import Typography from "@material-ui/core/Typography";
 import Subheaders from "./common/Subheaders";
+import PaperWrapper from "./common/PaperWrapper";
+import HeaderDivider from "./common/HeaderDivider";
+import Header from "../../../Navigation/Header";
 
 const Wrapper = styled.div`
   margin: 5%;
@@ -98,9 +101,11 @@ const ChooseCategory = ({
   };
 
   return (
-    <>
-      <Subheaders icon={"/swap.png"}>What transition would you like to talk about?</Subheaders>
-      <hr/>
+    <PaperWrapper>
+      <Subheaders icon={"/swap.png"}>
+        What transition would you like to talk about?
+      </Subheaders>
+      <HeaderDivider />
       <Wrapper>
         <StyledDiv>
           <CategoryForm
@@ -124,7 +129,7 @@ const ChooseCategory = ({
           />
         </StyledDiv>
       </Wrapper>
-    </>
+    </PaperWrapper>
   );
 };
 

@@ -31,12 +31,12 @@ function getExperiences(from, to, db = connection) {
   // return db("experiences").where({ from, to }).select();
   return db("experiences")
     .where({ from, to })
-    .join("users", "experiences.eid", "=", "users.uid")
+    .join("users", "experiences.experience_id", "=", "users.user_id")
     .select();
 }
 
 function getUserExperiences(uid, db = connection) {
-  return db("experiences").where("uid", uid);
+  return db("experiences").where("user_id", uid);
 }
 
 function addExperience(experience, db = connection) {

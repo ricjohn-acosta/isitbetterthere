@@ -6,8 +6,8 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex("experiences").insert([
         {
-          id: 1,
-          eid: "1",
+          // id: 1,
+          experience_id: "1",
           category: "Careers",
           from: "Unemployed / Graduate",
           to: "Accounting",

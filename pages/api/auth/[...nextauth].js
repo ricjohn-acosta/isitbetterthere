@@ -65,6 +65,7 @@
 
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
+import { session } from "next-auth/client";
 
 // For more information on options, go to
 // https://next-auth.js.org/configuration/options
@@ -150,7 +151,7 @@ const options = {
     // signout: '/api/auth/signout', // Displays form with sign out button
     // error: '/api/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/api/auth/verify-request', // Used for check email page
-    // newUser: null // If set, new users will be directed here on first sign in
+    newUser: "/account-setup" // If set, new users will be directed here on first sign in
   },
 
   // Callbacks are asynchronous functions you can use to control what happens

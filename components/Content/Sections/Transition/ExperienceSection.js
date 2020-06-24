@@ -49,7 +49,7 @@ const ExperienceContainer = styled(Paper)`
   }
 `;
 
-const SearchtoolsContainer = styled(Paper)`
+const SearchToolsContainer = styled.div`
   margin: 10.5vh 50px 0 50px;
   min-height: 25vh;
   max-width: 50vw;
@@ -139,10 +139,10 @@ const ExperienceSection = ({ experiences }) => {
         </Grid>
         {isMD ? null : (
           <Grid item xs={12} sm={12} md={3}>
-            <SearchtoolsContainer>
+            <SearchToolsContainer>
               <Typography variant="h4">Search tools</Typography>
               <SearchTools />
-            </SearchtoolsContainer>
+            </SearchToolsContainer>
           </Grid>
         )}
       </Grid>

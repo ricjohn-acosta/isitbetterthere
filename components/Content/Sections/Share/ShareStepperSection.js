@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import ChooseCategory from "./ChooseCategory";
 import ShareStory from "./ShareStory";
-import Preview from "./ExtraInformation";
 import StepConnector from "@material-ui/core/StepConnector";
 import { careersCategory } from "../../../../lib/categories";
 import { EditorState } from "draft-js";
@@ -18,6 +17,7 @@ import { grey } from "@material-ui/core/colors";
 import { addExperience } from "../../../../store/actions/experiences";
 import draftToHtml from "draftjs-to-html";
 import ExtraInformation from "./ExtraInformation";
+import Preview from "./Preview";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -59,15 +59,15 @@ const useStyles = makeStyles((theme) => ({
 
 // COMPONENT LEVEL STYLING
 const Wrapper = styled.div`
-  min-height: 110vh;
-  margin-top: 5vh;
+  min-height: 150vh;
   padding: 0 5% 0 5%;
-  background: rgb(255, 255, 255);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(211, 252, 252, 1) 100%
-  );
+  // background: rgb(255, 255, 255);
+  // background: linear-gradient(
+  //   180deg,
+  //   rgba(255, 255, 255, 1) 0%,
+  //   rgba(211, 252, 252, 1) 100%
+  // );
+  background-color: #f8f8f8;
   overflow: auto;
 `;
 
@@ -92,6 +92,8 @@ const ShareStepperSection = ({ addExperience, session }) => {
   const [isSelected, setSelected] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
   const [isEmptyField, setEmptyFields] = React.useState(false);
+  const [extraInfoEmptyState, setExtraInfoEmptyState] = React.useState(false);
+  const [shareEmptyState, setShareEmptyState] = React.useState(false);
   const [fulfillment, setFulfillment] = React.useState("");
   const [easeOfTransition, setEaseOfTransition] = React.useState("");
   const [regret, setRegret] = React.useState("");
@@ -138,6 +140,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
             setEditorState={setEditorState}
             toValue={toInputValue}
             fromValue={fromInputValue}
+            shareEmptyState={shareEmptyState}
           />
         );
       case 2:
@@ -150,6 +153,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
             easeOfTransition={easeOfTransition}
             setRegret={setRegret}
             regret={regret}
+            extraInfoEmptyState={extraInfoEmptyState}
           />
         );
       default:
@@ -157,14 +161,10 @@ const ShareStepperSection = ({ addExperience, session }) => {
     }
   };
 
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     addExperience({
-      eid: session.account.id,
+      experience_id: session.account.id,
       category: currentCategory,
       from: fromInputValue,
       to: toInputValue,
@@ -176,15 +176,30 @@ const ShareStepperSection = ({ addExperience, session }) => {
   };
 
   const handleNext = () => {
-    if (checkIfEmpty(0) && activeStep === 0) {
-      return;
-    } else if (checkIfEmpty(1) && activeStep === 1) {
-      return;
-    } else {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === 0) {
+      if (checkIfEmpty(0)) {
+        return;
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    }
+    if (activeStep === 1) {
+      if (checkIfEmpty(1)) {
+        return;
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    }
+    if (activeStep === 2) {
+      if (checkIfEmpty(2)) {
+        return;
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
     }
   };
 
+  console.log(activeStep);
   const checkIfEmpty = (step) => {
     switch (step) {
       case 0:
@@ -193,23 +208,42 @@ const ShareStepperSection = ({ addExperience, session }) => {
           return true;
         } else {
           setEmptyFields(false);
-
+          return false;
+        }
+      case 1:
+        if (
+          isWhiteSpaceOrEmpty(editorContent.blocks[0].text) &&
+          editorContent.blocks.length === 1
+        ) {
+          setShareEmptyState(true);
+          return true;
+        } else {
+          setShareEmptyState(false);
           return false;
         }
 
-      case 1:
+      case 2:
         if (
-          editorContent.blocks[0].text === "" &&
-          editorContent.blocks.length === 1
+          isWhiteSpaceOrEmpty(fulfillment) ||
+          isWhiteSpaceOrEmpty(easeOfTransition) ||
+          isWhiteSpaceOrEmpty(regret)
         ) {
+          setExtraInfoEmptyState(true);
           return true;
         } else {
+          setExtraInfoEmptyState(false);
           return false;
         }
       default:
         break;
     }
   };
+
+  const isWhiteSpaceOrEmpty = (input) => {
+    return !/[^\s]/.test(input);
+  };
+
+  console.log(isWhiteSpaceOrEmpty(" "));
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -231,14 +265,12 @@ const ShareStepperSection = ({ addExperience, session }) => {
           alternativeLabel
           activeStep={activeStep}
           connector={<StyledConnector />}
+          style={{ backgroundColor: "#F8F8F8" }}
         >
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
 
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
             return (
               <Step key={label} {...stepProps}>
                 <StepLabel {...labelProps}>{label}</StepLabel>
@@ -253,7 +285,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
                 style={{ display: "flex", justifyContent: "center" }}
                 className={classes.instructions}
               >
-                All done! Thanks for contributing.
+                <Preview editorState={editorState} />
               </div>
               <Button
                 color="primary"
