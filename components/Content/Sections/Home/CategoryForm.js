@@ -82,6 +82,7 @@ const CategoryForm = ({
           setFromValue(null);
           setToInputValue("");
           setFromInputValue("");
+          setSwapping(false);
         }}
         onOpen={(e) => {
           setSelected(false);

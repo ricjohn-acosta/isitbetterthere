@@ -72,13 +72,13 @@ const PersonalDetails = ({
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
               variant="outlined"
-              error={
-                emptyFields
-                  ? emptyFields.find((e) => e === "description") !== undefined
-                    ? true
-                    : false
-                  : false
-              }
+              // error={
+              //   emptyFields
+              //     ? emptyFields.find((e) => e === "description") !== undefined
+              //       ? true
+              //       : false
+              //     : false
+              // }
             />
           </Grid>
         </Grid>
