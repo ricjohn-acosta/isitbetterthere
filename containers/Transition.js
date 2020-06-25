@@ -8,7 +8,7 @@ const Transition = ({ from, to, category, session, experiences}) => {
     <>
       <LowerNavbar session={session}/>
       <HeaderSection from={from} to={to} category={category} experiences={experiences}/>
-      <OverviewSection from={from} to={to} />
+      <OverviewSection from={from} to={to} experiences={experiences}/>
       <ExperienceSection experiences={experiences}/>
     </>
   );

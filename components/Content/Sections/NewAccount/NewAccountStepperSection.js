@@ -25,7 +25,8 @@ const NewAccountStepperSection = ({ addUser, session }) => {
   const [occupation, setOccupation] = React.useState("");
   const [company, setCompany] = React.useState("");
   const [position, setPosition] = React.useState("");
-  const [location, setLocation] = React.useState("");
+  const [location, setLocation] = React.useState(null);
+  const [inputLocation, setInputLocation] = React.useState("");
   const [hideName, setHideName] = React.useState(false);
   const [hideOccupation, setHideOccupation] = React.useState(false);
   const [hideCompany, setHideCompany] = React.useState(false);
@@ -108,13 +109,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
         emptyFields.push(element);
       }
 
-      // if (element === fieldToString({ company }) && company === "") {
-      //   emptyFields.push(element);
-      // }
-      // if (element === fieldToString({ position }) && position === "") {
-      //   emptyFields.push(element);
-      // }
-      if (element === fieldToString({ location }) && location === "") {
+      if (element === fieldToString({ location }) && location === null) {
         emptyFields.push(element);
       }
     });
@@ -189,6 +184,8 @@ const NewAccountStepperSection = ({ addUser, session }) => {
                   position={position}
                   location={location}
                   emptyFields={emptyFields}
+                  inputLocation = {inputLocation}
+                  setInputLocation = {setInputLocation}
                 />
               ) : (
                 getStepContent(index)

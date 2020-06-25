@@ -58,30 +58,69 @@ const ExpansionPanelDetailsContainer = styled(ExpansionPanelDetails)`
   }
 `;
 
-const OverviewSection = ({ from, to, getExperiences }) => {
+const OverviewSection = ({ from, to, getExperiences, experiences }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+
+  const getPercentages = (quality) => {
+    switch (quality) {
+      case "fulfillment":
+        let numFulfilled = 0;
+        experiences.forEach((e) => {
+          if (e.fulfillment === "Fulfilled") {
+            numFulfilled++;
+          }
+        });
+        return numFulfilled !== 0
+          ? Math.floor((100 - numFulfilled / 3).toFixed(1))
+          : 0;
+
+      case "ease":
+        let numEase = 0;
+        experiences.forEach((e) => {
+          if (e.ease_of_transition === "Easy") {
+            numEase++;
+          }
+        });
+        return numEase !== 0 ? Math.floor((100 - numEase / 3).toFixed(1)) : 0;
+
+      case "regret":
+        let numRegret = 0;
+        experiences.forEach((e) => {
+          if (e.regret === "Did regret") {
+            numRegret++;
+          }
+        });
+        return numRegret !== 0
+          ? 100 - (100 - numRegret / 2).toFixed(1)
+          : 0;
+      default:
+        break;
+    }
+  };
   return (
     <>
       <Wrapper>
-        {console.log(getExperiences(from, to))}
+        {console.log(experiences)}
         <Container container direction="row">
           <GridItems item xs={12} sm={12} md={4} align="center">
             <StyledImage src="fulfillment.png" />
             <TransitionQualities>
-              79% found this transition fulfilling
+              {getPercentages("fulfillment") +
+                "% found this transition fulfilling"}
             </TransitionQualities>
           </GridItems>
           <GridItems item xs={12} sm={12} md={4} align="center">
             <StyledImage src="easeoftransition.png" />
             <TransitionQualities>
-              48% consider this an easy transition{" "}
+              {getPercentages("ease") + "% consider this an easy transition"}
             </TransitionQualities>
           </GridItems>
           <GridItems item xs={12} sm={12} md={4} align="center">
             <StyledImage src="regret.png" />
             <TransitionQualities>
-              1% regret going through this transition{" "}
+              {getPercentages("regret") +
+                "% regret going through this transition"}
             </TransitionQualities>
           </GridItems>
         </Container>
@@ -103,7 +142,7 @@ const OverviewSection = ({ from, to, getExperiences }) => {
               </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetailsContainer>
-              <Charts />
+              <Charts experiences={experiences}/>
             </ExpansionPanelDetailsContainer>
           </ExpansionPanel>
         </ExpansionContainer>

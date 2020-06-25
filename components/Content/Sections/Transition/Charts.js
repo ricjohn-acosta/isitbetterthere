@@ -1,21 +1,12 @@
 import { Pie } from "react-chartjs-2";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
+import { getChartData } from "./utils/getChartData";
 
-const data = {
-  labels: ["Fulfilled", "Not fulfilled", "Mixed"],
-  datasets: [
-    {
-      data: [300, 50, 100],
-      backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-      hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-    },
-  ],
-};
-
-const Charts = () => {
+const Charts = ({ experiences }) => {
   return (
     <Grid container direction="column" spacing={10}>
+      {console.log(getChartData("fulfillment", experiences))}
       <Grid item container direction="row">
         <Grid
           item
@@ -34,7 +25,7 @@ const Charts = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Pie data={data} />
+          <Pie data={getChartData("fulfillment", experiences)} />
         </Grid>
       </Grid>
 
@@ -56,7 +47,7 @@ const Charts = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Pie data={data} />
+          <Pie data={getChartData("ease", experiences)} />
         </Grid>
       </Grid>
 
@@ -78,7 +69,7 @@ const Charts = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Pie data={data} />
+          <Pie data={getChartData("regret", experiences)} />
         </Grid>
       </Grid>
 
@@ -100,7 +91,7 @@ const Charts = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Pie data={data} />
+          <Pie data={getChartData("fulfillment", experiences)} />
         </Grid>
       </Grid>
     </Grid>

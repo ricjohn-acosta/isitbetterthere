@@ -44,6 +44,14 @@ const ButtonGroup = styled.div`
 const HelpfulCount = styled(Typography)`
   color: grey;
 `;
+
+const StyledHr = styled.hr`
+  margin-top: 5vh;
+  border: 0;
+  height: 1px;
+  background: #E0E0E0;
+`;
+
 const Experience = ({
   experience,
   name,
@@ -121,7 +129,7 @@ const Experience = ({
         </ProfileContainer>
         <Content item xs={12} sm={6} md={12}>
           {experience}
-          <hr style={{ marginTop: "5vh" }} />
+          <StyledHr/>
           <HelpfulCount component="span" variant="caption">
             123 people have found this helpful
           </HelpfulCount>
