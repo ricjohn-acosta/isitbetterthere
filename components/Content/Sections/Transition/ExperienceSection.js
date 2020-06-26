@@ -8,6 +8,7 @@ import SearchTools from "./SearchTools";
 import Button from "@material-ui/core/Button";
 import SearchToolsMobile from "./SearchToolsMobile";
 import draftToHtml from "draftjs-to-html";
+import NoData from "./common/NoData"
 
 const Wrapper = styled.div`
   min-height: 80vh;
@@ -84,7 +85,7 @@ const ExperienceSection = ({ experiences }) => {
       <>
         {console.log(experiences)}
         {experiences.length === 0
-          ? "none"
+          ? <NoData/>
           : experiences.map((e) => (
               <>
                 <Experience
@@ -128,12 +129,6 @@ const ExperienceSection = ({ experiences }) => {
             {isMD ? <SearchToolsMobileContainer /> : null}
           </ShareExperienceBtnContainer>
           <ExperienceContainer>
-            {/* <Experience test={test} />
-            <br />
-            <Experience />
-            <br />
-            <Experience />
-            <br /> */}
             {displayExperiences()}
           </ExperienceContainer>
         </Grid>

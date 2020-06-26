@@ -91,7 +91,7 @@ const Charts = ({ experiences }) => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Pie data={getChartData("fulfillment", experiences)} />
+          <Pie data={getChartData("location", experiences)} />
         </Grid>
       </Grid>
     </Grid>

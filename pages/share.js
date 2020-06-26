@@ -37,12 +37,17 @@ export async function getServerSideProps(context) {
         Location: "http://localhost:3000/api/auth/signin",
       });
       context.res.end();
-    }
-
-    if (!findUserInDatabase()) {
-      context.res.writeHead(302, { Location: "http://localhost:3000/account-setup" });
+    } else if (session && !findUserInDatabase()) {
+      context.res.writeHead(302, {
+        Location: "http://localhost:3000/account-setup",
+      });
       context.res.end();
     }
+
+    // if (!findUserInDatabase()) {
+    //   context.res.writeHead(302, { Location: "http://localhost:3000/account-setup" });
+    //   context.res.end();
+    // }
   }
 
   return {

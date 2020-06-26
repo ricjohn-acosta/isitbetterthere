@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { getExperiences } from "../../../../store/actions/experiences";
 import { connect } from "react-redux";
+import NoData from "./common/NoData";
 
 const useStyles = makeStyles({
   expansionPanelSummaryContent: {
@@ -91,9 +92,7 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
             numRegret++;
           }
         });
-        return numRegret !== 0
-          ? 100 - (100 - numRegret / 2).toFixed(1)
-          : 0;
+        return numRegret !== 0 ? 100 - (100 - numRegret / 2).toFixed(1) : 0;
       default:
         break;
     }
@@ -102,6 +101,7 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
     <>
       <Wrapper>
         {console.log(experiences)}
+
         <Container container direction="row">
           <GridItems item xs={12} sm={12} md={4} align="center">
             <StyledImage src="fulfillment.png" />
@@ -141,9 +141,13 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
                 </Typography>
               </div>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetailsContainer>
-              <Charts experiences={experiences}/>
-            </ExpansionPanelDetailsContainer>
+            {experiences.length !== 0 ? (
+              <ExpansionPanelDetailsContainer>
+                <Charts experiences={experiences} />
+              </ExpansionPanelDetailsContainer>
+            ) : (
+              <NoData />
+            )}
           </ExpansionPanel>
         </ExpansionContainer>
       </Wrapper>
