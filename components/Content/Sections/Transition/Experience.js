@@ -49,7 +49,7 @@ const StyledHr = styled.hr`
   margin-top: 5vh;
   border: 0;
   height: 1px;
-  background: #E0E0E0;
+  background: #e0e0e0;
 `;
 
 const Experience = ({
@@ -88,8 +88,8 @@ const Experience = ({
     }
   };
 
-  const checkIfEmpty = () => {
-    return fulfillment === "" && easeOfTransition === "" && regret === "";
+  const isWhiteSpaceOrEmpty = (input) => {
+    return !/[^\s]/.test(input);
   };
 
   return (
@@ -112,10 +112,13 @@ const Experience = ({
                 <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />
                 &nbsp;{email}
               </div>
-              <div style={{ display: "flex" }}>
-                <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;{position} at {company}
-              </div>
+              {isWhiteSpaceOrEmpty(position) ||
+                (isWhiteSpaceOrEmpty(company) && (
+                  <div style={{ display: "flex" }}>
+                    <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
+                    &nbsp;{position + "at" + company}
+                  </div>
+                ))}
               <div style={{ display: "flex" }}>
                 <ChatBubbleIcon style={{ color: "#1a8cff" }} fontSize="small" />
                 &nbsp;{bio}
@@ -123,13 +126,11 @@ const Experience = ({
             </UserInfo>
           </ProfileDetails>
 
-          <ChipsContainer>
-            {checkIfEmpty() ? null : renderChips()}
-          </ChipsContainer>
+          <ChipsContainer>{renderChips()}</ChipsContainer>
         </ProfileContainer>
         <Content item xs={12} sm={6} md={12}>
           {experience}
-          <StyledHr/>
+          <StyledHr />
           <HelpfulCount component="span" variant="caption">
             123 people have found this helpful
           </HelpfulCount>

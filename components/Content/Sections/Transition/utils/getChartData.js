@@ -1,3 +1,5 @@
+import { colors } from "./colors";
+
 export const getChartData = (quality, experiences) => {
   switch (quality) {
     case "fulfillment":
@@ -91,30 +93,37 @@ export const getChartData = (quality, experiences) => {
       const locations = experiences.map((e) => e.location);
       const locationSet = new Set(locations);
       const locationLabels = [...locationSet];
+      const backgroundColor = [];
+      const hoverBackgroundColor = [];
 
+      // Keep track of how many countries there are and store result in locationObj
       let locationObj = {};
       locations.map((element) => {
         if (locationObj.hasOwnProperty(element)) {
-          return (locationObj[element]++);
+          return locationObj[element]++;
         } else {
           return (locationObj[element] = 1);
         }
       });
 
+      // Build the chart data by getting the values from locationObj and creating colors based on the length of locationData
       const locationData = Object.values(locationObj);
+      colors.forEach((e, i) => {
+        if (i <= locationLabels.length) {
+          backgroundColor.push(e.hexString);
+          hoverBackgroundColor.push(e.hexString);
+        }
+      });
       const locationResult = {
         labels: locationLabels,
         datasets: [
           {
             data: locationData,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            backgroundColor,
+            hoverBackgroundColor,
           },
         ],
       };
-
-      console.log(locations);
-      console.log(locationObj);
       return locationResult;
     default:
       break;

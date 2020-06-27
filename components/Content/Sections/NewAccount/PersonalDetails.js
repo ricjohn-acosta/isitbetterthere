@@ -72,13 +72,6 @@ const PersonalDetails = ({
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
               variant="outlined"
-              // error={
-              //   emptyFields
-              //     ? emptyFields.find((e) => e === "description") !== undefined
-              //       ? true
-              //       : false
-              //     : false
-              // }
             />
           </Grid>
         </Grid>
@@ -115,7 +108,7 @@ const PersonalDetails = ({
         {occupationState === "Unemployed" ? null : (
           <Grid item container direction="row">
             <Labels item xs={12} sm={12} md={3}>
-              Company:* &nbsp;
+              Company: &nbsp;
             </Labels>
             <Grid item xs={12} sm={12} md={2}>
               <TextField

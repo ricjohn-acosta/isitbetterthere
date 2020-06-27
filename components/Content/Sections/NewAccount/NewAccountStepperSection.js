@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 
 const Wrapper = styled.div`
   min-height: 60vh;
-  margin: 5vh 15vw 0 15vw;
+  margin: 5vh 15vw 10vh 15vw;
 `;
 
 const NewAccountStepperSection = ({ addUser, session }) => {
@@ -101,10 +101,6 @@ const NewAccountStepperSection = ({ addUser, session }) => {
     let emptyFields = [];
 
     fields.forEach((element) => {
-      // if (element === fieldToString({ description }) && description === "") {
-      //   emptyFields.push(element);
-      // }
-
       if (element === fieldToString({ occupation }) && occupation === "") {
         emptyFields.push(element);
       }

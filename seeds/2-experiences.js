@@ -7,14 +7,14 @@ exports.seed = function (knex) {
       return knex("experiences").insert([
         {
           // id: 1,
-          experience_id: "1",
-          category: "Careers",
-          from: "Unemployed / Graduate",
-          to: "Accounting",
+          experience_id: "112929919225856440659",
+          category: "universities",
+          from: "University of Auckland",
+          to: "Auckland University of Technology",
           fulfillment: "Fulfilled",
           ease_of_transition: "Easy",
           regret: "Did not regret",
-          story: `{"blocks":[{"key":"ajk40","text":"\\"On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.\\"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
+          story: `{"blocks":[{"key":"ajk40","text":"My transition from UOA to AUT was well worth it. I moved mainly because I didn't get in my desired engineering specialization which is Software Engineering. I do believe that there really shouldn't be any restrictions when it comes to choosing a specialization and so I looked at Software Engineering in AUT. Atmosphere wise I really like AUT's because everyone seems friendly and gives out a closely-knit community vibe. Cross-crediting the papers I finished in UoA was also a relatively easy task to do in AUT so it's a really easy transition in that regard. The enrolment process was quick and simple and I got in the software engineering program the following semester.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
         },
       ]);
     });

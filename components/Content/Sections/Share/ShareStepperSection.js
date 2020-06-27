@@ -243,8 +243,6 @@ const ShareStepperSection = ({ addExperience, session }) => {
     return !/[^\s]/.test(input);
   };
 
-  console.log(isWhiteSpaceOrEmpty(" "));
-
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };

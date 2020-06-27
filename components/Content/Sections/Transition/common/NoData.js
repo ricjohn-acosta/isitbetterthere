@@ -5,7 +5,6 @@ import Link from "@material-ui/core/Link";
 const Message = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   margin: 25%;
   font-style: italic;
   color: grey;

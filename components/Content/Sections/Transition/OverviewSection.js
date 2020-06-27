@@ -52,7 +52,7 @@ const ExpansionContainer = styled.div`
 `;
 
 const ExpansionPanelDetailsContainer = styled(ExpansionPanelDetails)`
-  padding: 0 200px 0 200px;
+  padding: 0 200px 5vh 200px;
 
   ${(props) => props.theme.breakpoints.down("sm")} {
     padding: 0;
@@ -73,7 +73,7 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
           }
         });
         return numFulfilled !== 0
-          ? Math.floor((100 - numFulfilled / 3).toFixed(1))
+          ? Math.floor((100 - numFulfilled / 3).toFixed(0))
           : 0;
 
       case "ease":
@@ -83,7 +83,7 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
             numEase++;
           }
         });
-        return numEase !== 0 ? Math.floor((100 - numEase / 3).toFixed(1)) : 0;
+        return numEase !== 0 ? Math.floor((100 - numEase / 3).toFixed(0)) : 0;
 
       case "regret":
         let numRegret = 0;

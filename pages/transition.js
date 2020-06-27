@@ -40,10 +40,6 @@ export async function getServerSideProps(context) {
     context.query.to
   );
 
-  /**
-   * experiences.foreach(e => {e.uid})
-   * 
-   */
   console.log(experiences);
   return {
     props: {
