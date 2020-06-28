@@ -70,13 +70,14 @@ import { session } from "next-auth/client";
 // For more information on options, go to
 // https://next-auth.js.org/configuration/options
 const options = {
-  site: "http://localhost:3000",
+  site:
+    process.env.NODE_ENV === "production" ? process.env.prod : process.env.dev,
   providers: [
     // https://next-auth.js.org/providers/email
-    Providers.Email({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
-    }),
+    // Providers.Email({
+    //   server: process.env.EMAIL_SERVER,
+    //   from: process.env.EMAIL_FROM,
+    // }),
     // https://next-auth.js.org/configuration/providers
     Providers.Google({
       clientId: process.env.GOOGLE_ID,
@@ -106,12 +107,12 @@ const options = {
   // Notes:
   // * You must to install an appropriate node_module for your database
   // * The Email provider requires a database (OAuth providers do not)
-  database: process.env.DATABASE_URL,
+  // database: process.env.DATABASE_URL,
 
   // The secret should be set to a reasonably long random string.
   // It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
   // a seperate secret is defined explicitly for encrypting the JWT.
-  secret: process.env.SECRET,
+  // secret: process.env.SECRET,
 
   session: {
     // Use JSON Web Tokens for session instead of database sessions.
@@ -151,7 +152,7 @@ const options = {
     // signout: '/api/auth/signout', // Displays form with sign out button
     // error: '/api/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/api/auth/verify-request', // Used for check email page
-    newUser: "/account-setup" // If set, new users will be directed here on first sign in
+    newUser: "/account-setup", // If set, new users will be directed here on first sign in
   },
 
   // Callbacks are asynchronous functions you can use to control what happens

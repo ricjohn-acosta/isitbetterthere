@@ -12,6 +12,7 @@ import PrivacyDetails from "./PrivacyDetails";
 import ConfirmDetails from "./ConfirmDetails";
 import { addUser } from "../../../../store/actions/users";
 import { connect } from "react-redux";
+import Link from "@material-ui/core/Link";
 
 const Wrapper = styled.div`
   min-height: 60vh;
@@ -136,7 +137,6 @@ const NewAccountStepperSection = ({ addUser, session }) => {
     } else if (activeStep === 2 && siteSource === "") {
       setEmptyFields(["siteSource"]);
       console.log("test");
-
     } else {
       // setCompany("");
       // setPosition("");
@@ -210,7 +210,18 @@ const NewAccountStepperSection = ({ addUser, session }) => {
         <Paper square elevation={0}>
           <Typography>All steps completed - you&apos;re finished</Typography>
           <Button onClick={handleReset}>Reset</Button>
-          <Button onClick={handleCreateUser}>Create account</Button>
+          <Link
+            component={Button}
+            href={
+              process.env.NODE_ENV === "production"
+                ? process.env.prod
+                : process.env.dev
+            }
+            style={{ textDecoration: "none" }}
+            onClick={handleCreateUser}
+          >
+            Create account
+          </Link>
         </Paper>
       )}
     </Wrapper>

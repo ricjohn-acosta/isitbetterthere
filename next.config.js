@@ -14,4 +14,8 @@ module.exports = withCSS({
     }
     return config;
   },
+  env: {
+    prod: "http://isitbetterthere.herokuapp.com",
+    dev: "http://localhost:3000"
+  }
 });
