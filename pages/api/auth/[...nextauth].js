@@ -83,18 +83,31 @@ const options = {
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
     }),
-    // Providers.Facebook({
-    //   clientId: process.env.FACEBOOK_ID,
-    //   clientSecret: process.env.FACEBOOK_SECRET
-    // }),
-    // Providers.Twitter({
-    //   clientId: process.env.TWITTER_ID,
-    //   clientSecret: process.env.TWITTER_SECRET
-    // }),
-    // Providers.GitHub({
-    //   clientId: process.env.GITHUB_ID,
-    //   clientSecret: process.env.GITHUB_SECRET
-    // }),
+    Providers.Facebook({
+      clientId: process.env.FACEBOOK_ID,
+      clientSecret: process.env.FACEBOOK_SECRET,
+    }),
+    Providers.Twitter({
+      clientId: process.env.TWITTER_ID,
+      clientSecret: process.env.TWITTER_SECRET,
+    }),
+    Providers.GitHub({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
+    Providers.Discord({
+      clientId: process.env.DISCORD_CLIENT_ID,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET,
+    }),
+    Providers.Slack({
+      clientId: process.env.SLACK_CLIENT_ID,
+      clientSecret: process.env.SLACK_CLIENT_SECRET,
+    }),
+    Providers.Twitch({
+      clientId: process.env.TWITCH_CLIENT_ID,
+      clientSecret: process.env.TWITCH_CLIENT_SECRET,
+    }),
+
     // Providers.Auth0({
     //   clientId: process.env.AUTH0_ID,
     //   clientSecret: process.env.AUTH0_SECRET,

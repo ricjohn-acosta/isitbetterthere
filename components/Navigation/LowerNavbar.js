@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
 import { addUser } from "../../store/actions/users";
 import { connect } from "react-redux";
-import { useRouter } from "next/router";
+import { useRouter, Router } from "next/router";
 import BrandLogo from "./BrandLogo";
 import { signin, signout, useSession } from "next-auth/client";
 import Modal from "@material-ui/core/Modal";
@@ -15,6 +15,8 @@ import Fade from "@material-ui/core/Fade";
 import { getProviders } from "next-auth/client";
 import { useEffect } from "react";
 import Link from "next/link";
+import { Paper } from "@material-ui/core";
+import HeaderDivider from "../Content/Sections/Share/common/HeaderDivider";
 
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
@@ -77,13 +79,41 @@ const Container = styled.div`
   }
 `;
 
-const LowerNavbar = ({ session, addUser }) => {
+const StyledModal = styled(Modal)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10vh 0 10vh 0;
+
+`;
+
+const ModalContent = styled(Paper)`
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding: 15vh 0 25vh 0;
+  width: 25vw;
+  height: 100%;
+  overflow: auto;
+  ${(props) => props.theme.breakpoints.down(1147)} {
+    padding: 10% 0 10% 0;
+    width: 60vw;
+    height: 70vh;
+  }
+`;
+
+const ProviderButtons = styled(Button)`
+  width: 10vw;
+  ${(props) => props.theme.breakpoints.down(1147)} {
+    width: 80%;
+  }
+`;
+
+const LowerNavbar = ({ session }) => {
   const [signinClicked, setSigninClicked] = React.useState(false);
   const [providers, setProviders] = React.useState(null);
 
   const router = useRouter();
-
-  const handleRouter = () => {};
 
   useEffect(() => {
     getProviders().then((data) => {
@@ -144,13 +174,15 @@ const LowerNavbar = ({ session, addUser }) => {
                 Sign out
               </UserButtons>
             ) : (
-              // Add custom signup page when next-auth is stable
-              // <UserButtons href={"/signup"}>Sign up | Login</UserButtons>
-              <Link href={`/?signin=${signinClicked}`} as={"/signup"} passHref>
-                <UserButtons style={{ textDecoration: "none" }}>
-                  Sign up | Login
-                </UserButtons>
-              </Link>
+              <UserButtons
+                style={{ textDecoration: "none" }}
+                onClick={() => {
+                  setSigninClicked(true);
+                }}
+              >
+                Sign up | Login
+              </UserButtons>
+              // </Link>
             )}
             <DrawerContainer>
               <Drawer />
@@ -159,22 +191,25 @@ const LowerNavbar = ({ session, addUser }) => {
         </Grid>
       </Container>
 
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={!!router.query.signin}
-        closeAfterTransition
+      <StyledModal
+        open={signinClicked}
+        onClose={() => {
+          setSigninClicked(false);
+        }}
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
         }}
       >
-        <Fade in={!!router.query.signin}>
-          <div>
+        <Fade in={signinClicked}>
+          <ModalContent>
+            <Typography variant="h4">Sign in!</Typography>
+            <HeaderDivider />
             {providers !== null &&
               Object.values(providers).map((provider) => (
                 <p key={provider.name}>
-                  <Button
+                  <ProviderButtons
+                    variant="outlined"
                     href={`/api/auth/signin/${provider.name.toLowerCase()}?callbackUrl=${
                       process.env.NODE_ENV === "production"
                         ? process.env.prod
@@ -182,14 +217,12 @@ const LowerNavbar = ({ session, addUser }) => {
                     }`}
                   >
                     Sign in with {provider.name}
-                  </Button>
+                  </ProviderButtons>
                 </p>
               ))}
-
-            {/* <>{fetchProviders().then((data) => JSON.stringify(data))}</> */}
-          </div>
+          </ModalContent>
         </Fade>
-      </Modal>
+      </StyledModal>
       {console.log(providers)}
     </StyledLowerNavbar>
   );
