@@ -8,7 +8,7 @@ exports.up = (knex, Promise) => {
     table.string("fulfillment");
     table.string("ease_of_transition");
     table.string("regret");
-    table.json("story");
+    table.text("story");
   });
 };
 
