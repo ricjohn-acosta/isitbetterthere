@@ -14,7 +14,7 @@ exports.seed = function (knex) {
           fulfillment: "Fulfilled",
           ease_of_transition: "Easy",
           regret: "Did not regret",
-          story: `a`,
+          story: `{"blocks":[{"key":"ajk40","text":"I didn't regret it. The competition for getting into UOA's software engineering was tough and, imo, unnecessary. Got in AUT's SWE program easily so I stayed.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
         },
       ]);
     });
