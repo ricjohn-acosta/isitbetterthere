@@ -18,6 +18,7 @@ import { addExperience } from "../../../../store/actions/experiences";
 import draftToHtml from "draftjs-to-html";
 import ExtraInformation from "./ExtraInformation";
 import Preview from "./Preview";
+import Router from "next/router";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -172,6 +173,14 @@ const ShareStepperSection = ({ addExperience, session }) => {
       ease_of_transition: easeOfTransition,
       regret,
       story,
+    });
+    Router.push({
+      pathname: "/transition",
+      query: {
+        category: currentCategory,
+        from: fromInputValue,
+        to: toInputValue,
+      },
     });
   };
 
