@@ -87,7 +87,7 @@ const LowerNavbar = ({ session, addUser }) => {
               href={
                 router.pathname === "/"
                   ? "#/howitworks"
-                  : "http://localhost:3000/#/howitworks"
+                  : process.env.NODE_ENV === "production" ? process.env.prod + "/#/howitworks" : process.env.dev + "/#/howitworks"
               }
               style={{ textDecoration: "none" }}
               disableRipple
@@ -99,7 +99,7 @@ const LowerNavbar = ({ session, addUser }) => {
               href={
                 router.pathname === "/"
                   ? "#/learn"
-                  : "http://localhost:3000/#/learn"
+                  : process.env.NODE_ENV === "production" ? process.env.prod + "/#/learn" : process.env.dev + "/#/learn"
               }
               style={{ textDecoration: "none" }}
               disableRipple
