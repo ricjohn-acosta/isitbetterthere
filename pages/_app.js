@@ -30,19 +30,30 @@ class MyApp extends App {
     const { Component, pageProps, session } = this.props;
     return (
       // <Provider store={store}>
+      // <AuthProvider session={session}>
+      //   <StylesProvider injectFirst>
+      //     <MuiThemeProvider theme={theme}>
+      //       <MuiProvider theme={theme}>
+      //         <ThemeProvider theme={theme}>
+      //           <CssBaseline />
+      //           <Component {...pageProps} />
+      //         </ThemeProvider>
+      //       </MuiProvider>
+      //     </MuiThemeProvider>
+      //   </StylesProvider>
+      // </AuthProvider>
+      // </Provider>
+
       <AuthProvider session={session}>
         <StylesProvider injectFirst>
-          <MuiThemeProvider theme={theme}>
-            <MuiProvider>
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Component {...pageProps} />
-              </ThemeProvider>
-            </MuiProvider>
-          </MuiThemeProvider>
+          <MuiProvider theme={theme}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </MuiProvider>
         </StylesProvider>
       </AuthProvider>
-      // </Provider>
     );
   }
 }
