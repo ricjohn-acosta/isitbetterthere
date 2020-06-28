@@ -30,16 +30,22 @@ export async function getServerSideProps(context) {
     }
     return found;
   };
-
+  // : process.env.NODE_ENV === "production" ? process.env.prod + "/#/howitworks" : process.env.dev + "/#/howitworks"
   if (typeof window === "undefined" && context.res.writeHead) {
     if (!session) {
       context.res.writeHead(302, {
-        Location: "http://localhost:3000/api/auth/signin",
+        Location:
+          process.env.NODE_ENV === "production"
+            ? process.env.prod + "/api/auth/signin"
+            : process.env.dev + "/api/auth/signin",
       });
       context.res.end();
     } else if (session && !findUserInDatabase()) {
       context.res.writeHead(302, {
-        Location: "http://localhost:3000/account-setup",
+        Location:
+          process.env.NODE_ENV === "production"
+            ? process.env.prod + "/account-setup"
+            : process.env.dev + "/account-setup",
       });
       context.res.end();
     }
