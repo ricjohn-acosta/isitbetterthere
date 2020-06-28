@@ -1,11 +1,16 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-// import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "../../../../public/editor.css"
+import "../../../../public/editor.css";
 import Typography from "@material-ui/core/Typography";
+import Subheaders from "./common/Subheaders";
+import PaperWrapper from "./common/PaperWrapper";
+import HeaderDivider from "./common/HeaderDivider";
 
 const Wrapper = styled.div`
-  min-height: 50vh;
+  // min-height: 50vh;
+  // margin-top: 5vh;
+  // margin-left: 20%;
+  // margin-right: 20%;
 `;
 
 const Editor = dynamic(() => import("./Editor"), {
@@ -13,21 +18,40 @@ const Editor = dynamic(() => import("./Editor"), {
   ssr: false,
 });
 
-const ShareStory = ({ editorState, setEditorState, toValue, fromValue }) => {
+const ShareStory = ({
+  editorState,
+  setEditorState,
+  toValue,
+  fromValue,
+  shareEmptyState,
+}) => {
   return (
-    <Wrapper>
-      <Typography component="div" variant="h5">
-        Share what you felt about transitioning from <b>{fromValue}</b> to{" "}
-        <b>{toValue}</b>
-      </Typography>
-      <br />
-      <Typography variant="subtitle1">
-        The more detailed your story is the more impact you could make to someone's life
-        😊
-      </Typography>
-      <br />
-      <Editor editorState={editorState} setEditorState={setEditorState} />
-    </Wrapper>
+    <PaperWrapper>
+      <Subheaders icon={"/shareExperience.png"}>Share your story!</Subheaders>
+      <HeaderDivider />
+      <Wrapper>
+        <Typography component="div" variant="h5">
+          Share your experience transitioning from <b>{fromValue}</b> to{" "}
+          <b>{toValue}</b>
+        </Typography>
+        <br />
+        <Typography variant="subtitle2">
+          The more detailed your story is the more impact you could make to
+          someone's life 😊
+        </Typography>
+        {shareEmptyState ? (
+          <Typography
+            style={{ color: "red" }}
+            component="span"
+            variant="subtitle2"
+          >
+            (required)
+          </Typography>
+        ) : null}
+        <br />
+        <Editor editorState={editorState} setEditorState={setEditorState} />
+      </Wrapper>
+    </PaperWrapper>
   );
 };
 

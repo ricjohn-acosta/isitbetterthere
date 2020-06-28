@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -8,10 +9,15 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import ChooseCategory from "./ChooseCategory";
 import ShareStory from "./ShareStory";
-import Preview from "./Preview";
 import StepConnector from "@material-ui/core/StepConnector";
 import { careersCategory } from "../../../../lib/categories";
 import { EditorState } from "draft-js";
+import { convertToRaw } from "draft-js";
+import { grey } from "@material-ui/core/colors";
+import { addExperience } from "../../../../store/actions/experiences";
+import draftToHtml from "draftjs-to-html";
+import ExtraInformation from "./ExtraInformation";
+import Preview from "./Preview";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -40,6 +46,7 @@ const StyledConnector = withStyles({
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+    backgroundColor: grey,
   },
   button: {
     marginRight: theme.spacing(1),
@@ -52,23 +59,29 @@ const useStyles = makeStyles((theme) => ({
 
 // COMPONENT LEVEL STYLING
 const Wrapper = styled.div`
-  min-height: 110vh;
-  margin-top: 5vh;
+  min-height: 150vh;
   padding: 0 5% 0 5%;
-  background: rgb(255,255,255);
-  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(211,252,252,1) 100%);
-
+  // background: rgb(255, 255, 255);
+  // background: linear-gradient(
+  //   180deg,
+  //   rgba(255, 255, 255, 1) 0%,
+  //   rgba(211, 252, 252, 1) 100%
+  // );
+  background-color: #f8f8f8;
+  overflow: auto;
 `;
 
 function getSteps() {
   return [
     "What transition would you like to talk about?",
-    "Explain how the transition went!",
-    "Preview",
+    "Share your story!",
+    "Extra information",
   ];
 }
+const HtmlToReactParser = require("html-to-react").Parser;
+const htmlToReactParser = new HtmlToReactParser();
 
-const ShareStepperSection = () => {
+const ShareStepperSection = ({ addExperience, session }) => {
   const classes = useStyles();
   const [categories, setCategory] = React.useState(careersCategory);
   const [currentCategory, setCurrentCategory] = React.useState("careers");
@@ -79,11 +92,21 @@ const ShareStepperSection = () => {
   const [isSelected, setSelected] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
   const [isEmptyField, setEmptyFields] = React.useState(false);
+  const [extraInfoEmptyState, setExtraInfoEmptyState] = React.useState(false);
+  const [shareEmptyState, setShareEmptyState] = React.useState(false);
+  const [fulfillment, setFulfillment] = React.useState("");
+  const [easeOfTransition, setEaseOfTransition] = React.useState("");
+  const [regret, setRegret] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty()
   );
+
+  const editorContent = convertToRaw(editorState.getCurrentContent());
+  const story = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+
+  console.log("STORY ", editorContent);
   const steps = getSteps();
 
   const getStepContent = (step) => {
@@ -107,6 +130,7 @@ const ShareStepperSection = () => {
             fromInputValue={fromInputValue}
             isSwapping={isSwapping}
             isEmptyField={isEmptyField}
+            setEmptyFields={setEmptyFields}
           />
         );
       case 1:
@@ -116,28 +140,107 @@ const ShareStepperSection = () => {
             setEditorState={setEditorState}
             toValue={toInputValue}
             fromValue={fromInputValue}
+            shareEmptyState={shareEmptyState}
           />
         );
       case 2:
-        return <Preview editorState={editorState} />;
+        return (
+          <ExtraInformation
+            editorState={editorState}
+            setFulfillment={setFulfillment}
+            fulfillment={fulfillment}
+            setEaseOfTransition={setEaseOfTransition}
+            easeOfTransition={easeOfTransition}
+            setRegret={setRegret}
+            regret={regret}
+            extraInfoEmptyState={extraInfoEmptyState}
+          />
+        );
       default:
         return "Unknown step";
     }
   };
 
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addExperience({
+      experience_id: session.account.id,
+      category: currentCategory,
+      from: fromInputValue,
+      to: toInputValue,
+      fulfillment,
+      ease_of_transition: easeOfTransition,
+      regret,
+      story,
+    });
   };
 
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
+    if (activeStep === 0) {
+      if (checkIfEmpty(0)) {
+        return;
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
     }
+    if (activeStep === 1) {
+      if (checkIfEmpty(1)) {
+        return;
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    }
+    if (activeStep === 2) {
+      if (checkIfEmpty(2)) {
+        return;
+      } else {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    }
+  };
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+  console.log(activeStep);
+  const checkIfEmpty = (step) => {
+    switch (step) {
+      case 0:
+        if (!toValue || !fromValue) {
+          setEmptyFields(true);
+          return true;
+        } else {
+          setEmptyFields(false);
+          return false;
+        }
+      case 1:
+        if (
+          isWhiteSpaceOrEmpty(editorContent.blocks[0].text) &&
+          editorContent.blocks.length === 1
+        ) {
+          setShareEmptyState(true);
+          return true;
+        } else {
+          setShareEmptyState(false);
+          return false;
+        }
+
+      case 2:
+        if (
+          isWhiteSpaceOrEmpty(fulfillment) ||
+          isWhiteSpaceOrEmpty(easeOfTransition) ||
+          isWhiteSpaceOrEmpty(regret)
+        ) {
+          setExtraInfoEmptyState(true);
+          return true;
+        } else {
+          setExtraInfoEmptyState(false);
+          return false;
+        }
+      default:
+        break;
+    }
+  };
+
+  const isWhiteSpaceOrEmpty = (input) => {
+    return !/[^\s]/.test(input);
   };
 
   const handleBack = () => {
@@ -150,21 +253,22 @@ const ShareStepperSection = () => {
 
   return (
     <Wrapper>
-      {console.log("TO VALUE, ", toValue, toInputValue)}
+      {/* {console.log("TO VALUE, ", toValue, toInputValue)}
       {console.log("FROM VALUE, ", fromValue, fromInputValue)}
+      {console.log(story)}
+      {console.log(editorContent.blocks[0].text)} */}
+      {console.log(fulfillment, easeOfTransition, regret)}
       <div className={classes.root}>
         <Stepper
           alternativeLabel
           activeStep={activeStep}
           connector={<StyledConnector />}
+          style={{ backgroundColor: "#F8F8F8" }}
         >
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
 
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
             return (
               <Step key={label} {...stepProps}>
                 <StepLabel {...labelProps}>{label}</StepLabel>
@@ -179,8 +283,17 @@ const ShareStepperSection = () => {
                 style={{ display: "flex", justifyContent: "center" }}
                 className={classes.instructions}
               >
-                All steps completed - you&apos;re finished
+                <Preview editorState={editorState} />
               </div>
+              <Button
+                color="primary"
+                variant="contained"
+                style={{ float: "right" }}
+                onClick={handleSubmit}
+                className={classes.button}
+              >
+                Submit
+              </Button>
               <Button
                 style={{ float: "right" }}
                 onClick={handleReset}
@@ -192,7 +305,7 @@ const ShareStepperSection = () => {
           ) : (
             <div>
               <div
-                style={{ display: "flex", justifyContent: "center" }}
+                // style={{ display: "flex", justifyContent: "center" }}
                 className={classes.instructions}
               >
                 {getStepContent(activeStep)}
@@ -205,7 +318,7 @@ const ShareStepperSection = () => {
                   onClick={handleNext}
                   className={classes.button}
                 >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                  {activeStep === steps.length - 1 ? "Confirm" : "Next"}
                 </Button>
                 <Button
                   style={{ float: "right" }}
@@ -224,4 +337,10 @@ const ShareStepperSection = () => {
   );
 };
 
-export default ShareStepperSection;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addExperience: (experience) => dispatch(addExperience(experience)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ShareStepperSection);

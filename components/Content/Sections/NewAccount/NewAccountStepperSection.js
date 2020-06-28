@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 
 const Wrapper = styled.div`
   min-height: 60vh;
-  margin: 5vh 15vw 0 15vw;
+  margin: 5vh 15vw 10vh 15vw;
 `;
 
 const NewAccountStepperSection = ({ addUser, session }) => {
@@ -25,7 +25,8 @@ const NewAccountStepperSection = ({ addUser, session }) => {
   const [occupation, setOccupation] = React.useState("");
   const [company, setCompany] = React.useState("");
   const [position, setPosition] = React.useState("");
-  const [location, setLocation] = React.useState("");
+  const [location, setLocation] = React.useState(null);
+  const [inputLocation, setInputLocation] = React.useState("");
   const [hideName, setHideName] = React.useState(false);
   const [hideOccupation, setHideOccupation] = React.useState(false);
   const [hideCompany, setHideCompany] = React.useState(false);
@@ -35,7 +36,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
 
   const handleCreateUser = () => {
     addUser({
-      uid: session.user.uid,
+      user_id: session.account.id,
       name: session.user.name,
       email: session.user.email,
       bio: description,
@@ -48,7 +49,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       hide_company: hideCompany,
       hide_location: hideLocation,
       comes_from: siteSource,
-      date_created: Date.now()
+      date_created: Date.now(),
     });
   };
 
@@ -100,21 +101,11 @@ const NewAccountStepperSection = ({ addUser, session }) => {
     let emptyFields = [];
 
     fields.forEach((element) => {
-      if (element === fieldToString({ description }) && description === "") {
-        emptyFields.push(element);
-      }
-
       if (element === fieldToString({ occupation }) && occupation === "") {
         emptyFields.push(element);
       }
 
-      // if (element === fieldToString({ company }) && company === "") {
-      //   emptyFields.push(element);
-      // }
-      // if (element === fieldToString({ position }) && position === "") {
-      //   emptyFields.push(element);
-      // }
-      if (element === fieldToString({ location }) && location === "") {
+      if (element === fieldToString({ location }) && location === null) {
         emptyFields.push(element);
       }
     });
@@ -134,17 +125,19 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       // position === "" ||
       location === ""
     ) {
-      if (occupation === "Unemployed" && location !== "") {
+      if (location !== null) {
         console.log("test");
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setEmptyFields(findEmptyFields());
       } else {
-        console.log("tesasdt");
+        console.log("test");
         setEmptyFields(findEmptyFields());
       }
     } else if (activeStep === 2 && siteSource === "") {
       setEmptyFields(["siteSource"]);
-    } else if (findEmptyFields().length === 0) {
+      console.log("test");
+
+    } else {
       // setCompany("");
       // setPosition("");
       console.log("test");
@@ -189,6 +182,8 @@ const NewAccountStepperSection = ({ addUser, session }) => {
                   position={position}
                   location={location}
                   emptyFields={emptyFields}
+                  inputLocation={inputLocation}
+                  setInputLocation={setInputLocation}
                 />
               ) : (
                 getStepContent(index)

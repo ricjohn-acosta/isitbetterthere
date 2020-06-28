@@ -7,9 +7,11 @@ import Experience from "./Experience";
 import SearchTools from "./SearchTools";
 import Button from "@material-ui/core/Button";
 import SearchToolsMobile from "./SearchToolsMobile";
+import draftToHtml from "draftjs-to-html";
+import NoData from "./common/NoData"
 
 const Wrapper = styled.div`
-  min-height: 75vh;
+  min-height: 80vh;
   padding: 5% 5% 5% 5%;
   margin-top: 2.5%;
   background-color: #e6f2ff;
@@ -48,7 +50,7 @@ const ExperienceContainer = styled(Paper)`
   }
 `;
 
-const SearchtoolsContainer = styled(Paper)`
+const SearchToolsContainer = styled.div`
   margin: 10.5vh 50px 0 50px;
   min-height: 25vh;
   max-width: 50vw;
@@ -68,12 +70,52 @@ const ShareExperienceBtn = styled(Button)`
 `;
 
 const SearchToolsMobileContainer = styled(SearchToolsMobile)``;
-const ExperienceSection = () => {
+
+const HtmlToReactParser = require("html-to-react").Parser;
+const htmlToReactParser = new HtmlToReactParser();
+
+const ExperienceSection = ({ experiences }) => {
   const isSM = useMediaQuery("(max-width:600px)");
   const isMD = useMediaQuery("(max-width:1199px)");
 
+  const testData = experiences;
+
+  const displayExperiences = () => {
+    return (
+      <>
+        {console.log(experiences)}
+        {experiences.length === 0
+          ? <NoData/>
+          : experiences.map((e) => (
+              <>
+                <Experience
+                  name={e.name}
+                  email={e.email}
+                  position={e.position}
+                  company={e.company}
+                  bio={e.bio}
+                  fulfillment={e.fulfillment}
+                  easeOfTransition={e.ease_of_transition}
+                  regret={e.regret}
+                  experience={convertToReact(e.story)}
+                />
+                <br />
+              </>
+            ))}
+      </>
+    );
+  };
+
+  const convertToReact = (story) => {
+    const test = htmlToReactParser.parse(draftToHtml(JSON.parse(story)));
+
+    return test;
+  };
+
   return (
     <Wrapper>
+      {/* {console.log(JSON.parse(testData[1].story))} */}
+      {console.log(testData)}
       <SectionHeader>
         <ExperienceIcon src="/experience.png" />
         <SectionTitle variant="h4">People's experiences</SectionTitle>
@@ -87,20 +129,15 @@ const ExperienceSection = () => {
             {isMD ? <SearchToolsMobileContainer /> : null}
           </ShareExperienceBtnContainer>
           <ExperienceContainer>
-            <Experience />
-            <br />
-            <Experience />
-            <br />
-            <Experience />
-            <br />
+            {displayExperiences()}
           </ExperienceContainer>
         </Grid>
         {isMD ? null : (
           <Grid item xs={12} sm={12} md={3}>
-            <SearchtoolsContainer>
+            <SearchToolsContainer>
               <Typography variant="h4">Search tools</Typography>
               <SearchTools />
-            </SearchtoolsContainer>
+            </SearchToolsContainer>
           </Grid>
         )}
       </Grid>

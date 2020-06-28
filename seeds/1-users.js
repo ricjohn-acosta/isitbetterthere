@@ -6,20 +6,20 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex("users").insert([
         {
-          id: 1,
-          uid: "1",
-          name: "admin",
-          email: "admin@admin.com",
-          bio: "I'm an admin",
-          occupation: "Employed",
-          position: "Nurse",
-          company: "Auckland Hospital",
-          location: "Glenfield, Auckland, New Zealand",
+          // id: 1,
+          user_id: "112929919225856440659",
+          name: "Ricjohn",
+          email: "ricjohngenoguin@gmail.com",
+          bio: "all for creating impactful projects!",
+          occupation: "Unemployed",
+          position: "",
+          company: "",
+          location: "New Zealand",
           hide_name: false,
           hide_occupation: false,
           hide_company: false,
           hide_location: false,
-          comes_from: "LinkedIn",
+          comes_from: "Word of mouth",
           date_created: Date.now()
         },
       ]);

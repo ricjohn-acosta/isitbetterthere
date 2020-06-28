@@ -7,7 +7,10 @@ import Router from "next/router";
 import WorkIcon from "@material-ui/icons/Work";
 import PersonIcon from "@material-ui/icons/Person";
 import EmailIcon from "@material-ui/icons/Email";
-import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { IconButton } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -37,54 +40,103 @@ const Content = styled(Grid)`
 const ButtonGroup = styled.div`
   float: right;
 `;
-const Experience = () => {
+
+const HelpfulCount = styled(Typography)`
+  color: grey;
+`;
+
+const StyledHr = styled.hr`
+  margin-top: 5vh;
+  border: 0;
+  height: 1px;
+  background: #e0e0e0;
+`;
+
+const Experience = ({
+  experience,
+  name,
+  company,
+  position,
+  email,
+  bio,
+  fulfillment,
+  easeOfTransition,
+  regret,
+}) => {
+  const renderChips = () => {
+    const chips = [fulfillment, easeOfTransition, regret];
+    console.log(chips);
+    return chips.map((e, i) => (
+      <>
+        <Chip label={e} color={checkColor(i)} />
+        &nbsp;
+      </>
+    ));
+  };
+
+  const checkColor = (index) => {
+    if (index === 0) {
+      return "secondary";
+    }
+
+    if (index === 1) {
+      return "primary";
+    }
+
+    if (index === 2) {
+      return "default";
+    }
+  };
+
+  const isWhiteSpaceOrEmpty = (input) => {
+    return !/[^\s]/.test(input);
+  };
+
   return (
     <Wrapper>
       <Grid container drection="column">
         <ProfileContainer item xs={12} sm={6} md={12}>
+          <div style={{ float: "right" }}>
+            <IconButton>
+              <MoreVertIcon />
+            </IconButton>
+          </div>
           <ProfileDetails>
             <Avatar style={{ marginTop: "5px" }} />
             <UserInfo>
               <div style={{ display: "flex" }}>
                 <PersonIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;John G. Doe
+                &nbsp;{name}
               </div>
               <div style={{ display: "flex" }}>
                 <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;john@gmail.com
+                &nbsp;{email}
               </div>
-              <div style={{ display: "flex" }}>
-                <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;Senior nurse at Auckland Hospital
-              </div>
+              {isWhiteSpaceOrEmpty(position) ||
+                (isWhiteSpaceOrEmpty(company) && (
+                  <div style={{ display: "flex" }}>
+                    <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
+                    &nbsp;{position + "at" + company}
+                  </div>
+                ))}
               <div style={{ display: "flex" }}>
                 <ChatBubbleIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;Saving lives is my passion
+                &nbsp;{bio}
               </div>
             </UserInfo>
           </ProfileDetails>
 
-          <ChipsContainer>
-            <Chip label="Fulfilled" color="secondary" />
-            &nbsp;
-            <Chip label="Easily transitioned" color="primary" />
-            &nbsp;
-            <Chip label="Did not regret" color="default" />
-            &nbsp;
-          </ChipsContainer>
+          <ChipsContainer>{renderChips()}</ChipsContainer>
         </ProfileContainer>
         <Content item xs={12} sm={6} md={12}>
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum."
-          <hr style={{ marginTop: "5vh" }} />
+          {experience}
+          <StyledHr />
+          <HelpfulCount component="span" variant="caption">
+            123 people have found this helpful
+          </HelpfulCount>
           <ButtonGroup>
-            <Button>SEE COMMENTS (0)</Button>
-            <Button>COMMENT</Button>
+            <Button>Helpful</Button>
+            <Button>Not helpful</Button>
           </ButtonGroup>
         </Content>
       </Grid>

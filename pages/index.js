@@ -5,6 +5,7 @@ import { session } from 'next-auth/client'
 const Index = ({session}) => {
   return (
     <Layout>
+      {console.log(session)}
       <Home session={session}/>
     </Layout>
   );

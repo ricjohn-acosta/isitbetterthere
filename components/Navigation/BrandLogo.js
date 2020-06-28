@@ -13,7 +13,7 @@ const StyledBrand = styled(Typography)`
 
 const BrandLogo = () => {
   const router = useRouter();
-  const down1347 = useMediaQuery("(max-width:1346px)");
+  const down1347 = useMediaQuery("(max-width:1374px)");
   const down959 = useMediaQuery("(max-width:959px)");
   return (
     <>

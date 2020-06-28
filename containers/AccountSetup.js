@@ -5,7 +5,7 @@ const AccountSetup = ({session}) => {
   return (
     <>
       <LowerNavbar session={session}/>
-      <StepperSNewAccountStepperSectionection session={session}/>
+      <NewAccountStepperSection session={session}/>
     </>
   );
 };

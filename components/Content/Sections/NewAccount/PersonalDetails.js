@@ -5,6 +5,8 @@ import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { countries } from "./utils/countries";
 
 const Wrapper = styled.div`
   min-height: 50vh;
@@ -27,12 +29,14 @@ const PersonalDetails = ({
   setOccupationState,
   setCompany,
   setPosition,
+  setInputLocation,
   setLocation,
   description,
   occupationState,
   company,
   position,
   location,
+  inputLocation,
   emptyFields,
 }) => {
   const [occupation, setOccupation] = React.useState("");
@@ -43,8 +47,8 @@ const PersonalDetails = ({
       setOccupationState(value);
     } else {
       setOccupation(value);
-      setPosition("")
-      setCompany("")
+      setPosition("");
+      setCompany("");
       setOccupationState(value);
     }
   };
@@ -68,13 +72,6 @@ const PersonalDetails = ({
               onChange={(e) => setDescription(e.target.value)}
               fullWidth
               variant="outlined"
-              error={
-                emptyFields
-                  ? emptyFields.find((e) => e === "description") !== undefined
-                    ? true
-                    : false
-                  : false
-              }
             />
           </Grid>
         </Grid>
@@ -111,7 +108,7 @@ const PersonalDetails = ({
         {occupationState === "Unemployed" ? null : (
           <Grid item container direction="row">
             <Labels item xs={12} sm={12} md={3}>
-              Company:* &nbsp;
+              Company: &nbsp;
             </Labels>
             <Grid item xs={12} sm={12} md={2}>
               <TextField
@@ -163,7 +160,7 @@ const PersonalDetails = ({
             Country: &nbsp;
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
-            <TextField
+            {/* <TextField
               value={location}
               fullWidth
               onChange={(e) => {
@@ -177,10 +174,41 @@ const PersonalDetails = ({
                     : false
                   : false
               }
+            /> */}
+
+            <Autocomplete
+              value={location}
+              inputValue={inputLocation}
+              options={countries}
+              getOptionLabel={(option) => (option.name ? option.name : option)}
+              getOptionSelected={(option, value) => option.name === value}
+              style={{ width: 300 }}
+              onChange={(e, newValue) =>
+                newValue !== null
+                  ? setLocation(newValue.name)
+                  : setLocation(null)
+              }
+              onInputChange={(event, newInputValue) => {
+                setInputLocation(newInputValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  error={
+                    emptyFields
+                      ? emptyFields.find((e) => e === "location") !== undefined
+                        ? true
+                        : false
+                      : false
+                  }
+                />
+              )}
             />
           </Grid>
         </Grid>
       </FormContainer>
+      {console.log(location)}
     </Wrapper>
   );
 };

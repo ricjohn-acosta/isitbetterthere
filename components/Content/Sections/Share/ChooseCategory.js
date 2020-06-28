@@ -9,10 +9,18 @@ import {
   lifeCategory,
   secondaryEducationCategory,
 } from "../../../../lib/categories";
-
+import Typography from "@material-ui/core/Typography";
+import Subheaders from "./common/Subheaders";
+import PaperWrapper from "./common/PaperWrapper";
+import HeaderDivider from "./common/HeaderDivider";
+import Header from "../../../Navigation/Header";
 
 const Wrapper = styled.div`
   margin: 5%;
+`;
+
+const StyledDiv = styled.div`
+  margin-top: 5vh;
 `;
 
 const ChooseCategory = ({
@@ -32,9 +40,8 @@ const ChooseCategory = ({
   isSwapping,
   setSwapping,
   isEmptyField,
+  setEmptyFields,
 }) => {
-
-
   const handleForm = (e) => {
     e.preventDefault();
     if (fromValue === null || toValue === null) {
@@ -94,27 +101,35 @@ const ChooseCategory = ({
   };
 
   return (
-    <Wrapper>
-      <CategoryForm
-        categories={categories}
-        currentCategory={currentCategory}
-        handleCategories={handleCategories}
-        handleForm={handleForm}
-        setToValue={setToValue}
-        setToInputValue={setToInputValue}
-        setFromValue={setFromValue}
-        setFromInputValue={setFromInputValue}
-        setSelected={setSelected}
-        setSwapping={setSwapping}
-        toValue={toValue}
-        toInputValue={toInputValue}
-        fromValue={fromValue}
-        fromInputValue={fromInputValue}
-        isSwapping={isSwapping}
-        isEmptyField={isEmptyField}
-        source={"ChooseCategory"}
-      />
-    </Wrapper>
+    <PaperWrapper>
+      <Subheaders icon={"/swap.png"}>
+        What transition would you like to talk about?
+      </Subheaders>
+      <HeaderDivider />
+      <Wrapper>
+        <StyledDiv>
+          <CategoryForm
+            categories={categories}
+            currentCategory={currentCategory}
+            handleCategories={handleCategories}
+            handleForm={handleForm}
+            setToValue={setToValue}
+            setToInputValue={setToInputValue}
+            setFromValue={setFromValue}
+            setFromInputValue={setFromInputValue}
+            setSelected={setSelected}
+            setSwapping={setSwapping}
+            toValue={toValue}
+            toInputValue={toInputValue}
+            fromValue={fromValue}
+            fromInputValue={fromInputValue}
+            isSwapping={isSwapping}
+            isEmptyField={isEmptyField}
+            source={"ChooseCategory"}
+          />
+        </StyledDiv>
+      </Wrapper>
+    </PaperWrapper>
   );
 };
 

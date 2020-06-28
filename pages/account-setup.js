@@ -6,7 +6,6 @@ import { getUsers } from "../server/db";
 
 // CLIENT SIDE
 const accountSetup = ({ session, users }) => {
-
   if (!session) {
     return (
       <Layout>
@@ -30,18 +29,26 @@ export async function getServerSideProps(context) {
   const findUserInDatabase = () => {
     let found = false;
     console.log("test");
-    users.forEach((user) => {
-      if (user.uid === session.user.uid) {
-        found = true;
-      }
-    });
+
+    if (session) {
+      users.forEach((user) => {
+        if (user.user_id === session.account.id) {
+          found = true;
+        }
+      });
+    } else {
+      found = false;
+    }
     return found;
   };
 
   if (typeof window === "undefined" && context.res.writeHead) {
-    if(findUserInDatabase()) {
-      context.res.writeHead(302, {Location: "/"})
-      context.res.end()
+    if (findUserInDatabase()) {
+      context.res.writeHead(302, { Location: "http://localhost:3000/" });
+      context.res.end();
+    } else if (!session) {
+      context.res.writeHead(302, { Location: "http://localhost:3000/" });
+      context.res.end();
     }
   }
 

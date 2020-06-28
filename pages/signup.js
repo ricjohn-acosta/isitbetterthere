@@ -2,10 +2,12 @@ import React from "react";
 import { csrfToken, signin, providers } from "next-auth/client";
 import Button from "@material-ui/core/Button";
 
+
+// Remove csrftoken and email provider completely? 
 export default ({ csrfToken, providers }) => {
   return (
     <>
-      <form
+      {/* <form
         method="post"
         action="/api/auth/signin/email"
         onSubmit={(e) => {
@@ -19,7 +21,7 @@ export default ({ csrfToken, providers }) => {
           <input type="text" id="email" name="email" />
         </label>
         <button type="submit">Sign in with Email</button>
-      </form>
+      </form> */}
 
       {Object.values(providers).map((provider) =>
         provider.name === "Email" ? null : (
@@ -41,9 +43,10 @@ export default ({ csrfToken, providers }) => {
 };
 
 export async function getServerSideProps(context) {
+  // const test = await csrfToken(context)
   return {
     props: {
-      csrfToken: await csrfToken(context),
+      // csrfToken: await csrfToken(context),
       providers: await providers(context),
     },
   };

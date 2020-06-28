@@ -7,10 +7,8 @@ const Share = ({session}) => {
 
   return (
     <div>
-      
-
       <LowerNavbar session={session} />
-      <ShareStepperSection />
+      <ShareStepperSection session={session}/>
     </div>
   );
 };
