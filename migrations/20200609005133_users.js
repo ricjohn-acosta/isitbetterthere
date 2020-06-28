@@ -14,7 +14,7 @@ exports.up = (knex, Promise) => {
     table.boolean("hide_company")
     table.boolean("hide_location")
     table.string("comes_from")
-    table.date("date_created")
+    table.string("date_created")
   });
 };
 
