@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start -p $PORT",
     "heroku-postbuild": "npm run build",
-    "postinstall": "knex migrate:latest"
+    "postinstall": "knex migrate:latest && knex seed:run"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.0",
