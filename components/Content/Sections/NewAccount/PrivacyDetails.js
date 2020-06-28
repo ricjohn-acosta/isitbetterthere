@@ -73,8 +73,6 @@ const PrivacyDetails = ({
             <Checkbox
               checked={hideName}
               onChange={(e) => handleChange("name")}
-              // onChange={(e) => setHideName(!hideName)}
-
               color="default"
             />
           </Grid>
