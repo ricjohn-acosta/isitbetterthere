@@ -4,12 +4,17 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
-import Link from "@material-ui/core/Link";
 import { addUser } from "../../store/actions/users";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import BrandLogo from "./BrandLogo";
 import { signin, signout, useSession } from "next-auth/client";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import { getProviders } from "next-auth/client";
+import { useEffect } from "react";
+import Link from "next/link";
 
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
@@ -73,7 +78,18 @@ const Container = styled.div`
 `;
 
 const LowerNavbar = ({ session, addUser }) => {
+  const [signinClicked, setSigninClicked] = React.useState(false);
+  const [providers, setProviders] = React.useState(null);
+
   const router = useRouter();
+
+  const handleRouter = () => {};
+
+  useEffect(() => {
+    getProviders().then((data) => {
+      setProviders(data);
+    });
+  }, []);
 
   return (
     <StyledLowerNavbar elevation={0} position="sticky" component="div">
@@ -82,38 +98,40 @@ const LowerNavbar = ({ session, addUser }) => {
         <Grid container direction="row">
           <Grid item container xs={6} sm={6} md={8}>
             <BrandLogo>IsItBetterThere</BrandLogo>
-            <Link
-              component={MiscButtons}
+            <MiscButtons
               href={
                 router.pathname === "/"
                   ? "#/howitworks"
-                  : process.env.NODE_ENV === "production" ? process.env.prod + "/#/howitworks" : process.env.dev + "/#/howitworks"
+                  : process.env.NODE_ENV === "production"
+                  ? process.env.prod + "/#/howitworks"
+                  : process.env.dev + "/#/howitworks"
               }
               style={{ textDecoration: "none" }}
               disableRipple
             >
               How it works
-            </Link>
-            <Link
-              component={MiscButtons}
+            </MiscButtons>
+            <MiscButtons
               href={
                 router.pathname === "/"
                   ? "#/learn"
-                  : process.env.NODE_ENV === "production" ? process.env.prod + "/#/learn" : process.env.dev + "/#/learn"
+                  : process.env.NODE_ENV === "production"
+                  ? process.env.prod + "/#/learn"
+                  : process.env.dev + "/#/learn"
               }
               style={{ textDecoration: "none" }}
               disableRipple
             >
               Learn
-            </Link>
-            <Link
-              component={MiscButtons}
+            </MiscButtons>
+            <MiscButtons
+              // component={MiscButtons}
               href={"/share"}
               style={{ textDecoration: "none" }}
               disableRipple
             >
               Share your experience
-            </Link>
+            </MiscButtons>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>
             <UserButtons disableRipple>Account</UserButtons>
@@ -128,23 +146,51 @@ const LowerNavbar = ({ session, addUser }) => {
             ) : (
               // Add custom signup page when next-auth is stable
               // <UserButtons href={"/signup"}>Sign up | Login</UserButtons>
-              <UserButtons
-                href={"/api/auth/signin"}
-                onClick={(e) => {
-                  e.preventDefault();
-                  signin();
-                }}
-              >
-                Sign up | Login
-              </UserButtons>
+              <Link href={`/?signin=${signinClicked}`} as={"/signup"} passHref>
+                <UserButtons style={{ textDecoration: "none" }}>
+                  Sign up | Login
+                </UserButtons>
+              </Link>
             )}
-            {/* {session ? null : <UserButtons disableRipple>Login</UserButtons>} */}
             <DrawerContainer>
               <Drawer />
             </DrawerContainer>
           </Grid>
         </Grid>
       </Container>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={!!router.query.signin}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={!!router.query.signin}>
+          <div>
+            {providers !== null &&
+              Object.values(providers).map((provider) => (
+                <p key={provider.name}>
+                  <Button
+                    href={`/api/auth/signin/${provider.name.toLowerCase()}?callbackUrl=${
+                      process.env.NODE_ENV === "production"
+                        ? process.env.prod
+                        : process.env.dev
+                    }`}
+                  >
+                    Sign in with {provider.name}
+                  </Button>
+                </p>
+              ))}
+
+            {/* <>{fetchProviders().then((data) => JSON.stringify(data))}</> */}
+          </div>
+        </Fade>
+      </Modal>
+      {console.log(providers)}
     </StyledLowerNavbar>
   );
 };
