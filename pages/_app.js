@@ -6,19 +6,19 @@ import {
   StylesProvider,
   createGenerateClassName,
 } from "@material-ui/core/styles";
+import { ThemeProvider as MuiProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../lib/theme";
 import { Provider } from "react-redux";
 import App from "next/app";
 import withReduxStore from "../lib/with-redux-store";
-import wrapper from "../store/store"
+import wrapper from "../store/store";
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "myclasses-",
 });
 
 class MyApp extends App {
-
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
@@ -33,10 +33,12 @@ class MyApp extends App {
       <AuthProvider session={session}>
         <StylesProvider injectFirst>
           <MuiThemeProvider theme={theme}>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <Component {...pageProps} />
-            </ThemeProvider>
+            <MuiProvider>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Component {...pageProps} />
+              </ThemeProvider>
+            </MuiProvider>
           </MuiThemeProvider>
         </StylesProvider>
       </AuthProvider>
