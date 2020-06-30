@@ -7,8 +7,12 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import { useRouter } from "next/router";
+import Router from "next/router";
 
 const SearchTools = () => {
+  const router = useRouter();
+
   return (
     <List component="nav">
       <ListItem>
@@ -18,7 +22,14 @@ const SearchTools = () => {
       <List style={{ marginLeft: "10px" }}>
         <ListItem>
           <FormControlLabel
-            control={<Checkbox name="gilad" />}
+            control={
+              <Checkbox
+                onChange={() => {
+                  router.query["test"] = "test";
+                  Router.push(router.asPath, router.asPath + `/?test=${"test"}`, { shallow: true });
+                }}
+              />
+            }
             label="by highest rated"
           />
         </ListItem>
