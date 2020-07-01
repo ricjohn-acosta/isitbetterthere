@@ -25,14 +25,14 @@ function registerUser(user, db = connection) {
 }
 
 // EXPERIENCES
-
-// Change this to return db("experiences").where({from,to}).join("users", "experiences.eid", "=", "users.uid").select()
-function getExperiences(from, to, db = connection) {
-  // return db("experiences").where({ from, to }).select();
+function getExperiences(from, to, currentPage, db = connection) {
+  const rowsPerPage = 10;
   return db("experiences")
     .where({ from, to })
     .join("users", "experiences.experience_id", "=", "users.user_id")
-    .select();
+    .select()
+    .limit(rowsPerPage)
+    .offset(rowsPerPage * currentPage)
 }
 
 function getUserExperiences(uid, db = connection) {

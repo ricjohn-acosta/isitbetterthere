@@ -33,11 +33,11 @@ const transition = ({ session, experiences }) => {
 };
 
 export async function getServerSideProps(context) {
-
   // returns an array of experiences
   const experiences = await getExperiences(
     context.query.from,
-    context.query.to
+    context.query.to,
+    context.query.currentPage
   );
 
   console.log(experiences);
