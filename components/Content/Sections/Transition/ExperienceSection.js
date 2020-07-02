@@ -8,7 +8,11 @@ import SearchTools from "./SearchTools";
 import Button from "@material-ui/core/Button";
 import SearchToolsMobile from "./SearchToolsMobile";
 import draftToHtml from "draftjs-to-html";
-import NoData from "./common/NoData"
+import NoData from "./common/NoData";
+import ExperienceSorter from "./ExperienceSorter";
+import { useRouter } from "next/router";
+const HtmlToReactParser = require("html-to-react").Parser;
+const htmlToReactParser = new HtmlToReactParser();
 
 const Wrapper = styled.div`
   min-height: 80vh;
@@ -71,10 +75,10 @@ const ShareExperienceBtn = styled(Button)`
 
 const SearchToolsMobileContainer = styled(SearchToolsMobile)``;
 
-const HtmlToReactParser = require("html-to-react").Parser;
-const htmlToReactParser = new HtmlToReactParser();
+
 
 const ExperienceSection = ({ experiences }) => {
+  const router = useRouter();
   const isSM = useMediaQuery("(max-width:600px)");
   const isMD = useMediaQuery("(max-width:1199px)");
 
@@ -83,31 +87,35 @@ const ExperienceSection = ({ experiences }) => {
   const displayExperiences = () => {
     return (
       <>
-        {console.log(experiences)}
-        {experiences.length === 0
-          ? <NoData/>
-          : experiences.map((e) => (
-              <>
-                <Experience
-                  name={e.name}
-                  email={e.email}
-                  position={e.position}
-                  company={e.company}
-                  bio={e.bio}
-                  fulfillment={e.fulfillment}
-                  easeOfTransition={e.ease_of_transition}
-                  regret={e.regret}
-                  experience={convertToReact(e.story)}
-                />
-                <br />
-              </>
-            ))}
+        {experiences.length === 0 ? (
+          <>
+            <NoData/>
+          </>
+        ) : (
+          experiences.map((e, i) => (
+            <>
+              <Experience
+                key={i}
+                name={e.name}
+                email={e.email}
+                position={e.position}
+                company={e.company}
+                bio={e.bio}
+                fulfillment={e.fulfillment}
+                easeOfTransition={e.ease_of_transition}
+                regret={e.regret}
+                experience={convertToReact(e.story)}
+                date_posted={e.date_posted}
+              />
+            </>
+          ))
+        )}
       </>
     );
   };
 
   const convertToReact = (story) => {
-    console.log(story)
+    console.log(story);
     const test = htmlToReactParser.parse(draftToHtml(JSON.parse(story)));
 
     return test;
@@ -130,7 +138,10 @@ const ExperienceSection = ({ experiences }) => {
             {isMD ? <SearchToolsMobileContainer /> : null}
           </ShareExperienceBtnContainer>
           <ExperienceContainer>
-            {displayExperiences()}
+            <ExperienceSorter sortBy={router.query.sortBy}>
+              {displayExperiences()}
+              {console.log("DISPLAY EXPERIENCES ", displayExperiences())}
+            </ExperienceSorter>
           </ExperienceContainer>
         </Grid>
         {isMD ? null : (

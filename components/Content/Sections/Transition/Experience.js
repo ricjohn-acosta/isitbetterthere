@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 const Wrapper = styled.div`
   min-height: 25vh;
   background-color: white;
+  padding-top: 5vh;
 `;
 
 const ProfileContainer = styled(Grid)`

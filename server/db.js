@@ -31,8 +31,11 @@ function getExperiences(from, to, currentPage, db = connection) {
     .where({ from, to })
     .join("users", "experiences.experience_id", "=", "users.user_id")
     .select()
-    .limit(rowsPerPage)
-    .offset(rowsPerPage * currentPage)
+    // .limit(rowsPerPage)
+    // .offset(rowsPerPage * currentPage)
+
+  
+  // return {experiences, totalRows}
 }
 
 function getUserExperiences(uid, db = connection) {

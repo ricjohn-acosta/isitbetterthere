@@ -20,7 +20,7 @@ exports.seed = function (knex) {
           hide_company: false,
           hide_location: false,
           comes_from: "Word of mouth",
-          date_created: Date.now().toString()
+          user_created: Date.now(),
         },
       ]);
     });
