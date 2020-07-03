@@ -138,7 +138,7 @@ const ExperienceSection = ({ experiences }) => {
             {isMD ? <SearchToolsMobileContainer /> : null}
           </ShareExperienceBtnContainer>
           <ExperienceContainer>
-            <ExperienceSorter sortBy={router.query.sortBy}>
+            <ExperienceSorter sortBy={router.query.sortBy} filterBy={router.query.filterBy}>
               {displayExperiences()}
               {console.log("DISPLAY EXPERIENCES ", displayExperiences())}
             </ExperienceSorter>
