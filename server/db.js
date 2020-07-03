@@ -30,8 +30,11 @@ async function getExperiences(from, to, page, db = connection) {
   const rowsPerPage = 5;
   const currentPage = page - 1;
 
+  // let filterQuery = {from, to};
+  // if(filterQuery === "Mixed") {filterQuery.fulfillment = filterQuery}
+
   let experiences = await db("experiences")
-    .where({ from, to })
+    .where({ from, to, fulfillment: "Mixed"})
     .join("users", "experiences.experience_id", "=", "users.user_id")
     .select()
     .limit(rowsPerPage)

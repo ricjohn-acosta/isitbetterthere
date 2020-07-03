@@ -41,6 +41,7 @@ const transition = ({
 
 export async function getServerSideProps(context) {
   // returns an array of experiences
+  console.log("SORT BY QUERY ", context.query.sortBy)
   const experiences = await getExperiences(
     context.query.from,
     context.query.to,
