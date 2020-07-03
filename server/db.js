@@ -8,6 +8,7 @@ module.exports = {
   registerUser,
   getUserExperiences,
   getExperiences,
+  getAllExperiences,
   addExperience,
 };
 
@@ -25,17 +26,26 @@ function registerUser(user, db = connection) {
 }
 
 // EXPERIENCES
-function getExperiences(from, to, currentPage, db = connection) {
-  const rowsPerPage = 10;
-  return db("experiences")
+async function getExperiences(from, to, page, db = connection) {
+  const rowsPerPage = 5;
+  const currentPage = page - 1;
+
+  let experiences = await db("experiences")
     .where({ from, to })
     .join("users", "experiences.experience_id", "=", "users.user_id")
     .select()
-    // .limit(rowsPerPage)
-    // .offset(rowsPerPage * currentPage)
+    .limit(rowsPerPage)
+    .offset(rowsPerPage * currentPage);
 
-  
-  // return {experiences, totalRows}
+  let totalExperiences = await db("experiences").select()
+  return [experiences, totalExperiences.length-1]
+}
+
+function getAllExperiences(from, to, db = connection) {
+  return db("experiences")
+  .where({ from, to })
+  .join("users", "experiences.experience_id", "=", "users.user_id")
+  .select()
 }
 
 function getUserExperiences(uid, db = connection) {

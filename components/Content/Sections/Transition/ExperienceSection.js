@@ -11,6 +11,9 @@ import draftToHtml from "draftjs-to-html";
 import NoData from "./common/NoData";
 import ExperienceSorter from "./ExperienceSorter";
 import { useRouter } from "next/router";
+import Pagination from "@material-ui/lab/Pagination";
+import PaginationItem from "@material-ui/lab/PaginationItem";
+import PaginationLink from "./PaginationLink";
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
 
@@ -75,9 +78,13 @@ const ShareExperienceBtn = styled(Button)`
 
 const SearchToolsMobileContainer = styled(SearchToolsMobile)``;
 
+const PaginationWrapper = styled(Pagination)`
+  float: right;
+  margin-right: 5vw;
+  margin-top: 2.5vh;
+`;
 
-
-const ExperienceSection = ({ experiences }) => {
+const ExperienceSection = ({ experiences, totalExperiences }) => {
   const router = useRouter();
   const isSM = useMediaQuery("(max-width:600px)");
   const isMD = useMediaQuery("(max-width:1199px)");
@@ -89,7 +96,7 @@ const ExperienceSection = ({ experiences }) => {
       <>
         {experiences.length === 0 ? (
           <>
-            <NoData/>
+            <NoData />
           </>
         ) : (
           experiences.map((e, i) => (
@@ -138,11 +145,26 @@ const ExperienceSection = ({ experiences }) => {
             {isMD ? <SearchToolsMobileContainer /> : null}
           </ShareExperienceBtnContainer>
           <ExperienceContainer>
-            <ExperienceSorter sortBy={router.query.sortBy} filterBy={router.query.filterBy}>
+            <ExperienceSorter
+              sortBy={router.query.sortBy}
+              filterBy={router.query.filterBy}
+            >
               {displayExperiences()}
               {console.log("DISPLAY EXPERIENCES ", displayExperiences())}
             </ExperienceSorter>
           </ExperienceContainer>
+            <PaginationWrapper
+              page={parseInt(router.query.page)}
+              count={Math.ceil(totalExperiences / 5)}
+              renderItem={(item) => (
+                <PaginationItem
+                  component={PaginationLink}
+                  query={router.query}
+                  item={item}
+                  {...item}
+                />
+              )}
+            />
         </Grid>
         {isMD ? null : (
           <Grid item xs={12} sm={12} md={3}>
@@ -153,6 +175,7 @@ const ExperienceSection = ({ experiences }) => {
           </Grid>
         )}
       </Grid>
+      {console.log(typeof router.query.page)}
     </Wrapper>
   );
 };

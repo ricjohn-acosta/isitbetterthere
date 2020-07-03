@@ -3,9 +3,14 @@ import Transition from "../containers/Transition";
 import Layout from "../components/Layout/Layout";
 import PageNotFound from "../containers/PageNotFound";
 import { session } from "next-auth/client";
-import { getExperiences } from "../server/db";
+import { getExperiences, getAllExperiences } from "../server/db";
 
-const transition = ({ session, experiences }) => {
+const transition = ({
+  session,
+  experiences,
+  totalExperiences,
+  allExperiences,
+}) => {
   const router = useRouter();
   const { from, to, category } = router.query;
 
@@ -25,6 +30,8 @@ const transition = ({ session, experiences }) => {
             category={category}
             session={session}
             experiences={experiences}
+            totalExperiences={totalExperiences}
+            allExperiences={allExperiences}
           />
         </Layout>
       </>
@@ -37,14 +44,20 @@ export async function getServerSideProps(context) {
   const experiences = await getExperiences(
     context.query.from,
     context.query.to,
-    context.query.currentPage
+    context.query.page
   );
 
-  console.log(experiences);
+  const allExperiences = await getAllExperiences(
+    context.query.from,
+    context.query.to
+  );
+
   return {
     props: {
       session: await session(context),
-      experiences,
+      experiences: experiences[0],
+      totalExperiences: experiences[1],
+      allExperiences,
     },
   };
 }

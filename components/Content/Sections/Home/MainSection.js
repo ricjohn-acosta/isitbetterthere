@@ -146,6 +146,7 @@ const MainSection = () => {
           category: currentCategory,
           from: fromInputValue,
           to: toInputValue,
+          page: 1,
         },
       });
       setEmptyFields(false);
