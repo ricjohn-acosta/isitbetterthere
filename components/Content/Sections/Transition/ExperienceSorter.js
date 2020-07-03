@@ -94,9 +94,9 @@ const ExperienceSorter = ({ children, sortBy, filterBy }) => {
           experienceResult = experiences;
           break;
 
-        case "fulfilled":
-          experienceResult = experiences.filter(filterByFulfilled);
-          break;
+        // case "fulfilled":
+        //   experienceResult = experiences.filter(filterByFulfilled);
+        //   break;
 
         case "not-fulfilled":
           return experiences.filter(filterByNotFulfilled);

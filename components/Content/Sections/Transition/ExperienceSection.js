@@ -153,18 +153,22 @@ const ExperienceSection = ({ experiences, totalExperiences }) => {
               {console.log("DISPLAY EXPERIENCES ", displayExperiences())}
             </ExperienceSorter>
           </ExperienceContainer>
-            <PaginationWrapper
-              page={parseInt(router.query.page)}
-              count={Math.ceil(totalExperiences / 5)}
-              renderItem={(item) => (
-                <PaginationItem
-                  component={PaginationLink}
-                  query={router.query}
-                  item={item}
-                  {...item}
-                />
-              )}
-            />
+          <PaginationWrapper
+            page={parseInt(router.query.page)}
+            count={
+              experiences.length < 5
+                ? Math.ceil(experiences.length / 5)
+                : Math.ceil(totalExperiences / 5)
+            }
+            renderItem={(item) => (
+              <PaginationItem
+                component={PaginationLink}
+                query={router.query}
+                item={item}
+                {...item}
+              />
+            )}
+          />
         </Grid>
         {isMD ? null : (
           <Grid item xs={12} sm={12} md={3}>

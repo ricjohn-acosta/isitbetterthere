@@ -26,29 +26,33 @@ function registerUser(user, db = connection) {
 }
 
 // EXPERIENCES
-async function getExperiences(from, to, page, db = connection) {
+async function getExperiences(from, to, page, filter, db = connection) {
   const rowsPerPage = 5;
   const currentPage = page - 1;
+  let filterQuery = { from, to };
 
-  // let filterQuery = {from, to};
-  // if(filterQuery === "Mixed") {filterQuery.fulfillment = filterQuery}
+  if (filter === "fulfilled") {
+    filterQuery.fulfillment = "Fulfilled";
+  }
 
   let experiences = await db("experiences")
-    .where({ from, to, fulfillment: "Mixed"})
+    .where(filterQuery)
+    // .where({ from, to })
     .join("users", "experiences.experience_id", "=", "users.user_id")
     .select()
     .limit(rowsPerPage)
     .offset(rowsPerPage * currentPage);
 
-  let totalExperiences = await db("experiences").select()
-  return [experiences, totalExperiences.length-1]
+  let totalExperiences = await db("experiences").select();
+  console.log("EXPERIENCE LENGTH ", totalExperiences.length)
+  return [experiences, totalExperiences.length - 1];
 }
 
 function getAllExperiences(from, to, db = connection) {
   return db("experiences")
-  .where({ from, to })
-  .join("users", "experiences.experience_id", "=", "users.user_id")
-  .select()
+    .where({ from, to })
+    .join("users", "experiences.experience_id", "=", "users.user_id")
+    .select();
 }
 
 function getUserExperiences(uid, db = connection) {

@@ -45,7 +45,8 @@ export async function getServerSideProps(context) {
   const experiences = await getExperiences(
     context.query.from,
     context.query.to,
-    context.query.page
+    context.query.page,
+    context.query.filterBy
   );
 
   const allExperiences = await getAllExperiences(
