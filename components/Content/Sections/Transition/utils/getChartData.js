@@ -24,8 +24,8 @@ export const getChartData = (quality, experiences) => {
         datasets: [
           {
             data: qualityData,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+            hoverBackgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
           },
         ],
       };
@@ -54,8 +54,8 @@ export const getChartData = (quality, experiences) => {
         datasets: [
           {
             data: easeData,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+            hoverBackgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
           },
         ],
       };
@@ -80,8 +80,8 @@ export const getChartData = (quality, experiences) => {
         datasets: [
           {
             data: regretData,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            backgroundColor: ["#36A2EB", "#FF6384"],
+            hoverBackgroundColor: ["#36A2EB", "#FF6384"],
           },
         ],
       };
