@@ -6,7 +6,6 @@ export const addExperience = (experience) => {
     dispatch({ type: actions.ADD_EXPERIENCE_START });
     return (
       request
-        // .post(process.env.EXPERIENCE_API || "http://localhost:3000/api/experiences")
         .post(
           process.env.NODE_ENV === "production"
             ? process.env.prod + "/api/experiences"

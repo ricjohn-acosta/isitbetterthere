@@ -49,6 +49,7 @@ export async function getServerSideProps(context) {
     context.query.filterBy
   );
 
+  console.log("EXPERIENCES ", experiences)
   const allExperiences = await getAllExperiences(
     context.query.from,
     context.query.to

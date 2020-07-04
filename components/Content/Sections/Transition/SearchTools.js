@@ -32,7 +32,7 @@ const SearchTools = () => {
         setByRegret("none");
         Router.push({
           pathname: "/transition",
-          query: { ...router.query, filterBy },
+          query: { ...router.query, page: "1", filterBy },
           asPath: router.asPath,
         });
 
@@ -44,7 +44,7 @@ const SearchTools = () => {
         setByRegret("none");
         Router.push({
           pathname: "/transition",
-          query: { ...router.query, filterBy },
+          query: { ...router.query, page: "1", filterBy },
           asPath: router.asPath,
         });
         break;
@@ -55,7 +55,7 @@ const SearchTools = () => {
         setByRegret(filterBy);
         Router.push({
           pathname: "/transition",
-          query: { ...router.query, filterBy },
+          query: { ...router.query, page: "1", filterBy },
           asPath: router.asPath,
         });
         break;

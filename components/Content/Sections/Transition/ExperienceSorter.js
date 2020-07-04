@@ -20,38 +20,6 @@ const sortMostHelpful = (a, b) => {
     : 0;
 };
 
-const filterByFulfilled = (value) => {
-  return value.props.children.props.fulfillment === "Fulfilled";
-};
-
-const filterByNotFulfilled = (value) => {
-  return value.props.children.props.fulfillment === "Not fulfilled";
-};
-
-const filterByMixed = (value) => {
-  return value.props.children.props.fulfillment === "Mixed";
-};
-
-const filterByEasy = (value) => {
-  return value.props.children.props.easeOfTransition === "Easy";
-};
-
-const filterByMedium = (value) => {
-  return value.props.children.props.easeOfTransition === "Medium";
-};
-
-const filterByHard = (value) => {
-  return value.props.children.props.easeOfTransition === "Hard";
-};
-
-const filterByDidRegret = (value) => {
-  return value.props.children.props.regret === "Did regret";
-};
-
-const filterByDidNotRegret = (value) => {
-  return value.props.children.props.regret === "Did not regret";
-};
-
 const ExperienceSorter = ({ children, sortBy, filterBy }) => {
   const experiences = React.Children.toArray(children)[0].props.children;
   let experienceResult;
@@ -85,52 +53,9 @@ const ExperienceSorter = ({ children, sortBy, filterBy }) => {
         default:
           return experiences;
       }
-    }
+    }    
 
-    // If there is only a filterBy query
-    if (filterBy) {
-      switch (filterBy) {
-        case "none":
-          experienceResult = experiences;
-          break;
-
-        // case "fulfilled":
-        //   experienceResult = experiences.filter(filterByFulfilled);
-        //   break;
-
-        case "not-fulfilled":
-          return experiences.filter(filterByNotFulfilled);
-
-        case "mixed":
-          experienceResult = experiences.filter(filterByMixed);
-          break;
-
-        case "easy":
-          experienceResult = experiences.filter(filterByEasy);
-          break;
-
-        case "medium":
-          experienceResult = experiences.filter(filterByMedium);
-          break;
-
-        case "hard":
-          experienceResult = experiences.filter(filterByHard);
-          break;
-
-        case "did-regret":
-          experienceResult = experiences.filter(filterByDidRegret);
-          break;
-
-        case "did-not-regret":
-          experienceResult = experiences.filter(filterByDidNotRegret);
-          break;
-
-        default:
-          experienceResult = experiences;
-          break;
-      }
-    }
-    
+    console.log("EXPERIENCE RESULT ", experienceResult)
     return experienceResult;
   } else {
     return experiences;

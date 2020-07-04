@@ -11,6 +11,7 @@ import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { IconButton } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import moment from 'moment';
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -63,6 +64,8 @@ const Experience = ({
   fulfillment,
   easeOfTransition,
   regret,
+  helpfulCount,
+  date_posted
 }) => {
   const renderChips = () => {
     const chips = [fulfillment, easeOfTransition, regret];
@@ -126,14 +129,14 @@ const Experience = ({
               </div>
             </UserInfo>
           </ProfileDetails>
-
+          <div>Posted at {moment(date_posted).format("DD MMM YYYY")}</div>
           <ChipsContainer>{renderChips()}</ChipsContainer>
         </ProfileContainer>
         <Content item xs={12} sm={6} md={12}>
           {experience}
           <StyledHr />
           <HelpfulCount component="span" variant="caption">
-            123 people have found this helpful
+            {helpfulCount} people have found this helpful
           </HelpfulCount>
           <ButtonGroup>
             <Button>Helpful</Button>

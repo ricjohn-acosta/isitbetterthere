@@ -112,6 +112,7 @@ const ExperienceSection = ({ experiences, totalExperiences }) => {
                 easeOfTransition={e.ease_of_transition}
                 regret={e.regret}
                 experience={convertToReact(e.story)}
+                helpfulCount={e.helpful}
                 date_posted={e.date_posted}
               />
             </>
@@ -147,18 +148,18 @@ const ExperienceSection = ({ experiences, totalExperiences }) => {
           <ExperienceContainer>
             <ExperienceSorter
               sortBy={router.query.sortBy}
-              filterBy={router.query.filterBy}
+              // filterBy={router.query.filterBy}
             >
               {displayExperiences()}
-              {console.log("DISPLAY EXPERIENCES ", displayExperiences())}
+              {/* {console.log("DISPLAY EXPERIENCES ", displayExperiences())} */}
             </ExperienceSorter>
           </ExperienceContainer>
           <PaginationWrapper
             page={parseInt(router.query.page)}
             count={
-              experiences.length < 5
-                ? Math.ceil(experiences.length / 5)
-                : Math.ceil(totalExperiences / 5)
+              router.query.filterBy === "none" || !router.query.hasOwnProperty("filterBy")
+                ? Math.ceil(totalExperiences / 5) 
+                : Math.ceil(experiences.length / 5)
             }
             renderItem={(item) => (
               <PaginationItem

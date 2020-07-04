@@ -6,6 +6,7 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex("experiences").insert([
         {
+          id: 1,
           experience_id: "112929919225856440659",
           category: "universities",
           from: "University of Auckland",
@@ -19,6 +20,7 @@ exports.seed = function (knex) {
           date_posted: Date.now(),
         },
         {
+          id: 2,
           experience_id: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -32,6 +34,7 @@ exports.seed = function (knex) {
           date_posted: 1519211809934,
         },
         {
+          id: 3,
           experience_id: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -45,6 +48,7 @@ exports.seed = function (knex) {
           date_posted: 1519211810362,
         },
         {
+          id: 4,
           experience_id: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -58,6 +62,7 @@ exports.seed = function (knex) {
           date_posted: 1519211811670,
         },
         {
+          id: 5,
           experience_id: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -71,6 +76,7 @@ exports.seed = function (knex) {
           date_posted: 151921181172,
         },
         {
+          id: 6,
           experience_id: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -84,6 +90,7 @@ exports.seed = function (knex) {
           date_posted: 1519211811683,
         },
         {
+          id: 7,
           experience_id: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",

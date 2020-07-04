@@ -1,7 +1,7 @@
 exports.up = (knex, Promise) => {
   return knex.schema.createTable("experiences", (table) => {
-    // table.increments("id").primary();
-    table.string("experience_id").primary;
+    table.increments("id").primary();
+    table.string("experience_id")
     table.string("category");
     table.string("from");
     table.string("to");
