@@ -46,7 +46,8 @@ export async function getServerSideProps(context) {
     context.query.from,
     context.query.to,
     context.query.page,
-    context.query.filterBy
+    context.query.sortBy,
+    context.query.filterBy,
   );
 
   console.log("EXPERIENCES ", experiences)

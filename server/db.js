@@ -27,10 +27,34 @@ function registerUser(user, db = connection) {
 }
 
 // EXPERIENCES
-async function getExperiences(from, to, page, filter, db = connection) {
+async function getExperiences(from, to, page, sort, filter, db = connection) {
   const rowsPerPage = 5;
   const currentPage = page - 1;
   let filterQuery = { from, to };
+  let sortColumn = "";
+  let sortDirection = "";
+
+  switch (sort) {
+    case "most-helpful":
+      sortColumn = "helpful";
+      sortDirection = "asc";
+      break;
+
+    case "newest":
+      sortColumn = "date_posted";
+      sortDirection = "desc";
+      break;
+
+    case "oldest":
+      sortColumn = "date_posted";
+      sortDirection = "asc";
+      break;
+
+    default:
+      sortColumn = "helpful";
+      sortDirection = "desc";
+      break;
+  }
 
   switch (filter) {
     case "fulfilled":
@@ -71,8 +95,9 @@ async function getExperiences(from, to, page, filter, db = connection) {
 
   let experiences = await db("experiences")
     .where(filterQuery)
-    .leftJoin("users", "experiences.posted_by", "=", "users.user_id")
+    .join("users", "experiences.posted_by", "=", "users.user_id")
     .select()
+    .orderBy(sortColumn, sortDirection)
     .limit(rowsPerPage)
     .offset(rowsPerPage * currentPage);
 

@@ -9,7 +9,6 @@ import Button from "@material-ui/core/Button";
 import SearchToolsMobile from "./SearchToolsMobile";
 import draftToHtml from "draftjs-to-html";
 import NoData from "./common/NoData";
-import ExperienceSorter from "./ExperienceSorter";
 import { useRouter } from "next/router";
 import Pagination from "@material-ui/lab/Pagination";
 import PaginationItem from "@material-ui/lab/PaginationItem";
@@ -148,13 +147,9 @@ const ExperienceSection = ({ experiences, totalExperiences }) => {
             {isMD ? <SearchToolsMobileContainer /> : null}
           </ShareExperienceBtnContainer>
           <ExperienceContainer>
-            <ExperienceSorter
-              sortBy={router.query.sortBy}
-              // filterBy={router.query.filterBy}
-            >
+
               {displayExperiences()}
               {/* {console.log("DISPLAY EXPERIENCES ", displayExperiences())} */}
-            </ExperienceSorter>
           </ExperienceContainer>
           <PaginationWrapper
             page={parseInt(router.query.page)}
