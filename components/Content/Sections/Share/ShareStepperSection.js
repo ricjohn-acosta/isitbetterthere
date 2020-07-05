@@ -62,12 +62,6 @@ const useStyles = makeStyles((theme) => ({
 const Wrapper = styled.div`
   min-height: 150vh;
   padding: 0 5% 0 5%;
-  // background: rgb(255, 255, 255);
-  // background: linear-gradient(
-  //   180deg,
-  //   rgba(255, 255, 255, 1) 0%,
-  //   rgba(211, 252, 252, 1) 100%
-  // );
   background-color: #f8f8f8;
   overflow: auto;
 `;
@@ -165,7 +159,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addExperience({
-      experience_id: session.account.id,
+      posted_by: session.account.id,
       category: currentCategory,
       from: fromInputValue,
       to: toInputValue,

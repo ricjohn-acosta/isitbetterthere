@@ -91,6 +91,7 @@ const ExperienceSection = ({ experiences, totalExperiences }) => {
 
   const testData = experiences;
 
+  console.log("ASDASDASD", experiences)
   const displayExperiences = () => {
     return (
       <>
@@ -103,6 +104,7 @@ const ExperienceSection = ({ experiences, totalExperiences }) => {
             <>
               <Experience
                 key={i}
+                experienceId={e.experience_id}
                 name={e.name}
                 email={e.email}
                 position={e.position}

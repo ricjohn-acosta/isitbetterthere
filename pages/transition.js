@@ -13,7 +13,7 @@ const transition = ({
 }) => {
   const router = useRouter();
   const { from, to, category } = router.query;
-
+  console.log("EXPEEERIENCES!! ", experiences)
   if (Object.keys(router.query).length === 0) {
     return (
       <Layout>

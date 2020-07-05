@@ -6,8 +6,8 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex("experiences").insert([
         {
-          id: 1,
-          experience_id: "112929919225856440659",
+          experience_id: 1,
+          posted_by: "112929919225856440659",
           category: "universities",
           from: "University of Auckland",
           to: "Auckland University of Technology",
@@ -20,8 +20,8 @@ exports.seed = function (knex) {
           date_posted: Date.now(),
         },
         {
-          id: 2,
-          experience_id: "112929919225856440659",
+          experience_id: 2,
+          posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
           to: "Accounting",
@@ -34,8 +34,8 @@ exports.seed = function (knex) {
           date_posted: 1519211809934,
         },
         {
-          id: 3,
-          experience_id: "112929919225856440659",
+          experience_id: 3,
+          posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
           to: "Accounting",
@@ -48,8 +48,8 @@ exports.seed = function (knex) {
           date_posted: 1519211810362,
         },
         {
-          id: 4,
-          experience_id: "112929919225856440659",
+          experience_id: 4,
+          posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
           to: "Accounting",
@@ -62,8 +62,8 @@ exports.seed = function (knex) {
           date_posted: 1519211811670,
         },
         {
-          id: 5,
-          experience_id: "112929919225856440659",
+          experience_id: 5,
+          posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
           to: "Accounting",
@@ -76,8 +76,8 @@ exports.seed = function (knex) {
           date_posted: 151921181172,
         },
         {
-          id: 6,
-          experience_id: "112929919225856440659",
+          experience_id: 6,
+          posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
           to: "Accounting",
@@ -90,8 +90,8 @@ exports.seed = function (knex) {
           date_posted: 1519211811683,
         },
         {
-          id: 7,
-          experience_id: "112929919225856440659",
+          experience_id: 7,
+          posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
           to: "Accounting",

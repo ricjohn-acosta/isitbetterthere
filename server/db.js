@@ -10,6 +10,7 @@ module.exports = {
   getExperiences,
   getAllExperiences,
   addExperience,
+  rateExperience,
 };
 
 // USERS
@@ -70,23 +71,36 @@ async function getExperiences(from, to, page, filter, db = connection) {
 
   let experiences = await db("experiences")
     .where(filterQuery)
-    .join("users", "experiences.experience_id", "=", "users.user_id")
+    .leftJoin("users", "experiences.posted_by", "=", "users.user_id")
     .select()
     .limit(rowsPerPage)
     .offset(rowsPerPage * currentPage);
 
-  let totalExperiences = await db("experiences")
-    .where({ from, to })
-    .join("users", "experiences.experience_id", "=", "users.user_id")
-    .select();
+  let ratings = await db("experience_rating").select();
+
+  // needed to add rate count to each experience object
+  experiences.map((e) =>
+    ratings.filter((rating) => rating.experience_id == e.experience_id)
+      .length !== 0
+      ? (e.helpful = ratings.filter(
+          (rating) => rating.experience_id == e.experience_id
+        ).length)
+      : (e.helpful = 0)
+  );
+
+  let totalExperiences = await db("experiences").where({ from, to }).select();
   return [experiences, totalExperiences.length];
 }
 
 function getAllExperiences(from, to, db = connection) {
   return db("experiences")
     .where({ from, to })
-    .join("users", "experiences.experience_id", "=", "users.user_id")
+    .join("users", "experiences.posted_by", "=", "users.user_id")
     .select();
+}
+
+function rateExperience(rating, db = connection) {
+  return db("experience_rating").insert(rating);
 }
 
 function getUserExperiences(uid, db = connection) {

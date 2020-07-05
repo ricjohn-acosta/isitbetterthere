@@ -11,7 +11,10 @@ import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { IconButton } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import moment from 'moment';
+import moment from "moment";
+import { rateExperience } from "../../../../store/actions/ratings";
+import { connect } from "react-redux";
+import { useSession } from "next-auth/client";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -56,6 +59,7 @@ const StyledHr = styled.hr`
 
 const Experience = ({
   experience,
+  experienceId,
   name,
   company,
   position,
@@ -65,10 +69,23 @@ const Experience = ({
   easeOfTransition,
   regret,
   helpfulCount,
-  date_posted
+  date_posted,
+  rateExperience,
 }) => {
+  const [session, loading] = useSession();
+
+  const handleRating = (e) => {
+    rateExperience({
+      user_id: session.account.id,
+      experience_id: experienceId,
+      is_helpful: e.currentTarget.value === "true" ? true : false,
+      date_liked: Date.now(),
+    });
+  };
+
   const renderChips = () => {
     const chips = [fulfillment, easeOfTransition, regret];
+
     console.log(chips);
     return chips.map((e, i) => (
       <>
@@ -139,8 +156,12 @@ const Experience = ({
             {helpfulCount} people have found this helpful
           </HelpfulCount>
           <ButtonGroup>
-            <Button>Helpful</Button>
-            <Button>Not helpful</Button>
+            <Button value="true" onClick={handleRating}>
+              Helpful
+            </Button>
+            <Button value="false" onClick={handleRating}>
+              Not helpful
+            </Button>
           </ButtonGroup>
         </Content>
       </Grid>
@@ -148,4 +169,10 @@ const Experience = ({
   );
 };
 
-export default Experience;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    rateExperience: (rating) => dispatch(rateExperience(rating)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Experience);
