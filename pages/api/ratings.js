@@ -1,14 +1,16 @@
-import { rateExperience, rateHelpful } from "../../server/db";
+import { addRating, rateExperience } from "../../server/db";
 import { getSession } from "next-auth/client";
 
 export default async function ratings(req, res) {
   const session = await getSession({ req });
+  console.log("TEEEEEST", req.body.is_helpful)
 
   if (req.method === "PUT" && session) {
-    rateExperience(req.body).then((rating) => {
+    addRating(req.body).then((rating) => {
       console.log("EXPERIENCE RATING ADDED TO DB");
     });
-    rateHelpful(req.body).then((rating) => {
+    
+    rateExperience(req.body).then((rating) => {
       console.log("RATED EXPERIENCE AS HELPFUL");
     });
     res.status(200).end();
