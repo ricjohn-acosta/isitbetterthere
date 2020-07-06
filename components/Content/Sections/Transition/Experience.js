@@ -15,6 +15,7 @@ import moment from "moment";
 import { rateExperience } from "../../../../store/actions/ratings";
 import { connect } from "react-redux";
 import { useSession } from "next-auth/client";
+import { useEffect } from "react";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -71,8 +72,10 @@ const Experience = ({
   helpfulCount,
   date_posted,
   rateExperience,
+  isRated,
 }) => {
   const [session, loading] = useSession();
+  const [rated, setRated] = React.useState(false);
 
   const handleRating = (e) => {
     rateExperience({
@@ -81,6 +84,7 @@ const Experience = ({
       is_helpful: e.currentTarget.value === "true" ? true : false,
       date_liked: Date.now(),
     });
+    setRated(true);
   };
 
   const renderChips = () => {
@@ -155,14 +159,19 @@ const Experience = ({
           <HelpfulCount component="span" variant="caption">
             {helpfulCount} people have found this helpful
           </HelpfulCount>
-          <ButtonGroup>
-            <Button value="true" onClick={handleRating}>
-              Helpful
-            </Button>
-            <Button value="false" onClick={handleRating}>
-              Not helpful
-            </Button>
-          </ButtonGroup>
+          {console.log(isRated)}
+          {isRated || rated ? (
+            <div style={{ float: "right" }}>Thanks for rating!</div>
+          ) : (
+            <ButtonGroup>
+              <Button value="true" onClick={handleRating}>
+                Helpful
+              </Button>
+              <Button value="false" onClick={handleRating}>
+                Not helpful
+              </Button>
+            </ButtonGroup>
+          )}
         </Content>
       </Grid>
     </Wrapper>

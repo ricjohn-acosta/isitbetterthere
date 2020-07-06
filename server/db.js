@@ -11,6 +11,8 @@ module.exports = {
   getAllExperiences,
   addExperience,
   rateExperience,
+  rateHelpful,
+  getRatedExperiences,
 };
 
 // USERS
@@ -37,7 +39,7 @@ async function getExperiences(from, to, page, sort, filter, db = connection) {
   switch (sort) {
     case "most-helpful":
       sortColumn = "helpful";
-      sortDirection = "asc";
+      sortDirection = "desc";
       break;
 
     case "newest":
@@ -101,18 +103,6 @@ async function getExperiences(from, to, page, sort, filter, db = connection) {
     .limit(rowsPerPage)
     .offset(rowsPerPage * currentPage);
 
-  let ratings = await db("experience_rating").select();
-
-  // needed to add rate count to each experience object
-  experiences.map((e) =>
-    ratings.filter((rating) => rating.experience_id == e.experience_id)
-      .length !== 0
-      ? (e.helpful = ratings.filter(
-          (rating) => rating.experience_id == e.experience_id
-        ).length)
-      : (e.helpful = 0)
-  );
-
   let totalExperiences = await db("experiences").where({ from, to }).select();
   return [experiences, totalExperiences.length];
 }
@@ -124,8 +114,18 @@ function getAllExperiences(from, to, db = connection) {
     .select();
 }
 
+function getRatedExperiences(userId, db = connection) {
+  return db("experience_rating").where({ user_id: userId }).select();
+}
+
 function rateExperience(rating, db = connection) {
   return db("experience_rating").insert(rating);
+}
+
+function rateHelpful(experienceId, db = connection) {
+  return db("experiences")
+    .where({ experience_id: experienceId.experience_id })
+    .increment("helpful", 1);
 }
 
 function getUserExperiences(uid, db = connection) {

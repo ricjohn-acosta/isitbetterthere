@@ -83,14 +83,14 @@ const PaginationWrapper = styled(Pagination)`
   margin-top: 2.5vh;
 `;
 
-const ExperienceSection = ({ experiences, totalExperiences }) => {
+const ExperienceSection = ({ experiences, totalExperiences, ratedExperiences }) => {
   const router = useRouter();
   const isSM = useMediaQuery("(max-width:600px)");
   const isMD = useMediaQuery("(max-width:1199px)");
 
   const testData = experiences;
 
-  console.log("ASDASDASD", experiences)
+  console.log("ASDASDASD", ratedExperiences.find(({experience_id}) => experience_id === "2"));
   const displayExperiences = () => {
     return (
       <>
@@ -115,6 +115,7 @@ const ExperienceSection = ({ experiences, totalExperiences }) => {
                 experience={convertToReact(e.story)}
                 helpfulCount={e.helpful}
                 date_posted={e.date_posted}
+                isRated={!!ratedExperiences.find(({experience_id}) => experience_id === e.experience_id.toString())}
               />
             </>
           ))
@@ -146,16 +147,13 @@ const ExperienceSection = ({ experiences, totalExperiences }) => {
             </ShareExperienceBtn>
             {isMD ? <SearchToolsMobileContainer /> : null}
           </ShareExperienceBtnContainer>
-          <ExperienceContainer>
-
-              {displayExperiences()}
-              {/* {console.log("DISPLAY EXPERIENCES ", displayExperiences())} */}
-          </ExperienceContainer>
+          <ExperienceContainer>{displayExperiences()}</ExperienceContainer>
           <PaginationWrapper
             page={parseInt(router.query.page)}
             count={
-              router.query.filterBy === "none" || !router.query.hasOwnProperty("filterBy")
-                ? Math.ceil(totalExperiences / 5) 
+              router.query.filterBy === "none" ||
+              !router.query.hasOwnProperty("filterBy")
+                ? Math.ceil(totalExperiences / 5)
                 : Math.ceil(experiences.length / 5)
             }
             renderItem={(item) => (
