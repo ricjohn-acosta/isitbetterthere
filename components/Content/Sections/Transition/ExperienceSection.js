@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 import Pagination from "@material-ui/lab/Pagination";
 import PaginationItem from "@material-ui/lab/PaginationItem";
 import PaginationLink from "./PaginationLink";
+import Popper from "@material-ui/core/Popper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
 
@@ -83,14 +85,37 @@ const PaginationWrapper = styled(Pagination)`
   margin-top: 2.5vh;
 `;
 
-const ExperienceSection = ({ experiences, totalExperiences, ratedExperiences }) => {
+const PopperContent = styled(Paper)`
+  padding: 2.5%;
+  background-color: #f5f5f5;
+  width: 10vw;
+`;
+
+const ExperienceSection = ({
+  experiences,
+  totalExperiences,
+  ratedExperiences,
+}) => {
   const router = useRouter();
   const isSM = useMediaQuery("(max-width:600px)");
   const isMD = useMediaQuery("(max-width:1199px)");
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [clickAway, setClickaway] = React.useState(false);
+  const [currentId, setCurrentId] = React.useState("");
 
   const testData = experiences;
 
-  console.log("ASDASDASD", ratedExperiences.find(({experience_id}) => experience_id === "2"));
+  const handleOptions = (event) => {
+    setAnchorEl(event.currentTarget);
+    setClickaway(false)
+  };
+  const open = Boolean(anchorEl);
+
+  const handleClickaway = () => {
+    setClickaway(true);
+  };
+
+  console.log("curent Id? ", currentId);
   const displayExperiences = () => {
     return (
       <>
@@ -115,7 +140,16 @@ const ExperienceSection = ({ experiences, totalExperiences, ratedExperiences }) 
                 experience={convertToReact(e.story)}
                 helpfulCount={e.helpful}
                 date_posted={e.date_posted}
-                isRated={!!ratedExperiences.find(({experience_id}) => experience_id === e.experience_id.toString())}
+                isRated={
+                  !!ratedExperiences.find(
+                    ({ experience_id }) =>
+                      experience_id === e.experience_id.toString()
+                  )
+                }
+                handleOptions={handleOptions}
+                setCurrentId={setCurrentId}
+                // setOpen={setOpen}
+                // open={open}
               />
             </>
           ))
@@ -127,7 +161,6 @@ const ExperienceSection = ({ experiences, totalExperiences, ratedExperiences }) 
   const convertToReact = (story) => {
     console.log(story);
     const test = htmlToReactParser.parse(draftToHtml(JSON.parse(story)));
-
     return test;
   };
 
@@ -175,7 +208,15 @@ const ExperienceSection = ({ experiences, totalExperiences, ratedExperiences }) 
           </Grid>
         )}
       </Grid>
-      {console.log(typeof router.query.page)}
+      {console.log("CLICKED AWAY? ", clickAway)}
+
+      <Popper open={open && !clickAway} anchorEl={anchorEl}>
+        <ClickAwayListener onClickAway={handleClickaway}>
+          <PopperContent>
+            <Button fullWidth>Flag as inapproriate?</Button>
+          </PopperContent>
+        </ClickAwayListener>
+      </Popper>
     </Wrapper>
   );
 };

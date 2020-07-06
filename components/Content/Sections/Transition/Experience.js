@@ -15,7 +15,8 @@ import moment from "moment";
 import { rateExperience } from "../../../../store/actions/ratings";
 import { connect } from "react-redux";
 import { useSession } from "next-auth/client";
-import { useEffect } from "react";
+import Popper from "@material-ui/core/Popper";
+import Paper from "@material-ui/core/Paper";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -58,6 +59,8 @@ const StyledHr = styled.hr`
   background: #e0e0e0;
 `;
 
+
+
 const Experience = ({
   experience,
   experienceId,
@@ -73,9 +76,12 @@ const Experience = ({
   date_posted,
   rateExperience,
   isRated,
+  handleOptions,
+  setCurrentId,
 }) => {
   const [session, loading] = useSession();
   const [rated, setRated] = React.useState(false);
+
 
   const handleRating = (e) => {
     rateExperience({
@@ -86,6 +92,7 @@ const Experience = ({
     });
     setRated(true);
   };
+
 
   const renderChips = () => {
     const chips = [fulfillment, easeOfTransition, regret];
@@ -122,7 +129,7 @@ const Experience = ({
       <Grid container drection="column">
         <ProfileContainer item xs={12} sm={6} md={12}>
           <div style={{ float: "right" }}>
-            <IconButton>
+            <IconButton onClick={(e) => {handleOptions(e);setCurrentId(experienceId.toString())}}>
               <MoreVertIcon />
             </IconButton>
           </div>
@@ -174,6 +181,12 @@ const Experience = ({
           )}
         </Content>
       </Grid>
+      {/* <Popper
+        open={open && experienceId.toString() === currentExperienceId ? true : false}
+        anchorEl={anchorEl}
+      >
+        <PopperContent>The content of the Popper.</PopperContent>
+      </Popper> */}
     </Wrapper>
   );
 };
