@@ -124,15 +124,16 @@ const Experience = ({
     <Wrapper>
       <Grid container drection="column">
         <ProfileContainer item xs={12} sm={6} md={12}>
-          <div style={{ float: "right" }}>
+          <div id="icon-container" style={{ float: "right" }}>
             <IconButton
+              id="icon-button"
               value={experienceId.toString()}
               onClick={(e) => {
                 handleOptions(e);
                 setCurrentId(experienceId.toString());
               }}
             >
-              <MoreVertIcon />
+              <MoreVertIcon id="icon-button-svg"/>
             </IconButton>
           </div>
           <ProfileDetails>

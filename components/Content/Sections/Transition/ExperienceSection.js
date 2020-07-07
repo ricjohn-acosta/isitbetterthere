@@ -116,10 +116,16 @@ const ExperienceSection = ({
 
   const handleClickaway = (e) => {
     console.log("HANDLE CLICKAWAY ", e);
-    if (e.srcElement instanceof SVGElement) {
+    if (
+      e.srcElement.id === "icon-button" ||
+      e.srcElement.parentElement.id === "icon-button-svg" ||
+      e.srcElement.id === "icon-button-svg" ||
+      e.srcElement.id === "icon-container"
+    ) {
       setClickaway(false);
     } else {
       console.log("NO");
+      setOpen(false);
       setClickaway(true);
     }
   };
@@ -177,8 +183,6 @@ const ExperienceSection = ({
 
   return (
     <Wrapper>
-      {/* {console.log(JSON.parse(testData[1].story))} */}
-      {console.log(testData)}
       <SectionHeader>
         <ExperienceIcon src="/experience.png" />
         <SectionTitle variant="h4">People's experiences</SectionTitle>
@@ -219,17 +223,14 @@ const ExperienceSection = ({
           </Grid>
         )}
       </Grid>
-      {console.log("CLICKED AWAY? ", clickAway)}
 
-      {clickAway ? null : (
-        <Popper open={open} anchorEl={anchorEl}>
-          <ClickAwayListener onClickAway={handleClickaway}>
-            <PopperContent>
-              <Button fullWidth>Flag as inapproriate?</Button>
-            </PopperContent>
-          </ClickAwayListener>
-        </Popper>
-      )}
+      <Popper open={open && !clickAway ? true : false} anchorEl={anchorEl}>
+        <ClickAwayListener onClickAway={handleClickaway}>
+          <PopperContent>
+            <Button fullWidth>Flag as inapproriate?</Button>
+          </PopperContent>
+        </ClickAwayListener>
+      </Popper>
     </Wrapper>
   );
 };
