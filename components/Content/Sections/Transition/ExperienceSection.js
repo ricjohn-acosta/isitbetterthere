@@ -15,6 +15,10 @@ import PaginationItem from "@material-ui/lab/PaginationItem";
 import PaginationLink from "./PaginationLink";
 import Popper from "@material-ui/core/Popper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import ReportForm from "./ReportForm";
+import { connect } from "react-redux";
+import { addReport } from "../../../../store/actions/reports";
+import { useSession } from 'next-auth/client'
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
 
@@ -95,6 +99,7 @@ const ExperienceSection = ({
   experiences,
   totalExperiences,
   ratedExperiences,
+  addReport,
 }) => {
   const router = useRouter();
   const isSM = useMediaQuery("(max-width:600px)");
@@ -104,6 +109,10 @@ const ExperienceSection = ({
   const [currentId, setCurrentId] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
+  const [reportView, setReportView] = React.useState(false);
+  const [violationType, setViolationType] = React.useState("");
+  const [ session, loading ] = useSession()
+
 
   const testData = experiences;
 
@@ -128,6 +137,27 @@ const ExperienceSection = ({
       setOpen(false);
       setClickaway(true);
     }
+  };
+
+  const handleReportOpen = () => {
+    setReportView(true);
+  };
+
+  const handleReportClose = () => {
+    setReportView(false);
+  };
+
+  const handleReportSubmit = () => {
+    addReport({
+      reported_by: session.account.id,
+      experience_id: currentId,
+      violation_type: violationType,
+      date_reported: Date.now(),
+    });
+  };
+
+  const handleViolationType = (e) => {
+    setViolationType(e.target.value);
   };
 
   console.log("curent Id? ", currentId);
@@ -223,11 +253,20 @@ const ExperienceSection = ({
           </Grid>
         )}
       </Grid>
-
+      <ReportForm
+        reportView={reportView}
+        handleReportClose={handleReportClose}
+        violationType={violationType}
+        handleViolationType={handleViolationType}
+        handleReportSubmit={handleReportSubmit}
+      />
+      {console.log("VIOLATION TYPE", violationType)}
       <Popper open={open && !clickAway ? true : false} anchorEl={anchorEl}>
         <ClickAwayListener onClickAway={handleClickaway}>
           <PopperContent>
-            <Button fullWidth>Flag as inapproriate?</Button>
+            <Button onClick={handleReportOpen} fullWidth>
+              Flag as inapproriate?
+            </Button>
           </PopperContent>
         </ClickAwayListener>
       </Popper>
@@ -235,4 +274,10 @@ const ExperienceSection = ({
   );
 };
 
-export default ExperienceSection;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addReport: (report) => dispatch(addReport(report)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ExperienceSection);

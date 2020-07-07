@@ -1,10 +1,10 @@
 exports.up = (knex, Promise) => {
     return knex.schema.createTable("flagged_experiences", (table) => {
       table.increments("id").primary();
-      table.string("user_id");
+      table.string("reported_by");
       table.string("experience_id");
-      table.boolean("is_helpful");
-      table.integer("date_liked");
+      table.boolean("violation_type");
+      table.integer("date_reported");
     });
   };
   

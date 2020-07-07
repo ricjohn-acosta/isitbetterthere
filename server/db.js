@@ -5,14 +5,15 @@ const connection = require("knex")(config);
 module.exports = {
   getUser,
   getUsers,
-  registerUser,
   getUserExperiences,
   getExperiences,
   getAllExperiences,
+  getRatedExperiences,
   addExperience,
   addRating,
+  addReport,
+  registerUser,
   rateExperience,
-  getRatedExperiences,
 };
 
 // USERS
@@ -140,4 +141,8 @@ function getUserExperiences(uid, db = connection) {
 
 function addExperience(experience, db = connection) {
   return db("experiences").insert(experience);
+}
+
+function addReport(report, db = connection) {
+  return db("flagged_experiences").insert(report)
 }
