@@ -18,7 +18,19 @@ const ReportForm = ({
   violationType,
   handleViolationType,
   handleReportSubmit,
+  reportedExperiences,
+  currentId,
+  uid,
 }) => {
+  const hasUserReported = () => {
+    return (
+      reportedExperiences &&
+      !!reportedExperiences.find(
+        (e) => e.reported_by === uid && e.experience_id === currentId
+      )
+    );
+  };
+
   return (
     <Dialog
       open={reportView}
@@ -32,34 +44,40 @@ const ReportForm = ({
           substantial and genuine.
         </DialogContentText>
         <br />
-        <FormControl component="fieldset">
-          <FormLabel component="legend">Violation type:</FormLabel>
-          <RadioGroup value={violationType} onChange={handleViolationType}>
-            <FormControlLabel
-              value="hate"
-              control={<Radio />}
-              label="This submission contains hateful, violent, or inappropriate content"
-            />
-            <FormControlLabel
-              value="spam"
-              control={<Radio />}
-              label="This submission contains advertising or spam"
-            />
-            <FormControlLabel
-              value="offtopic"
-              control={<Radio />}
-              label="This submission is off-topic"
-            />
-          </RadioGroup>
-        </FormControl>
+        {hasUserReported() ? (
+          "Thank you for reporting this submission! We will review your report and take appropriate action."
+        ) : (
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Violation type:</FormLabel>
+            <RadioGroup value={violationType} onChange={handleViolationType}>
+              <FormControlLabel
+                value="hate"
+                control={<Radio />}
+                label="This submission contains hateful, violent, or inappropriate content"
+              />
+              <FormControlLabel
+                value="spam"
+                control={<Radio />}
+                label="This submission contains advertising or spam"
+              />
+              <FormControlLabel
+                value="offtopic"
+                control={<Radio />}
+                label="This submission is off-topic"
+              />
+            </RadioGroup>
+          </FormControl>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleReportClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleReportSubmit} color="primary">
-          Submit
-        </Button>
+        {hasUserReported() ? null : (
+          <Button onClick={handleReportSubmit} color="primary">
+            Submit
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

@@ -70,8 +70,8 @@ import { session } from "next-auth/client";
 // For more information on options, go to
 // https://next-auth.js.org/configuration/options
 const options = {
-  site:
-    process.env.NODE_ENV === "production" ? process.env.prod : process.env.dev,
+  // site:
+  //   process.env.NODE_ENV === "production" ? process.env.prod : process.env.dev,
   providers: [
     // https://next-auth.js.org/providers/email
     // Providers.Email({

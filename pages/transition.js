@@ -7,6 +7,7 @@ import {
   getExperiences,
   getAllExperiences,
   getRatedExperiences,
+  getReportedExperiences
 } from "../server/db";
 
 const transition = ({
@@ -15,6 +16,7 @@ const transition = ({
   totalExperiences,
   allExperiences,
   ratedExperiences,
+  reportedExperiences
 }) => {
   const router = useRouter();
   const { from, to, category } = router.query;
@@ -38,6 +40,7 @@ const transition = ({
             totalExperiences={totalExperiences}
             allExperiences={allExperiences}
             ratedExperiences={ratedExperiences}
+            reportedExperiences={reportedExperiences}
           />
         </Layout>
       </>
@@ -48,6 +51,7 @@ const transition = ({
 export async function getServerSideProps(context) {
   const session = await getSession(context);
   let ratedExperiences = null;
+  let reportedExperiences = null;
   // returns an array of experiences
   console.log("SORT BY QUERY ", context.query.sortBy);
   const experiences = await getExperiences(
@@ -58,7 +62,6 @@ export async function getServerSideProps(context) {
     context.query.filterBy
   );
 
-  console.log("EXPERIENCES ", experiences);
   const allExperiences = await getAllExperiences(
     context.query.from,
     context.query.to
@@ -66,8 +69,8 @@ export async function getServerSideProps(context) {
 
   if (session) {
     ratedExperiences = await getRatedExperiences(session.account.id);
+    reportedExperiences = await getReportedExperiences(session.account.id);
   }
-  console.log("LOOOOKIEEE", ratedExperiences);
 
   return {
     props: {
@@ -76,6 +79,7 @@ export async function getServerSideProps(context) {
       totalExperiences: experiences[1],
       allExperiences,
       ratedExperiences,
+      reportedExperiences
     },
   };
 }

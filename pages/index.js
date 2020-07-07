@@ -1,6 +1,6 @@
 import Home from "../containers/Home";
 import Layout from "../components/Layout/Layout";
-import { session } from 'next-auth/client'
+import { getSession  } from 'next-auth/client'
 
 const Index = ({session}) => {
   return (
@@ -12,9 +12,10 @@ const Index = ({session}) => {
 };
 
 export async function getServerSideProps(context) {
+  console.log("TEEEST", await getSession(context))
   return {
     props: {
-      session: await session(context),
+      session: await getSession(context),
     },
   };
 }

@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import SearchToolsMobile from "./SearchToolsMobile";
 import draftToHtml from "draftjs-to-html";
 import NoData from "./common/NoData";
-import { useRouter } from "next/router";
+import { useRouter, Router } from "next/router";
 import Pagination from "@material-ui/lab/Pagination";
 import PaginationItem from "@material-ui/lab/PaginationItem";
 import PaginationLink from "./PaginationLink";
@@ -18,7 +18,8 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import ReportForm from "./ReportForm";
 import { connect } from "react-redux";
 import { addReport } from "../../../../store/actions/reports";
-import { useSession } from 'next-auth/client'
+import { useSession } from "next-auth/client";
+
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
 
@@ -99,6 +100,7 @@ const ExperienceSection = ({
   experiences,
   totalExperiences,
   ratedExperiences,
+  reportedExperiences,
   addReport,
 }) => {
   const router = useRouter();
@@ -111,8 +113,7 @@ const ExperienceSection = ({
   const [placement, setPlacement] = React.useState();
   const [reportView, setReportView] = React.useState(false);
   const [violationType, setViolationType] = React.useState("");
-  const [ session, loading ] = useSession()
-
+  const [session, loading] = useSession();
 
   const testData = experiences;
 
@@ -140,7 +141,11 @@ const ExperienceSection = ({
   };
 
   const handleReportOpen = () => {
-    setReportView(true);
+    if (session) {
+      setReportView(true);
+    } else {
+      router.push("/signup", undefined, {});
+    }
   };
 
   const handleReportClose = () => {
@@ -188,6 +193,7 @@ const ExperienceSection = ({
                 helpfulCount={e.helpful}
                 date_posted={e.date_posted}
                 isRated={
+                  ratedExperiences &&
                   !!ratedExperiences.find(
                     ({ experience_id }) =>
                       experience_id === e.experience_id.toString()
@@ -195,8 +201,6 @@ const ExperienceSection = ({
                 }
                 handleOptions={handleOptions}
                 setCurrentId={setCurrentId}
-                // setOpen={setOpen}
-                // open={open}
               />
             </>
           ))
@@ -259,6 +263,9 @@ const ExperienceSection = ({
         violationType={violationType}
         handleViolationType={handleViolationType}
         handleReportSubmit={handleReportSubmit}
+        reportedExperiences={reportedExperiences}
+        currentId={currentId}
+        uid={session && session.account.id}
       />
       {console.log("VIOLATION TYPE", violationType)}
       <Popper open={open && !clickAway ? true : false} anchorEl={anchorEl}>

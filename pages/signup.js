@@ -7,22 +7,6 @@ import Button from "@material-ui/core/Button";
 export default ({ csrfToken, providers }) => {
   return (
     <>
-      {/* <form
-        method="post"
-        action="/api/auth/signin/email"
-        onSubmit={(e) => {
-          e.preventDefault();
-          signin("email", { email: document.getElementById("email").value });
-        }}
-      >
-        <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-        <label>
-          Email address
-          <input type="text" id="email" name="email" />
-        </label>
-        <button type="submit">Sign in with Email</button>
-      </form> */}
-
       {Object.values(providers).map((provider) =>
         provider.name === "Email" ? null : (
           <p key={provider.name}>

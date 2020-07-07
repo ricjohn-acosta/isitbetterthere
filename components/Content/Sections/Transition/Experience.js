@@ -81,13 +81,17 @@ const Experience = ({
   const [rated, setRated] = React.useState(false);
 
   const handleRating = (e) => {
-    rateExperience({
-      user_id: session.account.id,
-      experience_id: experienceId,
-      is_helpful: e.currentTarget.value === "true" ? true : false,
-      date_liked: Date.now(),
-    });
-    setRated(true);
+    if (session) {
+      rateExperience({
+        user_id: session.account.id,
+        experience_id: experienceId,
+        is_helpful: e.currentTarget.value === "true" ? true : false,
+        date_liked: Date.now(),
+      });
+      setRated(true);
+    } else {
+      Router.push("/signup", undefined, {})
+    }
   };
 
   const renderChips = () => {
@@ -133,7 +137,7 @@ const Experience = ({
                 setCurrentId(experienceId.toString());
               }}
             >
-              <MoreVertIcon id="icon-button-svg"/>
+              <MoreVertIcon id="icon-button-svg" />
             </IconButton>
           </div>
           <ProfileDetails>
@@ -184,12 +188,6 @@ const Experience = ({
           )}
         </Content>
       </Grid>
-      {/* <Popper
-        open={open && experienceId.toString() === currentExperienceId ? true : false}
-        anchorEl={anchorEl}
-      >
-        <PopperContent>The content of the Popper.</PopperContent>
-      </Popper> */}
     </Wrapper>
   );
 };

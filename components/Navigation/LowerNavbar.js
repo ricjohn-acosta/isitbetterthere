@@ -8,7 +8,7 @@ import { addUser } from "../../store/actions/users";
 import { connect } from "react-redux";
 import { useRouter, Router } from "next/router";
 import BrandLogo from "./BrandLogo";
-import { signin, signout, useSession } from "next-auth/client";
+import { signIn, signout, useSession } from "next-auth/client";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
