@@ -102,20 +102,31 @@ const ExperienceSection = ({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [clickAway, setClickaway] = React.useState(false);
   const [currentId, setCurrentId] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [placement, setPlacement] = React.useState();
 
   const testData = experiences;
 
   const handleOptions = (event) => {
     setAnchorEl(event.currentTarget);
-    setClickaway(false)
+    setOpen((prev) => placement !== event.currentTarget.value || !prev);
+    setPlacement(event.currentTarget.value);
+    setClickaway(false);
   };
-  const open = Boolean(anchorEl);
 
-  const handleClickaway = () => {
-    setClickaway(true);
+  const handleClickaway = (e) => {
+    console.log("HANDLE CLICKAWAY ", e);
+    if (e.srcElement instanceof SVGElement) {
+      setClickaway(false);
+    } else {
+      console.log("NO");
+      setClickaway(true);
+    }
   };
 
   console.log("curent Id? ", currentId);
+  console.log("IS OPEN?", open);
+
   const displayExperiences = () => {
     return (
       <>
@@ -210,13 +221,15 @@ const ExperienceSection = ({
       </Grid>
       {console.log("CLICKED AWAY? ", clickAway)}
 
-      <Popper open={open && !clickAway} anchorEl={anchorEl}>
-        <ClickAwayListener onClickAway={handleClickaway}>
-          <PopperContent>
-            <Button fullWidth>Flag as inapproriate?</Button>
-          </PopperContent>
-        </ClickAwayListener>
-      </Popper>
+      {clickAway ? null : (
+        <Popper open={open} anchorEl={anchorEl}>
+          <ClickAwayListener onClickAway={handleClickaway}>
+            <PopperContent>
+              <Button fullWidth>Flag as inapproriate?</Button>
+            </PopperContent>
+          </ClickAwayListener>
+        </Popper>
+      )}
     </Wrapper>
   );
 };

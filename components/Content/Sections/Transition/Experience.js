@@ -59,8 +59,6 @@ const StyledHr = styled.hr`
   background: #e0e0e0;
 `;
 
-
-
 const Experience = ({
   experience,
   experienceId,
@@ -82,7 +80,6 @@ const Experience = ({
   const [session, loading] = useSession();
   const [rated, setRated] = React.useState(false);
 
-
   const handleRating = (e) => {
     rateExperience({
       user_id: session.account.id,
@@ -92,7 +89,6 @@ const Experience = ({
     });
     setRated(true);
   };
-
 
   const renderChips = () => {
     const chips = [fulfillment, easeOfTransition, regret];
@@ -129,7 +125,13 @@ const Experience = ({
       <Grid container drection="column">
         <ProfileContainer item xs={12} sm={6} md={12}>
           <div style={{ float: "right" }}>
-            <IconButton onClick={(e) => {handleOptions(e);setCurrentId(experienceId.toString())}}>
+            <IconButton
+              value={experienceId.toString()}
+              onClick={(e) => {
+                handleOptions(e);
+                setCurrentId(experienceId.toString());
+              }}
+            >
               <MoreVertIcon />
             </IconButton>
           </div>
