@@ -84,7 +84,6 @@ const StyledModal = styled(Modal)`
   align-items: center;
   justify-content: center;
   margin: 10vh 0 10vh 0;
-
 `;
 
 const ModalContent = styled(Paper)`
@@ -164,7 +163,12 @@ const LowerNavbar = ({ session }) => {
             </MiscButtons>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>
-            <UserButtons disableRipple>Account</UserButtons>
+            <UserButtons
+              href={"/account"}
+              disableRipple
+            >
+              Account
+            </UserButtons>
             {session ? (
               <UserButtons
                 onClick={(e) => {

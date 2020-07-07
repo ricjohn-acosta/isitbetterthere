@@ -36,8 +36,8 @@ export async function getServerSideProps(context) {
       context.res.writeHead(302, {
         Location:
           process.env.NODE_ENV === "production"
-            ? process.env.prod + "/api/auth/signin"
-            : process.env.dev + "/api/auth/signin",
+            ? process.env.prod + "/signup"
+            : process.env.dev + "/signup",
       });
       context.res.end();
     } else if (session && !findUserInDatabase()) {
@@ -49,11 +49,6 @@ export async function getServerSideProps(context) {
       });
       context.res.end();
     }
-
-    // if (!findUserInDatabase()) {
-    //   context.res.writeHead(302, { Location: "http://localhost:3000/account-setup" });
-    //   context.res.end();
-    // }
   }
 
   return {
