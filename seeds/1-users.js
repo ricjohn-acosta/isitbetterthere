@@ -16,6 +16,7 @@ exports.seed = function (knex) {
           company: "",
           location: "New Zealand",
           hide_name: false,
+          hide_email: false,
           hide_occupation: false,
           hide_company: false,
           hide_location: false,

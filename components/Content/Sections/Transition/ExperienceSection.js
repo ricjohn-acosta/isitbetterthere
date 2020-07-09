@@ -182,6 +182,7 @@ const ExperienceSection = ({
                 key={i}
                 experienceId={e.experience_id}
                 name={e.name}
+                location={e.location}
                 email={e.email}
                 position={e.position}
                 company={e.company}

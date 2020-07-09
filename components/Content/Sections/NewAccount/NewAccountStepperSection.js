@@ -29,6 +29,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
   const [location, setLocation] = React.useState(null);
   const [inputLocation, setInputLocation] = React.useState("");
   const [hideName, setHideName] = React.useState(false);
+  const [hideEmail, setHideEmail] = React.useState(true);
   const [hideOccupation, setHideOccupation] = React.useState(false);
   const [hideCompany, setHideCompany] = React.useState(false);
   const [hideLocation, setHideLocation] = React.useState(false);
@@ -46,6 +47,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       company,
       location,
       hide_name: hideName,
+      hide_email: hideEmail,
       hide_occupation: hideOccupation,
       hide_company: hideCompany,
       hide_location: hideLocation,
@@ -68,10 +70,12 @@ const NewAccountStepperSection = ({ addUser, session }) => {
         return (
           <PrivacyDetails
             setHideName={setHideName}
+            setHideEmail={setHideEmail}
             setHideOccupation={setHideOccupation}
             setHideCompany={setHideCompany}
             setHideLocation={setHideLocation}
             hideName={hideName}
+            hideEmail={hideEmail}
             hideOccupation={hideOccupation}
             hideCompany={hideCompany}
             hideLocation={hideLocation}

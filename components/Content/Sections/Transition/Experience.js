@@ -9,6 +9,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import EmailIcon from "@material-ui/icons/Email";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
 import { IconButton } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
@@ -63,6 +64,7 @@ const Experience = ({
   experience,
   experienceId,
   name,
+  location,
   company,
   position,
   email,
@@ -90,7 +92,7 @@ const Experience = ({
       });
       setRated(true);
     } else {
-      Router.push("/signup", undefined, {})
+      Router.push("/signup", undefined, {});
     }
   };
 
@@ -145,7 +147,13 @@ const Experience = ({
             <UserInfo>
               <div style={{ display: "flex" }}>
                 <PersonIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;{name}
+                &nbsp;{name}&nbsp;
+                <LocationOnRoundedIcon
+                  style={{ color: "#1a8cff" }}
+                  fontSize="small"
+                />
+                &nbsp;
+                {location}
               </div>
               <div style={{ display: "flex" }}>
                 <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />

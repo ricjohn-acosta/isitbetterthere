@@ -8,6 +8,9 @@ import PersonIcon from "@material-ui/icons/Person";
 import EmailIcon from "@material-ui/icons/Email";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
+import PrivacyDetails from "../NewAccount/PrivacyDetails"
+import ContributionTab from "./ContributionTab";
+import HelpfulStoriesTab from "./HelpfulStoriesTab";
 
 const Wrapper = styled.div`
   min-height: 110vh;
@@ -47,7 +50,31 @@ const StyledTypography = styled(Typography)`
 `;
 
 const AccountSection = ({ session, user }) => {
-  console.log(user);
+  const [view, setView] = React.useState("settings")
+
+  const renderView = () => {
+    if(view === "settings") {
+      return <PrivacyDetails/>
+    } else if(view ==="contributions") {
+      return <ContributionTab/>
+    }
+
+    switch (view) {
+      case "settings":
+        return <PrivacyDetails/>
+        break;
+    
+      case "contributions":
+        return <ContributionTab/>
+
+      case "helpful-stories":
+        return <HelpfulStoriesTab/>
+
+      default:
+        break;
+    }
+  }
+
   return (
     <Wrapper>
       <DashboardContainer elevation={0}>
@@ -56,7 +83,6 @@ const AccountSection = ({ session, user }) => {
             <ImageContainer>
               <StyledImage
                 src={session.user.image}
-                rel="no-referrer"
               ></StyledImage>
             </ImageContainer>
             <ProfileDetails>
@@ -105,7 +131,8 @@ const AccountSection = ({ session, user }) => {
             </ProfileDetails>
           </LeftGrid>
           <Grid item xs={12} sm={9}>
-            <AccountTab />
+            <AccountTab view={view} setView={setView}/>
+            <div>{renderView()}</div>
           </Grid>
         </Grid>
       </DashboardContainer>

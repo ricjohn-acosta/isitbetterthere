@@ -21,20 +21,26 @@ const Labels = styled(Grid)`
 
 const PrivacyDetails = ({
   setHideName,
+  setHideEmail,
   setHideOccupation,
   setHideCompany,
   setHideLocation,
   hideName,
+  hideEmail,
   hideOccupation,
   hideCompany,
   hideLocation,
 }) => {
-
   const handleChange = (target) => {
     switch (target) {
       case "name":
         // setChecked(!isChecked);
         setHideName(!hideName);
+        break;
+
+      case "email":
+        // setChecked(!isChecked);
+        setHideEmail(!hideEmail);
         break;
 
       case "occupation":
@@ -80,7 +86,20 @@ const PrivacyDetails = ({
 
         <Grid item container direction="row">
           <Labels item xs={12} sm={12} md={3}>
-            Hide Occupation? &nbsp;
+            Hide email? &nbsp;
+          </Labels>
+          <Grid item xs={12} sm={12} md={2}>
+            <Checkbox
+              checked={hideEmail}
+              onChange={(e) => handleChange("email")}
+              color="default"
+            />
+          </Grid>
+        </Grid>
+
+        <Grid item container direction="row">
+          <Labels item xs={12} sm={12} md={3}>
+            Hide occupation? &nbsp;
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
             <Checkbox
