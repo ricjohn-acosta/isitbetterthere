@@ -4,6 +4,7 @@ const connection = require("knex")(config);
 
 module.exports = {
   getUser,
+  editUser,
   getUsers,
   getUserExperiences,
   getExperiences,
@@ -24,6 +25,11 @@ function getUsers(db = connection) {
 
 function getUser(userId, db = connection) {
   return db("users").where("user_id", userId).first();
+}
+
+function editUser(userData, db = connection) {
+  let {user_id: userId, ...details} = userData
+  return db("users").where("user_id", userId).update(details);
 }
 
 function registerUser(user, db = connection) {

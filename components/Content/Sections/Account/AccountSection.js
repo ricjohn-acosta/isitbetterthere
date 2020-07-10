@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { Paper, Grid, Typography } from "@material-ui/core";
+import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import AccountTab from "./AccountTab";
 import WorkIcon from "@material-ui/icons/Work";
 import BusinessRoundedIcon from "@material-ui/icons/BusinessRounded";
@@ -8,9 +8,11 @@ import PersonIcon from "@material-ui/icons/Person";
 import EmailIcon from "@material-ui/icons/Email";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
-import PrivacyDetails from "../NewAccount/PrivacyDetails"
+import PrivacyDetails from "../NewAccount/PrivacyDetails";
 import ContributionTab from "./ContributionTab";
 import HelpfulStoriesTab from "./HelpfulStoriesTab";
+import { editUser } from "../../../../store/actions/users";
+import { connect } from "react-redux";
 
 const Wrapper = styled.div`
   min-height: 110vh;
@@ -49,31 +51,56 @@ const StyledTypography = styled(Typography)`
   display: flex;
 `;
 
-const AccountSection = ({ session, user }) => {
-  const [view, setView] = React.useState("settings")
+const AccountSection = ({ session, user, editUser }) => {
+  const [view, setView] = React.useState("settings");
+  const [hideName, setHideName] = React.useState(false);
+  const [hideEmail, setHideEmail] = React.useState(true);
+  const [hideOccupation, setHideOccupation] = React.useState(false);
+  const [hideCompany, setHideCompany] = React.useState(false);
+  const [hideLocation, setHideLocation] = React.useState(false);
+
+  const handleSubmit = () => {
+    editUser({
+      user_id: session.account.id,
+      hide_name: hideName,
+      hide_email: hideEmail,
+      hide_occupation: hideOccupation,
+      hide_company: hideCompany,
+      hide_location: hideLocation,
+    });
+  };
+
+  console.log(hideEmail)
 
   const renderView = () => {
-    if(view === "settings") {
-      return <PrivacyDetails/>
-    } else if(view ==="contributions") {
-      return <ContributionTab/>
-    }
-
     switch (view) {
       case "settings":
-        return <PrivacyDetails/>
+        return (
+          <PrivacyDetails
+            setHideName={setHideName}
+            setHideEmail={setHideEmail}
+            setHideOccupation={setHideOccupation}
+            setHideCompany={setHideCompany}
+            setHideLocation={setHideLocation}
+            hideName={hideName}
+            hideEmail={hideEmail}
+            hideOccupation={hideOccupation}
+            hideCompany={hideCompany}
+            hideLocation={hideLocation}
+          />
+        );
         break;
-    
+
       case "contributions":
-        return <ContributionTab/>
+        return <ContributionTab />;
 
       case "helpful-stories":
-        return <HelpfulStoriesTab/>
+        return <HelpfulStoriesTab />;
 
       default:
         break;
     }
-  }
+  };
 
   return (
     <Wrapper>
@@ -81,9 +108,7 @@ const AccountSection = ({ session, user }) => {
         <Grid container direction={"row"}>
           <LeftGrid item xs={12} sm={3}>
             <ImageContainer>
-              <StyledImage
-                src={session.user.image}
-              ></StyledImage>
+              <StyledImage src={session.user.image}></StyledImage>
             </ImageContainer>
             <ProfileDetails>
               <StyledTypography
@@ -131,8 +156,13 @@ const AccountSection = ({ session, user }) => {
             </ProfileDetails>
           </LeftGrid>
           <Grid item xs={12} sm={9}>
-            <AccountTab view={view} setView={setView}/>
+            <AccountTab view={view} setView={setView} />
             <div>{renderView()}</div>
+            {view === "settings" && (
+              <Button style={{ float: "right" }} onClick={handleSubmit}>
+                SUBMIT
+              </Button>
+            )}
           </Grid>
         </Grid>
       </DashboardContainer>
@@ -140,4 +170,10 @@ const AccountSection = ({ session, user }) => {
   );
 };
 
-export default AccountSection;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    editUser: (userData) => dispatch(editUser(userData)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(AccountSection);

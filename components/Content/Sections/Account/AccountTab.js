@@ -2,16 +2,15 @@ import React from "react";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import Link from 'next/link'
-
+import Link from "next/link";
 
 const CenteredTabs = ({ view, setView }) => {
-
   const handleChange = (event, newValue) => {
     setView(newValue);
   };
 
   return (
+    <>
     <Paper elevation={0}>
       <Tabs
         value={view}
@@ -24,6 +23,8 @@ const CenteredTabs = ({ view, setView }) => {
         <Tab value={"helpful-stories"} label="Helpful stories" disableRipple />
       </Tabs>
     </Paper>
+
+    </>
   );
 };
 

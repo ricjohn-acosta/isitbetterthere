@@ -1,15 +1,19 @@
-import { getUsers, registerUser } from "../../server/db";
+import { editUser, registerUser } from "../../server/db";
 import { getSession } from "next-auth/client";
 
 export default async function users(req, res) {
-  const session = await getSession({ req })
+  const session = await getSession({ req });
 
   if (req.method === "POST" && session) {
-    console.log(req.body)
+    console.log(req.body);
     registerUser(req.body).then((user) => {
-      console.log("USER ADDED TO DB")
+      console.log("USER ADDED TO DB");
     });
-    res.status(200).end()
+    res.status(200).end();
+  } else if (req.method === "PUT" && session) {
+    editUser(req.body).then((user) => {
+      console.log("USER UPDATED");
+    });
   } else {
     res.setHeader("Allow", ["GET"]);
     res.status(405).end(`Method  Not Allowed`);
