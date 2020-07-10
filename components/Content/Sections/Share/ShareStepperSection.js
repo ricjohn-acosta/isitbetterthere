@@ -84,7 +84,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
   const [toInputValue, setToInputValue] = React.useState("");
   const [fromValue, setFromValue] = React.useState(null);
   const [fromInputValue, setFromInputValue] = React.useState("");
-  const [isSelected, setSelected] = React.useState(false);
+  // const [isSelected, setSelected] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
   const [isEmptyField, setEmptyFields] = React.useState(false);
   const [extraInfoEmptyState, setExtraInfoEmptyState] = React.useState(false);
@@ -93,7 +93,6 @@ const ShareStepperSection = ({ addExperience, session }) => {
   const [easeOfTransition, setEaseOfTransition] = React.useState("");
   const [regret, setRegret] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty()
   );
@@ -117,7 +116,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
             setToInputValue={setToInputValue}
             setFromValue={setFromValue}
             setFromInputValue={setFromInputValue}
-            setSelected={setSelected}
+            // setSelected={setSelected}
             setSwapping={setSwapping}
             toValue={toValue}
             toInputValue={toInputValue}

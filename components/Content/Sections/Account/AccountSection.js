@@ -13,6 +13,7 @@ import ContributionTab from "./ContributionTab";
 import HelpfulStoriesTab from "./HelpfulStoriesTab";
 import { editUser } from "../../../../store/actions/users";
 import { connect } from "react-redux";
+import { useRouter } from "next/router";
 
 const Wrapper = styled.div`
   min-height: 110vh;
@@ -21,7 +22,6 @@ const Wrapper = styled.div`
 
 const DashboardContainer = styled(Paper)`
   margin: 5% 15% 5% 15%;
-  height: 50vh;
 `;
 
 const LeftGrid = styled(Grid)`
@@ -51,14 +51,16 @@ const StyledTypography = styled(Typography)`
   display: flex;
 `;
 
-const AccountSection = ({ session, user, editUser }) => {
+const AccountSection = ({ session, user, editUser, userContributions }) => {
+  const router = useRouter()
   const [view, setView] = React.useState("settings");
-  const [hideName, setHideName] = React.useState(false);
-  const [hideEmail, setHideEmail] = React.useState(true);
-  const [hideOccupation, setHideOccupation] = React.useState(false);
-  const [hideCompany, setHideCompany] = React.useState(false);
-  const [hideLocation, setHideLocation] = React.useState(false);
+  const [hideName, setHideName] = React.useState(user.hide_name === 1 && true);
+  const [hideEmail, setHideEmail] = React.useState(user.hide_email === 1 && true);
+  const [hideOccupation, setHideOccupation] = React.useState(user.hide_occupation === 1 && true);
+  const [hideCompany, setHideCompany] = React.useState(user.hide_company === 1 && true);
+  const [hideLocation, setHideLocation] = React.useState(user.hide_location === 1 && true);
 
+  console.log(userContributions)
   const handleSubmit = () => {
     editUser({
       user_id: session.account.id,
@@ -71,9 +73,10 @@ const AccountSection = ({ session, user, editUser }) => {
   };
 
   console.log(hideEmail)
+  console.log(hideOccupation)
 
   const renderView = () => {
-    switch (view) {
+    switch (router.query.tab) {
       case "settings":
         return (
           <PrivacyDetails
@@ -89,10 +92,9 @@ const AccountSection = ({ session, user, editUser }) => {
             hideLocation={hideLocation}
           />
         );
-        break;
 
       case "contributions":
-        return <ContributionTab />;
+        return <ContributionTab userContributions={userContributions}/>;
 
       case "helpful-stories":
         return <HelpfulStoriesTab />;
@@ -106,7 +108,7 @@ const AccountSection = ({ session, user, editUser }) => {
     <Wrapper>
       <DashboardContainer elevation={0}>
         <Grid container direction={"row"}>
-          <LeftGrid item xs={12} sm={3}>
+          <LeftGrid item xs={12} sm={12} md={12} lg={3}>
             <ImageContainer>
               <StyledImage src={session.user.image}></StyledImage>
             </ImageContainer>
@@ -155,10 +157,10 @@ const AccountSection = ({ session, user, editUser }) => {
               ) : null}
             </ProfileDetails>
           </LeftGrid>
-          <Grid item xs={12} sm={9}>
+          <Grid item xs={12} sm={12} md={12} lg={9}>
             <AccountTab view={view} setView={setView} />
             <div>{renderView()}</div>
-            {view === "settings" && (
+            {router.query.tab === "settings" && (
               <Button style={{ float: "right" }} onClick={handleSubmit}>
                 SUBMIT
               </Button>

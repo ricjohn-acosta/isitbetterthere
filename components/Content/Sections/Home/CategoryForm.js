@@ -56,7 +56,7 @@ const CategoryForm = ({
   setToInputValue,
   setFromValue,
   setFromInputValue,
-  setSelected,
+  // setSelected,
   setSwapping,
   toValue,
   toInputValue,
@@ -84,9 +84,9 @@ const CategoryForm = ({
           setFromInputValue("");
           setSwapping(false);
         }}
-        onOpen={(e) => {
-          setSelected(false);
-        }}
+        // onOpen={(e) => {
+        //   setSelected(false);
+        // }}
         value={currentCategory}
         variant="standard"
       >

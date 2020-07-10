@@ -7,10 +7,6 @@ import PaperWrapper from "./common/PaperWrapper";
 import HeaderDivider from "./common/HeaderDivider";
 
 const Wrapper = styled.div`
-  // min-height: 50vh;
-  // margin-top: 5vh;
-  // margin-left: 20%;
-  // margin-right: 20%;
 `;
 
 const Editor = dynamic(() => import("./Editor"), {

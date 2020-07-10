@@ -10,12 +10,14 @@ module.exports = {
   getExperiences,
   getAllExperiences,
   getRatedExperiences,
+  getReportedExperiences,
+  getUserExperiences,
   addExperience,
   addRating,
   addReport,
   registerUser,
   rateExperience,
-  getReportedExperiences,
+
 };
 
 // USERS
@@ -122,6 +124,10 @@ function getAllExperiences(from, to, db = connection) {
     .select();
 }
 
+function getUserExperiences(user, db = connection) {
+  return db("experiences").where({posted_by: user}).select()
+}
+
 function getRatedExperiences(user_id, db = connection) {
   return db("experience_rating").where({ user_id }).select();
 }
@@ -144,10 +150,6 @@ function rateExperience(experience, db = connection) {
       .where({ experience_id: experience.experience_id })
       .increment("not_helpful", 1);
   }
-}
-
-function getUserExperiences(uid, db = connection) {
-  return db("experiences").where("user_id", uid);
 }
 
 function addExperience(experience, db = connection) {
