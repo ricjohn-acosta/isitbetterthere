@@ -52,7 +52,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       hide_company: hideCompany,
       hide_location: hideLocation,
       comes_from: siteSource,
-      date_created: Date.now(),
+      user_created: Date.now(),
     });
   };
 
@@ -124,7 +124,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
 
   const handleNext = () => {
     if (
-      (activeStep === 0 && description === "") ||
+      (activeStep === 0) ||
       occupation === "" ||
       // company === "" ||
       // position === "" ||

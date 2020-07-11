@@ -12,7 +12,7 @@ const htmlToReactParser = new HtmlToReactParser();
 const Wrapper = styled(Paper)``;
 const RightGrid = styled(Grid)`
   text-align: right;
-  background-color: #F7F7F7;
+  background-color: #F0F0F0;
 `;
 
 const LeftGrid = styled(Grid)`

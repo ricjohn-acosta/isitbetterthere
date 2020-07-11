@@ -8,7 +8,7 @@ const Wrapper = styled(Paper)``;
 const TopContent = styled(Grid)`
   padding: 2.5% 2.5% 2% 2.5%;
   margin: 0 0 2.5% 0;
-  background-color: #f7f7f7;
+  background-color: #F0F0F0;
 `;
 
 const HelpedPeopleCount = styled(Grid)`
@@ -47,7 +47,7 @@ const HelpfulStory = ({ name, story, helpfulCount, from, to, hideName }) => {
           </Grid>
           <HelpedPeopleCount item xs={12} sm={6}>
             <Typography variant="subtitle1">
-              <b>{helpfulCount - 1}</b> other{" "}
+              <b>{helpfulCount !== 0 ? helpfulCount - 1 : helpfulCount}</b> other{" "}
               {helpfulCount - 1 === 1 ? "person" : "people"} found this helpful
             </Typography>
           </HelpedPeopleCount>

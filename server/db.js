@@ -134,9 +134,9 @@ function getUserRatedExperiences(userId, db = connection) {
   return db("experience_rating")
     .from("experience_rating AS exr")
     .leftJoin("experiences AS ex", "ex.experience_id", "exr.experience_id")
-    .leftJoin("users AS us", "us.user_id", "exr.user_id")
+    .leftJoin("users AS us", "us.user_id", "ex.posted_by")
     .where("exr.user_id", "=", userId)
-    .select(["name", "story", "helpful", "from", "to", "hide_name"]);
+    .select();
 }
 
 function getRatedExperiences(user_id, db = connection) {

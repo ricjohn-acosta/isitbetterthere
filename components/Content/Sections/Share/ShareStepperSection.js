@@ -164,6 +164,9 @@ const ShareStepperSection = ({ addExperience, session }) => {
       ease_of_transition: easeOfTransition,
       regret,
       story,
+      helpful: 0,
+      not_helpful: 0,
+      date_posted: Date.now()
     });
     Router.push({
       pathname: "/transition",

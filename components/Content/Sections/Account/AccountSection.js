@@ -51,6 +51,14 @@ const StyledTypography = styled(Typography)`
   display: flex;
 `;
 
+const NameContainer = styled(Typography)`
+  display: inline;
+  text-align: center;
+`
+const BioContainer = styled(Typography)`
+  text-align: center;
+`;
+
 const AccountSection = ({
   session,
   user,
@@ -129,18 +137,14 @@ const AccountSection = ({
               <StyledImage src={session.user.image}></StyledImage>
             </ImageContainer>
             <ProfileDetails>
-              <StyledTypography
-                style={{ display: "inline", textAlign: "center" }}
+              <NameContainer
                 variant="h5"
               >
                 {session.user.name}
-              </StyledTypography>
-              <StyledTypography
-                style={{ textAlign: "center" }}
-                variant="subtitle1"
-              >
+              </NameContainer>
+              <BioContainer style={{ textAlign: "center" }} variant="subtitle1">
                 "{user.bio}"
-              </StyledTypography>
+              </BioContainer>
               <br />
               <StyledTypography variant="subtitle2">
                 <LocationOnRoundedIcon
