@@ -84,7 +84,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
   const [toInputValue, setToInputValue] = React.useState("");
   const [fromValue, setFromValue] = React.useState(null);
   const [fromInputValue, setFromInputValue] = React.useState("");
-  // const [isSelected, setSelected] = React.useState(false);
+  const [isSelected, setSelected] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
   const [isEmptyField, setEmptyFields] = React.useState(false);
   const [extraInfoEmptyState, setExtraInfoEmptyState] = React.useState(false);
@@ -99,8 +99,6 @@ const ShareStepperSection = ({ addExperience, session }) => {
 
   const editorContent = convertToRaw(editorState.getCurrentContent());
   const story = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-
-  console.log("STORY ", editorContent);
   const steps = getSteps();
 
   const getStepContent = (step) => {
@@ -116,7 +114,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
             setToInputValue={setToInputValue}
             setFromValue={setFromValue}
             setFromInputValue={setFromInputValue}
-            // setSelected={setSelected}
+            setSelected={setSelected}
             setSwapping={setSwapping}
             toValue={toValue}
             toInputValue={toInputValue}

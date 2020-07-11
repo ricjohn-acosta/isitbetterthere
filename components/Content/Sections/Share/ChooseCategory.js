@@ -36,7 +36,7 @@ const ChooseCategory = ({
   setFromValue,
   fromInputValue,
   setFromInputValue,
-  // setSelected,
+  setSelected,
   isSwapping,
   setSwapping,
   isEmptyField,
@@ -113,11 +113,12 @@ const ChooseCategory = ({
             currentCategory={currentCategory}
             handleCategories={handleCategories}
             handleForm={handleForm}
+            setCategory={setCategory}
             setToValue={setToValue}
             setToInputValue={setToInputValue}
             setFromValue={setFromValue}
             setFromInputValue={setFromInputValue}
-            // setSelected={setSelected}
+            setSelected={setSelected}
             setSwapping={setSwapping}
             toValue={toValue}
             toInputValue={toInputValue}

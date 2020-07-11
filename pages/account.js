@@ -14,12 +14,14 @@ const account = (props) => {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  const userContributions = await getUserExperiences(session.account.id)
+  
 
   
   let user = null;
+  let userContributions = null;
   if (session) {
     user = await getUser(session.account.id);
+    userContributions = await getUserExperiences(session.account.id)
   } else {
     context.res.writeHead(302, {
       Location:

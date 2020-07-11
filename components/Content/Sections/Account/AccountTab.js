@@ -23,18 +23,6 @@ const CenteredTabs = ({ view, setView }) => {
           <LinkTab label={"Settings"} view={"settings"}/>
           <LinkTab label={"Contributions"} view={"contributions"}/>
           <LinkTab label={"Helpful stories"} view={"helpful-stories"}/>
-          {/* <Tab
-            value={"settings"}
-            component="a"
-            label="Settings"
-            disableRipple
-          />
-          <Tab value={"contributions"} label="Contributions" disableRipple />
-          <Tab
-            value={"helpful-stories"}
-            label="Helpful stories"
-            disableRipple
-          /> */}
         </Tabs>
       </Paper>
     </>

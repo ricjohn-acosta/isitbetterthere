@@ -9,12 +9,11 @@ const Wrapper = styled.div`
 const ContributionTab = ({ userContributions }) => {
   const [contributions, setContributions] = React.useState(userContributions)
 
-
   return (
     <Wrapper>
       <Typography variant="h4">Your stories</Typography>
       <br/>
-      {userContributions.map((e) => (
+      {contributions.map((e) => (
         <>
           <Contribution
             experienceId={e.experience_id}
@@ -24,6 +23,8 @@ const ContributionTab = ({ userContributions }) => {
             story={e.story}
             datePosted={e.date_posted}
             helpfulRating={e.helpful}
+            contributions={contributions}
+            setContributions={setContributions}
           />
           <br />
         </>

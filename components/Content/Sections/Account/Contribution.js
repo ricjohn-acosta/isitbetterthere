@@ -1,15 +1,19 @@
 import styled, { keyframes } from "styled-components";
+import moment from "moment";
 import draftToHtml from "draftjs-to-html";
 import { useRouter } from "next/router";
 import { Paper, Grid, Typography, Button } from "@material-ui/core";
-import ViewExperienceModal from "./ContributionExperienceModal";
+import ContributionExperienceModal from "./ContributionExperienceModal";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import { connect } from "react-redux";
+import { deleteExperience } from "../../../../store/actions/experiences";
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
 
 const Wrapper = styled(Paper)``;
 const RightGrid = styled(Grid)`
   text-align: right;
-  background-color: #ccffff;
+  background-color: #F8F8F8;
 `;
 
 const LeftGrid = styled(Grid)`
@@ -30,42 +34,58 @@ const Contribution = ({
   story,
   datePosted,
   helpfulRating,
+  contributions,
+  setContributions,
+  deleteExperience
 }) => {
-  const router = useRouter();
   const [modalView, setModalView] = React.useState(false);
-  const storyPreview = htmlToReactParser.parse(draftToHtml(JSON.parse(story)));
+  const [storyPreview, setStoryPreview] = React.useState(htmlToReactParser.parse(draftToHtml(JSON.parse(story))))
 
   const handleView = () => {
     setModalView(true);
   };
+
+  const handleDelete = (id) => {
+    setContributions(contributions.filter(experience => experience.experience_id !== id))
+    deleteExperience({experience_id: id})
+  }
 
   return (
     <Wrapper variant="outlined">
       <Grid container direction="row">
         <LeftGrid item xs={12} sm={9}>
           <Typography variant="h5">
-            {from} to {to}{" "}
+            {from} <ArrowForwardIcon fontSize="small"/> {to}{" "}
           </Typography>
         </LeftGrid>
         <RightGrid item xs={12} sm={3}>
           <ContributionDetails>
-            <Typography variant="body2">{datePosted}</Typography>
+            <Typography variant="body2">{moment(datePosted).format("DD MMM YYYY")}</Typography>
             <Typography variant="body2">{helpfulRating} users found this helpful</Typography>
             <br />
-            <Button variant="outlined">Delete</Button>&nbsp;
-            <Button variant="outlined" onClick={handleView}>
+            <Button color="primary" variant="contained" size="small" onClick={() => handleDelete(experienceId)}>Delete</Button>&nbsp;
+            <Button color="primary" variant="contained" size="small" onClick={handleView}>
               View
             </Button>
           </ContributionDetails>
         </RightGrid>
       </Grid>
-      <ViewExperienceModal
+      <ContributionExperienceModal
+        experienceId={experienceId}
         modalView={modalView}
         setModalView={setModalView}
         storyPreview={storyPreview}
+        setStoryPreview={setStoryPreview}
+        rawStoryPreview={story}
       />
     </Wrapper>
   );
 };
 
-export default Contribution;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteExperience: (experienceId) => dispatch(deleteExperience(experienceId)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Contribution);

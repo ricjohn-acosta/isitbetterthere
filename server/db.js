@@ -12,12 +12,13 @@ module.exports = {
   getRatedExperiences,
   getReportedExperiences,
   getUserExperiences,
+  editExperience,
   addExperience,
   addRating,
   addReport,
   registerUser,
   rateExperience,
-
+  deleteExperience
 };
 
 // USERS
@@ -155,6 +156,16 @@ function rateExperience(experience, db = connection) {
 function addExperience(experience, db = connection) {
   return db("experiences").insert(experience);
 }
+
+function editExperience(experience, db = connection) {
+  let {experience_id: experienceId, ...story} = experience
+  return db("experiences").where({experience_id: experienceId}).update(story)
+}
+
+function deleteExperience(experienceId, db = connection) {
+  return db("experiences").where(experienceId).del()
+}
+
 
 function addReport(report, db = connection) {
   return db("flagged_experiences").insert(report);

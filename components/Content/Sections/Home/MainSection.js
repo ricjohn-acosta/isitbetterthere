@@ -215,6 +215,7 @@ const MainSection = () => {
             currentCategory={currentCategory}
             handleCategories={handleCategories}
             handleForm={handleForm}
+            setCategory={setCategory}
             setToValue={setToValue}
             setToInputValue={setToInputValue}
             setFromValue={setFromValue}

@@ -161,7 +161,7 @@ const AccountSection = ({ session, user, editUser, userContributions }) => {
             <AccountTab view={view} setView={setView} />
             <div>{renderView()}</div>
             {router.query.tab === "settings" && (
-              <Button style={{ float: "right" }} onClick={handleSubmit}>
+              <Button variant="outlined" style={{ float: "right" }} onClick={handleSubmit}>
                 SUBMIT
               </Button>
             )}

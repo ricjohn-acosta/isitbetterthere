@@ -164,7 +164,7 @@ const LowerNavbar = ({ session }) => {
           </Grid>
           <Grid item xs={6} sm={6} md={4}>
             <UserButtons
-              href={"/account"}
+              href={"/account?tab=settings"}
               disableRipple
             >
               Account

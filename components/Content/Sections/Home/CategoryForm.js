@@ -56,8 +56,9 @@ const CategoryForm = ({
   setToInputValue,
   setFromValue,
   setFromInputValue,
-  // setSelected,
+  setSelected,
   setSwapping,
+  setCategory,
   toValue,
   toInputValue,
   fromValue,
@@ -75,7 +76,7 @@ const CategoryForm = ({
       <br />
       <Select
         onChange={(e) => {
-          // setCategory(e.target.value);
+          setCategory(e.target.value);
           handleCategories(e.target.value);
           setSelected(true);
           setToValue(null);
@@ -84,9 +85,9 @@ const CategoryForm = ({
           setFromInputValue("");
           setSwapping(false);
         }}
-        // onOpen={(e) => {
-        //   setSelected(false);
-        // }}
+        onOpen={(e) => {
+          setSelected(false);
+        }}
         value={currentCategory}
         variant="standard"
       >
