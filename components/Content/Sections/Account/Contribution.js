@@ -1,7 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import moment from "moment";
 import draftToHtml from "draftjs-to-html";
-import { useRouter } from "next/router";
 import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import ContributionExperienceModal from "./ContributionExperienceModal";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
@@ -13,7 +12,7 @@ const htmlToReactParser = new HtmlToReactParser();
 const Wrapper = styled(Paper)``;
 const RightGrid = styled(Grid)`
   text-align: right;
-  background-color: #F8F8F8;
+  background-color: #F7F7F7;
 `;
 
 const LeftGrid = styled(Grid)`
@@ -61,7 +60,7 @@ const Contribution = ({
         <RightGrid item xs={12} sm={3}>
           <ContributionDetails>
             <Typography variant="body2">{moment(datePosted).format("DD MMM YYYY")}</Typography>
-            <Typography variant="body2">{helpfulRating} users found this helpful</Typography>
+            <Typography variant="body2"><b>{helpfulRating}</b> {helpfulRating === 1 ? "user" : "users"} found this helpful</Typography>
             <br />
             <Button color="primary" variant="contained" size="small" onClick={() => handleDelete(experienceId)}>Delete</Button>&nbsp;
             <Button color="primary" variant="contained" size="small" onClick={handleView}>

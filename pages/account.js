@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../components/Layout/Layout";
 import Account from "../containers/Account";
 import { getSession } from "next-auth/client";
-import { getUser, getUserExperiences} from "../server/db";
+import { getUser, getUserExperiences, getUserRatedExperiences} from "../server/db";
 
 const account = (props) => {
   return (
@@ -19,9 +19,11 @@ export async function getServerSideProps(context) {
   
   let user = null;
   let userContributions = null;
+  let helpfulContributions = null;
   if (session) {
     user = await getUser(session.account.id);
     userContributions = await getUserExperiences(session.account.id)
+    helpfulContributions = await getUserRatedExperiences(session.account.id)
   } else {
     context.res.writeHead(302, {
       Location:
@@ -37,6 +39,7 @@ export async function getServerSideProps(context) {
       session,
       user,
       userContributions,
+      helpfulContributions
     },
   };
 }

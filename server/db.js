@@ -12,13 +12,14 @@ module.exports = {
   getRatedExperiences,
   getReportedExperiences,
   getUserExperiences,
+  getUserRatedExperiences,
   editExperience,
   addExperience,
   addRating,
   addReport,
   registerUser,
   rateExperience,
-  deleteExperience
+  deleteExperience,
 };
 
 // USERS
@@ -31,7 +32,7 @@ function getUser(userId, db = connection) {
 }
 
 function editUser(userData, db = connection) {
-  let {user_id: userId, ...details} = userData
+  let { user_id: userId, ...details } = userData;
   return db("users").where("user_id", userId).update(details);
 }
 
@@ -126,7 +127,16 @@ function getAllExperiences(from, to, db = connection) {
 }
 
 function getUserExperiences(user, db = connection) {
-  return db("experiences").where({posted_by: user}).select()
+  return db("experiences").where({ posted_by: user }).select();
+}
+
+function getUserRatedExperiences(userId, db = connection) {
+  return db("experience_rating")
+    .from("experience_rating AS exr")
+    .leftJoin("experiences AS ex", "ex.experience_id", "exr.experience_id")
+    .leftJoin("users AS us", "us.user_id", "exr.user_id")
+    .where("exr.user_id", "=", userId)
+    .select(["name", "story", "helpful", "from", "to", "hide_name"]);
 }
 
 function getRatedExperiences(user_id, db = connection) {
@@ -158,14 +168,13 @@ function addExperience(experience, db = connection) {
 }
 
 function editExperience(experience, db = connection) {
-  let {experience_id: experienceId, ...story} = experience
-  return db("experiences").where({experience_id: experienceId}).update(story)
+  let { experience_id: experienceId, ...story } = experience;
+  return db("experiences").where({ experience_id: experienceId }).update(story);
 }
 
 function deleteExperience(experienceId, db = connection) {
-  return db("experiences").where(experienceId).del()
+  return db("experiences").where({ experience_id: experienceId }).del();
 }
-
 
 function addReport(report, db = connection) {
   return db("flagged_experiences").insert(report);

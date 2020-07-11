@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { Paper, Grid, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Contribution from "./Contribution";
 
 const Wrapper = styled.div`

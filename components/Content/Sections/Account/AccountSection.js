@@ -51,16 +51,30 @@ const StyledTypography = styled(Typography)`
   display: flex;
 `;
 
-const AccountSection = ({ session, user, editUser, userContributions }) => {
-  const router = useRouter()
+const AccountSection = ({
+  session,
+  user,
+  userContributions,
+  helpfulContributions,
+  editUser,
+}) => {
+  const router = useRouter();
   const [view, setView] = React.useState("settings");
   const [hideName, setHideName] = React.useState(user.hide_name === 1 && true);
-  const [hideEmail, setHideEmail] = React.useState(user.hide_email === 1 && true);
-  const [hideOccupation, setHideOccupation] = React.useState(user.hide_occupation === 1 && true);
-  const [hideCompany, setHideCompany] = React.useState(user.hide_company === 1 && true);
-  const [hideLocation, setHideLocation] = React.useState(user.hide_location === 1 && true);
+  const [hideEmail, setHideEmail] = React.useState(
+    user.hide_email === 1 && true
+  );
+  const [hideOccupation, setHideOccupation] = React.useState(
+    user.hide_occupation === 1 && true
+  );
+  const [hideCompany, setHideCompany] = React.useState(
+    user.hide_company === 1 && true
+  );
+  const [hideLocation, setHideLocation] = React.useState(
+    user.hide_location === 1 && true
+  );
 
-  console.log(userContributions)
+  console.log(userContributions);
   const handleSubmit = () => {
     editUser({
       user_id: session.account.id,
@@ -72,8 +86,8 @@ const AccountSection = ({ session, user, editUser, userContributions }) => {
     });
   };
 
-  console.log(hideEmail)
-  console.log(hideOccupation)
+  console.log(hideEmail);
+  console.log(hideOccupation);
 
   const renderView = () => {
     switch (router.query.tab) {
@@ -94,10 +108,12 @@ const AccountSection = ({ session, user, editUser, userContributions }) => {
         );
 
       case "contributions":
-        return <ContributionTab userContributions={userContributions}/>;
+        return <ContributionTab userContributions={userContributions} />;
 
       case "helpful-stories":
-        return <HelpfulStoriesTab />;
+        return (
+          <HelpfulStoriesTab helpfulContributions={helpfulContributions} />
+        );
 
       default:
         break;
@@ -161,8 +177,13 @@ const AccountSection = ({ session, user, editUser, userContributions }) => {
             <AccountTab view={view} setView={setView} />
             <div>{renderView()}</div>
             {router.query.tab === "settings" && (
-              <Button variant="outlined" style={{ float: "right" }} onClick={handleSubmit}>
-                SUBMIT
+              <Button
+                color="primary"
+                variant="contained"
+                style={{ float: "right" }}
+                onClick={handleSubmit}
+              >
+                update
               </Button>
             )}
           </Grid>
