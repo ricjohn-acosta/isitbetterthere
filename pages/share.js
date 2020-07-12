@@ -1,19 +1,20 @@
 import Share from "../containers/Share";
 import Layout from "../components/Layout/Layout";
 import { getSession } from "next-auth/client";
-import { getUsers, getUser } from "../server/db";
+import { getUserExperiences, getUser } from "../server/db";
 
-const share = ({ session }) => {
+const share = (props) => {
   return (
     <Layout>
-      <Share session={session} />
+      <Share {...props} />
     </Layout>
   );
 };
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  const userExists = await getUser(session.account.id);
+  let userExperiences = null;
+
   if (typeof window === "undefined" && context.res.writeHead) {
     if (!session) {
       context.res.writeHead(302, {
@@ -35,12 +36,14 @@ export async function getServerSideProps(context) {
         });
         context.res.end();
       }
+      userExperiences = await getUserExperiences(session.account.id);
     }
   }
 
   return {
     props: {
-      session: session,
+      session,
+      userExperiences,
     },
   };
 }

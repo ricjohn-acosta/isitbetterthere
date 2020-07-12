@@ -2,13 +2,13 @@ import ShareStepperSection from "../components/Content/Sections/Share/ShareStepp
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import LowerNavbar from "../components/Navigation/LowerNavbar";
 
-const Share = ({session}) => {
+const Share = ({session, userExperiences}) => {
   const downMD = useMediaQuery("(max-width:959px)");
 
   return (
     <div>
       <LowerNavbar session={session} />
-      <ShareStepperSection session={session}/>
+      <ShareStepperSection session={session} userExperiences={userExperiences}/>
     </div>
   );
 };

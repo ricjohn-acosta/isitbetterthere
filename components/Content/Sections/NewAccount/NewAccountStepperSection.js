@@ -35,8 +35,10 @@ const NewAccountStepperSection = ({ addUser, session }) => {
   const [hideLocation, setHideLocation] = React.useState(false);
   const [siteSource, setSiteSource] = React.useState("");
   const [emptyFields, setEmptyFields] = React.useState(null);
+  const [disableSubmit, setDisableSubmit] = React.useState(false);
 
   const handleCreateUser = () => {
+    setDisableSubmit(true);
     addUser({
       user_id: session.account.id,
       profile_picture: session.user.image,
@@ -125,7 +127,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
 
   const handleNext = () => {
     if (
-      (activeStep === 0) ||
+      activeStep === 0 ||
       occupation === "" ||
       // company === "" ||
       // position === "" ||
@@ -217,6 +219,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
           <Button onClick={handleReset}>Reset</Button>
           <Link
             component={Button}
+            disabled={disableSubmit}
             href={
               process.env.NODE_ENV === "production"
                 ? process.env.prod

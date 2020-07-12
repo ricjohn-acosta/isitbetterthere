@@ -3,7 +3,7 @@ import { getSession } from "next-auth/client";
 
 export default async function experiences(req, res) {
   const session = await getSession({ req });
-
+    
   if (req.method === "POST" && session) {
     addExperience(req.body).then((experience) => {
       console.log("EXPERIENCE ADDED TO DB");

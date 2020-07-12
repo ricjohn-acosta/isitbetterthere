@@ -115,8 +115,6 @@ const ExperienceSection = ({
   const [violationType, setViolationType] = React.useState("");
   const [session, loading] = useSession();
 
-  const testData = experiences;
-
   const handleOptions = (event) => {
     setAnchorEl(event.currentTarget);
     setOpen((prev) => placement !== event.currentTarget.value || !prev);
@@ -181,9 +179,9 @@ const ExperienceSection = ({
               <Experience
                 key={i}
                 experienceId={e.experience_id}
-                userId = {e.user_id}
+                userId={e.user_id}
                 name={e.name}
-                profilePicture = {e.profile_picture}
+                profilePicture={e.profile_picture}
                 location={e.location}
                 email={e.email}
                 position={e.position}
@@ -208,9 +206,9 @@ const ExperienceSection = ({
                 hideEmail={e.hide_email}
                 hideCompany={e.hide_company}
                 hideOccupation={e.hide_occupation}
-                hideLocation = {e.hide_location}
+                hideLocation={e.hide_location}
               />
-              <br/>
+              <br />
             </>
           ))
         )}
@@ -239,23 +237,25 @@ const ExperienceSection = ({
             {isMD ? <SearchToolsMobileContainer /> : null}
           </ShareExperienceBtnContainer>
           <ExperienceContainer>{displayExperiences()}</ExperienceContainer>
-          <PaginationWrapper
-            page={parseInt(router.query.page)}
-            count={
-              router.query.filterBy === "none" ||
-              !router.query.hasOwnProperty("filterBy")
-                ? Math.ceil(totalExperiences / 5)
-                : Math.ceil(experiences.length / 5)
-            }
-            renderItem={(item) => (
-              <PaginationItem
-                component={PaginationLink}
-                query={router.query}
-                item={item}
-                {...item}
-              />
-            )}
-          />
+          {experiences.length !== 0 ? (
+            <PaginationWrapper
+              page={parseInt(router.query.page)}
+              count={
+                router.query.filterBy === "none" ||
+                !router.query.hasOwnProperty("filterBy")
+                  ? Math.ceil(totalExperiences / 5)
+                  : Math.ceil(experiences.length / 5)
+              }
+              renderItem={(item) => (
+                <PaginationItem
+                  component={PaginationLink}
+                  query={router.query}
+                  item={item}
+                  {...item}
+                />
+              )}
+            />
+          ) : null}
         </Grid>
         {isMD ? null : (
           <Grid item xs={12} sm={12} md={3}>

@@ -4,7 +4,7 @@ import { Typography } from "@material-ui/core";
 const Wrapper = styled.div`
   padding: 1%;
   background-color: #33cccc;
-  color: #F5F5F5;
+  color: #F8F8F8;
 `;
 
 const StyledTypography = styled(Typography)`

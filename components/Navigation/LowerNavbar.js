@@ -15,9 +15,16 @@ import Fade from "@material-ui/core/Fade";
 import { getProviders } from "next-auth/client";
 import { useEffect } from "react";
 import Link from "next/link";
-import { Paper } from "@material-ui/core";
+import { Paper, Box } from "@material-ui/core";
 import HeaderDivider from "../Content/Sections/Share/common/HeaderDivider";
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from "@material-ui/core/Avatar";
+import Popper from "@material-ui/core/Popper";
+import { makeStyles } from "@material-ui/core/styles";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+
+const useStyles = makeStyles((theme) => ({
+  label: { justifyContent: "normal" },
+}));
 
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
@@ -102,23 +109,44 @@ const ModalContent = styled(Paper)`
   }
 `;
 
-const ProviderButtons = styled(Button)`
-  width: 10vw;
-  ${(props) => props.theme.breakpoints.down(1147)} {
-    width: 80%;
-  }
-`;
+const ProviderButtons = styled(Button)``;
 
 const StyledAvatar = styled(Avatar)`
   height: 30px;
   width: 30px;
-`
+`;
+
+const PopperPaper = styled(Paper)`
+  width: 300px;
+`;
+
+const SigninIcon = styled.img`
+  height: auto;
+  width: auto;
+  max-width: 30px;
+  max-height: 30px;
+  margin-right: 50px;
+  margin-left: 20px;
+`;
 
 const LowerNavbar = ({ session }) => {
   const [signinClicked, setSigninClicked] = React.useState(false);
   const [providers, setProviders] = React.useState(null);
-
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
   const router = useRouter();
+  const classes = useStyles();
+
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpen(!open);
+  };
+  // const open = Boolean(anchorEl);
+
+  const handleClickAway = () => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpen(false);
+  };
 
   useEffect(() => {
     getProviders().then((data) => {
@@ -165,20 +193,24 @@ const LowerNavbar = ({ session }) => {
               style={{ textDecoration: "none" }}
               disableRipple
             >
-              Share your stories
+              Share your story
             </MiscButtons>
           </Grid>
           <Grid item xs={6} sm={6} md={4}>
-            <UserButtons
-              href={"/account?tab=settings"}
-              disableRipple
-            >
-              {session ? <><StyledAvatar src={session.user.image}/>&nbsp;{session.user.name}</> : "Account"}
+            <UserButtons href={"/account?tab=settings"} disableRipple>
+              {session ? (
+                <>
+                  <StyledAvatar src={session.user.image} />
+                  &nbsp;{session.user.name}
+                </>
+              ) : (
+                "Account"
+              )}
             </UserButtons>
             {session ? (
               <UserButtons
                 onClick={(e) => {
-                  signout();
+                  signout({ callbackUrl: "http://localhost:3000/" });
                 }}
               >
                 Sign out
@@ -186,13 +218,11 @@ const LowerNavbar = ({ session }) => {
             ) : (
               <UserButtons
                 style={{ textDecoration: "none" }}
-                onClick={() => {
-                  setSigninClicked(true);
-                }}
+                disableRipple
+                onClick={handleClick}
               >
                 Sign up | Login
               </UserButtons>
-              // </Link>
             )}
             <DrawerContainer>
               <Drawer />
@@ -201,25 +231,21 @@ const LowerNavbar = ({ session }) => {
         </Grid>
       </Container>
 
-      <StyledModal
-        open={signinClicked}
-        onClose={() => {
-          setSigninClicked(false);
-        }}
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={signinClicked}>
-          <ModalContent>
-            <Typography variant="h4">Sign in!</Typography>
-            <HeaderDivider />
+      <Popper placement="bottom-start" open={open} anchorEl={anchorEl}>
+        <ClickAwayListener onClickAway={handleClickAway}>
+          <PopperPaper variant="outlined">
             {providers !== null &&
               Object.values(providers).map((provider) => (
                 <p key={provider.name}>
                   <ProviderButtons
-                    variant="outlined"
+                    classes={{
+                      label: classes.label,
+                    }}
+                    startIcon={
+                      <SigninIcon src={`/${provider.name}-signin.png`} />
+                    }
+                    fullWidth
+                    variant="text"
                     href={`/api/auth/signin/${provider.name.toLowerCase()}?callbackUrl=${
                       process.env.NODE_ENV === "production"
                         ? process.env.prod
@@ -230,9 +256,9 @@ const LowerNavbar = ({ session }) => {
                   </ProviderButtons>
                 </p>
               ))}
-          </ModalContent>
-        </Fade>
-      </StyledModal>
+          </PopperPaper>
+        </ClickAwayListener>
+      </Popper>
       {console.log(providers)}
     </StyledLowerNavbar>
   );

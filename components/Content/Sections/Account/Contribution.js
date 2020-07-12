@@ -63,7 +63,7 @@ const Contribution = ({
             <br />
             <Button color="primary" variant="contained" size="small" onClick={() => handleDelete(experienceId)}>Delete</Button>&nbsp;
             <Button color="primary" variant="contained" size="small" onClick={handleView}>
-              View
+              READ
             </Button>
           </ContributionDetails>
         </RightGrid>

@@ -54,7 +54,7 @@ const StyledTypography = styled(Typography)`
 const NameContainer = styled(Typography)`
   display: inline;
   text-align: center;
-`
+`;
 const BioContainer = styled(Typography)`
   text-align: center;
 `;
@@ -137,11 +137,7 @@ const AccountSection = ({
               <StyledImage src={session.user.image}></StyledImage>
             </ImageContainer>
             <ProfileDetails>
-              <NameContainer
-                variant="h5"
-              >
-                {session.user.name}
-              </NameContainer>
+              <NameContainer variant="h5">{session.user.name}</NameContainer>
               <BioContainer style={{ textAlign: "center" }} variant="subtitle1">
                 "{user.bio}"
               </BioContainer>
@@ -179,6 +175,20 @@ const AccountSection = ({
           </LeftGrid>
           <Grid item xs={12} sm={12} md={12} lg={9}>
             <AccountTab view={view} setView={setView} />
+            {router.query.hasOwnProperty("tab") ? null : (
+              <PrivacyDetails
+                setHideName={setHideName}
+                setHideEmail={setHideEmail}
+                setHideOccupation={setHideOccupation}
+                setHideCompany={setHideCompany}
+                setHideLocation={setHideLocation}
+                hideName={hideName}
+                hideEmail={hideEmail}
+                hideOccupation={hideOccupation}
+                hideCompany={hideCompany}
+                hideLocation={hideLocation}
+              />
+            )}
             <div>{renderView()}</div>
             {router.query.tab === "settings" && (
               <Button

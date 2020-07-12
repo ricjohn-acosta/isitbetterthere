@@ -18,6 +18,7 @@ import { addExperience } from "../../../../store/actions/experiences";
 import draftToHtml from "draftjs-to-html";
 import ExtraInformation from "./ExtraInformation";
 import Preview from "./Preview";
+import ContributionWarningModal from "./ContributionWarningModal";
 import Router from "next/router";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
@@ -52,10 +53,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginRight: theme.spacing(1),
   },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
 }));
 
 // COMPONENT LEVEL STYLING
@@ -76,7 +73,7 @@ function getSteps() {
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
 
-const ShareStepperSection = ({ addExperience, session }) => {
+const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
   const classes = useStyles();
   const [categories, setCategory] = React.useState(careersCategory);
   const [currentCategory, setCurrentCategory] = React.useState("careers");
@@ -92,6 +89,8 @@ const ShareStepperSection = ({ addExperience, session }) => {
   const [fulfillment, setFulfillment] = React.useState("");
   const [easeOfTransition, setEaseOfTransition] = React.useState("");
   const [regret, setRegret] = React.useState("");
+  const [disableSubmit, setDisableSubmit] = React.useState(false)
+  const [modalView, setModalView] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty()
@@ -101,6 +100,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
   const story = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
   const steps = getSteps();
 
+  console.log(userExperiences);
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -155,6 +155,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setDisableSubmit(true);
     addExperience({
       posted_by: session.account.id,
       category: currentCategory,
@@ -166,7 +167,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
       story,
       helpful: 0,
       not_helpful: 0,
-      date_posted: Date.now()
+      date_posted: Date.now(),
     });
     Router.push({
       pathname: "/transition",
@@ -183,7 +184,11 @@ const ShareStepperSection = ({ addExperience, session }) => {
       if (checkIfEmpty(0)) {
         return;
       } else {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        userExperiences.find(
+          (e) => e.from === fromInputValue && e.to === toInputValue
+        )
+          ? setModalView(true)
+          : setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     }
     if (activeStep === 1) {
@@ -256,11 +261,6 @@ const ShareStepperSection = ({ addExperience, session }) => {
 
   return (
     <Wrapper>
-      {/* {console.log("TO VALUE, ", toValue, toInputValue)}
-      {console.log("FROM VALUE, ", fromValue, fromInputValue)}
-      {console.log(story)}
-      {console.log(editorContent.blocks[0].text)} */}
-      {console.log(fulfillment, easeOfTransition, regret)}
       <div className={classes.root}>
         <Stepper
           alternativeLabel
@@ -282,13 +282,11 @@ const ShareStepperSection = ({ addExperience, session }) => {
         <div>
           {activeStep === steps.length ? (
             <div>
-              <div
-                style={{ display: "flex", justifyContent: "center" }}
-                className={classes.instructions}
-              >
+              <div>
                 <Preview editorState={editorState} />
               </div>
               <Button
+                disabled={disableSubmit}
                 color="primary"
                 variant="contained"
                 style={{ float: "right" }}
@@ -307,10 +305,7 @@ const ShareStepperSection = ({ addExperience, session }) => {
             </div>
           ) : (
             <div>
-              <div
-                // style={{ display: "flex", justifyContent: "center" }}
-                className={classes.instructions}
-              >
+              <div className={classes.instructions}>
                 {getStepContent(activeStep)}
               </div>
               <div>
@@ -336,6 +331,12 @@ const ShareStepperSection = ({ addExperience, session }) => {
           )}
         </div>
       </div>
+      <ContributionWarningModal
+        modalView={modalView}
+        setModalView={setModalView}
+        from={fromInputValue}
+        to={toInputValue}
+      />
     </Wrapper>
   );
 };
