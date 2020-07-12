@@ -8,6 +8,7 @@ exports.seed = function (knex) {
         {
           id: 1,
           user_id: "112929919225856440659",
+          profile_picture: "https://lh3.googleusercontent.com/-8wKGcQR3uQI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucm17yyVSO5GkllyrxCPqHJ1mmX2zg/photo.jpg",
           name: "Ricjohn",
           email: "ricjohngenoguin@gmail.com",
           bio: "all for creating impactful projects!",

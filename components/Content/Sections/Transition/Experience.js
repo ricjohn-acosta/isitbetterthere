@@ -21,8 +21,9 @@ import Paper from "@material-ui/core/Paper";
 
 const Wrapper = styled.div`
   min-height: 25vh;
-  background-color: white;
-  padding-top: 5vh;
+  background-color: ${(props) =>
+    props.sessionId === props.userId ? "#F8F8F8" : "white"};
+  padding: 2.5%;
 `;
 
 const ProfileContainer = styled(Grid)`
@@ -33,9 +34,13 @@ const ProfileDetails = styled.div`
   display: flex;
 `;
 
-const UserInfo = styled.div`
+const UserInfoContainer = styled.div`
   margin-left: 2.5%;
   color: grey;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
 `;
 
 const ChipsContainer = styled.div`
@@ -60,10 +65,20 @@ const StyledHr = styled.hr`
   background: #e0e0e0;
 `;
 
+const IconContainer = styled.div`
+  float: right;
+`;
+
+const StyledAvatar = styled(Avatar)`
+  margin-top: 5px;
+`;
+
 const Experience = ({
   experience,
   experienceId,
+  userId,
   name,
+  profilePicture,
   location,
   company,
   position,
@@ -78,9 +93,18 @@ const Experience = ({
   isRated,
   handleOptions,
   setCurrentId,
+  hideName,
+  hideEmail,
+  hideCompany,
+  hideOccupation,
+  hideLocation,
 }) => {
   const [session, loading] = useSession();
   const [rated, setRated] = React.useState(false);
+
+  const isWhiteSpaceOrEmpty = (input) => {
+    return !/[^\s]/.test(input);
+  };
 
   const handleRating = (e) => {
     if (session) {
@@ -93,6 +117,30 @@ const Experience = ({
       setRated(true);
     } else {
       Router.push("/signup", undefined, {});
+    }
+  };
+
+  const getSessionId = () => {
+    return session ? session.account.id : false;
+  }
+
+  const renderJobDetails = (position, company) => {
+    if (!isWhiteSpaceOrEmpty(position) && !isWhiteSpaceOrEmpty(company)) {
+      if (hideOccupation === 1) {
+        return company;
+      } else if (hideCompany === 1) {
+        return position;
+      } else {
+        return position + " at " + company;
+      }
+    }
+
+    if (!isWhiteSpaceOrEmpty(position)) {
+      return position;
+    }
+
+    if (!isWhiteSpaceOrEmpty(company)) {
+      return company;
     }
   };
 
@@ -122,15 +170,16 @@ const Experience = ({
     }
   };
 
-  const isWhiteSpaceOrEmpty = (input) => {
-    return !/[^\s]/.test(input);
-  };
-
   return (
-    <Wrapper id={"/"+experienceId}>
+    <Wrapper
+      id={"/" + experienceId}
+      userId={userId}
+      sessionId={getSessionId()}
+    >
+      {console.log(hideName)}
       <Grid container drection="column">
         <ProfileContainer item xs={12} sm={6} md={12}>
-          <div id="icon-container" style={{ float: "right" }}>
+          <IconContainer id="icon-container">
             <IconButton
               id="icon-button"
               value={experienceId.toString()}
@@ -141,38 +190,48 @@ const Experience = ({
             >
               <MoreVertIcon id="icon-button-svg" />
             </IconButton>
-          </div>
+          </IconContainer>
           <ProfileDetails>
-            <Avatar style={{ marginTop: "5px" }} />
-            <UserInfo>
-              <div style={{ display: "flex" }}>
+            <StyledAvatar src={profilePicture} />
+            <UserInfoContainer>
+              <UserInfo>
                 <PersonIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;{name}&nbsp;
-                <LocationOnRoundedIcon
-                  style={{ color: "#1a8cff" }}
-                  fontSize="small"
-                />
-                &nbsp;
-                {location}
-              </div>
-              <div style={{ display: "flex" }}>
-                <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;{email}
-              </div>
+                &nbsp;{hideName === 1 ? "Anon" : name}&nbsp;
+                {hideLocation === 1 ? null : (
+                  <>
+                    <LocationOnRoundedIcon
+                      style={{ color: "#1a8cff" }}
+                      fontSize="small"
+                    />
+                    &nbsp;
+                    {location}
+                  </>
+                )}
+              </UserInfo>
+              {hideEmail === 1 ? null : (
+                <UserInfo>
+                  <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />
+                  &nbsp;{email}
+                </UserInfo>
+              )}
               {isWhiteSpaceOrEmpty(position) ||
-                (isWhiteSpaceOrEmpty(company) && (
-                  <div style={{ display: "flex" }}>
+                (isWhiteSpaceOrEmpty(company) ||
+                (hideCompany === 1 && hideOccupation === 1) ? null : (
+                  <UserInfo>
                     <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                    &nbsp;{position + "at" + company}
-                  </div>
+                    &nbsp;{renderJobDetails(position, company)}
+                  </UserInfo>
                 ))}
-              <div style={{ display: "flex" }}>
+
+              <UserInfo>
                 <ChatBubbleIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;{bio}
-              </div>
-            </UserInfo>
+                &nbsp;"{bio}"
+              </UserInfo>
+            </UserInfoContainer>
           </ProfileDetails>
-          <div>Posted at {moment(date_posted).format("DD MMM YYYY")}</div>
+          <Typography variant="caption">
+            Posted at {moment(date_posted).format("DD MMM YYYY")}
+          </Typography>
           <ChipsContainer>{renderChips()}</ChipsContainer>
         </ProfileContainer>
         <Content item xs={12} sm={6} md={12}>
@@ -184,7 +243,7 @@ const Experience = ({
           {console.log(isRated)}
           {isRated || rated ? (
             <div style={{ float: "right" }}>Thanks for rating!</div>
-          ) : (
+          ) : userId === getSessionId() ? null : (
             <ButtonGroup>
               <Button value="true" onClick={handleRating}>
                 Helpful

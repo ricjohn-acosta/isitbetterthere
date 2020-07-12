@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { Paper } from "@material-ui/core";
 import HeaderDivider from "../Content/Sections/Share/common/HeaderDivider";
+import Avatar from '@material-ui/core/Avatar';
 
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
@@ -108,6 +109,11 @@ const ProviderButtons = styled(Button)`
   }
 `;
 
+const StyledAvatar = styled(Avatar)`
+  height: 30px;
+  width: 30px;
+`
+
 const LowerNavbar = ({ session }) => {
   const [signinClicked, setSigninClicked] = React.useState(false);
   const [providers, setProviders] = React.useState(null);
@@ -167,7 +173,7 @@ const LowerNavbar = ({ session }) => {
               href={"/account?tab=settings"}
               disableRipple
             >
-              Account
+              {session ? <><StyledAvatar src={session.user.image}/>&nbsp;{session.user.name}</> : "Account"}
             </UserButtons>
             {session ? (
               <UserButtons

@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { Typography } from "@material-ui/core";
 
 const Wrapper = styled.div`
-  margin-top: 5vh;
-  margin-bottom: 7.5vh;
+  padding-top: 5vh;
+  padding-bottom: 7.5vh;
+  // background-color: #CCFFFF;
   ${(props) => props.theme.breakpoints.down("sm")} {
     margin-left: 7.5vw;
     margin-right: 7.5vw

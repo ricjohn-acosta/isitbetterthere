@@ -12,6 +12,7 @@ module.exports = {
   getRatedExperiences,
   getReportedExperiences,
   getUserExperiences,
+  getAllUserExperiences,
   getUserRatedExperiences,
   editExperience,
   addExperience,
@@ -124,6 +125,10 @@ function getAllExperiences(from, to, db = connection) {
     .where({ from, to })
     .join("users", "experiences.posted_by", "=", "users.user_id")
     .select();
+}
+
+function getAllUserExperiences(db = connection) {
+  return db("experiences").select();
 }
 
 function getUserExperiences(user, db = connection) {

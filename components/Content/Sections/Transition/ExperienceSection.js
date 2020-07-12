@@ -181,7 +181,9 @@ const ExperienceSection = ({
               <Experience
                 key={i}
                 experienceId={e.experience_id}
+                userId = {e.user_id}
                 name={e.name}
+                profilePicture = {e.profile_picture}
                 location={e.location}
                 email={e.email}
                 position={e.position}
@@ -202,7 +204,13 @@ const ExperienceSection = ({
                 }
                 handleOptions={handleOptions}
                 setCurrentId={setCurrentId}
+                hideName={e.hide_name}
+                hideEmail={e.hide_email}
+                hideCompany={e.hide_company}
+                hideOccupation={e.hide_occupation}
+                hideLocation = {e.hide_location}
               />
+              <br/>
             </>
           ))
         )}

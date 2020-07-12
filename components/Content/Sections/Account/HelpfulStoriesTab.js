@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { Typography } from "@material-ui/core";
 import HelpfulStory from "./HelpfulStory";
+import NoData from "./common/NoData"
 
 const Wrapper = styled.div`
   padding: 5%;
@@ -9,9 +10,9 @@ const Wrapper = styled.div`
 const HelpfulStoriesTab = ({ helpfulContributions }) => {
   return (
     <Wrapper>
-      <Typography variant="h4">Stories you found helpful</Typography>
+      <Typography variant="h5">Stories you found helpful</Typography>
       <br />
-      {helpfulContributions.map((e) => (
+      {helpfulContributions.length !== 0 ? helpfulContributions.map((e) => (
         <>
           <HelpfulStory
             name={e.name}
@@ -23,7 +24,7 @@ const HelpfulStoriesTab = ({ helpfulContributions }) => {
           />
           <br />
         </>
-      ))}
+      )) : <NoData>YOU HAVEN'T FOUND ANY HELPFUL STORIES YET...</NoData>}
       {console.log(helpfulContributions)}
     </Wrapper>
   );

@@ -27,7 +27,6 @@ const ContributionDetails = styled.div`
 
 const Contribution = ({
   experienceId,
-  category,
   from,
   to,
   story,

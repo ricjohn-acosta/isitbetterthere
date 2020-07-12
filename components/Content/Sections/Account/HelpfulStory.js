@@ -42,7 +42,7 @@ const HelpfulStory = ({ name, story, helpfulCount, from, to, hideName }) => {
         <TopContent item container xs={12} sm={12}>
           <Grid item xs={12} sm={6}>
             <Typography variant="subtitle1">
-              <b>{hideName === 0 ? name : "Anon"}'s</b> story
+              <b>{hideName === 1 ? "Anon" : name}'s</b> story
             </Typography>
           </Grid>
           <HelpedPeopleCount item xs={12} sm={6}>

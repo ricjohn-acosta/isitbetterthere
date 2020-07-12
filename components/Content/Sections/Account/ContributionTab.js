@@ -1,34 +1,38 @@
 import styled, { keyframes } from "styled-components";
 import { Typography } from "@material-ui/core";
 import Contribution from "./Contribution";
+import NoData from "./common/NoData";
 
 const Wrapper = styled.div`
   padding: 5%;
 `;
 
 const ContributionTab = ({ userContributions }) => {
-  const [contributions, setContributions] = React.useState(userContributions)
+  const [contributions, setContributions] = React.useState(userContributions);
 
   return (
     <Wrapper>
-      <Typography variant="h4">Your stories</Typography>
-      <br/>
-      {contributions.map((e) => (
-        <>
-          <Contribution
-            experienceId={e.experience_id}
-            category={e.category}
-            from={e.from}
-            to={e.to}
-            story={e.story}
-            datePosted={e.date_posted}
-            helpfulRating={e.helpful}
-            contributions={contributions}
-            setContributions={setContributions}
-          />
-          <br />
-        </>
-      ))}
+      <Typography variant="h5">Your stories</Typography>
+      <br />
+      {contributions.length !== 0 ? (
+        contributions.map((e) => (
+          <>
+            <Contribution
+              experienceId={e.experience_id}
+              from={e.from}
+              to={e.to}
+              story={e.story}
+              datePosted={e.date_posted}
+              helpfulRating={e.helpful}
+              contributions={contributions}
+              setContributions={setContributions}
+            />
+            <br />
+          </>
+        ))
+      ) : (
+          <NoData>YOU HAVEN'T CONTRIBUTED YET...</NoData>
+      )}
     </Wrapper>
   );
 };

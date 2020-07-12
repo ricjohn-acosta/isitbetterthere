@@ -39,6 +39,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
   const handleCreateUser = () => {
     addUser({
       user_id: session.account.id,
+      profile_picture: session.user.image,
       name: session.user.name,
       email: session.user.email,
       bio: description,
