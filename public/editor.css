@@ -866,7 +866,7 @@
   }
   .rdw-editor-wrapper {
     box-sizing: content-box;
-    width: 55vw;
+    width: 100%;
   }
   .rdw-editor-main blockquote {
     border-left: 5px solid #f1f1f1;

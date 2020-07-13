@@ -17,6 +17,11 @@ import Link from "@material-ui/core/Link";
 const Wrapper = styled.div`
   min-height: 60vh;
   margin: 5vh 15vw 10vh 15vw;
+  overflow: auto;
+
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    margin: 2vh 1vh 0 1vh;
+  }
 `;
 
 const NewAccountStepperSection = ({ addUser, session }) => {
@@ -88,6 +93,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       case 2:
         return (
           <ConfirmDetails
+            emptyFields={emptyFields}
             setSiteSource={setSiteSource}
             siteSource={siteSource}
           />
@@ -143,7 +149,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       }
     } else if (activeStep === 2 && siteSource === "") {
       setEmptyFields(["siteSource"]);
-      console.log("test");
+      console.log(emptyFields);
     } else {
       // setCompany("");
       // setPosition("");

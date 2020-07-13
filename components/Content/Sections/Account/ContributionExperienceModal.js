@@ -32,6 +32,17 @@ const StyledPaper = styled(Paper)`
   width: 65vw;
   padding: 2.5%;
   overflow: auto;
+
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    width: 100%;
+  }
+`;
+
+const Header = styled(Typography)`
+  font-weight: bold;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    font-size: 2em;
+  }
 `;
 
 const EditorContainer = styled.div`
@@ -90,18 +101,29 @@ const ContributionExperienceModal = ({
       >
         <Fade in={modalView}>
           <StyledPaper>
-            <Typography variant="h3">
+            <Header variant="h3">
               Your story&nbsp;
-              <Button color="primary" onClick={handleEditing} variant="contained" disableRipple>
+              <Button
+                disableElevation
+                color="primary"
+                onClick={handleEditing}
+                variant="contained"
+                disableRipple
+              >
                 {editing ? "CANCEL" : "EDIT"}
               </Button>
               &nbsp;
               {editing ? (
-                <Button color="primary" onClick={handleSave} variant="contained">
+                <Button
+                  disableElevation
+                  color="primary"
+                  onClick={handleSave}
+                  variant="contained"
+                >
                   SAVE
                 </Button>
               ) : null}
-            </Typography>
+            </Header>
 
             <HeaderDivider />
 

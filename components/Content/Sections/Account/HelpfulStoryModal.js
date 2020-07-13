@@ -20,6 +20,18 @@ const StyledPaper = styled(Paper)`
   width: 50vw;
   padding: 2.5%;
   overflow: auto;
+
+  ${(props) => props.theme.breakpoints.down("md")} {
+    width: 100%;
+  }
+`;
+
+const Header = styled(Typography)`
+font-weight: bold;
+
+  ${(props) => props.theme.breakpoints.down("md")} {
+    font-size: 2em;
+  }
 `;
 
 const HelpfulStoryModal = ({
@@ -48,9 +60,9 @@ const HelpfulStoryModal = ({
     >
       <Fade in={modalView}>
         <StyledPaper>
-          <Typography variant="h3">
+          <Header variant="h3">
             {hideName === 0 ? name : "Anon"}'s story
-          </Typography>
+          </Header>
           <HeaderDivider />
           {storyPreview}
         </StyledPaper>

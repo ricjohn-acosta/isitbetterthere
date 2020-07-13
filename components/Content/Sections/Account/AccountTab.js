@@ -19,10 +19,11 @@ const CenteredTabs = ({ view, setView }) => {
           onChange={handleChange}
           indicatorColor="secondary"
           textColor="primary"
+          scrollButtons="on"
         >
-          <LinkTab label={"Settings"} view={"settings"}/>
-          <LinkTab label={"Contributions"} view={"contributions"}/>
-          <LinkTab label={"Helpful stories"} view={"helpful-stories"}/>
+          <LinkTab label={"Settings"} value={"settings"} view={"settings"}/>
+          <LinkTab label={"Contributions"} value={"contributions"} view={"contributions"}/>
+          <LinkTab label={"Helpful stories"} value={"helpful-stories"} view={"helpful-stories"}/>
         </Tabs>
       </Paper>
     </>

@@ -8,6 +8,9 @@ const Wrapper = styled.div`
 const StyledTypography = styled(Typography)`
   font-weight: bold;
   padding-top: 25px;
+  ${(props) => props.theme.breakpoints.down(441)} {
+    font-size: 1.5em;
+  }
 `;
 
 const Icon = styled.img`
@@ -17,6 +20,15 @@ const Icon = styled.img`
   max-height: 40px;
   margin-top: 25px;
   margin-right: 10px;
+
+  ${(props) => props.theme.breakpoints.down(441)} {
+    height: auto;
+    width: auto;
+    max-width: 30px;
+    max-height: 30px;
+    margin-top: 25px;
+    margin-right: 10px;
+  }
 `;
 
 const Subheaders = ({ icon, children }) => {

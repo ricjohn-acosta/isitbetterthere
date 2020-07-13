@@ -15,6 +15,12 @@ const StyledGrid = styled(Grid)`
   margin-top: 2.5vh;
 `;
 
+const QuestionText = styled(Typography)`
+  ${(props) => props.theme.breakpoints.down(441)} {
+    font-size: 1.5em;
+  }
+`;
+
 const ExtraInformation = ({
   setFulfillment,
   fulfillment,
@@ -44,7 +50,7 @@ const ExtraInformation = ({
       <HeaderDivider />
 
       <StyledGrid container direction="column" spacing={3}>
-        <Typography variant="h4">
+        <QuestionText variant="h4">
           How fulfilling was the transition?{" "}
           {extraInfoEmptyState ? (
             <Typography
@@ -55,7 +61,7 @@ const ExtraInformation = ({
               (required)
             </Typography>
           ) : null}
-        </Typography>
+        </QuestionText>
         <Grid item container direction="row">
           <Grid align="center" xs={4} sm={4} item>
             <FormControlLabel
@@ -98,7 +104,7 @@ const ExtraInformation = ({
           </Grid>
         </Grid>
         <br />
-        <Typography variant="h4">
+        <QuestionText variant="h4">
           How easy was the transition?{" "}
           {extraInfoEmptyState ? (
             <Typography
@@ -109,7 +115,7 @@ const ExtraInformation = ({
               (required)
             </Typography>
           ) : null}
-        </Typography>
+        </QuestionText>
 
         <Grid item container direction="row">
           <Grid align="center" xs={4} sm={4} item>
@@ -156,7 +162,7 @@ const ExtraInformation = ({
           </Grid>
         </Grid>
         <br />
-        <Typography variant="h4">
+        <QuestionText variant="h4">
           Did you regret transitioning?{" "}
           {extraInfoEmptyState ? (
             <Typography
@@ -167,7 +173,7 @@ const ExtraInformation = ({
               (required)
             </Typography>
           ) : null}
-        </Typography>
+        </QuestionText>
         <Grid item container direction="row">
           <Grid align="center" xs={4} sm={4} item>
             <FormControlLabel

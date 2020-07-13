@@ -3,6 +3,7 @@ import { getSession } from "next-auth/client";
 
 export default async function ratings(req, res) {
   const session = await getSession({ req });
+
   console.log("TEEEEEST", req.body.is_helpful)
 
   if (req.method === "PUT" && session) {

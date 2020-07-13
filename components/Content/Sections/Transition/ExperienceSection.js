@@ -231,7 +231,12 @@ const ExperienceSection = ({
       <Grid container direction="row">
         <Grid item xs={12} sm={12} md={isMD ? 12 : 8}>
           <ShareExperienceBtnContainer>
-            <ShareExperienceBtn variant="contained">
+            <ShareExperienceBtn
+              disableRipple
+              disableElevation
+              href={"/share"}
+              variant="contained"
+            >
               Share your experience
             </ShareExperienceBtn>
             {isMD ? <SearchToolsMobileContainer /> : null}

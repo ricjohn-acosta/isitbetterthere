@@ -8,7 +8,7 @@ import { addUser } from "../../store/actions/users";
 import { connect } from "react-redux";
 import { useRouter, Router } from "next/router";
 import BrandLogo from "./BrandLogo";
-import { signIn, signout, useSession } from "next-auth/client";
+import { signout } from "next-auth/client";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -200,7 +200,7 @@ const LowerNavbar = ({ session }) => {
             <UserButtons href={"/account?tab=settings"} disableRipple>
               {session ? (
                 <>
-                  <StyledAvatar src={session.user.image} />
+                  <StyledAvatar src={session.user.image}><img src="user-32.png"/></StyledAvatar>
                   &nbsp;{session.user.name}
                 </>
               ) : (
@@ -209,8 +209,14 @@ const LowerNavbar = ({ session }) => {
             </UserButtons>
             {session ? (
               <UserButtons
+                disableRipple
                 onClick={(e) => {
-                  signout({ callbackUrl: "http://localhost:3000/" });
+                  signout({
+                    callbackUrl:
+                      process.env.NODE_ENV === "production"
+                        ? process.env.prod + "/"
+                        : process.env.dev + "/",
+                  });
                 }}
               >
                 Sign out

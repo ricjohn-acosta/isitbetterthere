@@ -89,7 +89,7 @@ const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
   const [fulfillment, setFulfillment] = React.useState("");
   const [easeOfTransition, setEaseOfTransition] = React.useState("");
   const [regret, setRegret] = React.useState("");
-  const [disableSubmit, setDisableSubmit] = React.useState(false)
+  const [disableSubmit, setDisableSubmit] = React.useState(false);
   const [modalView, setModalView] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [editorState, setEditorState] = React.useState(
@@ -286,6 +286,7 @@ const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
                 <Preview editorState={editorState} />
               </div>
               <Button
+                disableElevation
                 disabled={disableSubmit}
                 color="primary"
                 variant="contained"
@@ -296,6 +297,7 @@ const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
                 Submit
               </Button>
               <Button
+                disableElevation
                 style={{ float: "right" }}
                 onClick={handleReset}
                 className={classes.button}
@@ -310,6 +312,7 @@ const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
               </div>
               <div>
                 <Button
+                  disableElevation
                   style={{ float: "right" }}
                   variant="contained"
                   color="primary"
@@ -319,6 +322,7 @@ const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
                   {activeStep === steps.length - 1 ? "Confirm" : "Next"}
                 </Button>
                 <Button
+                  disableElevation
                   style={{ float: "right" }}
                   disabled={activeStep === 0}
                   onClick={handleBack}

@@ -21,6 +21,9 @@ import Paper from "@material-ui/core/Paper";
 
 const Wrapper = styled.div`
   min-height: 25vh;
+  border: 0.5px solid;
+  border-width: thin;
+  border-color: #d6d6d6;
   background-color: ${(props) =>
     props.sessionId === props.userId ? "#F8F8F8" : "white"};
   padding: 2.5%;

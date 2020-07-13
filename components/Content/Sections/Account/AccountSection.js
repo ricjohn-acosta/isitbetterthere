@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import AccountTab from "./AccountTab";
@@ -11,6 +11,7 @@ import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
 import PrivacyDetails from "../NewAccount/PrivacyDetails";
 import ContributionTab from "./ContributionTab";
 import HelpfulStoriesTab from "./HelpfulStoriesTab";
+import ReactImageFallback from "react-image-fallback";
 import { editUser } from "../../../../store/actions/users";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
@@ -22,12 +23,19 @@ const Wrapper = styled.div`
 
 const DashboardContainer = styled(Paper)`
   margin: 5% 15% 5% 15%;
+  overflow: hidden;
+  ${(props) => props.theme.breakpoints.down(441)} {
+    margin: 0;
+  }
 `;
 
 const LeftGrid = styled(Grid)`
   padding: 0 50px 0 50px;
+  ${(props) => props.theme.breakpoints.down(441)} {
+    padding: 0 5px 0 5px;
+  }
 `;
-const StyledImage = styled.img`
+const StyledImage = styled(ReactImageFallback)`
   height: auto;
   width: auto;
   max-width: 200px;
@@ -134,7 +142,19 @@ const AccountSection = ({
         <Grid container direction={"row"}>
           <LeftGrid item xs={12} sm={12} md={12} lg={3}>
             <ImageContainer>
-              <StyledImage src={session.user.image}></StyledImage>
+              {/* <StyledImage
+                src={session.user.image}
+
+                onError={(e) => {
+                  e.target.src = "/facebook.png";
+                }}
+              ></StyledImage> */}
+
+              <StyledImage
+                src={session.user.image}
+                fallbackImage="/user.png"
+                alt={session.user.name}
+              />
             </ImageContainer>
             <ProfileDetails>
               <NameContainer variant="h5">{session.user.name}</NameContainer>
@@ -190,16 +210,18 @@ const AccountSection = ({
               />
             )}
             <div>{renderView()}</div>
-            {router.query.tab === "settings" && (
+            {!router.query.hasOwnProperty("tab") ||
+            router.query.tab === "settings" ? (
               <Button
                 color="primary"
                 variant="contained"
                 style={{ float: "right" }}
+                disableElevation
                 onClick={handleSubmit}
               >
                 update
               </Button>
-            )}
+            ) : null}
           </Grid>
         </Grid>
       </DashboardContainer>

@@ -15,9 +15,10 @@ const ContributionTab = ({ userContributions }) => {
       <Typography variant="h5">Your stories</Typography>
       <br />
       {contributions.length !== 0 ? (
-        contributions.map((e) => (
+        contributions.map((e,i) => (
           <>
             <Contribution
+              key={i}
               experienceId={e.experience_id}
               from={e.from}
               to={e.to}
