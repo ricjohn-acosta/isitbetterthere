@@ -178,7 +178,7 @@ function editExperience(experience, db = connection) {
 }
 
 function deleteExperience(experienceId, db = connection) {
-  return db("experiences").where({ experience_id: experienceId }).del();
+  return db("experiences").where(experienceId).del();
 }
 
 function addReport(report, db = connection) {

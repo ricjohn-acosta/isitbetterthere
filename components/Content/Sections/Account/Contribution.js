@@ -64,6 +64,7 @@ const Contribution = ({
     setContributions(
       contributions.filter((experience) => experience.experience_id !== id)
     );
+    console.log(id)
     deleteExperience({ experience_id: id });
   };
 

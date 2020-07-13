@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import HelpfulStoryModal from "./HelpfulStoryModal";
+import NoData from "./common/NoData"
 
 const Wrapper = styled(Paper)``;
 
@@ -32,7 +33,7 @@ const Transition = styled(Typography)`
   ${(props) => props.theme.breakpoints.down("md")} {
     font-size: 2em;
   }
-  
+
   ${(props) => props.theme.breakpoints.down("sm")} {
     font-size: 1em;
   }
@@ -50,46 +51,52 @@ const HelpfulStory = ({ name, story, helpfulCount, from, to, hideName }) => {
 
   return (
     <Wrapper variant="outlined">
-      <Grid container direction="row">
-        <TopContent item container xs={12} sm={12}>
-          <Grid item xs={12} sm={12} md={6}>
-            <Typography variant="subtitle1">
-              <b>{hideName === 1 ? "Anon" : name}'s</b> story
-            </Typography>
+      {story === null ? (
+        <NoData source={"HelpfulStory"}>USER DELETED THEIR POST :(</NoData>
+      ) : (
+        <>
+          <Grid container direction="row">
+            <TopContent item container xs={12} sm={12}>
+              <Grid item xs={12} sm={12} md={6}>
+                <Typography variant="subtitle1">
+                  <b>{hideName === 1 ? "Anon" : name}'s</b> story
+                </Typography>
+              </Grid>
+              <HelpedPeopleCount item xs={12} sm={12} md={6}>
+                <Typography variant="subtitle1">
+                  <b>{helpfulCount !== 0 ? helpfulCount - 1 : helpfulCount}</b>{" "}
+                  other {helpfulCount - 1 === 1 ? "person" : "people"} found
+                  this helpful
+                </Typography>
+              </HelpedPeopleCount>
+            </TopContent>
+            <TransitionContainer item xs={12} sm={12}>
+              <Transition variant="h5">
+                {from}&nbsp;
+                <ArrowForwardIcon fontSize="small" />
+                &nbsp;{to}
+              </Transition>
+            </TransitionContainer>
+            <BottomContent item xs={12} sm={12}>
+              <ReadButton
+                disableElevation
+                onClick={handleOpen}
+                color="primary"
+                variant="contained"
+              >
+                VIEW
+              </ReadButton>
+            </BottomContent>
           </Grid>
-          <HelpedPeopleCount item xs={12} sm={12} md={6}>
-            <Typography variant="subtitle1">
-              <b>{helpfulCount !== 0 ? helpfulCount - 1 : helpfulCount}</b>{" "}
-              other {helpfulCount - 1 === 1 ? "person" : "people"} found this
-              helpful
-            </Typography>
-          </HelpedPeopleCount>
-        </TopContent>
-        <TransitionContainer item xs={12} sm={12}>
-          <Transition variant="h5">
-            {from}&nbsp;
-            <ArrowForwardIcon fontSize="small" />
-            &nbsp;{to}
-          </Transition>
-        </TransitionContainer>
-        <BottomContent item xs={12} sm={12}>
-          <ReadButton
-            disableElevation
-            onClick={handleOpen}
-            color="primary"
-            variant="contained"
-          >
-            VIEW
-          </ReadButton>
-        </BottomContent>
-      </Grid>
-      <HelpfulStoryModal
-        name={name}
-        story={story}
-        hideName={hideName}
-        modalView={modalView}
-        setModalView={setModalView}
-      />
+          <HelpfulStoryModal
+            name={name}
+            story={story}
+            hideName={hideName}
+            modalView={modalView}
+            setModalView={setModalView}
+          />
+        </>
+      )}
     </Wrapper>
   );
 };
