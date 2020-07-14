@@ -211,7 +211,7 @@ export default function TemporaryDrawer() {
       </List>
       <Divider />
       <List>
-        {["About", "Contact", "Meet the team"].map((text, index) => (
+        {["About", "Contact"].map((text, index) => (
           <ListItem
             component={Button}
             style={{ color: "black" }}

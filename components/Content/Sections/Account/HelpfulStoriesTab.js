@@ -12,7 +12,7 @@ const HelpfulStoriesTab = ({ helpfulContributions }) => {
     <Wrapper>
       <Typography variant="h5">Stories you found helpful</Typography>
       <br />
-      {helpfulContributions.length !== 0 ? helpfulContributions.map((e) => (
+      {helpfulContributions.length !== 0 ? helpfulContributions.filter(e => e.is_helpful === 1).map(e => (
         <>
           <HelpfulStory
             name={e.name}

@@ -103,6 +103,7 @@ const Contribution = ({
             <br />
             <ButtonContainer>
               <Button
+                style={{ color: "white" }}
                 color="primary"
                 variant="contained"
                 size="small"
@@ -114,6 +115,7 @@ const Contribution = ({
               </Button>
               &nbsp;
               <Button
+                style={{ color: "white" }}
                 color="primary"
                 variant="contained"
                 size="small"
@@ -137,11 +139,17 @@ const Contribution = ({
       <Dialog onClose={handleDialogClose} open={dialogView}>
         <DialogTitle>Confirm story deletion</DialogTitle>
         <DialogContent>
-          <DialogContentText>Are you sure you want to delete this story?</DialogContentText>
+          <DialogContentText>
+            Are you sure you want to delete this story?
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleDelete(experienceId)}>Delete</Button>
-          <Button onClick={handleDialogClose}>Cancel</Button>
+          <Button color="primary" onClick={() => handleDelete(experienceId)}>
+            Delete
+          </Button>
+          <Button color="primary" onClick={handleDialogClose}>
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     </Wrapper>

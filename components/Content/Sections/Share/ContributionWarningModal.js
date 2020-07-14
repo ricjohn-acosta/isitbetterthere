@@ -15,7 +15,7 @@ const ContributionWarningModal = ({ modalView, setModalView, from, to }) => {
       <DialogContent>
         <DialogContentText>
           It looks like you've already contributed your transition story from{" "}
-          <b>{from}</b> to <b>{to}</b>. You can view/update your story <a href="/account?tab=contributions">here!</a>{" "}
+          <b>{from}</b> to <b>{to}</b>. You can view/update your story <a href="/account?tab=contributions" target="_blank">here!</a>{" "}
           <br/>
           <br/>
           We really appreciate your submission and feel free to submit another story!

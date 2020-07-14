@@ -136,6 +136,7 @@ const AccountSection = ({
     }
   };
 
+  console.log("HELPFUL", helpfulContributions)
   return (
     <Wrapper>
       <DashboardContainer elevation={0}>
@@ -215,7 +216,7 @@ const AccountSection = ({
               <Button
                 color="primary"
                 variant="contained"
-                style={{ float: "right" }}
+                style={{ float: "right", color: "white"}}
                 disableElevation
                 onClick={handleSubmit}
               >

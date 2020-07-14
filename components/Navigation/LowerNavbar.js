@@ -130,7 +130,6 @@ const SigninIcon = styled.img`
 `;
 
 const LowerNavbar = ({ session }) => {
-  const [signinClicked, setSigninClicked] = React.useState(false);
   const [providers, setProviders] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -141,7 +140,6 @@ const LowerNavbar = ({ session }) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
     setOpen(!open);
   };
-  // const open = Boolean(anchorEl);
 
   const handleClickAway = () => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -188,8 +186,7 @@ const LowerNavbar = ({ session }) => {
               Learn
             </MiscButtons>
             <MiscButtons
-              // component={MiscButtons}
-              href={"/share"}
+              href="/share"
               style={{ textDecoration: "none" }}
               disableRipple
             >
@@ -200,7 +197,9 @@ const LowerNavbar = ({ session }) => {
             <UserButtons href={"/account?tab=settings"} disableRipple>
               {session ? (
                 <>
-                  <StyledAvatar src={session.user.image}><img src="user-32.png"/></StyledAvatar>
+                  <StyledAvatar src={session.user.image}>
+                    <img src="user-32.png" />
+                  </StyledAvatar>
                   &nbsp;{session.user.name}
                 </>
               ) : (

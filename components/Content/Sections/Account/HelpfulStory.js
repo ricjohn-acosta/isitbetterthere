@@ -79,6 +79,7 @@ const HelpfulStory = ({ name, story, helpfulCount, from, to, hideName }) => {
             </TransitionContainer>
             <BottomContent item xs={12} sm={12}>
               <ReadButton
+              style={{color: "white"}}
                 disableElevation
                 onClick={handleOpen}
                 color="primary"
