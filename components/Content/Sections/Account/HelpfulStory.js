@@ -52,7 +52,7 @@ const HelpfulStory = ({ name, story, helpfulCount, from, to, hideName }) => {
   return (
     <Wrapper variant="outlined">
       {story === null ? (
-        <NoData source={"HelpfulStory"}>USER DELETED THEIR POST :(</NoData>
+        <NoData source={"HelpfulStory"}>USER DELETED THEIR STORY :(</NoData>
       ) : (
         <>
           <Grid container direction="row">

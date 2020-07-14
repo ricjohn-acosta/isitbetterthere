@@ -6,6 +6,12 @@ import ContributionExperienceModal from "./ContributionExperienceModal";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { connect } from "react-redux";
 import { deleteExperience } from "../../../../store/actions/experiences";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
 
@@ -52,6 +58,7 @@ const Contribution = ({
   deleteExperience,
 }) => {
   const [modalView, setModalView] = React.useState(false);
+  const [dialogView, setDialogView] = React.useState(false);
   const [storyPreview, setStoryPreview] = React.useState(
     htmlToReactParser.parse(draftToHtml(JSON.parse(story)))
   );
@@ -60,11 +67,19 @@ const Contribution = ({
     setModalView(true);
   };
 
+  const handleDialogOpen = () => {
+    setDialogView(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogView(false);
+  };
+
   const handleDelete = (id) => {
     setContributions(
       contributions.filter((experience) => experience.experience_id !== id)
     );
-    console.log(id)
+    console.log(id);
     deleteExperience({ experience_id: id });
   };
 
@@ -92,7 +107,8 @@ const Contribution = ({
                 variant="contained"
                 size="small"
                 disableElevation
-                onClick={() => handleDelete(experienceId)}
+                // onClick={() => handleDelete(experienceId)}
+                onClick={handleDialogOpen}
               >
                 Delete
               </Button>
@@ -118,6 +134,16 @@ const Contribution = ({
         setStoryPreview={setStoryPreview}
         rawStoryPreview={story}
       />
+      <Dialog onClose={handleDialogClose} open={dialogView}>
+        <DialogTitle>Confirm story deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Are you sure you want to delete this story?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleDelete(experienceId)}>Delete</Button>
+          <Button onClick={handleDialogClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
     </Wrapper>
   );
 };
