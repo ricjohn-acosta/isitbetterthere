@@ -9,8 +9,8 @@ exports.up = (knex, Promise) => {
     table.string("ease_of_transition");
     table.string("regret");
     table.text("story");
-    table.integer("helpful");
-    table.integer("not_helpful");
+    table.integer("helpful")
+    table.integer("not_helpful")
     table.integer("date_posted")
   });
 };

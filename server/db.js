@@ -152,19 +152,37 @@ function getReportedExperiences(reported_by, db = connection) {
   return db("flagged_experiences").where({ reported_by }).select();
 }
 
-function addRating(rating, db = connection) {
-  return db("experience_rating").insert(rating);
+async function addRating(rating, db = connection) {
+  const ratingExists = await db("experience_rating").where({
+    user_id: rating.user_id,
+    experience_id: rating.experience_id
+  });
+
+  console.log("RATING EXISTS", ratingExists);
+  if (ratingExists.length !== 0) {
+    return db("experience_rating").where({experience_id: rating.experience_id}).update({ is_helpful: rating.is_helpful });
+  } else {
+    return db("experience_rating").insert(rating);
+  }
 }
 
-function rateExperience(experience, db = connection) {
+async function rateExperience(experience, db = connection) {
   if (experience.is_helpful) {
+    await db("experiences")
+      .where({ experience_id: experience.experience_id })
+      .andWhere("not_helpful", ">", 0)
+      .decrement("not_helpful", 1);
     return db("experiences")
       .where({ experience_id: experience.experience_id })
       .increment("helpful", 1);
   } else {
-    return db("experiences")
+    await db("experiences")
       .where({ experience_id: experience.experience_id })
       .increment("not_helpful", 1);
+    return db("experiences")
+      .where({ experience_id: experience.experience_id })
+      .andWhere("not_helpful", ">", 0)
+      .decrement("helpful", 1);
   }
 }
 

@@ -195,7 +195,7 @@ const ExperienceSection = ({
                 date_posted={e.date_posted}
                 isRated={
                   ratedExperiences &&
-                  !!ratedExperiences.find(
+                  ratedExperiences.find(
                     ({ experience_id }) =>
                       experience_id === e.experience_id.toString()
                   )

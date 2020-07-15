@@ -53,6 +53,26 @@ const Content = styled(Grid)`
   margin-top: 2.5vh;
 `;
 
+const HelpfulButton = styled(Button)`
+  background-color: ${(props) => {
+    // Check if experience has been rated
+    if (props.rateType) {
+      // Check if button is helpful or not helpful
+      return props.rateType.is_helpful === 1 ? "#CCFFCC" : "none";
+    }
+  }};
+`;
+
+const UnhelpfulButton = styled(Button)`
+  background-color: ${(props) => {
+    // Check if experience has been rated
+    if (props.rateType) {
+      // Check if button is helpful or not helpful
+      return props.rateType.is_helpful === 0 ? "#FF6699" : "none";
+    }
+  }};
+`;
+
 const ButtonGroup = styled.div`
   float: right;
 `;
@@ -115,7 +135,7 @@ const Experience = ({
         user_id: session.account.id,
         experience_id: experienceId,
         is_helpful: e.currentTarget.value === "true" ? true : false,
-        date_liked: Date.now(),
+        date_rated: Date.now()
       });
       setRated(true);
     } else {
@@ -125,7 +145,7 @@ const Experience = ({
 
   const getSessionId = () => {
     return session ? session.account.id : false;
-  }
+  };
 
   const renderJobDetails = (position, company) => {
     if (!isWhiteSpaceOrEmpty(position) && !isWhiteSpaceOrEmpty(company)) {
@@ -174,11 +194,7 @@ const Experience = ({
   };
 
   return (
-    <Wrapper
-      id={"/" + experienceId}
-      userId={userId}
-      sessionId={getSessionId()}
-    >
+    <Wrapper id={"/" + experienceId} userId={userId} sessionId={getSessionId()}>
       {console.log(hideName)}
       <Grid container drection="column">
         <ProfileContainer item xs={12} sm={6} md={12}>
@@ -241,21 +257,27 @@ const Experience = ({
           {experience}
           <StyledHr />
           <HelpfulCount component="span" variant="caption">
-            {helpfulCount} people have found this helpful
+            {rated
+              ? "Thanks for rating!"
+              : helpfulCount + " people found this helpful"}
           </HelpfulCount>
-          {console.log(isRated)}
-          {isRated || rated ? (
-            <div style={{ float: "right" }}>Thanks for rating!</div>
-          ) : userId === getSessionId() ? null : (
-            <ButtonGroup>
-              <Button value="true" onClick={handleRating}>
-                Helpful
-              </Button>
-              <Button value="false" onClick={handleRating}>
-                Not helpful
-              </Button>
-            </ButtonGroup>
-          )}
+          {console.log("israted", isRated)}
+          <ButtonGroup>
+            <HelpfulButton
+              rateType={isRated}
+              value="true"
+              onClick={handleRating}
+            >
+              Helpful
+            </HelpfulButton>
+            <UnhelpfulButton
+              rateType={isRated}
+              value="false"
+              onClick={handleRating}
+            >
+              Not helpful
+            </UnhelpfulButton>
+          </ButtonGroup>
         </Content>
       </Grid>
     </Wrapper>

@@ -23,6 +23,8 @@ const Label = styled(Typography)`
   margin-top: 2.5vh;
   font-weight: bold;
 `;
+
+const NameField = styled(TextField)``;
 const EmailField = styled(TextField)``;
 const MessageField = styled(TextField)`
   width: 60vh;
@@ -34,8 +36,24 @@ const MessageField = styled(TextField)`
 const Contact = ({ session }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    return console.log("works");
+    let name = e.target[0].value;
+    let email = e.target[2].value;
+    let message = e.target[4].value;
+    try {
+      request
+        .post(
+          process.env.NODE_ENV === "production"
+            ? process.env.prod + "/api/contact"
+            : process.env.dev + "/api/contact"
+        )
+        .send({ name, email, message })
+        .then((res) => console.log(res));
+    } catch (error) {
+      console.log("SENDING CONTACT INFO FAILED", error);
+    }
+    document.getElementById("contact-form").reset()
   };
+
   return (
     <>
       <LowerNavbar session={session} />
@@ -47,16 +65,34 @@ const Contact = ({ session }) => {
             &nbsp;Feel free to reach out to us. Suggestions, feedback, offer of
             help are all appreciated.
           </DescriptionText>
-          <FormContainer onSubmit={handleSubmit}>
-            <Label>Your email</Label>
-            <EmailField type="email" variant="outlined" />
+          <FormContainer id="contact-form" onSubmit={handleSubmit}>
+            <Label>Name</Label>
+            <NameField
+              type="text"
+              name="name"
+              variant="outlined"
+              size="small"
+            />
+            <Label>Email</Label>
+            <EmailField
+              type="email"
+              name="email"
+              variant="outlined"
+              size="small"
+            />
             <br />
-            <Label>Your message</Label>
-            <MessageField fullwidth variant="outlined" multiline rows={15} />
+            <Label>Message</Label>
+            <MessageField
+              name="msg"
+              fullwidth
+              variant="outlined"
+              multiline
+              rows={15}
+            />
             <br />
             <br />
             <Button
-              style={{color: "white"}}
+              style={{ color: "white" }}
               type="submit"
               color="primary"
               variant="contained"
