@@ -57,8 +57,19 @@ const HelpfulButton = styled(Button)`
   background-color: ${(props) => {
     // Check if experience has been rated
     if (props.rateType) {
-      // Check if button is helpful or not helpful
-      return props.rateType.is_helpful === 1 ? "#CCFFCC" : "none";
+      // Check if no button has been clicked yet, use db data if so.
+      if (props.rateType.is_helpful === 1 && props.buttonClicked === "") {
+        return "#CCFFCC";
+      }
+
+      // Handle color change when button is clicked
+      if (props.buttonClicked === "Liked") {
+        return "#CCFFCC";
+      }
+    }
+
+    if(props.buttonClicked === "Liked") {
+      return "#CCFFCC"
     }
   }};
 `;
@@ -67,8 +78,19 @@ const UnhelpfulButton = styled(Button)`
   background-color: ${(props) => {
     // Check if experience has been rated
     if (props.rateType) {
-      // Check if button is helpful or not helpful
-      return props.rateType.is_helpful === 0 ? "#FF6699" : "none";
+      // Check if no button has been clicked yet, use db data if so.
+      if (props.rateType.is_helpful === 0 && props.buttonClicked === "") {
+        return "#FF6699";
+      }
+
+      // Handle color change when button is clicked
+      if (props.buttonClicked === "Disliked") {
+        return "#FF6699";
+      }
+    }
+
+    if(props.buttonClicked === "Disliked") {
+      return "#FF6699"
     }
   }};
 `;
@@ -123,10 +145,19 @@ const Experience = ({
   hideLocation,
 }) => {
   const [session, loading] = useSession();
+  const [buttonClicked, setButtonClicked] = React.useState("");
   const [rated, setRated] = React.useState(false);
 
   const isWhiteSpaceOrEmpty = (input) => {
     return !/[^\s]/.test(input);
+  };
+
+  const handleButtonClicked = (e) => {
+    if (e.currentTarget.value === "true") {
+      setButtonClicked("Liked");
+    } else {
+      setButtonClicked("Disliked");
+    }
   };
 
   const handleRating = (e) => {
@@ -135,11 +166,35 @@ const Experience = ({
         user_id: session.account.id,
         experience_id: experienceId,
         is_helpful: e.currentTarget.value === "true" ? true : false,
-        date_rated: Date.now()
+        date_rated: Date.now(),
       });
       setRated(true);
     } else {
       Router.push("/signup", undefined, {});
+    }
+  };
+
+  const handleHelpful = () => {
+    if(isRated && buttonClicked === "") {
+      if(isRated.is_helpful === 1) {
+        return true;
+      }
+    } 
+
+    if (buttonClicked === "Liked") {
+      return true;
+    }
+  };
+
+  const handleNotHelpful = () => {
+    if(isRated && buttonClicked === "") {
+      if(isRated.is_helpful === 0) {
+        return true;
+      }
+    } 
+
+    if (buttonClicked === "Disliked") {
+      return true;
     }
   };
 
@@ -195,7 +250,7 @@ const Experience = ({
 
   return (
     <Wrapper id={"/" + experienceId} userId={userId} sessionId={getSessionId()}>
-      {console.log(hideName)}
+      {console.log(buttonClicked)}
       <Grid container drection="column">
         <ProfileContainer item xs={12} sm={6} md={12}>
           <IconContainer id="icon-container">
@@ -265,15 +320,25 @@ const Experience = ({
           <ButtonGroup>
             <HelpfulButton
               rateType={isRated}
+              disabled={handleHelpful()}
+              buttonClicked={buttonClicked}
               value="true"
-              onClick={handleRating}
+              onClick={(e) => {
+                handleRating(e);
+                handleButtonClicked(e);
+              }}
             >
               Helpful
             </HelpfulButton>
             <UnhelpfulButton
               rateType={isRated}
+              disabled={handleNotHelpful()}
+              buttonClicked={buttonClicked}
               value="false"
-              onClick={handleRating}
+              onClick={(e) => {
+                handleRating(e);
+                handleButtonClicked(e);
+              }}
             >
               Not helpful
             </UnhelpfulButton>
