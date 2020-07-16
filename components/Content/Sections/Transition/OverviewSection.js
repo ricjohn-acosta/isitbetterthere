@@ -136,7 +136,7 @@ const OverviewSection = ({ from, to, getExperiences, allExperiences }) => {
               id="panel1a-header"
             >
               <div style={{ textAlign: "center" }}>
-                <Typography>
+                <Typography style={{fontWeight: "bold"}}>
                   {expanded ? "Hide details" : "Show details"}
                 </Typography>
               </div>

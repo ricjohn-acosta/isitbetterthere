@@ -54,6 +54,7 @@ const Content = styled(Grid)`
 `;
 
 const HelpfulButton = styled(Button)`
+  color: black;
   background-color: ${(props) => {
     // Check if experience has been rated
     if (props.rateType) {
@@ -68,8 +69,8 @@ const HelpfulButton = styled(Button)`
       }
     }
 
-    if(props.buttonClicked === "Liked") {
-      return "#CCFFCC"
+    if (props.buttonClicked === "Liked") {
+      return "#CCFFCC";
     }
   }};
 `;
@@ -80,19 +81,23 @@ const UnhelpfulButton = styled(Button)`
     if (props.rateType) {
       // Check if no button has been clicked yet, use db data if so.
       if (props.rateType.is_helpful === 0 && props.buttonClicked === "") {
-        return "#FF6699";
+        return "	#FF9999 ";
       }
 
       // Handle color change when button is clicked
       if (props.buttonClicked === "Disliked") {
-        return "#FF6699";
+        return "	#FF9999 ";
       }
     }
 
-    if(props.buttonClicked === "Disliked") {
-      return "#FF6699"
+    if (props.buttonClicked === "Disliked") {
+      return "	#FF9999 ";
     }
   }};
+`;
+
+const EditButton = styled(Button)`
+  float: right;
 `;
 
 const ButtonGroup = styled.div`
@@ -175,11 +180,11 @@ const Experience = ({
   };
 
   const handleHelpful = () => {
-    if(isRated && buttonClicked === "") {
-      if(isRated.is_helpful === 1) {
+    if (isRated && buttonClicked === "") {
+      if (isRated.is_helpful === 1) {
         return true;
       }
-    } 
+    }
 
     if (buttonClicked === "Liked") {
       return true;
@@ -187,11 +192,11 @@ const Experience = ({
   };
 
   const handleNotHelpful = () => {
-    if(isRated && buttonClicked === "") {
-      if(isRated.is_helpful === 0) {
+    if (isRated && buttonClicked === "") {
+      if (isRated.is_helpful === 0) {
         return true;
       }
-    } 
+    }
 
     if (buttonClicked === "Disliked") {
       return true;
@@ -250,21 +255,22 @@ const Experience = ({
 
   return (
     <Wrapper id={"/" + experienceId} userId={userId} sessionId={getSessionId()}>
-      {console.log(buttonClicked)}
       <Grid container drection="column">
-        <ProfileContainer item xs={12} sm={6} md={12}>
-          <IconContainer id="icon-container">
-            <IconButton
-              id="icon-button"
-              value={experienceId.toString()}
-              onClick={(e) => {
-                handleOptions(e);
-                setCurrentId(experienceId.toString());
-              }}
-            >
-              <MoreVertIcon id="icon-button-svg" />
-            </IconButton>
-          </IconContainer>
+        <ProfileContainer item xs={12} sm={12} md={12}>
+          {getSessionId() === userId ? null : (
+            <IconContainer id="icon-container">
+              <IconButton
+                id="icon-button"
+                value={experienceId.toString()}
+                onClick={(e) => {
+                  handleOptions(e);
+                  setCurrentId(experienceId.toString());
+                }}
+              >
+                <MoreVertIcon id="icon-button-svg" />
+              </IconButton>
+            </IconContainer>
+          )}
           <ProfileDetails>
             <StyledAvatar src={profilePicture} />
             <UserInfoContainer>
@@ -308,7 +314,7 @@ const Experience = ({
           </Typography>
           <ChipsContainer>{renderChips()}</ChipsContainer>
         </ProfileContainer>
-        <Content item xs={12} sm={6} md={12}>
+        <Content item xs={12} sm={12} md={12}>
           {experience}
           <StyledHr />
           <HelpfulCount component="span" variant="caption">
@@ -316,33 +322,36 @@ const Experience = ({
               ? "Thanks for rating!"
               : helpfulCount + " people found this helpful"}
           </HelpfulCount>
-          {console.log("israted", isRated)}
-          <ButtonGroup>
-            <HelpfulButton
-              rateType={isRated}
-              disabled={handleHelpful()}
-              buttonClicked={buttonClicked}
-              value="true"
-              onClick={(e) => {
-                handleRating(e);
-                handleButtonClicked(e);
-              }}
-            >
-              Helpful
-            </HelpfulButton>
-            <UnhelpfulButton
-              rateType={isRated}
-              disabled={handleNotHelpful()}
-              buttonClicked={buttonClicked}
-              value="false"
-              onClick={(e) => {
-                handleRating(e);
-                handleButtonClicked(e);
-              }}
-            >
-              Not helpful
-            </UnhelpfulButton>
-          </ButtonGroup>
+          {getSessionId() === userId ? (
+            <EditButton href="/account?tab=contributions" target="_blank">EDIT</EditButton>
+          ) : (
+            <ButtonGroup>
+              <HelpfulButton
+                rateType={isRated}
+                disabled={handleHelpful()}
+                buttonClicked={buttonClicked}
+                value="true"
+                onClick={(e) => {
+                  handleRating(e);
+                  handleButtonClicked(e);
+                }}
+              >
+                Helpful
+              </HelpfulButton>
+              <UnhelpfulButton
+                rateType={isRated}
+                disabled={handleNotHelpful()}
+                buttonClicked={buttonClicked}
+                value="false"
+                onClick={(e) => {
+                  handleRating(e);
+                  handleButtonClicked(e);
+                }}
+              >
+                Not helpful
+              </UnhelpfulButton>
+            </ButtonGroup>
+          )}
         </Content>
       </Grid>
     </Wrapper>

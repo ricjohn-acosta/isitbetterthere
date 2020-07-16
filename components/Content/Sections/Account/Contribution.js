@@ -122,7 +122,7 @@ const Contribution = ({
                 disableElevation
                 onClick={handleView}
               >
-                VIEW
+                VIEW/EDIT
               </Button>
             </ButtonContainer>
           </ContributionDetails>

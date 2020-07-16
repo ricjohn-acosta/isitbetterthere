@@ -163,9 +163,6 @@ const ExperienceSection = ({
     setViolationType(e.target.value);
   };
 
-  console.log("curent Id? ", currentId);
-  console.log("IS OPEN?", open);
-
   const displayExperiences = () => {
     return (
       <>
