@@ -57,9 +57,9 @@ const HelpfulButton = styled(Button)`
   color: black;
   background-color: ${(props) => {
     // Check if experience has been rated
-    if (props.rateType) {
+    if (props.ratetype !== false) {
       // Check if no button has been clicked yet, use db data if so.
-      if (props.rateType.is_helpful === 1 && props.buttonClicked === "") {
+      if (props.ratetype === 1 && props.buttonClicked === "") {
         return "#CCFFCC";
       }
 
@@ -78,20 +78,20 @@ const HelpfulButton = styled(Button)`
 const UnhelpfulButton = styled(Button)`
   background-color: ${(props) => {
     // Check if experience has been rated
-    if (props.rateType) {
+    if (props.ratetype !== false) {
       // Check if no button has been clicked yet, use db data if so.
-      if (props.rateType.is_helpful === 0 && props.buttonClicked === "") {
-        return "	#FF9999 ";
+      if (props.ratetype === 0 && props.buttonClicked === "") {
+        return "#FF9999";
       }
 
       // Handle color change when button is clicked
       if (props.buttonClicked === "Disliked") {
-        return "	#FF9999 ";
+        return "#FF9999";
       }
     }
 
     if (props.buttonClicked === "Disliked") {
-      return "	#FF9999 ";
+      return "#FF9999";
     }
   }};
 `;
@@ -207,6 +207,12 @@ const Experience = ({
     return session ? session.account.id : false;
   };
 
+  const getRateType = () => {
+    return !isRated ? false : isRated.is_helpful;
+  };
+
+  console.log(getRateType());
+
   const renderJobDetails = (position, company) => {
     if (!isWhiteSpaceOrEmpty(position) && !isWhiteSpaceOrEmpty(company)) {
       if (hideOccupation === 1) {
@@ -232,10 +238,10 @@ const Experience = ({
 
     console.log(chips);
     return chips.map((e, i) => (
-      <>
+      <React.Fragment key={i}>
         <Chip label={e} color={checkColor(i)} />
         &nbsp;
-      </>
+      </React.Fragment>
     ));
   };
 
@@ -323,11 +329,13 @@ const Experience = ({
               : helpfulCount + " people found this helpful"}
           </HelpfulCount>
           {getSessionId() === userId ? (
-            <EditButton href="/account?tab=contributions" target="_blank">EDIT</EditButton>
+            <EditButton href="/account?tab=contributions" target="_blank">
+              EDIT
+            </EditButton>
           ) : (
             <ButtonGroup>
               <HelpfulButton
-                rateType={isRated}
+                ratetype={getRateType()}
                 disabled={handleHelpful()}
                 buttonClicked={buttonClicked}
                 value="true"
@@ -339,7 +347,7 @@ const Experience = ({
                 Helpful
               </HelpfulButton>
               <UnhelpfulButton
-                rateType={isRated}
+                ratetype={getRateType()}
                 disabled={handleNotHelpful()}
                 buttonClicked={buttonClicked}
                 value="false"

@@ -172,7 +172,7 @@ const ExperienceSection = ({
           </>
         ) : (
           experiences.map((e, i) => (
-            <>
+            <React.Fragment key={i}>
               <Experience
                 key={i}
                 experienceId={e.experience_id}
@@ -206,7 +206,7 @@ const ExperienceSection = ({
                 hideLocation={e.hide_location}
               />
               <br />
-            </>
+            </React.Fragment>
           ))
         )}
       </>

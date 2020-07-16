@@ -181,7 +181,7 @@ async function rateExperience(experience, db = connection) {
       .increment("not_helpful", 1);
     return db("experiences")
       .where({ experience_id: experience.experience_id })
-      .andWhere("not_helpful", ">", 0)
+      .andWhere("helpful", ">", 0)
       .decrement("helpful", 1);
   }
 }
