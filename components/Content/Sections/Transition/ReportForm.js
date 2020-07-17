@@ -21,7 +21,17 @@ const ReportForm = ({
   reportedExperiences,
   currentId,
   uid,
+  eid,
 }) => {
+  const [clickedSubmit, setClickedSubmit] = React.useState(false);
+  const [successDialog, setSuccessDialog] = React.useState(false);
+
+  const hasClickedSubmit = () => {
+    setClickedSubmit(true);
+    setSuccessDialog(true)
+    handleReportClose();
+  };
+
   const hasUserReported = () => {
     return (
       reportedExperiences &&
@@ -31,56 +41,88 @@ const ReportForm = ({
     );
   };
 
-  return (
-    <Dialog
-      open={reportView}
-      onClose={handleReportClose}
-      aria-labelledby="form-dialog-title"
-    >
-      <DialogTitle id="form-dialog-title">Flag as inappropriate</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          We want to make sure that the stories people have shared are
-          substantial and genuine.
-        </DialogContentText>
-        <br />
-        {hasUserReported() ? (
-          "Thank you for reporting this submission! We will review your report and take appropriate action."
-        ) : (
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Violation type:</FormLabel>
-            <RadioGroup value={violationType} onChange={handleViolationType}>
-              <FormControlLabel
-                value="hate"
-                control={<Radio />}
-                label="This submission contains hateful, violent, or inappropriate content"
-              />
-              <FormControlLabel
-                value="spam"
-                control={<Radio />}
-                label="This submission contains advertising or spam"
-              />
-              <FormControlLabel
-                value="offtopic"
-                control={<Radio />}
-                label="This submission is off-topic"
-              />
-            </RadioGroup>
-          </FormControl>
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleReportClose} color="primary">
-          Cancel
-        </Button>
-        {hasUserReported() ? null : (
-          <Button onClick={handleReportSubmit} color="primary">
-            Submit
+  const handleSuccessDialogClose = () => {
+    setSuccessDialog(false)
+  }
+
+  if (clickedSubmit) {
+    return (
+      <Dialog open={successDialog}>
+        <DialogTitle>Flag as inappropriate</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            We want to make sure that the stories people have shared are
+            substantial and genuine.
+          </DialogContentText>
+          <br />
+          Thank you for reporting this submission! We will review your report
+          and take appropriate action.
+          <DialogActions>
+            <Button onClick={handleSuccessDialogClose} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+    );
+  } else {
+    return (
+      <Dialog
+        open={reportView}
+        onClose={handleReportClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Flag as inappropriate</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            We want to make sure that the stories people have shared are
+            substantial and genuine.
+          </DialogContentText>
+          <br />
+          {hasUserReported() ? (
+            "Thank you for reporting this submission! We will review your report and take appropriate action."
+          ) : (
+            <FormControl component="fieldset">
+              <FormLabel component="legend">Violation type:</FormLabel>
+              <RadioGroup value={violationType} onChange={handleViolationType}>
+                <FormControlLabel
+                  value="hate"
+                  control={<Radio />}
+                  label="This submission contains hateful, violent, or inappropriate content"
+                />
+                <FormControlLabel
+                  value="spam"
+                  control={<Radio />}
+                  label="This submission contains advertising or spam"
+                />
+                <FormControlLabel
+                  value="offtopic"
+                  control={<Radio />}
+                  label="This submission is off-topic"
+                />
+              </RadioGroup>
+            </FormControl>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleReportClose} color="primary">
+            Cancel
           </Button>
-        )}
-      </DialogActions>
-    </Dialog>
-  );
+          {hasUserReported() ? null : (
+            <Button
+              onClick={() => {
+                handleReportSubmit();
+                hasClickedSubmit();
+              }}
+              color="primary"
+            >
+              Submit
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
+    );
+  }
 };
 
 export default ReportForm;

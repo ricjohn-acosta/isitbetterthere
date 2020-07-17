@@ -16,6 +16,7 @@ import moment from "moment";
 import { rateExperience } from "../../../../store/actions/ratings";
 import { connect } from "react-redux";
 import { useSession } from "next-auth/client";
+import ReportForm from "./ReportForm";
 import Popper from "@material-ui/core/Popper";
 import Paper from "@material-ui/core/Paper";
 
@@ -148,6 +149,15 @@ const Experience = ({
   hideCompany,
   hideOccupation,
   hideLocation,
+
+  reportView,
+  handleReportClose,
+  violationType,
+  handleViolationType,
+  handleReportSubmit,
+  reportedExperiences,
+  currentId,
+  uid,
 }) => {
   const [session, loading] = useSession();
   const [buttonClicked, setButtonClicked] = React.useState("");
@@ -211,8 +221,6 @@ const Experience = ({
     return !isRated ? false : isRated.is_helpful;
   };
 
-  console.log(getRateType());
-
   const renderJobDetails = (position, company) => {
     if (!isWhiteSpaceOrEmpty(position) && !isWhiteSpaceOrEmpty(company)) {
       if (hideOccupation === 1) {
@@ -236,7 +244,6 @@ const Experience = ({
   const renderChips = () => {
     const chips = [fulfillment, easeOfTransition, regret];
 
-    console.log(chips);
     return chips.map((e, i) => (
       <React.Fragment key={i}>
         <Chip label={e} color={checkColor(i)} />
@@ -362,6 +369,17 @@ const Experience = ({
           )}
         </Content>
       </Grid>
+      <ReportForm
+        reportView={reportView}
+        handleReportClose={handleReportClose}
+        violationType={violationType}
+        handleViolationType={handleViolationType}
+        handleReportSubmit={handleReportSubmit}
+        reportedExperiences={reportedExperiences}
+        currentId={currentId}
+        uid={session && session.account.id}
+        eid={experienceId}
+      />
     </Wrapper>
   );
 };

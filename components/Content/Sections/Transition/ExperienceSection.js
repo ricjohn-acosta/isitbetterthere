@@ -123,7 +123,6 @@ const ExperienceSection = ({
   };
 
   const handleClickaway = (e) => {
-    console.log("HANDLE CLICKAWAY ", e);
     if (
       e.srcElement.id === "icon-button" ||
       e.srcElement.parentElement.id === "icon-button-svg" ||
@@ -132,7 +131,6 @@ const ExperienceSection = ({
     ) {
       setClickaway(false);
     } else {
-      console.log("NO");
       setOpen(false);
       setClickaway(true);
     }
@@ -204,6 +202,15 @@ const ExperienceSection = ({
                 hideCompany={e.hide_company}
                 hideOccupation={e.hide_occupation}
                 hideLocation={e.hide_location}
+                
+                reportView={reportView}
+                handleReportClose={handleReportClose}
+                violationType={violationType}
+                handleViolationType={handleViolationType}
+                handleReportSubmit={handleReportSubmit}
+                reportedExperiences={reportedExperiences}
+                currentId={currentId}
+                uid={session && session.account.id}
               />
               <br />
             </React.Fragment>
@@ -214,7 +221,6 @@ const ExperienceSection = ({
   };
 
   const convertToReact = (story) => {
-    console.log(story);
     const test = htmlToReactParser.parse(draftToHtml(JSON.parse(story)));
     return test;
   };
@@ -268,7 +274,7 @@ const ExperienceSection = ({
           </Grid>
         )}
       </Grid>
-      <ReportForm
+      {/* <ReportForm
         reportView={reportView}
         handleReportClose={handleReportClose}
         violationType={violationType}
@@ -277,8 +283,7 @@ const ExperienceSection = ({
         reportedExperiences={reportedExperiences}
         currentId={currentId}
         uid={session && session.account.id}
-      />
-      {console.log("VIOLATION TYPE", violationType)}
+      /> */}
       <Popper open={open && !clickAway ? true : false} anchorEl={anchorEl}>
         <ClickAwayListener onClickAway={handleClickaway}>
           <PopperContent>
