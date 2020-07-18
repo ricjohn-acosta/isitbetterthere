@@ -247,7 +247,7 @@ const LowerNavbar = ({ session }) => {
                       label: classes.label,
                     }}
                     startIcon={
-                      <SigninIcon src={`/${provider.name}-signin.png`} />
+                      <SigninIcon src={`/${provider.name.toLowerCase()}-signin.png`} />
                     }
                     fullWidth
                     variant="text"
