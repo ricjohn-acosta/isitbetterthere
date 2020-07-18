@@ -21,6 +21,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import { signin } from 'next-auth/client'
 
 const useStyles = makeStyles((theme) => ({
   label: { justifyContent: "normal" },
@@ -256,6 +257,7 @@ const LowerNavbar = ({ session }) => {
                         ? process.env.prod
                         : process.env.dev
                     }`}
+                    // onClick={() => signin("google", {callbackUrl: "https://www.isitbetterthere.com"})}
                   >
                     Sign in with {provider.name}
                   </ProviderButtons>

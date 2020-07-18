@@ -3,6 +3,7 @@ import { providers } from "next-auth/client";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Typography } from "@material-ui/core";
+import { signin } from 'next-auth/client'
 
 const useStyles = makeStyles((theme) => ({
   label: { justifyContent: "normal" },
@@ -101,6 +102,7 @@ export default ({ providers }) => {
                   ? process.env.prod
                   : process.env.dev
               }`}
+              // onClick={() => signin("google", {callbackUrl: "https://www.isitbetterthere.com"})}
             >
               Sign in with {provider.name}
             </ProviderButtons>

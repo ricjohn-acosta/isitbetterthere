@@ -15,7 +15,7 @@ module.exports = withCSS({
     return config;
   },
   env: {
-    prod: "https://www.isitbetterthere.com",
+    prod: "https://isitbetterthere.com",
     dev: "http://localhost:3000"
   }
 });
