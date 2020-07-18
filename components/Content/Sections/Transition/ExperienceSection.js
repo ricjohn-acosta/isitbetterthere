@@ -274,16 +274,6 @@ const ExperienceSection = ({
           </Grid>
         )}
       </Grid>
-      {/* <ReportForm
-        reportView={reportView}
-        handleReportClose={handleReportClose}
-        violationType={violationType}
-        handleViolationType={handleViolationType}
-        handleReportSubmit={handleReportSubmit}
-        reportedExperiences={reportedExperiences}
-        currentId={currentId}
-        uid={session && session.account.id}
-      /> */}
       <Popper open={open && !clickAway ? true : false} anchorEl={anchorEl}>
         <ClickAwayListener onClickAway={handleClickaway}>
           <PopperContent>

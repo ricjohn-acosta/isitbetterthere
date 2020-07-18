@@ -29,7 +29,6 @@ const ReportForm = ({
   const hasClickedSubmit = () => {
     setClickedSubmit(true);
     setSuccessDialog(true)
-    handleReportClose();
   };
 
   const hasUserReported = () => {
@@ -41,31 +40,6 @@ const ReportForm = ({
     );
   };
 
-  const handleSuccessDialogClose = () => {
-    setSuccessDialog(false)
-  }
-
-  if (clickedSubmit) {
-    return (
-      <Dialog open={successDialog}>
-        <DialogTitle>Flag as inappropriate</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            We want to make sure that the stories people have shared are
-            substantial and genuine.
-          </DialogContentText>
-          <br />
-          Thank you for reporting this submission! We will review your report
-          and take appropriate action.
-          <DialogActions>
-            <Button onClick={handleSuccessDialogClose} color="primary">
-              Cancel
-            </Button>
-          </DialogActions>
-        </DialogContent>
-      </Dialog>
-    );
-  } else {
     return (
       <Dialog
         open={reportView}
@@ -79,7 +53,7 @@ const ReportForm = ({
             substantial and genuine.
           </DialogContentText>
           <br />
-          {hasUserReported() ? (
+          {hasUserReported() || clickedSubmit? (
             "Thank you for reporting this submission! We will review your report and take appropriate action."
           ) : (
             <FormControl component="fieldset">
@@ -122,7 +96,6 @@ const ReportForm = ({
         </DialogActions>
       </Dialog>
     );
-  }
 };
 
 export default ReportForm;

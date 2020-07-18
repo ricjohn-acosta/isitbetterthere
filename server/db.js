@@ -18,6 +18,7 @@ module.exports = {
   addExperience,
   addRating,
   addReport,
+  getReport,
   registerUser,
   rateExperience,
   deleteExperience,
@@ -201,4 +202,8 @@ function deleteExperience(experienceId, db = connection) {
 
 function addReport(report, db = connection) {
   return db("flagged_experiences").insert(report);
+}
+
+function getReport(report, db = connection) {
+  return db("flagged_experiences").where(report).select();
 }

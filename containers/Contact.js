@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
-  margin: 5% 32.5% 5% 32.5%;
+  margin: 2.5% 32.5% 5% 32.5%;
   ${(props) => props.theme.breakpoints.down("sm")} {
     margin: 5% 0;
   }
