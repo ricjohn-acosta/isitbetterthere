@@ -116,9 +116,13 @@ const ExperienceSection = ({
   const [session, loading] = useSession();
 
   const handleOptions = (event) => {
-    setAnchorEl(event.currentTarget);
-    setOpen((prev) => placement !== event.currentTarget.value || !prev);
-    setPlacement(event.currentTarget.value);
+    let target = event.currentTarget;
+    let targetValue = event.currentTarget.value
+    // setAnchorEl(event.currentTarget);
+    setAnchorEl(target)
+    setOpen((prev) => placement !== targetValue || !prev);
+    // setPlacement(event.currentTarget.value);
+    setPlacement(targetValue)
     setClickaway(false);
   };
 
@@ -202,7 +206,6 @@ const ExperienceSection = ({
                 hideCompany={e.hide_company}
                 hideOccupation={e.hide_occupation}
                 hideLocation={e.hide_location}
-                
                 reportView={reportView}
                 handleReportClose={handleReportClose}
                 violationType={violationType}
