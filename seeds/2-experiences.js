@@ -17,7 +17,7 @@ exports.seed = function (knex) {
           story: `{"blocks":[{"key":"ajk40","text":"I didn't regret it. The competition for getting into UOA's software engineering was tough and, imo, unnecessary. Got in AUT's SWE program easily so I stayed.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
           helpful: 0,
           not_helpful: 0,
-          date_posted: Date.now(),
+          date_posted: Math.floor(Date.now() / 1000),
         },
         {
           experience_id: 2,
@@ -31,7 +31,7 @@ exports.seed = function (knex) {
           story: `{"blocks":[{"key":"ajk40","text":"first","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
           helpful: 0,
           not_helpful: 0,
-          date_posted: 1519211809934,
+          date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
           experience_id: 3,
@@ -45,7 +45,7 @@ exports.seed = function (knex) {
           story: `{"blocks":[{"key":"ajk40","text":"second","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
           helpful: 0,
           not_helpful: 0,
-          date_posted: 1519211810362,
+          date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
           experience_id: 4,
@@ -59,7 +59,7 @@ exports.seed = function (knex) {
           story: `{"blocks":[{"key":"ajk40","text":"third","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
           helpful: 0,
           not_helpful: 0,
-          date_posted: 1519211811670,
+          date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
           experience_id: 5,
@@ -73,7 +73,7 @@ exports.seed = function (knex) {
           story: `{"blocks":[{"key":"ajk40","text":"fourth","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
           helpful: 0,
           not_helpful: 0,
-          date_posted: 151921181172,
+          date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
           experience_id: 6,
@@ -87,7 +87,7 @@ exports.seed = function (knex) {
           story: `{"blocks":[{"key":"ajk40","text":"fifth","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
           helpful: 0,
           not_helpful: 0,
-          date_posted: 1519211811683,
+          date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
           experience_id: 7,
@@ -101,7 +101,7 @@ exports.seed = function (knex) {
           story: `{"blocks":[{"key":"ajk40","text":"sixth","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}`,
           helpful: 0,
           not_helpful: 0,
-          date_posted: 1519211811631,
+          date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
       ]);
     });
