@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import { Typography } from "@material-ui/core";
-import Link from "@material-ui/core/Link";
+import Link from 'next/link'
 
 const Wrapper = styled.div`
   background: rgb(0, 61, 77);
@@ -47,14 +47,16 @@ const ListHeader = styled(Typography)`
   color: #9494b8;
 `;
 
-const StyledLinks = styled(Link)`
+const StyledLinks = styled.a`
   color: grey;
 `;
+
 const Copyright = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
 
 const Footer = () => {
   return (
@@ -67,14 +69,18 @@ const Footer = () => {
                 Community
               </ListItem>
               <ListItem>
-                <StyledLinks href="about">About</StyledLinks>
+                <Link href="/about" passHref>
+                <StyledLinks>About</StyledLinks>
+                </Link>
               </ListItem>
               <ListItem>
-                <StyledLinks href="contact">Contact</StyledLinks>
+              <Link href="/contact" passHref>
+                <StyledLinks>Contact</StyledLinks>
+                </Link>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <StyledLinks href="ourteam">Meet the team</StyledLinks>
-              </ListItem>
+              </ListItem> */}
             </List>
           </Grid>
           <Grid item xs={6} sm={6}>
@@ -87,7 +93,6 @@ const Footer = () => {
         <Divider />
         <br />
         <Copyright>© IsItBetterThere 2020</Copyright>
-        <div style={{ float: "right" }}>v0.0.1</div>
       </Container>
     </Wrapper>
   );

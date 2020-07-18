@@ -59,7 +59,7 @@ const ExpansionPanelDetailsContainer = styled(ExpansionPanelDetails)`
   }
 `;
 
-const OverviewSection = ({ from, to, getExperiences, experiences }) => {
+const OverviewSection = ({ from, to, getExperiences, allExperiences }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -67,7 +67,7 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
     switch (quality) {
       case "fulfillment":
         let numFulfilled = 0;
-        experiences.forEach((e) => {
+        allExperiences.forEach((e) => {
           if (e.fulfillment === "Fulfilled") {
             numFulfilled++;
           }
@@ -78,7 +78,7 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
 
       case "ease":
         let numEase = 0;
-        experiences.forEach((e) => {
+        allExperiences.forEach((e) => {
           if (e.ease_of_transition === "Easy") {
             numEase++;
           }
@@ -87,7 +87,7 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
 
       case "regret":
         let numRegret = 0;
-        experiences.forEach((e) => {
+        allExperiences.forEach((e) => {
           if (e.regret === "Did regret") {
             numRegret++;
           }
@@ -100,7 +100,7 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
   return (
     <>
       <Wrapper>
-        {console.log(experiences)}
+        {console.log(allExperiences)}
 
         <Container container direction="row">
           <GridItems item xs={12} sm={12} md={4} align="center">
@@ -136,14 +136,14 @@ const OverviewSection = ({ from, to, getExperiences, experiences }) => {
               id="panel1a-header"
             >
               <div style={{ textAlign: "center" }}>
-                <Typography>
+                <Typography style={{fontWeight: "bold"}}>
                   {expanded ? "Hide details" : "Show details"}
                 </Typography>
               </div>
             </ExpansionPanelSummary>
-            {experiences.length !== 0 ? (
+            {allExperiences.length !== 0 ? (
               <ExpansionPanelDetailsContainer>
-                <Charts experiences={experiences} />
+                <Charts allExperiences={allExperiences} />
               </ExpansionPanelDetailsContainer>
             ) : (
               <NoData />

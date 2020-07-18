@@ -44,10 +44,20 @@ export async function getServerSideProps(context) {
 
   if (typeof window === "undefined" && context.res.writeHead) {
     if (findUserInDatabase()) {
-      context.res.writeHead(302, { Location: "http://localhost:3000/" });
+      context.res.writeHead(302, {
+        Location:
+          process.env.NODE_ENV === "production"
+            ? process.env.prod
+            : process.env.dev,
+      });
       context.res.end();
     } else if (!session) {
-      context.res.writeHead(302, { Location: "http://localhost:3000/" });
+      context.res.writeHead(302, {
+        Location:
+          process.env.NODE_ENV === "production"
+            ? process.env.prod
+            : process.env.dev,
+      });
       context.res.end();
     }
   }

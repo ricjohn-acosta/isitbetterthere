@@ -6,11 +6,12 @@ import Subheaders from "./common/Subheaders";
 import PaperWrapper from "./common/PaperWrapper";
 import HeaderDivider from "./common/HeaderDivider";
 
-const Wrapper = styled.div`
-  // min-height: 50vh;
-  // margin-top: 5vh;
-  // margin-left: 20%;
-  // margin-right: 20%;
+const Wrapper = styled.div``;
+
+const ShareMessage = styled(Typography)`
+  ${(props) => props.theme.breakpoints.down(441)} {
+    font-size: 1em;
+  }
 `;
 
 const Editor = dynamic(() => import("./Editor"), {
@@ -30,10 +31,10 @@ const ShareStory = ({
       <Subheaders icon={"/shareExperience.png"}>Share your story!</Subheaders>
       <HeaderDivider />
       <Wrapper>
-        <Typography component="div" variant="h5">
+        <ShareMessage component="div" variant="h5">
           Share your experience transitioning from <b>{fromValue}</b> to{" "}
           <b>{toValue}</b>
-        </Typography>
+        </ShareMessage>
         <br />
         <Typography variant="subtitle2">
           The more detailed your story is the more impact you could make to

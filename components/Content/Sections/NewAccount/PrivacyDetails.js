@@ -21,20 +21,26 @@ const Labels = styled(Grid)`
 
 const PrivacyDetails = ({
   setHideName,
+  setHideEmail,
   setHideOccupation,
   setHideCompany,
   setHideLocation,
   hideName,
+  hideEmail,
   hideOccupation,
   hideCompany,
   hideLocation,
 }) => {
-
   const handleChange = (target) => {
     switch (target) {
       case "name":
         // setChecked(!isChecked);
         setHideName(!hideName);
+        break;
+
+      case "email":
+        // setChecked(!isChecked);
+        setHideEmail(!hideEmail);
         break;
 
       case "occupation":
@@ -66,10 +72,10 @@ const PrivacyDetails = ({
 
       <FormContainer container direction="column" spacing={4}>
         <Grid item container direction="row">
-          <Labels item xs={12} sm={12} md={3}>
+          <Labels item xs={6} sm={6} md={3}>
             Hide name? &nbsp;
           </Labels>
-          <Grid item xs={12} sm={12} md={2}>
+          <Grid item xs={6} sm={6} md={2}>
             <Checkbox
               checked={hideName}
               onChange={(e) => handleChange("name")}
@@ -79,10 +85,23 @@ const PrivacyDetails = ({
         </Grid>
 
         <Grid item container direction="row">
-          <Labels item xs={12} sm={12} md={3}>
-            Hide Occupation? &nbsp;
+          <Labels item xs={6} sm={6} md={3}>
+            Hide email? &nbsp;
           </Labels>
-          <Grid item xs={12} sm={12} md={2}>
+          <Grid item xs={6} sm={6} md={2}>
+            <Checkbox
+              checked={hideEmail}
+              onChange={(e) => handleChange("email")}
+              color="default"
+            />
+          </Grid>
+        </Grid>
+
+        <Grid item container direction="row">
+          <Labels item xs={6} sm={6} md={3}>
+            Hide occupation? &nbsp;
+          </Labels>
+          <Grid item xs={6} sm={6} md={2}>
             <Checkbox
               checked={hideOccupation}
               onChange={(e) => handleChange("occupation")}
@@ -92,10 +111,10 @@ const PrivacyDetails = ({
         </Grid>
 
         <Grid item container direction="row">
-          <Labels item xs={12} sm={12} md={3}>
+          <Labels item xs={6} sm={6} md={3}>
             Hide company? &nbsp;
           </Labels>
-          <Grid item xs={12} sm={12} md={2}>
+          <Grid item xs={6} sm={6} md={2}>
             <Checkbox
               checked={hideCompany}
               onChange={(e) => handleChange("company")}
@@ -105,10 +124,10 @@ const PrivacyDetails = ({
         </Grid>
 
         <Grid item container direction="row">
-          <Labels item xs={12} sm={12} md={3}>
+          <Labels item xs={6} sm={6} md={3}>
             Hide location? &nbsp;
           </Labels>
-          <Grid item xs={12} sm={12} md={2}>
+          <Grid item xs={6} sm={6} md={2}>
             <Checkbox
               checked={hideLocation}
               onChange={(e) => handleChange("location")}

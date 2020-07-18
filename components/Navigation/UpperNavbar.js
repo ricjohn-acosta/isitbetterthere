@@ -7,6 +7,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import BrandLogo from "./BrandLogo";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const UpperNavbar = styled(AppBar)`
   background-color: #33cccc;
@@ -26,8 +27,8 @@ const StyledButton = styled(Button)`
 
 const Container = styled.div`
   position: relative;
-  margin-right: 13vw;
-  margin-left: 13vw;
+  margin-right: 15vw;
+  margin-left: 15vw;
   ${(props) => props.theme.breakpoints.down("md")} {
     margin-left: 0;
     margin-right: 0;
@@ -36,17 +37,22 @@ const Container = styled.div`
 
 const StyledUpperNavbar = () => {
   const router = useRouter();
-
   return (
     <UpperNavbar elevation={0} position="static">
       <Container>
-        {/* {router.pathname !== "/share" ? null : (
-          <BrandLogo>IsItBetterThere</BrandLogo>
-        )} */}
-
-        <StyledButton disableRipple>Meet the team</StyledButton>
-        <StyledButton disableRipple>Contact</StyledButton>
-        <StyledButton disableRipple>About</StyledButton>
+        {/* <Link href="/our-team" passHref>
+          <StyledButton disableRipple>Meet the team</StyledButton>
+        </Link> */}
+        <Link href="/contact" passHref>
+        <StyledButton disableRipple>
+          Contact
+        </StyledButton>
+        </Link>
+        <Link href="/about" passHref>
+        <StyledButton href="/about" disableRipple>
+          About
+        </StyledButton>
+        </Link>
       </Container>
     </UpperNavbar>
   );

@@ -8,9 +8,7 @@ import Subheaders from "./common/Subheaders";
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
 
-const StyledPaper = styled.div`
-  padding: 0 20vw 0 20vw;
-`;
+const StyledPaper = styled.div``;
 
 const Preview = ({ editorState }) => {
   const htmlInput = draftToHtml(convertToRaw(editorState.getCurrentContent()));
@@ -18,7 +16,9 @@ const Preview = ({ editorState }) => {
 
   return (
     <PaperWrapper>
-      <Subheaders icon={"/preview.png"} variant="h4">Preview</Subheaders>
+      <Subheaders icon={"/preview.png"} variant="h4">
+        Preview
+      </Subheaders>
       <HeaderDivider />
       <StyledPaper>{preview}</StyledPaper>
     </PaperWrapper>

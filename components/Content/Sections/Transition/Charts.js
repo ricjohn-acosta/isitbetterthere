@@ -3,10 +3,10 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import { getChartData } from "./utils/getChartData";
 
-const Charts = ({ experiences }) => {
+const Charts = ({ allExperiences }) => {
   return (
     <Grid container direction="column" spacing={10}>
-      {console.log(getChartData("fulfillment", experiences))}
+      {console.log(getChartData("fulfillment", allExperiences))}
       <Grid item container direction="row">
         <Grid
           item
@@ -25,7 +25,7 @@ const Charts = ({ experiences }) => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Pie data={getChartData("fulfillment", experiences)} />
+          <Pie data={getChartData("fulfillment", allExperiences)} />
         </Grid>
       </Grid>
 
@@ -47,7 +47,7 @@ const Charts = ({ experiences }) => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Pie data={getChartData("ease", experiences)} />
+          <Pie data={getChartData("ease", allExperiences)} />
         </Grid>
       </Grid>
 
@@ -69,7 +69,7 @@ const Charts = ({ experiences }) => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Pie data={getChartData("regret", experiences)} />
+          <Pie data={getChartData("regret", allExperiences)} />
         </Grid>
       </Grid>
 
@@ -91,7 +91,7 @@ const Charts = ({ experiences }) => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <Pie data={getChartData("location", experiences)} />
+          <Pie data={getChartData("location", allExperiences)} />
         </Grid>
       </Grid>
     </Grid>

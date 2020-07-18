@@ -6,8 +6,9 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex("users").insert([
         {
-          // id: 1,
+          id: 1,
           user_id: "112929919225856440659",
+          profile_picture: "https://lh3.googleusercontent.com/-8wKGcQR3uQI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucm17yyVSO5GkllyrxCPqHJ1mmX2zg/photo.jpg",
           name: "Ricjohn",
           email: "ricjohngenoguin@gmail.com",
           bio: "all for creating impactful projects!",
@@ -16,11 +17,12 @@ exports.seed = function (knex) {
           company: "",
           location: "New Zealand",
           hide_name: false,
+          hide_email: false,
           hide_occupation: false,
           hide_company: false,
           hide_location: false,
           comes_from: "Word of mouth",
-          date_created: Date.now().toString()
+          user_created: Date.now(),
         },
       ]);
     });

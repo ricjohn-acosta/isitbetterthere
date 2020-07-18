@@ -22,6 +22,16 @@ const Labels = styled(Grid)`
   align-items: center;
   padding-left: 5vw;
   font-weight: bold;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    padding-left: 0;
+  }
+`;
+
+const SectionMessage = styled(Typography)`
+  font-size: 1.5rem;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    font-size: 1.5em;
+  }
 `;
 
 const PersonalDetails = ({
@@ -56,10 +66,10 @@ const PersonalDetails = ({
   return (
     <Wrapper>
       {console.log(emptyFields)}
-      <Typography variant="h5">
+      <SectionMessage variant="h5">
         This information will be shown in your profile dashboard and in your
         contributed experiences
-      </Typography>
+      </SectionMessage>
 
       <FormContainer container direction="column" spacing={4}>
         <Grid item container direction="row">
@@ -78,7 +88,7 @@ const PersonalDetails = ({
 
         <Grid item container direction="row">
           <Labels item xs={12} sm={12} md={3}>
-            Occupation: &nbsp;
+            Occupation:* &nbsp;
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
             <Select
@@ -157,25 +167,9 @@ const PersonalDetails = ({
 
         <Grid item container direction="row">
           <Labels item xs={12} sm={12} md={3}>
-            Country: &nbsp;
+            Country:* &nbsp;
           </Labels>
           <Grid item xs={12} sm={12} md={2}>
-            {/* <TextField
-              value={location}
-              fullWidth
-              onChange={(e) => {
-                setLocation(e.target.value);
-              }}
-              variant="outlined"
-              error={
-                emptyFields
-                  ? emptyFields.find((e) => e === "location") !== undefined
-                    ? true
-                    : false
-                  : false
-              }
-            /> */}
-
             <Autocomplete
               value={location}
               inputValue={inputLocation}

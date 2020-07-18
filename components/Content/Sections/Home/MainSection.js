@@ -146,6 +146,7 @@ const MainSection = () => {
           category: currentCategory,
           from: fromInputValue,
           to: toInputValue,
+          page: 1,
         },
       });
       setEmptyFields(false);
@@ -214,6 +215,7 @@ const MainSection = () => {
             currentCategory={currentCategory}
             handleCategories={handleCategories}
             handleForm={handleForm}
+            setCategory={setCategory}
             setToValue={setToValue}
             setToInputValue={setToInputValue}
             setFromValue={setFromValue}

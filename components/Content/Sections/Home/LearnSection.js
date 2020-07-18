@@ -3,11 +3,11 @@ import { Typography } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import LearnCards from "../../Cards/LearnCards";
 import Button from "@material-ui/core/Button";
-import Paper from '@material-ui/core/Paper';
+import Paper from "@material-ui/core/Paper";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const Wrapper = styled.div`
-  overflow:hidden;
+  overflow: hidden;
   padding: 5% 5% 5% 5%;
 `;
 
@@ -30,7 +30,7 @@ const LearnIcon = styled.img`
 
 const LearnCardsContainer = styled.div`
   padding: 5% 5% 3.5% 5%;
-  display: flex
+  display: flex;
 `;
 
 const ResourcesButtonContainer = styled.div`
@@ -53,12 +53,14 @@ const LearnSection = () => {
     <Wrapper id="/learn">
       <SectionHeader>
         <LearnIcon src="/learning.png" />
-        <SectionTitle variant={matches ? "h4" : "h5"}>Learning Resources</SectionTitle>
+        <SectionTitle variant={matches ? "h4" : "h5"}>
+          Learning Resources
+        </SectionTitle>
       </SectionHeader>
       <LearnCardsContainer>
         <LearnCards />
       </LearnCardsContainer>
-      <ResourcesButtonContainer>
+      {/* <ResourcesButtonContainer>
         <ResourcesButton
           color="primary"
           size="large"
@@ -70,7 +72,7 @@ const LearnSection = () => {
             See more resources
           </ResourcesButtonText>
         </ResourcesButton>
-      </ResourcesButtonContainer>
+      </ResourcesButtonContainer> */}
     </Wrapper>
   );
 };

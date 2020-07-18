@@ -10,14 +10,21 @@ const Wrapper = styled.div`
   margin: 5vh 10vw 2.5vh 2.5vw;
 `;
 
-const ConfirmDetails = ({ setSiteSource, siteSource }) => {
+const ConfirmDetails = ({ setSiteSource, siteSource, emptyFields }) => {
   return (
     <Wrapper>
       <Typography variant="h5">
-        How did you find out about this website?
+        How did you find out about this website?*
       </Typography>
       <br />
       <Select
+        error={
+          emptyFields
+            ? emptyFields.find((e) => e === "siteSource") !== undefined
+              ? true
+              : false
+            : false
+        }
         value={siteSource}
         onChange={(e) => setSiteSource(e.target.value)}
         fullWidth

@@ -64,6 +64,15 @@ const MiddleTextContainer = styled(Typography)`
   }
 `;
 
+const StyledLink = styled.a`
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const TutorialSection = () => {
   const matches = useMediaQuery("(min-width:1300px)");
 
@@ -85,7 +94,7 @@ const TutorialSection = () => {
               </ImageContainer>
               <Grid item xs={12} sm={6}>
                 <TopText variant="h4">
-                  Start <Link href="/"><a>here</a></Link>. Choose a category that best suit your situation,
+                  Start <StyledLink href="/#">here</StyledLink>. Choose a category that best suit your situation,
                   where you are planning to transition from and where you want
                   to be.
                 </TopText>
@@ -95,7 +104,7 @@ const TutorialSection = () => {
             <Grid container item>
               <Grid item xs={12} sm={12}>
                 <TopText variant="h5">
-                  Start <Link href="/"><a>here</a></Link>. Choose a category that best suit your situation,
+                  Start <StyledLink href="/#">here</StyledLink>. Choose a category that best suit your situation,
                   where you are planning to transition from and where you want
                   to be.
                 </TopText>

@@ -6,7 +6,6 @@ export const addExperience = (experience) => {
     dispatch({ type: actions.ADD_EXPERIENCE_START });
     return (
       request
-        // .post(process.env.EXPERIENCE_API || "http://localhost:3000/api/experiences")
         .post(
           process.env.NODE_ENV === "production"
             ? process.env.prod + "/api/experiences"
@@ -23,6 +22,63 @@ export const addExperience = (experience) => {
             dispatch({ type: actions.ADD_EXPERIENCE_FAIL });
           } else {
             console.log("EXPERIENCE ADD FLOW ENDED");
+            dispatch({ type: actions.ADD_EXPERIENCE_END });
+          }
+        })
+    );
+  };
+};
+
+export const editExperience = (experience) => {
+  return (dispatch) => {
+    dispatch({ type: actions.ADD_EXPERIENCE_START });
+    return (
+      request
+        .put(
+          process.env.NODE_ENV === "production"
+            ? process.env.prod + "/api/experiences"
+            : process.env.dev + "/api/experiences"
+        )
+        .send(experience)
+        .then((res) => {
+          dispatch({ type: actions.ADD_EXPERIENCE_SUCCESS });
+        })
+        .catch((res) => {
+          console.log(res.status);
+          if (res.status === 405) {
+            console.log("EXPERIENCE EDIT FLOW FAILED");
+            dispatch({ type: actions.ADD_EXPERIENCE_FAIL });
+          } else {
+            console.log("EXPERIENCE EDIT FLOW ENDED");
+            dispatch({ type: actions.ADD_EXPERIENCE_END });
+          }
+        })
+    );
+  };
+};
+
+
+export const deleteExperience = (experience) => {
+  return (dispatch) => {
+    dispatch({ type: actions.ADD_EXPERIENCE_START });
+    return (
+      request
+        .delete(
+          process.env.NODE_ENV === "production"
+            ? process.env.prod + "/api/experiences"
+            : process.env.dev + "/api/experiences"
+        )
+        .send(experience)
+        .then((res) => {
+          dispatch({ type: actions.ADD_EXPERIENCE_SUCCESS });
+        })
+        .catch((res) => {
+          console.log(res.status);
+          if (res.status === 405) {
+            console.log("EXPERIENCE DELETE FLOW FAILED");
+            dispatch({ type: actions.ADD_EXPERIENCE_FAIL });
+          } else {
+            console.log("EXPERIENCE DELETE FLOW ENDED");
             dispatch({ type: actions.ADD_EXPERIENCE_END });
           }
         })

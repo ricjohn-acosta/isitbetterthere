@@ -27,7 +27,7 @@ class MyApp extends App {
     }
   }
   render() {
-    const { Component, pageProps, session } = this.props;
+    const { Component, pageProps } = this.props;
     return (
       // <Provider store={store}>
       // <AuthProvider session={session}>
@@ -44,7 +44,17 @@ class MyApp extends App {
       // </AuthProvider>
       // </Provider>
 
-      <AuthProvider session={session}>
+      <AuthProvider
+        options={{
+          site:
+            process.env.NODE_ENV === "production"
+              ? process.env.prod
+              : process.env.dev,
+          clientMaxAge: 0,
+          keepAlive: 0,
+        }}
+        session={pageProps.session}
+      >
         <StylesProvider injectFirst>
           <MuiProvider theme={theme}>
             <ThemeProvider theme={theme}>

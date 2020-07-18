@@ -8,10 +8,15 @@ import styled from "styled-components";
 const StyledPaper = styled(Paper)`
   margin: 0 10% 0 10%;
   padding: 5% 10% 10% 10%;
+
+  ${(props) => props.theme.breakpoints.down(441)} {
+    margin: 0; 
+    padding: 5% 10% 10% 10%;
+  }
 `;
 
 const PaperWrapper = ({ children }) => {
-  return <StyledPaper>{children}</StyledPaper>;
+  return <><StyledPaper>{children}</StyledPaper><br/></>;
 };
 
 export default PaperWrapper;

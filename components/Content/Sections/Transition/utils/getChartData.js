@@ -1,11 +1,11 @@
 import { colors } from "./colors";
 
-export const getChartData = (quality, experiences) => {
+export const getChartData = (quality, allExperiences) => {
   switch (quality) {
     case "fulfillment":
       const fulfillmentLabels = ["Fulfilled", "Mixed", "Not fulfilled"];
       let qualityData = [0, 0, 0];
-      experiences.forEach((e) => {
+      allExperiences.forEach((e) => {
         if (e.fulfillment === "Fulfilled") {
           qualityData[0]++;
         }
@@ -24,8 +24,8 @@ export const getChartData = (quality, experiences) => {
         datasets: [
           {
             data: qualityData,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+            hoverBackgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
           },
         ],
       };
@@ -35,7 +35,7 @@ export const getChartData = (quality, experiences) => {
     case "ease":
       const easeLabels = ["Easy", "Medium", "Hard"];
       let easeData = [0, 0, 0];
-      experiences.forEach((e) => {
+      allExperiences.forEach((e) => {
         if (e.ease_of_transition === "Easy") {
           easeData[0]++;
         }
@@ -54,8 +54,8 @@ export const getChartData = (quality, experiences) => {
         datasets: [
           {
             data: easeData,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+            hoverBackgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
           },
         ],
       };
@@ -65,7 +65,7 @@ export const getChartData = (quality, experiences) => {
     case "regret":
       const regretLabels = ["Did not regret", "Did regret"];
       let regretData = [0, 0];
-      experiences.forEach((e) => {
+      allExperiences.forEach((e) => {
         if (e.regret === "Did not regret") {
           regretData[0]++;
         }
@@ -80,8 +80,8 @@ export const getChartData = (quality, experiences) => {
         datasets: [
           {
             data: regretData,
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+            backgroundColor: ["#36A2EB", "#FF6384"],
+            hoverBackgroundColor: ["#36A2EB", "#FF6384"],
           },
         ],
       };
@@ -90,7 +90,7 @@ export const getChartData = (quality, experiences) => {
 
     case "location":
       // get location labels from experience object
-      const locations = experiences.map((e) => e.location);
+      const locations = allExperiences.map((e) => e.location);
       const locationSet = new Set(locations);
       const locationLabels = [...locationSet];
       const backgroundColor = [];

@@ -17,6 +17,11 @@ import Link from "@material-ui/core/Link";
 const Wrapper = styled.div`
   min-height: 60vh;
   margin: 5vh 15vw 10vh 15vw;
+  overflow: auto;
+
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    margin: 2vh 1vh 0 1vh;
+  }
 `;
 
 const NewAccountStepperSection = ({ addUser, session }) => {
@@ -29,15 +34,19 @@ const NewAccountStepperSection = ({ addUser, session }) => {
   const [location, setLocation] = React.useState(null);
   const [inputLocation, setInputLocation] = React.useState("");
   const [hideName, setHideName] = React.useState(false);
+  const [hideEmail, setHideEmail] = React.useState(true);
   const [hideOccupation, setHideOccupation] = React.useState(false);
   const [hideCompany, setHideCompany] = React.useState(false);
   const [hideLocation, setHideLocation] = React.useState(false);
   const [siteSource, setSiteSource] = React.useState("");
   const [emptyFields, setEmptyFields] = React.useState(null);
+  const [disableSubmit, setDisableSubmit] = React.useState(false);
 
   const handleCreateUser = () => {
+    setDisableSubmit(true);
     addUser({
       user_id: session.account.id,
+      profile_picture: session.user.image,
       name: session.user.name,
       email: session.user.email,
       bio: description,
@@ -46,11 +55,12 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       company,
       location,
       hide_name: hideName,
+      hide_email: hideEmail,
       hide_occupation: hideOccupation,
       hide_company: hideCompany,
       hide_location: hideLocation,
       comes_from: siteSource,
-      date_created: Date.now(),
+      user_created: Date.now(),
     });
   };
 
@@ -68,10 +78,12 @@ const NewAccountStepperSection = ({ addUser, session }) => {
         return (
           <PrivacyDetails
             setHideName={setHideName}
+            setHideEmail={setHideEmail}
             setHideOccupation={setHideOccupation}
             setHideCompany={setHideCompany}
             setHideLocation={setHideLocation}
             hideName={hideName}
+            hideEmail={hideEmail}
             hideOccupation={hideOccupation}
             hideCompany={hideCompany}
             hideLocation={hideLocation}
@@ -81,6 +93,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       case 2:
         return (
           <ConfirmDetails
+            emptyFields={emptyFields}
             setSiteSource={setSiteSource}
             siteSource={siteSource}
           />
@@ -120,7 +133,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
 
   const handleNext = () => {
     if (
-      (activeStep === 0 && description === "") ||
+      activeStep === 0 ||
       occupation === "" ||
       // company === "" ||
       // position === "" ||
@@ -136,7 +149,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       }
     } else if (activeStep === 2 && siteSource === "") {
       setEmptyFields(["siteSource"]);
-      console.log("test");
+      console.log(emptyFields);
     } else {
       // setCompany("");
       // setPosition("");
@@ -212,6 +225,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
           <Button onClick={handleReset}>Reset</Button>
           <Link
             component={Button}
+            disabled={disableSubmit}
             href={
               process.env.NODE_ENV === "production"
                 ? process.env.prod

@@ -76,13 +76,13 @@ const LinkContainer = styled.div`
   margin-bottom: 2.5vh;
 `;
 
-const HeaderSection = ({ from, to, category, experiences }) => {
+const HeaderSection = ({ from, to, category, allExperiences }) => {
   const isSM = useMediaQuery("(max-width:600px)");
   const downMD = useMediaQuery("(max-width:959px)");
 
   return (
     <Wrapper>
-      {console.log(experiences)}
+      {console.log(allExperiences)}
       <Container container direction="row">
         <FromText item xs={12} sm={12} md={5}>
           <Typography
@@ -110,7 +110,7 @@ const HeaderSection = ({ from, to, category, experiences }) => {
       </Container>
       <OdometerContainer>
         <b>
-          <CountUp start={0} end={experiences.length} />
+          <CountUp start={0} end={allExperiences.length} />
         </b>
         &nbsp;people have went through this transition
       </OdometerContainer>
