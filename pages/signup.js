@@ -10,8 +10,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Wrapper = styled.div`
   height: 100vh;
-  background: rgb(0,153,204);
-  background: linear-gradient(90deg, rgba(0,153,204,1) 0%, rgba(187,250,255,1) 100%);
+  background: rgb(0, 153, 204);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 153, 204, 1) 0%,
+    rgba(187, 250, 255, 1) 100%
+  );
   padding: 10% 0 0 0;
   ${(props) => props.theme.breakpoints.down("sm")} {
     padding: 10% 0 0 0;
@@ -78,28 +82,30 @@ export default ({ providers }) => {
       <StyledPaper>
         <StyledTypography variant="h3">Sign in!</StyledTypography>
         <StyledHr />
-        {Object.values(providers).map((provider) =>
-          provider.name === "Email" ? null : (
-            <ProviderContainer key={provider.name}>
-              <ProviderButtons
-                classes={{
-                  label: classes.label,
-                }}
-                fullWidth
-                variant="outlined"
-                disableElevation
-                startIcon={<SigninIcon src={`/${provider.name}-signin.png`} />}
-                href={`/api/auth/signin/${provider.name.toLowerCase()}?callbackUrl=${
-                  process.env.NODE_ENV !== "production"
-                    ? "http://localhost:3000/account-setup"
-                    : process.env.SITE
-                }`}
-              >
-                Sign in with {provider.name}
-              </ProviderButtons>
-            </ProviderContainer>
-          )
-        )}
+        {Object.values(providers).map((provider) => (
+          <ProviderContainer key={provider.name}>
+            <ProviderButtons
+              classes={{
+                label: classes.label,
+              }}
+              fullWidth
+              variant="outlined"
+              disableElevation
+              startIcon={
+                <SigninIcon
+                  src={`/${provider.name.toLowerCase()}-signin.png`}
+                />
+              }
+              href={`/api/auth/signin/${provider.name.toLowerCase()}?callbackUrl=${
+                process.env.NODE_ENV === "production"
+                  ? process.env.prod
+                  : process.env.dev
+              }`}
+            >
+              Sign in with {provider.name}
+            </ProviderButtons>
+          </ProviderContainer>
+        ))}
       </StyledPaper>
     </Wrapper>
   );
