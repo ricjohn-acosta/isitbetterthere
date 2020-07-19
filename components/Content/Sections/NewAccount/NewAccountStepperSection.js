@@ -60,7 +60,8 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       hide_company: hideCompany,
       hide_location: hideLocation,
       comes_from: siteSource,
-      user_created: Date.now(),
+      user_created: Math.floor(Date.now() / 1000),
+      permission: "user"
     });
   };
 

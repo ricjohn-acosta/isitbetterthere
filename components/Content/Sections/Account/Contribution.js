@@ -94,7 +94,7 @@ const Contribution = ({
         <RightGrid item xs={12} sm={5}>
           <ContributionDetails>
             <Typography variant="body2">
-              {moment(datePosted).format("DD MMM YYYY")}
+              {moment.unix(datePosted).format("DD MMM YYYY")}
             </Typography>
             <Typography variant="body2">
               <b>{helpfulRating}</b> {helpfulRating === 1 ? "user" : "users"}{" "}

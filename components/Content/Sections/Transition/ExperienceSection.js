@@ -157,7 +157,7 @@ const ExperienceSection = ({
       reported_by: session.id,
       experience_id: currentId,
       violation_type: violationType,
-      date_reported: Date.now(),
+      date_reported: Math.floor(Date.now() / 1000),
     });
   };
 

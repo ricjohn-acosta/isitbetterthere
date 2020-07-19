@@ -23,6 +23,7 @@ exports.seed = function (knex) {
           hide_location: false,
           comes_from: "Word of mouth",
           user_created: Math.floor(Date.now() / 1000),
+          permission: "admin"
         },
       ]);
     });

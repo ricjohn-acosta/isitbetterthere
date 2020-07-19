@@ -174,11 +174,18 @@ const options = {
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
     session: async (session, token) => {
-      console.log("SESSION", token)
+      console.log("session", token);
       return Promise.resolve({
         ...session,
-        ...token
+        ...token,
       });
+    },
+
+    jwt: async (token, profile, isNewUser) => {
+      console.log("JWT TOKEN", profile);
+      const isSignIn = (profile) ? true : false
+      if (isSignIn) { token.id = profile.id}
+      return Promise.resolve(token)
     },
   },
 
