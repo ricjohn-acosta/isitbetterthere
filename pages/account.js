@@ -22,29 +22,31 @@ export async function getServerSideProps(context) {
   let userContributions = null;
   let helpfulContributions = null;
 
-  if (!session) {
-    context.res.writeHead(302, {
-      Location:
-        process.env.NODE_ENV === "production"
-          ? process.env.prod + "/signup"
-          : process.env.dev + "/signup",
-    });
-    context.res.end();
-  }
-
-  if (session) {
-    if (!(await getUser(session.id))) {
+  if (typeof window === "undefined" && context.res.writeHead) {
+    if (!session) {
       context.res.writeHead(302, {
         Location:
           process.env.NODE_ENV === "production"
-            ? process.env.prod + "/account-setup"
-            : process.env.dev + "/account-setup",
+            ? process.env.prod + "/signup"
+            : process.env.dev + "/signup",
       });
       context.res.end();
-    } else {
-      user = await getUser(session.id);
-      userContributions = await getUserExperiences(session.id);
-      helpfulContributions = await getUserRatedExperiences(session.id);
+    }
+
+    if (session) {
+      if (!(await getUser(session.id))) {
+        context.res.writeHead(302, {
+          Location:
+            process.env.NODE_ENV === "production"
+              ? process.env.prod + "/account-setup"
+              : process.env.dev + "/account-setup",
+        });
+        context.res.end();
+      } else {
+        user = await getUser(session.id);
+        userContributions = await getUserExperiences(session.id);
+        helpfulContributions = await getUserRatedExperiences(session.id);
+      }
     }
   }
 
