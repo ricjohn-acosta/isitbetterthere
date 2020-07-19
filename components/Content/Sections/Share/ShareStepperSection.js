@@ -167,7 +167,7 @@ const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
       story,
       helpful: 0,
       not_helpful: 0,
-      date_posted: Date.now(),
+      date_posted: Math.floor(Date.now() / 1000),
     });
     Router.push({
       pathname: "/transition",

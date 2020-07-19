@@ -181,7 +181,7 @@ const Experience = ({
         user_id: session.id,
         experience_id: experienceId,
         is_helpful: e.currentTarget.value === "true" ? true : false,
-        date_rated: Date.now(),
+        date_rated: Math.floor(Date.now() / 1000),
       });
       setRated(true);
     } else {
@@ -323,7 +323,7 @@ const Experience = ({
             </UserInfoContainer>
           </ProfileDetails>
           <Typography variant="caption">
-            Posted at {moment(date_posted).format("DD MMM YYYY")}
+            Posted at {moment.unix(date_posted).format("DD MMM YYYY")}
           </Typography>
           <ChipsContainer>{renderChips()}</ChipsContainer>
         </ProfileContainer>

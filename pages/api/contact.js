@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export default async function experiences(req, res) {
+export default async function contact(req, res) {
   if (req.method === "POST") {
     let transporter = nodemailer.createTransport({
       service: "gmail",
