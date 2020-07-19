@@ -13,6 +13,27 @@ import { Provider } from "react-redux";
 import App from "next/app";
 import withReduxStore from "../lib/with-redux-store";
 import wrapper from "../store/store";
+import { Router } from "next/dist/client/router";
+import NProgress from "nprogress";
+import "../public/nprogress.css";
+
+NProgress.configure({
+  showSpinner: false,
+  trickleRate: 0.1,
+  trickleSpeed: 300,
+});
+
+Router.events.on("routeChangeStart", () => {
+  NProgress.start();
+});
+
+Router.events.on("routeChangeComplete", () => {
+  NProgress.done();
+});
+
+Router.events.on("routeChangeError", () => {
+  NProgress.done();
+});
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "myclasses-",
@@ -29,27 +50,8 @@ class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      // <Provider store={store}>
-      // <AuthProvider session={session}>
-      //   <StylesProvider injectFirst>
-      //     <MuiThemeProvider theme={theme}>
-      //       <MuiProvider theme={theme}>
-      //         <ThemeProvider theme={theme}>
-      //           <CssBaseline />
-      //           <Component {...pageProps} />
-      //         </ThemeProvider>
-      //       </MuiProvider>
-      //     </MuiThemeProvider>
-      //   </StylesProvider>
-      // </AuthProvider>
-      // </Provider>
-
       <AuthProvider
         options={{
-          // site:
-          //   process.env.NODE_ENV === "production"
-          //     ? process.env.prod
-          //     : process.env.dev,
           clientMaxAge: 0,
           keepAlive: 0,
         }}
