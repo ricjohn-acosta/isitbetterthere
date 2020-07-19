@@ -83,6 +83,7 @@ const options = {
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
     }),
+
     Providers.Facebook({
       clientId: process.env.FACEBOOK_ID,
       clientSecret: process.env.FACEBOOK_SECRET,
@@ -161,7 +162,7 @@ const options = {
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    // signin: '/api/auth/signin',  // Displays signin buttons
+    signIn: "/signup", // Displays signin buttons
     // signout: '/api/auth/signout', // Displays form with sign out button
     // error: '/api/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/api/auth/verify-request', // Used for check email page
@@ -173,7 +174,11 @@ const options = {
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
     session: async (session, token) => {
-      return token;
+      console.log("SESSION", token)
+      return Promise.resolve({
+        ...session,
+        ...token
+      });
     },
   },
 

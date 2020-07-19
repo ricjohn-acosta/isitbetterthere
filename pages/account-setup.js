@@ -32,7 +32,7 @@ export async function getServerSideProps(context) {
 
     if (session) {
       users.forEach((user) => {
-        if (user.user_id === session.account.id) {
+        if (user.user_id === session.id) {
           found = true;
         }
       });

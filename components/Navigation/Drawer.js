@@ -189,9 +189,9 @@ export default function TemporaryDrawer() {
             <ListItemIcon>
               {session && text === "Account" ? (
                 <DrawerIcon
-                  src={session.user.image}
+                  src={session.picture}
                   fallbackImage="/user.png"
-                  alt={session.user.name}
+                  alt={session.name}
                 />
               ) : (
                 getIcon(text)
@@ -200,7 +200,7 @@ export default function TemporaryDrawer() {
             <ListItemText
               primary={
                 session && text === "Account"
-                  ? session.user.name
+                  ? session.name
                   : session && text === "Signup / Login"
                   ? "Sign out"
                   : text

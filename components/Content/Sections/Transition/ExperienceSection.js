@@ -154,7 +154,7 @@ const ExperienceSection = ({
 
   const handleReportSubmit = () => {
     addReport({
-      reported_by: session.account.id,
+      reported_by: session.id,
       experience_id: currentId,
       violation_type: violationType,
       date_reported: Date.now(),
@@ -213,7 +213,7 @@ const ExperienceSection = ({
                 handleReportSubmit={handleReportSubmit}
                 reportedExperiences={reportedExperiences}
                 currentId={currentId}
-                uid={session && session.account.id}
+                uid={session && session.id}
               />
               <br />
             </React.Fragment>

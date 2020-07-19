@@ -178,7 +178,7 @@ const Experience = ({
   const handleRating = (e) => {
     if (session) {
       rateExperience({
-        user_id: session.account.id,
+        user_id: session.id,
         experience_id: experienceId,
         is_helpful: e.currentTarget.value === "true" ? true : false,
         date_rated: Date.now(),
@@ -214,7 +214,7 @@ const Experience = ({
   };
 
   const getSessionId = () => {
-    return session ? session.account.id : false;
+    return session ? session.id : false;
   };
 
   const getRateType = () => {
@@ -377,7 +377,7 @@ const Experience = ({
         handleReportSubmit={handleReportSubmit}
         reportedExperiences={reportedExperiences}
         currentId={currentId}
-        uid={session && session.account.id}
+        uid={session && session.id}
         eid={experienceId}
       />
     </Wrapper>

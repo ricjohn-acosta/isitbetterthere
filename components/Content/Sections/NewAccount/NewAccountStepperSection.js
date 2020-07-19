@@ -45,10 +45,10 @@ const NewAccountStepperSection = ({ addUser, session }) => {
   const handleCreateUser = () => {
     setDisableSubmit(true);
     addUser({
-      user_id: session.account.id,
-      profile_picture: session.user.image,
-      name: session.user.name,
-      email: session.user.email,
+      user_id: session.id,
+      profile_picture: session.picture,
+      name: session.name,
+      email: session.email,
       bio: description,
       occupation,
       position,

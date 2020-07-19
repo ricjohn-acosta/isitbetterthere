@@ -93,7 +93,7 @@ const AccountSection = ({
   console.log(userContributions);
   const handleSubmit = () => {
     editUser({
-      user_id: session.account.id,
+      user_id: session.id,
       hide_name: hideName,
       hide_email: hideEmail,
       hide_occupation: hideOccupation,
@@ -152,13 +152,13 @@ const AccountSection = ({
               ></StyledImage> */}
 
               <StyledImage
-                src={session.user.image}
+                src={session.picture}
                 fallbackImage="/user.png"
-                alt={session.user.name}
+                alt={session.name}
               />
             </ImageContainer>
             <ProfileDetails>
-              <NameContainer variant="h5">{session.user.name}</NameContainer>
+              <NameContainer variant="h5">{session.name}</NameContainer>
               <BioContainer style={{ textAlign: "center" }} variant="subtitle1">
                 "{user.bio}"
               </BioContainer>
@@ -173,7 +173,7 @@ const AccountSection = ({
               <br />
               <StyledTypography variant="subtitle2">
                 <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                {session.user.email}
+                {session.email}
               </StyledTypography>
               <br />
               <StyledTypography variant="subtitle2">

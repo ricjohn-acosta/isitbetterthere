@@ -157,7 +157,7 @@ const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
     e.preventDefault();
     setDisableSubmit(true);
     addExperience({
-      posted_by: session.account.id,
+      posted_by: session.id,
       category: currentCategory,
       from: fromInputValue,
       to: toInputValue,
