@@ -11,9 +11,14 @@ export default async function experiences(req, res) {
     const session = await getSession({ req });
 
     if (req.method === "POST" && session) {
-      const {posted_by: uid, category: category} = req.body
-      const userExperience = await getUserExperience({posted_by: uid, category});
+      const userExperience = await getUserExperience({
+        posted_by: req.body.posted_by,
+        category: req.body.category,
+        from: req.body.from,
+        to: req.body.to,
+      });
 
+      console.log("ASDAWFAWF", userExperience);
       if (userExperience.length === 0) {
         addExperience(req.body).then((experience) => {
           console.log("EXPERIENCE ADDED TO DB");
