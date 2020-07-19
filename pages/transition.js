@@ -7,7 +7,7 @@ import {
   getExperiences,
   getAllExperiences,
   getRatedExperiences,
-  getReportedExperiences
+  getReportedExperiences,
 } from "../server/db";
 
 const transition = ({
@@ -16,7 +16,7 @@ const transition = ({
   totalExperiences,
   allExperiences,
   ratedExperiences,
-  reportedExperiences
+  reportedExperiences,
 }) => {
   const router = useRouter();
   const { from, to, category } = router.query;
@@ -72,6 +72,13 @@ export async function getServerSideProps(context) {
     reportedExperiences = await getReportedExperiences(session.id);
   }
 
+  // if (typeof window === "undefined" && context.res.writeHead) {
+  //   context.res.writeHead(302, {
+  //     Location: "https://www.isitbetterthere.com" + context.req.url,
+  //   });
+  //   context.res.end();
+  // }
+
   return {
     props: {
       session,
@@ -79,7 +86,7 @@ export async function getServerSideProps(context) {
       totalExperiences: experiences[1],
       allExperiences,
       ratedExperiences,
-      reportedExperiences
+      reportedExperiences,
     },
   };
 }
