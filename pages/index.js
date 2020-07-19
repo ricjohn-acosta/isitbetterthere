@@ -15,15 +15,18 @@ const Index = (props) => {
 export async function getServerSideProps(context) {
   const allUserExperience = await getAllUserExperiences();
   let contributionCount = allUserExperience.length;
+  let herokuDomain = "isitbetterthere.herokuapp.com";
+  let customDomain = "https://www.isitbetterthere.com";
 
-  // if (typeof window === "undefined" && context.res.writeHead) {
-  //   context.res.writeHead(302, {
-  //     Location: "https://www.isitbetterthere.com" + context.req.url,
-  //   });
-  //   context.res.end();
-  // }
+  if (typeof window === "undefined" && context.res.writeHead) {
+    if (context.req.headers.host === herokuDomain) {
+      context.res.writeHead(302, {
+        Location: customDomain + context.req.url,
+      });
+      context.res.end();
+    }
+  }
 
-  console.log("REQ HEADERS HOST", context.req.headers.host)
   return {
     props: {
       session: await getSession(context),
