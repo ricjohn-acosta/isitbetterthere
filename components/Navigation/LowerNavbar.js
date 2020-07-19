@@ -21,7 +21,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import { signin } from 'next-auth/client'
+import { signIn } from "next-auth/client";
 
 const useStyles = makeStyles((theme) => ({
   label: { justifyContent: "normal" },
@@ -198,10 +198,10 @@ const LowerNavbar = ({ session }) => {
             <UserButtons href={"/account?tab=settings"} disableRipple>
               {session ? (
                 <>
-                  <StyledAvatar src={session.user.image}>
+                  <StyledAvatar src={session.picture}>
                     <img src="user-32.png" />
                   </StyledAvatar>
-                  &nbsp;{session.user.name}
+                  &nbsp;{session.name}
                 </>
               ) : (
                 "Account"
@@ -248,16 +248,20 @@ const LowerNavbar = ({ session }) => {
                       label: classes.label,
                     }}
                     startIcon={
-                      <SigninIcon src={`/${provider.name.toLowerCase()}-signin.png`} />
+                      <SigninIcon
+                        src={`/${provider.name.toLowerCase()}-signin.png`}
+                      />
                     }
                     fullWidth
                     variant="text"
-                    href={`/api/auth/signin/${provider.name.toLowerCase()}?callbackUrl=${
-                      process.env.NODE_ENV === "production"
-                        ? process.env.prod
-                        : process.env.dev
-                    }`}
-                    // onClick={() => signin("google", {callbackUrl: "https://www.isitbetterthere.com"})}
+                    onClick={() =>
+                      signIn(provider.name.toLowerCase(), {
+                        callbackUrl:
+                          process.env.NODE_ENV === "production"
+                            ? process.env.prod
+                            : process.env.dev,
+                      })
+                    }
                   >
                     Sign in with {provider.name}
                   </ProviderButtons>

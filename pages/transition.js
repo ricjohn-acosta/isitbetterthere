@@ -68,8 +68,8 @@ export async function getServerSideProps(context) {
   );
 
   if (session) {
-    ratedExperiences = await getRatedExperiences(session.account.id);
-    reportedExperiences = await getReportedExperiences(session.account.id);
+    ratedExperiences = await getRatedExperiences(session.id);
+    reportedExperiences = await getReportedExperiences(session.id);
   }
 
   return {

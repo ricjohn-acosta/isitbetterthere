@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
     }
 
     if (session) {
-      if (!(await getUser(session.account.id))) {
+      if (!(await getUser(session.id))) {
         context.res.writeHead(302, {
           Location:
             process.env.NODE_ENV === "production"
@@ -36,7 +36,7 @@ export async function getServerSideProps(context) {
         });
         context.res.end();
       }
-      userExperiences = await getUserExperiences(session.account.id);
+      userExperiences = await getUserExperiences(session.id);
     }
   }
 

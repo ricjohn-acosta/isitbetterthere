@@ -46,10 +46,10 @@ class MyApp extends App {
 
       <AuthProvider
         options={{
-          site:
-            process.env.NODE_ENV === "production"
-              ? process.env.prod
-              : process.env.dev,
+          // site:
+          //   process.env.NODE_ENV === "production"
+          //     ? process.env.prod
+          //     : process.env.dev,
           clientMaxAge: 0,
           keepAlive: 0,
         }}

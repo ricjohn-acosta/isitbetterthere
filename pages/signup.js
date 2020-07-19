@@ -3,7 +3,7 @@ import { providers } from "next-auth/client";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Typography } from "@material-ui/core";
-import { signIn } from 'next-auth/client'
+import { signIn } from "next-auth/client";
 
 const useStyles = makeStyles((theme) => ({
   label: { justifyContent: "normal" },
@@ -97,12 +97,14 @@ export default ({ providers }) => {
                   src={`/${provider.name.toLowerCase()}-signin.png`}
                 />
               }
-              href={`/api/auth/signin/${provider.name.toLowerCase()}?callbackUrl=${
-                process.env.NODE_ENV === "production"
-                  ? process.env.prod
-                  : process.env.dev
-              }`}
-              // onClick={() => signIn("google", {callbackUrl: "https://www.isitbetterthere.com"})}
+              onClick={() =>
+                signIn(provider.name.toLowerCase(), {
+                  callbackUrl:
+                    process.env.NODE_ENV === "production"
+                      ? process.env.prod
+                      : process.env.dev,
+                })
+              }
             >
               Sign in with {provider.name}
             </ProviderButtons>
