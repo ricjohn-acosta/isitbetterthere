@@ -142,11 +142,12 @@ function getUserExperiences(user, db = connection) {
 }
 
 function getUserRatedExperiences(userId, db = connection) {
+  console.log("USERRR IDD", typeof userId)
   return db("experience_rating")
     .from("experience_rating AS exr")
     .leftJoin("experiences AS ex", "ex.experience_id", "exr.experience_id")
     .leftJoin("users AS us", "us.user_id", "ex.posted_by")
-    .where("exr.user_id", "=", userId)
+    .where("exr.user_id", "=", parseInt(userId) )
     .select();
 }
 
