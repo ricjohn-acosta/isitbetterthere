@@ -51,17 +51,6 @@ export async function getServerSideProps(context) {
   const session = await getSession(context);
   let ratedExperiences = null;
   let reportedExperiences = null;
-  let herokuDomain = "isitbetterthere.herokuapp.com";
-  let customDomain = "https://www.isitbetterthere.com";
-
-  // if (typeof window === "undefined" && context.res.writeHead) {
-  //   if (context.req.headers.host === herokuDomain) {
-  //     context.res.writeHead(302, {
-  //       Location: customDomain + context.req.url,
-  //     });
-  //   }
-  //   context.res.end();
-  // }
 
   const experiences = await getExperiences(
     context.query.from,
@@ -80,7 +69,6 @@ export async function getServerSideProps(context) {
     ratedExperiences = await getRatedExperiences(session.id);
     reportedExperiences = await getReportedExperiences(session.id);
   }
-
 
   return {
     props: {

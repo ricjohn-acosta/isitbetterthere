@@ -47,16 +47,6 @@ export async function getServerSideProps(context) {
       userContributions = await getUserExperiences(session.id);
       helpfulContributions = await getUserRatedExperiences(session.id);
     }
-
-    let herokuDomain = "isitbetterthere.herokuapp.com";
-    let customDomain = "https://www.isitbetterthere.com";
-
-    if (context.req.headers.host === herokuDomain) {
-      context.res.writeHead(302, {
-        Location: customDomain + context.req.url,
-      });
-      context.res.end();
-    }
   }
 
   return {
