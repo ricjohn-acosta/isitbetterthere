@@ -52,8 +52,19 @@ export async function getServerSideProps(context) {
   const session = await getSession(context);
   let ratedExperiences = null;
   let reportedExperiences = null;
-  // returns an array of experiences
-  console.log("SORT BY QUERY ", context.query.sortBy);
+  let herokuDomain = "isitbetterthere.herokuapp.com";
+  let customDomain = "https://www.isitbetterthere.com";
+
+  if (typeof window === "undefined" && context.res.writeHead) {
+    if (context.req.headers.host === herokuDomain) {
+      context.res.writeHead(302, {
+        Location: customDomain + context.req.url,
+      });
+    }
+    context.res.end();
+  }
+
+  console.log(context)
   const experiences = await getExperiences(
     context.query.from,
     context.query.to,
@@ -72,12 +83,6 @@ export async function getServerSideProps(context) {
     reportedExperiences = await getReportedExperiences(session.id);
   }
 
-  // if (typeof window === "undefined" && context.res.writeHead) {
-  //   context.res.writeHead(302, {
-  //     Location: "https://www.isitbetterthere.com" + context.req.url,
-  //   });
-  //   context.res.end();
-  // }
 
   return {
     props: {
