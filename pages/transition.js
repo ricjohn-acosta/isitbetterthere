@@ -20,7 +20,6 @@ const transition = ({
 }) => {
   const router = useRouter();
   const { from, to, category } = router.query;
-  console.log("EXPEEERIENCES!! ", experiences);
   if (Object.keys(router.query).length === 0) {
     return (
       <Layout>
@@ -55,16 +54,15 @@ export async function getServerSideProps(context) {
   let herokuDomain = "isitbetterthere.herokuapp.com";
   let customDomain = "https://www.isitbetterthere.com";
 
-  if (typeof window === "undefined" && context.res.writeHead) {
-    if (context.req.headers.host === herokuDomain) {
-      context.res.writeHead(302, {
-        Location: customDomain + context.req.url,
-      });
-    }
-    context.res.end();
-  }
+  // if (typeof window === "undefined" && context.res.writeHead) {
+  //   if (context.req.headers.host === herokuDomain) {
+  //     context.res.writeHead(302, {
+  //       Location: customDomain + context.req.url,
+  //     });
+  //   }
+  //   context.res.end();
+  // }
 
-  console.log(context)
   const experiences = await getExperiences(
     context.query.from,
     context.query.to,
