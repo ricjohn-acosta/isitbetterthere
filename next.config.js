@@ -14,8 +14,8 @@ module.exports = withCSS({
     }
     return config;
   },
-  env: {
-    prod: "https://www.isitbetterthere.com",
-    dev: "http://localhost:3000"
-  }
+  // env: {
+  //   prod: "https://www.isitbetterthere.com",
+  //   dev: "http://localhost:3000"
+  // }
 });
