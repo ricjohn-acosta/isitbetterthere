@@ -5,19 +5,27 @@ import {
   getUserExperience,
 } from "../../server/db";
 import { getSession } from "next-auth/client";
+import validator from "validator";
 
 export default async function experiences(req, res) {
   return new Promise(async (resolve) => {
     const session = await getSession({ req });
+    let test = null;
 
     if (req.method === "POST" && session) {
+      // if req.body is not valid res.send
+      let test = JSON.parse(req.body.story);
+      if (validator.isEmpty(test.blocks[0].text)) {
+        console.log("HELLO IS IT WORKIINGGG ");
+        test = {error: true}
+      }
+
       const userExperience = await getUserExperience({
         posted_by: req.body.posted_by,
         category: req.body.category,
         from: req.body.from,
         to: req.body.to,
       });
-
       console.log("ASDAWFAWF", userExperience);
       if (userExperience.length === 0) {
         addExperience(req.body).then((experience) => {
@@ -40,6 +48,9 @@ export default async function experiences(req, res) {
         console.log("EXPERIENCE DELETED");
       });
       res.status(200).end();
+      return resolve();
+    } else if (req.method === "GET" && session) {
+      res.status(200).json(test);
       return resolve();
     } else {
       res.setHeader("Allow", ["GET"]);

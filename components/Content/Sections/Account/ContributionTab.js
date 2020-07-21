@@ -10,6 +10,7 @@ const Wrapper = styled.div`
 const ContributionTab = ({ userContributions }) => {
   const [contributions, setContributions] = React.useState(userContributions);
 
+  console.log(userContributions)
   return (
     <Wrapper>
       <Typography variant="h5">Your stories</Typography>
@@ -19,7 +20,7 @@ const ContributionTab = ({ userContributions }) => {
           <>
             <Contribution
               key={i}
-              experienceId={e.experience_id}
+              experienceId={e.id}
               from={e.from}
               to={e.to}
               story={e.story}

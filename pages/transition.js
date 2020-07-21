@@ -70,6 +70,7 @@ export async function getServerSideProps(context) {
     reportedExperiences = await getReportedExperiences(session.id);
   }
 
+  console.log("awfafawfawf", experiences)
   return {
     props: {
       session,

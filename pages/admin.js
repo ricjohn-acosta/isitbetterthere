@@ -20,7 +20,7 @@ const admin = ({ session, user }) => {
               ? process.env.prod + "/api/experiences"
               : process.env.dev + "/api/experiences"
           )
-          .send({ experience_id: id })
+          .send({ id: id })
           .then((res) => console.log("EXPERIENCE DELETED"));
       } catch (error) {
         console.log("DELETING REPORTED EXPERIENCE FAILED", error);
