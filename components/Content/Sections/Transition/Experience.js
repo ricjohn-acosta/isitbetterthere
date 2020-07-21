@@ -17,6 +17,7 @@ import { rateExperience } from "../../../../store/actions/ratings";
 import { connect } from "react-redux";
 import { useSession } from "next-auth/client";
 import ReportForm from "./ReportForm";
+import SuccessDialog from "./SuccessDialog";
 import Popper from "@material-ui/core/Popper";
 import Paper from "@material-ui/core/Paper";
 
@@ -149,7 +150,6 @@ const Experience = ({
   hideCompany,
   hideOccupation,
   hideLocation,
-
   reportView,
   handleReportClose,
   violationType,
@@ -157,7 +157,8 @@ const Experience = ({
   handleReportSubmit,
   reportedExperiences,
   currentId,
-  uid,
+  hasReported,
+  handleReportSuccessClose,
 }) => {
   const [session, loading] = useSession();
   const [buttonClicked, setButtonClicked] = React.useState("");
@@ -266,6 +267,7 @@ const Experience = ({
     }
   };
 
+  console.log(experienceId);
   return (
     <Wrapper id={"/" + experienceId} userId={userId} sessionId={getSessionId()}>
       <Grid container drection="column">
@@ -274,10 +276,10 @@ const Experience = ({
             <IconContainer id="icon-container">
               <IconButton
                 id="icon-button"
-                value={experienceId.toString()}
+                value={experienceId}
                 onClick={(e) => {
                   handleOptions(e);
-                  setCurrentId(experienceId.toString());
+                  setCurrentId(experienceId);
                 }}
               >
                 <MoreVertIcon id="icon-button-svg" />
@@ -380,6 +382,7 @@ const Experience = ({
         uid={session && session.id}
         eid={experienceId}
       />
+      <SuccessDialog hasReported={hasReported} handleReportSuccessClose={handleReportSuccessClose}/>
     </Wrapper>
   );
 };

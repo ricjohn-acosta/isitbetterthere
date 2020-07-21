@@ -2,6 +2,7 @@ import Share from "../containers/Share";
 import Layout from "../components/Layout/Layout";
 import { getSession } from "next-auth/client";
 import { getUserExperiences, getUser } from "../server/db";
+import request from "superagent";
 
 const share = (props) => {
   return (

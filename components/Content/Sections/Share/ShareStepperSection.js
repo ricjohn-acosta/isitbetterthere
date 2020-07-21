@@ -19,7 +19,8 @@ import draftToHtml from "draftjs-to-html";
 import ExtraInformation from "./ExtraInformation";
 import Preview from "./Preview";
 import ContributionWarningModal from "./ContributionWarningModal";
-import Router from "next/router";
+import { useRouter } from 'next/router'
+import Router from 'next/router'
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -75,6 +76,7 @@ const htmlToReactParser = new HtmlToReactParser();
 
 const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
   const classes = useStyles();
+  const router = useRouter()
   const [categories, setCategory] = React.useState(careersCategory);
   const [currentCategory, setCurrentCategory] = React.useState("careers");
   const [toValue, setToValue] = React.useState(null);
@@ -258,6 +260,7 @@ const ShareStepperSection = ({ addExperience, session, userExperiences }) => {
   const handleReset = () => {
     setActiveStep(0);
   };
+
 
   return (
     <Wrapper>

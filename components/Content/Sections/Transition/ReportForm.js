@@ -28,7 +28,7 @@ const ReportForm = ({
 
   const hasClickedSubmit = () => {
     setClickedSubmit(true);
-    setSuccessDialog(true)
+    setSuccessDialog(true);
   };
 
   const hasUserReported = () => {
@@ -40,62 +40,62 @@ const ReportForm = ({
     );
   };
 
-    return (
-      <Dialog
-        open={reportView}
-        onClose={handleReportClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Flag as inappropriate</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            We want to make sure that the stories people have shared are
-            substantial and genuine.
-          </DialogContentText>
-          <br />
-          {hasUserReported() || clickedSubmit? (
-            "Thank you for reporting this submission! We will review your report and take appropriate action."
-          ) : (
-            <FormControl component="fieldset">
-              <FormLabel component="legend">Violation type:</FormLabel>
-              <RadioGroup value={violationType} onChange={handleViolationType}>
-                <FormControlLabel
-                  value="hate"
-                  control={<Radio />}
-                  label="This submission contains hateful, violent, or inappropriate content"
-                />
-                <FormControlLabel
-                  value="spam"
-                  control={<Radio />}
-                  label="This submission contains advertising or spam"
-                />
-                <FormControlLabel
-                  value="offtopic"
-                  control={<Radio />}
-                  label="This submission is off-topic"
-                />
-              </RadioGroup>
-            </FormControl>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleReportClose} color="primary">
-            Cancel
+  return (
+    <Dialog
+      open={reportView}
+      onClose={handleReportClose}
+      aria-labelledby="form-dialog-title"
+    >
+      <DialogTitle id="form-dialog-title">Flag as inappropriate</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          We want to make sure that the stories people have shared are
+          substantial and genuine.
+        </DialogContentText>
+        <br />
+        {hasUserReported() ? (
+          "Thank you for reporting this submission! We will review your report and take appropriate action."
+        ) : (
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Violation type:</FormLabel>
+            <RadioGroup value={violationType} onChange={handleViolationType}>
+              <FormControlLabel
+                value="hate"
+                control={<Radio />}
+                label="This submission contains hateful, violent, or inappropriate content"
+              />
+              <FormControlLabel
+                value="spam"
+                control={<Radio />}
+                label="This submission contains advertising or spam"
+              />
+              <FormControlLabel
+                value="offtopic"
+                control={<Radio />}
+                label="This submission is off-topic"
+              />
+            </RadioGroup>
+          </FormControl>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleReportClose} color="primary">
+          Cancel
+        </Button>
+        {hasUserReported() ? null : (
+          <Button
+            onClick={() => {
+              handleReportSubmit();
+              handleReportClose();
+            }}
+            color="primary"
+          >
+            Submit
           </Button>
-          {hasUserReported() ? null : (
-            <Button
-              onClick={() => {
-                handleReportSubmit();
-                hasClickedSubmit();
-              }}
-              color="primary"
-            >
-              Submit
-            </Button>
-          )}
-        </DialogActions>
-      </Dialog>
-    );
+        )}
+      </DialogActions>
+    </Dialog>
+  );
 };
 
 export default ReportForm;

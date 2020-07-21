@@ -5,8 +5,10 @@ export default async function contact(req, res) {
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "isitbetterthere@gmail.com",
-        pass: "wtf!5dudE",
+        // user: "isitbetterthere@gmail.com",
+        // pass: "wtf!5dudE",
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASSWORD,
       },
     });
 

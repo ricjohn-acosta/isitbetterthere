@@ -6,7 +6,7 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex("experiences").insert([
         {
-          experience_id: 1,
+          id: 1,
           posted_by: "112929919225856440659",
           category: "universities",
           from: "University of Auckland",
@@ -20,7 +20,7 @@ exports.seed = function (knex) {
           date_posted: Math.floor(Date.now() / 1000),
         },
         {
-          experience_id: 2,
+          id: 2,
           posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -34,7 +34,7 @@ exports.seed = function (knex) {
           date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
-          experience_id: 3,
+          id: 3,
           posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -48,7 +48,7 @@ exports.seed = function (knex) {
           date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
-          experience_id: 4,
+          id: 4,
           posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -62,7 +62,7 @@ exports.seed = function (knex) {
           date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
-          experience_id: 5,
+          id: 5,
           posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -76,7 +76,7 @@ exports.seed = function (knex) {
           date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
-          experience_id: 6,
+          id: 6,
           posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
@@ -90,7 +90,7 @@ exports.seed = function (knex) {
           date_posted: Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 101),
         },
         {
-          experience_id: 7,
+          id: 7,
           posted_by: "112929919225856440659",
           category: "careers",
           from: "Unemployed / Graduate",
