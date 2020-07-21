@@ -77,10 +77,10 @@ const Contribution = ({
 
   const handleDelete = (id) => {
     setContributions(
-      contributions.filter((experience) => experience.experience_id !== id)
+      contributions.filter((experience) => experience.id !== id)
     );
     console.log(id);
-    deleteExperience({ experience_id: id });
+    deleteExperience({ id: id });
   };
 
   return (
@@ -144,7 +144,7 @@ const Contribution = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={() => handleDelete(experienceId)}>
+          <Button color="primary" onClick={() => {handleDelete(experienceId); handleDialogClose()}}>
             Delete
           </Button>
           <Button color="primary" onClick={handleDialogClose}>

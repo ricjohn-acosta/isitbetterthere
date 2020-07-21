@@ -108,13 +108,15 @@ const ExperienceSection = ({
   const isMD = useMediaQuery("(max-width:1199px)");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [clickAway, setClickaway] = React.useState(false);
-  const [currentId, setCurrentId] = React.useState("");
+  const [currentId, setCurrentId] = React.useState(0);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
   const [reportView, setReportView] = React.useState(false);
   const [violationType, setViolationType] = React.useState("");
+  const [hasReported, setHasReported] = React.useState(false);
   const [session, loading] = useSession();
 
+  console.log("teataeata", currentId)
   const handleOptions = (event) => {
     let target = event.currentTarget;
     let targetValue = event.currentTarget.value
@@ -152,6 +154,10 @@ const ExperienceSection = ({
     setReportView(false);
   };
 
+  const handleReportSuccessClose = () => {
+    setHasReported(false)
+  }
+
   const handleReportSubmit = () => {
     addReport({
       reported_by: session.id,
@@ -159,12 +165,14 @@ const ExperienceSection = ({
       violation_type: violationType,
       date_reported: Math.floor(Date.now() / 1000),
     });
+    setHasReported(true)
   };
 
   const handleViolationType = (e) => {
     setViolationType(e.target.value);
   };
 
+  console.log(experiences)
   const displayExperiences = () => {
     return (
       <>
@@ -177,7 +185,7 @@ const ExperienceSection = ({
             <React.Fragment key={i}>
               <Experience
                 key={i}
-                experienceId={e.experience_id}
+                experienceId={e.eid}
                 userId={e.user_id}
                 name={e.name}
                 profilePicture={e.profile_picture}
@@ -196,7 +204,7 @@ const ExperienceSection = ({
                   ratedExperiences &&
                   ratedExperiences.find(
                     ({ experience_id }) =>
-                      experience_id === e.experience_id.toString()
+                      experience_id === e.eid
                   )
                 }
                 handleOptions={handleOptions}
@@ -214,6 +222,8 @@ const ExperienceSection = ({
                 reportedExperiences={reportedExperiences}
                 currentId={currentId}
                 uid={session && session.id}
+                hasReported={hasReported}
+                handleReportSuccessClose={handleReportSuccessClose}
               />
               <br />
             </React.Fragment>

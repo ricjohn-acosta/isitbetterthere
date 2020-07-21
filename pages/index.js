@@ -2,6 +2,7 @@ import Home from "../containers/Home";
 import Layout from "../components/Layout/Layout";
 import { getSession } from "next-auth/client";
 import { getAllUserExperiences } from "../server/db";
+import { useRouter } from "next/router";
 
 const Index = (props) => {
   return (

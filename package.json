@@ -10,7 +10,7 @@
     "db:seed": "npx knex seed:run",
     "db:reset": "run-s db:delete db:migrate db:seed dev",
     "heroku-postbuild": "npm run build",
-    "postinstall": "knex migrate:rollback && knex migrate:latest && knex seed:run"
+    "postinstall": "knex migrate:latest && knex seed:run"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.0",
@@ -48,7 +48,8 @@
     "redux-thunk": "^2.3.0",
     "sqlite3": "^4.2.0",
     "styled-components": "^5.1.1",
-    "superagent": "^5.2.2"
+    "superagent": "^5.2.2",
+    "validator": "^13.1.1"
   },
   "license": "ISC",
   "devDependencies": {

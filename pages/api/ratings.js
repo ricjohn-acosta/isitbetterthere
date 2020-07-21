@@ -14,7 +14,7 @@ export default async function ratings(req, res) {
       const ratedExperience = userRatedExperiences.find(
         ({ user_id, experience_id }) =>
           user_id === req.body.user_id &&
-          experience_id === req.body.experience_id.toString()
+          experience_id === req.body.experience_id
       );
 
       if (!ratedExperience) {

@@ -41,11 +41,10 @@ export async function getServerSideProps(context) {
             : process.env.dev + "/account-setup",
       });
       context.res.end();
-    } else {
-      user = await getUser(session.id);
-      userContributions = await getUserExperiences(session.id);
-      helpfulContributions = await getUserRatedExperiences(session.id);
     }
+    user = await getUser(session.id);
+    userContributions = await getUserExperiences(session.id);
+    helpfulContributions = await getUserRatedExperiences(session.id);
   }
 
   return {

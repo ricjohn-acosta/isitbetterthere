@@ -82,7 +82,7 @@ const ContributionExperienceModal = ({
     );
     setStoryPreview(updatedStoryPreview);
     editExperience({
-      experience_id: experienceId,
+      id: experienceId,
       story: updatedStory,
     });
     setEditing(false);
