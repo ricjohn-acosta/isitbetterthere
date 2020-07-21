@@ -10,7 +10,7 @@ import validator from "validator";
 export default async function experiences(req, res) {
   return new Promise(async (resolve) => {
     const session = await getSession({ req });
-    let test = null;
+    let test = "test";
 
     if (req.method === "POST" && session) {
 
