@@ -13,12 +13,6 @@ export default async function experiences(req, res) {
     let test = null;
 
     if (req.method === "POST" && session) {
-      // if req.body is not valid res.send
-      let test = JSON.parse(req.body.story);
-      if (validator.isEmpty(test.blocks[0].text)) {
-        console.log("HELLO IS IT WORKIINGGG ");
-        test = {error: true}
-      }
 
       const userExperience = await getUserExperience({
         posted_by: req.body.posted_by,
