@@ -14,7 +14,6 @@ export default async function experiences(req, res) {
 
     if (req.method === "POST" && session) {
       if (!isValid(req.body, "new-experience")) {
-        // console.log("test")
         res.status(200).end();
         return resolve();
       }
