@@ -6,7 +6,7 @@ export const isValid = (request, source) => {
   switch (source) {
     case "new-experience":
       
-      if
+      // check if category, to and from values are all valid options
 
       if(validator.isEmpty(JSON.parse(request.story).blocks[0].text)) {
         console.log("json")
@@ -21,6 +21,7 @@ export const isValid = (request, source) => {
       return true;
 
     case "new-user":
+      // check if location, occupation, site source are all valid options
       const { occupation, location, comes_from } = request;
       occupation === "" || location === "" || comes_from === "" ? true : false;
 
