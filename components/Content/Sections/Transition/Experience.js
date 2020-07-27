@@ -61,7 +61,7 @@ const HelpfulButton = styled(Button)`
     // Check if experience has been rated
     if (props.ratetype !== false) {
       // Check if no button has been clicked yet, use db data if so.
-      if (props.ratetype === 1 && props.buttonClicked === "") {
+      if (props.ratetype === 1 || props.ratetype === true && props.buttonClicked === "") {
         return "#CCFFCC";
       }
 
