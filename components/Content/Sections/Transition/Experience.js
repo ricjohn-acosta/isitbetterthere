@@ -291,8 +291,8 @@ const Experience = ({
             <UserInfoContainer>
               <UserInfo>
                 <PersonIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;{hideName === 1 ? "Anon" : name}&nbsp;
-                {hideLocation === 1 ? null : (
+                &nbsp;{hideName === 1 || hideName === false ? "Anon" : name}&nbsp;
+                {hideLocation === 1 || hideLocation === false ? null : (
                   <>
                     <LocationOnRoundedIcon
                       style={{ color: "#1a8cff" }}
@@ -303,7 +303,7 @@ const Experience = ({
                   </>
                 )}
               </UserInfo>
-              {hideEmail === 1 ? null : (
+              {hideEmail === 1 || hideEmail === false ? null : (
                 <UserInfo>
                   <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />
                   &nbsp;{email}
@@ -311,7 +311,7 @@ const Experience = ({
               )}
               {isWhiteSpaceOrEmpty(position) ||
                 (isWhiteSpaceOrEmpty(company) ||
-                (hideCompany === 1 && hideOccupation === 1) ? null : (
+                (hideCompany === 1 || hideCompany === false && hideOccupation === 1 || hideOccupation === false) ? null : (
                   <UserInfo>
                     <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
                     &nbsp;{renderJobDetails(position, company)}
