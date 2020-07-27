@@ -36,7 +36,7 @@ function getUser(userId, db = connection) {
 
 function editUser(userData, db = connection) {
   let { user_id: userId, ...details } = userData;
-  return db("users").where("user_id", userId).update(details);
+  return db("users").where({user_id: userId}).update(details);
 }
 
 function registerUser(user, db = connection) {
