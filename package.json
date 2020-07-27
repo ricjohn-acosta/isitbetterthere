@@ -10,7 +10,7 @@
     "db:seed": "npx knex seed:run",
     "db:reset": "run-s db:delete db:migrate db:seed dev",
     "heroku-postbuild": "npm run build",
-    "postinstall": "knex migrate:rollback && knex migrate:latest && knex seed:run"
+    "postinstall": "knex migrate:latest && knex seed:run"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.0",
