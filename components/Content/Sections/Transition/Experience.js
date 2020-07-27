@@ -287,7 +287,7 @@ const Experience = ({
             </IconContainer>
           )}
           <ProfileDetails>
-            <StyledAvatar src={profilePicture} />
+            <StyledAvatar src={hideName === 1 || hideName === true ? "/user.png" : profilePicture} />
             <UserInfoContainer>
               <UserInfo>
                 <PersonIcon style={{ color: "#1a8cff" }} fontSize="small" />
