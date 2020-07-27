@@ -82,7 +82,7 @@ const UnhelpfulButton = styled(Button)`
     // Check if experience has been rated
     if (props.ratetype !== false) {
       // Check if no button has been clicked yet, use db data if so.
-      if (props.ratetype === 0 && props.buttonClicked === "") {
+      if (props.ratetype === 0 || props.ratetype === false && props.buttonClicked === "") {
         return "#FF9999";
       }
 
