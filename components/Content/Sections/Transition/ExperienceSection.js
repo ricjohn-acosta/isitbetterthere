@@ -186,7 +186,7 @@ const ExperienceSection = ({
               <Experience
                 key={i}
                 experienceId={e.eid}
-                userId={e.user_id}
+                userId={e.uid}
                 name={e.name}
                 profilePicture={e.profile_picture}
                 location={e.location}

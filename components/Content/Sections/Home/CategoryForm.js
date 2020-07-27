@@ -93,7 +93,7 @@ const CategoryForm = ({
       >
         <MenuItem value={"secondaryEducation"}>Secondary Education</MenuItem>
         <MenuItem value={"tertiaryEducation"}>Tertiary Education</MenuItem>
-        <MenuItem value={"universities"}>Universities</MenuItem>
+        <MenuItem value={"universities"}>Institutions</MenuItem>
         <MenuItem value={"careers"}>Careers</MenuItem>
         <MenuItem value={"jobs"}>Jobs</MenuItem>
         <MenuItem value={"countries"}>Countries</MenuItem>

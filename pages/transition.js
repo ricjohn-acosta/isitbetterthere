@@ -5,7 +5,7 @@ import PageNotFound from "../containers/PageNotFound";
 import { session, getSession } from "next-auth/client";
 import {
   getExperiences,
-  getAllExperiences,
+  getTransitionExperiences,
   getRatedExperiences,
   getReportedExperiences,
 } from "../server/db";
@@ -60,7 +60,7 @@ export async function getServerSideProps(context) {
     context.query.filterBy
   );
 
-  const allExperiences = await getAllExperiences(
+  const allExperiences = await getTransitionExperiences(
     context.query.from,
     context.query.to
   );

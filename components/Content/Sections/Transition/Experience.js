@@ -267,7 +267,7 @@ const Experience = ({
     }
   };
 
-  console.log(experienceId);
+  console.log(getSessionId());
   return (
     <Wrapper id={"/" + experienceId} userId={userId} sessionId={getSessionId()}>
       <Grid container drection="column">

@@ -8,7 +8,7 @@ module.exports = {
   getUsers,
   getUserExperiences,
   getExperiences,
-  getAllExperiences,
+  getTransitionExperiences,
   getRatedExperiences,
   getReportedExperiences,
   getUserExperiences,
@@ -127,6 +127,7 @@ async function getExperiences(from, to, page, sort, filter, db = connection) {
       "experiences.helpful",
       "experiences.not_helpful",
       "experiences.date_posted",
+      "users.user_id as uid",
       "users.profile_picture",
       "users.name",
       "users.email",
@@ -153,7 +154,7 @@ async function getExperiences(from, to, page, sort, filter, db = connection) {
   return [experiences, totalExperiences.length];
 }
 
-function getAllExperiences(from, to, db = connection) {
+function getTransitionExperiences(from, to, db = connection) {
   return db("experiences")
     .where({ from, to })
     .join("users", "experiences.posted_by", "=", "users.user_id")

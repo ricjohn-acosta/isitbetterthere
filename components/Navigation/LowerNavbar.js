@@ -22,6 +22,7 @@ import Popper from "@material-ui/core/Popper";
 import { makeStyles } from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import { signIn } from "next-auth/client";
+import { useSession } from 'next-auth/client'
 
 const useStyles = makeStyles((theme) => ({
   label: { justifyContent: "normal" },
@@ -130,10 +131,11 @@ const SigninIcon = styled.img`
   margin-left: 20px;
 `;
 
-const LowerNavbar = ({ session }) => {
+const LowerNavbar = () => {
   const [providers, setProviders] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const [ session, loading ] = useSession()
   const router = useRouter();
   const classes = useStyles();
 
