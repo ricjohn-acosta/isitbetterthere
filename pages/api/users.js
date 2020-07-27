@@ -1,5 +1,6 @@
 import { editUser, registerUser, getUser } from "../../server/db";
 import { getSession } from "next-auth/client";
+import { isValid } from "../../server/utils/validateInputs";
 
 export default async function users(req, res) {
   return new Promise(async (resolve) => {

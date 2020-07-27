@@ -33,7 +33,7 @@ export const options = (categories) => {
     }
 
     if (categories == uniCategory) {
-      const firstLetter = option.field.toUpperCase();
+      const firstLetter = option.category[0].toUpperCase();
       return {
         firstLetter: /[0-9]/.test(firstLetter) ? "" : firstLetter,
         ...option,

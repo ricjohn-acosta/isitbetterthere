@@ -31,6 +31,8 @@ export const isValid = (request, source) => {
         return false;
       }
 
+      return true;
+
     default:
       return false;
   }
