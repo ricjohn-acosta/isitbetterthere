@@ -102,8 +102,9 @@ const AccountSection = ({
     });
   };
 
-  console.log(hideEmail);
-  console.log(hideOccupation);
+  console.log("USER", user)
+  console.log("HIDE EMAIL", hideEmail);
+  console.log("HIDE OCCUPATION", hideOccupation);
 
   const renderView = () => {
     switch (router.query.tab) {
