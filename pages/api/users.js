@@ -29,6 +29,7 @@ export default async function users(req, res) {
       editUser(req.body).then((user) => {
         console.log("USER UPDATED");
       });
+      res.status(200).end();
       return resolve();
     } else {
       res.setHeader("Allow", ["GET"]);
