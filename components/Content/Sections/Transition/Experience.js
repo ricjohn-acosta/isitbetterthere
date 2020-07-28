@@ -59,7 +59,7 @@ const HelpfulButton = styled(Button)`
   color: black;
   background-color: ${(props) => {
     // Check if experience has been rated
-    if (!props.ratetype || props.ratetype === 1) {
+    if (!props.ratetype || (props.ratetype === 1 || props.ratetype === true)) {
       // Check if no button has been clicked yet, use db data if so.
       if (
         (props.ratetype === 1 || props.ratetype === true) &&
@@ -83,7 +83,7 @@ const HelpfulButton = styled(Button)`
 const UnhelpfulButton = styled(Button)`
   background-color: ${(props) => {
     // Check if experience has been rated
-    if (!props.ratetype || props.ratetype === 0) {
+    if (!props.ratetype || (props.ratetype === 0 || props.ratetype === false)) {
       // Check if no button has been clicked yet, use db data if so.
       if (
         (props.ratetype === 0 || props.ratetype === false) &&
