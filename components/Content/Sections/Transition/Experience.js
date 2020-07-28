@@ -192,7 +192,7 @@ const Experience = ({
 
   const handleHelpful = () => {
     if (isRated && buttonClicked === "") {
-      if (isRated.is_helpful === 1) {
+      if (isRated.is_helpful === 1 || isRated.is_helpful === true) {
         return true;
       }
     }
@@ -204,7 +204,7 @@ const Experience = ({
 
   const handleNotHelpful = () => {
     if (isRated && buttonClicked === "") {
-      if (isRated.is_helpful === 0) {
+      if (isRated.is_helpful === 0 || isRated.is_helpful === false) {
         return true;
       }
     }
