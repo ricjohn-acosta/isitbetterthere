@@ -117,6 +117,21 @@ const WelcomeMessage = styled(Typography)`
   }
 `;
 
+const SeeStories = styled(Typography)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10vh;
+  margin-left: 25vw;
+
+  ${(props) => props.theme.breakpoints.down("md")} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1vw;
+  }
+`;
+
 const ImageContainer = styled(Grid)`
   padding-right: 50px;
 `;
@@ -229,6 +244,8 @@ const MainSection = () => {
             isSwapping={isSwapping}
             isEmptyField={isEmptyField}
           />
+          <br/>
+          <SeeStories variant="body" component="a" href="/">OR see all stories..</SeeStories>
         </InputContainer>
         <ImageContainer item xs={12} sm={12} md={12} lg={3}>
           <img

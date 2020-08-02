@@ -13,8 +13,9 @@ module.exports = {
   getReportedExperiences,
   getUserExperiences,
   getUserExperience,
-  getAllUserExperiences,
+  getTotalContributions,
   getUserRatedExperiences,
+  getAllExperiences,
   editExperience,
   addExperience,
   addRating,
@@ -161,8 +162,45 @@ function getTransitionExperiences(from, to, db = connection) {
     .select();
 }
 
-function getAllUserExperiences(db = connection) {
+function getTotalContributions(db = connection) {
   return db("experiences").select();
+}
+
+function getAllExperiences(db = connection) {
+  return db("experiences")
+  .select([
+    "experiences.id as eid",
+    "experiences.posted_by",
+    "experiences.category",
+    "experiences.from",
+    "experiences.to",
+    "experiences.fulfillment",
+    "experiences.ease_of_transition",
+    "experiences.regret",
+    "experiences.story",
+    "experiences.helpful",
+    "experiences.not_helpful",
+    "experiences.date_posted",
+    "users.id as upid",
+    "users.user_id as uid",
+    "users.profile_picture",
+    "users.name",
+    "users.email",
+    "users.bio",
+    "users.occupation",
+    "users.position",
+    "users.company",
+    "users.location",
+    "users.hide_name",
+    "users.hide_email",
+    "users.hide_occupation",
+    "users.hide_company",
+    "users.hide_location",
+    "users.comes_from",
+    "users.user_created",
+    "users.permission",
+  ])
+  .leftJoin("users", "experiences.posted_by", "users.user_id")
 }
 
 function getUserExperience(experience, db = connection) {

@@ -1,7 +1,7 @@
 import Home from "../containers/Home";
 import Layout from "../components/Layout/Layout";
 import { getSession } from "next-auth/client";
-import { getAllUserExperiences } from "../server/db";
+import { getTotalContributions } from "../server/db";
 import { useRouter } from "next/router";
 
 const Index = (props) => {
@@ -13,7 +13,7 @@ const Index = (props) => {
 };
 
 export async function getServerSideProps(context) {
-  const allUserExperience = await getAllUserExperiences();
+  const allUserExperience = await getTotalContributions();
   let contributionCount = allUserExperience.length;
 
   return {
