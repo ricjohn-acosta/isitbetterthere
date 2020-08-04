@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import moment from "moment";
+import Link from 'next/link'
 
 const Wrapper = styled(Paper)`
   margin: 2.5% 20% 2.5% 20%;
@@ -46,6 +47,7 @@ const ReadButton = styled(Button)`
 const HelpfulStory = ({
   name,
   story,
+  uid,
   helpfulCount,
   from,
   to,
@@ -91,14 +93,16 @@ const HelpfulStory = ({
                 &nbsp;{to}
               </Transition>
             </TransitionContainer>
-            <BottomContent container item xs={12} sm={12}>
+            <BottomContent container item xs={12} sm={12} spacing={2}>
               <Grid item xs={12} sm={6}>
-                <Button disableRipple variant="outlined">
-                  View stories relating this transition
+                <Button fullWidth disableRipple variant="outlined">
+                  View stories related to this transition
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6}>
+                <Link href="/user/[id]" as={`/user/${uid}`} passHref>
                 <ReadButton
+                  fullWidth
                   style={{ color: "white" }}
                   disableElevation
                   disableRipple
@@ -108,6 +112,7 @@ const HelpfulStory = ({
                 >
                   Read {name}'s story
                 </ReadButton>
+                </Link>
               </Grid>
             </BottomContent>
           </Grid>

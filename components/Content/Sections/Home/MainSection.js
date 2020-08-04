@@ -16,6 +16,8 @@ import {
 import Router from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 import CategoryForm from "./CategoryForm";
+import Link from 'next/link'
+
 
 const useStyles = makeStyles((theme) => ({
   popper: { width: 400 },
@@ -245,7 +247,9 @@ const MainSection = () => {
             isEmptyField={isEmptyField}
           />
           <br/>
-          <SeeStories variant="body" component="a" href="/">OR see all stories..</SeeStories>
+          <Link href="/stories" passHref>
+          <SeeStories variant="body" component="a">OR see all stories..</SeeStories>
+          </Link>
         </InputContainer>
         <ImageContainer item xs={12} sm={12} md={12} lg={3}>
           <img
