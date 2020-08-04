@@ -29,7 +29,7 @@ const Transition = styled(Typography)`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: large;
+  font-size: 3em;
 
   ${(props) => props.theme.breakpoints.down("md")} {
     font-size: 2em;
@@ -41,7 +41,7 @@ const Transition = styled(Typography)`
 `;
 
 const ReadButton = styled(Button)`
-  float: right;
+  // float: right;
 `;
 const HelpfulStory = ({
   name,
@@ -69,14 +69,13 @@ const HelpfulStory = ({
               <Grid item xs={12} sm={12} md={6}>
                 <Typography variant="subtitle1">
                   <b>{hideName === 1 || hideName === true ? "Anon" : name}'s</b>{" "}
-                  story from <b>{from}</b> to <b>{to}</b>
+                  story
                 </Typography>
               </Grid>
               <HelpedPeopleCount item xs={12} sm={12} md={6}>
                 <Typography variant="subtitle1">
-                  <b>{helpfulCount !== 0 ? helpfulCount - 1 : helpfulCount}</b>{" "}
-                  other {helpfulCount - 1 === 1 ? "person" : "people"} found
-                  this helpful
+                  <b>{helpfulCount}</b>{" "}
+                  {helpfulCount === 1 ? "person" : "people"} found this helpful
                 </Typography>
                 <Typography variant="subtitle1">
                   {" "}
@@ -85,18 +84,31 @@ const HelpfulStory = ({
               </HelpedPeopleCount>
             </TopContent>
             <TransitionContainer item xs={12} sm={12}>
-              <Transition variant="h5">test</Transition>
+              <Transition variant="h6">
+                {" "}
+                {from}&nbsp;
+                <ArrowForwardIcon fontSize="small" />
+                &nbsp;{to}
+              </Transition>
             </TransitionContainer>
-            <BottomContent item xs={12} sm={12}>
-              <ReadButton
-                style={{ color: "white" }}
-                disableElevation
-                onClick={handleOpen}
-                color="primary"
-                variant="contained"
-              >
-                VIEW
-              </ReadButton>
+            <BottomContent container item xs={12} sm={12}>
+              <Grid item xs={12} sm={6}>
+                <Button disableRipple variant="outlined">
+                  View stories relating this transition
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ReadButton
+                  style={{ color: "white" }}
+                  disableElevation
+                  disableRipple
+                  onClick={handleOpen}
+                  color="primary"
+                  variant="contained"
+                >
+                  Read {name}'s story
+                </ReadButton>
+              </Grid>
             </BottomContent>
           </Grid>
         </>

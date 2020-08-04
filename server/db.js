@@ -6,7 +6,6 @@ module.exports = {
   getUser,
   editUser,
   getUsers,
-  getUserExperiences,
   getExperiences,
   getTransitionExperiences,
   getRatedExperiences,
