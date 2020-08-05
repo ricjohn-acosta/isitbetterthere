@@ -5,6 +5,8 @@ import ReactImageFallback from "react-image-fallback";
 import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
 import EmailIcon from "@material-ui/icons/Email";
 import WorkIcon from "@material-ui/icons/Work";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import moment from "moment";
 
 const Wrapper = styled.div`
   min-height: 110vh;
@@ -72,7 +74,37 @@ const BioContainer = styled(Typography)`
   text-align: center;
 `;
 
-const UserView = ({ user }) => {
+const RightContent = styled(Grid)`
+  text-align: right;
+  background-color: #f0f0f0;
+`;
+
+const LeftContent = styled(Grid)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+`;
+
+const Transition = styled(Typography)`
+  font-size: large;
+
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    font-size: 1em;
+  }
+`;
+
+const ContributionDetails = styled.div`
+  padding: 2.5%;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  float: right;
+  padding: 5px;
+`;
+
+const UserView = ({ user, userExperiences }) => {
   return (
     <>
       <LowerNavbar />
@@ -129,7 +161,46 @@ const UserView = ({ user }) => {
             </ProfileDetails>
           </LeftGrid>
           <RightGrid item xs={12} sm={12} md={12} lg={9}>
-            test
+            {console.log(userExperiences)}
+            {userExperiences.map((e) => {
+              return (
+                <>
+                  <Grid container direction="row">
+                    <LeftContent item xs={12} sm={7}>
+                      <Transition variant="h5">
+                        {e.from} <ArrowForwardIcon fontSize="small" /> {e.to}{" "}
+                      </Transition>
+                    </LeftContent>
+                    <RightContent item xs={12} sm={5}>
+                      <ContributionDetails>
+                        <Typography variant="body2">
+                          {moment.unix(e.date_posted).format("DD MMM YYYY")}
+                        </Typography>
+                        <Typography variant="body2">
+                          <b>{e.helpful}</b>{" "}
+                          {e.helpful === 1 ? "user" : "users"} found this
+                          helpful
+                        </Typography>
+                        <br />
+                        <ButtonContainer>
+                          &nbsp;
+                          <Button
+                            style={{ color: "white" }}
+                            color="primary"
+                            variant="contained"
+                            size="small"
+                            disableElevation
+                          >
+                            VIEW STORY
+                          </Button>
+                        </ButtonContainer>
+                      </ContributionDetails>
+                    </RightContent>
+                  </Grid>
+                  <br/>
+                </>
+              );
+            })}
           </RightGrid>
         </Grid>
       </Wrapper>
