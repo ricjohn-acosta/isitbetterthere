@@ -1,3 +1,4 @@
+import React, {useEffect} from 'react';
 import styled from "styled-components";
 import LowerNavbar from "../components/Navigation/LowerNavbar";
 import { Paper, Grid, Typography, Button } from "@material-ui/core";
@@ -7,6 +8,9 @@ import EmailIcon from "@material-ui/icons/Email";
 import WorkIcon from "@material-ui/icons/Work";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import moment from "moment";
+import Router from "next/router";
+import { useRouter } from 'next/router'
+
 
 const Wrapper = styled.div`
   min-height: 110vh;
@@ -105,6 +109,18 @@ const ButtonContainer = styled.div`
 `;
 
 const UserView = ({ user, userExperiences }) => {
+  
+  const router = useRouter()
+
+  const [currentStory, setCurrentStory] = React.useState('')
+
+  const handleCurrentStory = (event, storyID) => {
+    event.preventDefault();
+    router.push({pathname: `/user/${Router.router.query.id}`, query: {story:storyID}})
+  };
+
+  console.log(Router)
+
   return (
     <>
       <LowerNavbar />
@@ -162,23 +178,23 @@ const UserView = ({ user, userExperiences }) => {
           </LeftGrid>
           <RightGrid item xs={12} sm={12} md={12} lg={9}>
             {console.log(userExperiences)}
-            {userExperiences.map((e) => {
+            {userExperiences.map((experience) => {
               return (
                 <>
                   <Grid container direction="row">
                     <LeftContent item xs={12} sm={7}>
                       <Transition variant="h5">
-                        {e.from} <ArrowForwardIcon fontSize="small" /> {e.to}{" "}
+                        {experience.from} <ArrowForwardIcon fontSize="small" /> {experience.to}{" "}
                       </Transition>
                     </LeftContent>
                     <RightContent item xs={12} sm={5}>
                       <ContributionDetails>
                         <Typography variant="body2">
-                          {moment.unix(e.date_posted).format("DD MMM YYYY")}
+                          {moment.unix(experience.date_posted).format("DD MMM YYYY")}
                         </Typography>
                         <Typography variant="body2">
-                          <b>{e.helpful}</b>{" "}
-                          {e.helpful === 1 ? "user" : "users"} found this
+                          <b>{experience.helpful}</b>{" "}
+                          {experience.helpful === 1 ? "user" : "users"} found this
                           helpful
                         </Typography>
                         <br />
@@ -190,6 +206,7 @@ const UserView = ({ user, userExperiences }) => {
                             variant="contained"
                             size="small"
                             disableElevation
+                            onClick={() => {handleCurrentStory(event, experience.id)}}
                           >
                             VIEW STORY
                           </Button>
