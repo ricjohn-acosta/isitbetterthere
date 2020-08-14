@@ -3,6 +3,7 @@ import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import moment from "moment";
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const Wrapper = styled(Paper)`
   margin: 2.5% 20% 2.5% 20%;
@@ -47,6 +48,7 @@ const ReadButton = styled(Button)`
 const HelpfulStory = ({
   name,
   story,
+  eid,
   uid,
   helpfulCount,
   from,
@@ -56,9 +58,20 @@ const HelpfulStory = ({
 }) => {
   const [modalView, setModalView] = React.useState(false);
 
+  const router = useRouter()
+
   const handleOpen = () => {
     setModalView(true);
   };
+
+  const handleRouter = (e, uid, eid) => {
+    router.push({
+      pathname: `/user/${uid}`,
+      query: {
+        story: eid
+      }
+    })
+  }
 
   return (
     <Wrapper variant="outlined">
@@ -100,19 +113,19 @@ const HelpfulStory = ({
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Link href="/user/[id]" as={`/user/${uid}`} passHref>
+                {/* <Link href="/user/[id]" as={`/user/${uid}?story=${eid}`} passHref> */}
                 <ReadButton
                   fullWidth
                   style={{ color: "white" }}
                   disableElevation
                   disableRipple
-                  onClick={handleOpen}
+                  onClick={(e) => {handleRouter(e, uid, eid);}}
                   color="primary"
                   variant="contained"
                 >
                   Read {name}'s story
                 </ReadButton>
-                </Link>
+                {/* </Link> */}
               </Grid>
             </BottomContent>
           </Grid>

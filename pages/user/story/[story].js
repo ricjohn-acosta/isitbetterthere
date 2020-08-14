@@ -9,7 +9,5 @@ const User = ({}) => {
     </Layout>
   );
 };
-export async function getServerSideProps(context) {
-}
 
 export default User;

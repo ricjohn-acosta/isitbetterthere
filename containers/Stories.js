@@ -18,6 +18,7 @@ const Stories = ({ allContributions }) => {
           name={e.name}
           story={e.story}
           uid={e.uid}
+          eid={e.eid}
           from={e.from}
           to={e.to}
           helpfulCount={e.helpful}
