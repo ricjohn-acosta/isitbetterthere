@@ -3,6 +3,9 @@ import Layout from "../components/Layout/Layout";
 import { session, getSession } from "next-auth/client";
 import PageNotFound from "../containers/PageNotFound";
 import { getUsers } from "../server/db";
+import { useSelector, useDispatch } from 'react-redux'
+import {getUserBySessionId} from "../server/user/userDb";
+import dbConnect from "../server/mongodbConnect";
 
 // CLIENT SIDE
 const accountSetup = ({ session, users }) => {
@@ -23,27 +26,14 @@ const accountSetup = ({ session, users }) => {
 
 // SERVER SIDE
 export async function getServerSideProps(context) {
+  await dbConnect();
   const session = await getSession(context);
   const users = await getUsers();
 
-  const findUserInDatabase = () => {
-    let found = false;
-    console.log("test");
-
-    if (session) {
-      users.forEach((user) => {
-        if (user.user_id === session.id) {
-          found = true;
-        }
-      });
-    } else {
-      found = false;
-    }
-    return found;
-  };
-
   if (typeof window === "undefined" && context.res.writeHead) {
-    if (findUserInDatabase()) {
+    const user = await getUserBySessionId(session.id)
+
+    if (user) {
       context.res.writeHead(302, {
         Location:
           process.env.NODE_ENV === "production"
