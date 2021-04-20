@@ -18,8 +18,6 @@ export default async function experiences(req, res) {
         return resolve();
       }
 
-      console.log("kjhsdfiuhs", req.body)
-
       const userExperience = await getUserExperience({
         posted_by: req.body.posted_by,
         category: req.body.category,
