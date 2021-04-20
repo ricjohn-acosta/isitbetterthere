@@ -11,7 +11,7 @@ import ContributionTab from "./ContributionTab";
 import HelpfulStoriesTab from "./HelpfulStoriesTab";
 import ReactImageFallback from "react-image-fallback";
 import {editUser} from "../../../../store/actions/users";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {useRouter} from "next/router";
 
 const Wrapper = styled.div`
@@ -92,7 +92,9 @@ const AccountSection = ({
         user.hide_location === true
     );
 
-    console.log(userContributions);
+    const localUser = useSelector((state) => state.users.user)
+
+    console.log('localUser', localUser);
     const handleSubmit = () => {
         editUser({
             user_id: session.id,

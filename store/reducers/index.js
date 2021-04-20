@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import userReducer from "./users";
+import userReducer, {storeUserData} from "./users";
 import experienceReducer from "./experiences";
 
 export default combineReducers({
-  users: userReducer,
+  users: storeUserData,
   experiences: experienceReducer,
 });

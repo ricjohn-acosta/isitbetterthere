@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Layout from "../components/Layout/Layout";
 import Account from "../containers/Account";
 import {getSession} from "next-auth/client";
@@ -8,8 +8,17 @@ import {
     getUserRatedExperiences,
 } from "../server/db";
 import {getUserBySessionId} from "../server/user/userDb";
+import {storeUserData} from "../store/actions/users";
+import {useDispatch} from "react-redux";
+import dbConnect from "../server/mongodbConnect";
 
 const account = (props) => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(storeUserData(props.user))
+    }, [dispatch])
+
     return (
         <Layout>
             <Account {...props} />
@@ -18,7 +27,9 @@ const account = (props) => {
 };
 
 export async function getServerSideProps(context) {
+    await dbConnect();
     const session = await getSession(context);
+
     let user = null;
     let userContributions = null;
     let helpfulContributions = null;

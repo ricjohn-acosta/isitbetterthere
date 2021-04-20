@@ -1,7 +1,9 @@
 import * as actions from "../actions/types";
 import { HYDRATE } from "next-redux-wrapper";
+import {STORE_USER_DATA} from "../actions/users";
 
 const initialState = {
+  user: null,
   error: null,
   loading: false,
 };
@@ -44,6 +46,18 @@ const addUserEnd = (state) => {
     loading: false,
   };
 };
+
+export const storeUserData = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case STORE_USER_DATA:
+      return {
+        ...state,
+        user: payload
+      }
+    default:
+      return state
+  }
+}
 
 export default (state = initialState, { type, payload }, action) => {
   switch (type) {
