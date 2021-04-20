@@ -24,6 +24,7 @@ export async function getServerSideProps(context) {
     let helpfulContributions = null;
 
     if (!session) {
+        // Redirect to signup if no session
         context.res.writeHead(302, {
             Location:
                 process.env.NODE_ENV === "production"
@@ -31,9 +32,8 @@ export async function getServerSideProps(context) {
                     : process.env.dev + "/signup",
         });
         context.res.end();
-    }
-
-    if (session) {
+    } else {
+        // Get user data if there is session
         const fetchedUser = await getUserBySessionId(session.id)
 
         if (!fetchedUser) {
