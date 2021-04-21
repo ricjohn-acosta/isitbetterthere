@@ -1,14 +1,8 @@
 import styled from "styled-components";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 import AppBar from "@material-ui/core/AppBar";
-import Typography from "@material-ui/core/Typography";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import BrandLogo from "./BrandLogo";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import Link from "next/link";
-import {useSelector} from "react-redux";
 
 const UpperNavbar = styled(AppBar)`
   background-color: #33cccc;
@@ -37,9 +31,7 @@ const Container = styled.div`
 `;
 
 const StyledUpperNavbar = () => {
-  const localUser = useSelector((state) => state.users.user)
 
-  console.log('localUser', localUser);
   const router = useRouter();
   return (
     <UpperNavbar elevation={0} position="static">
