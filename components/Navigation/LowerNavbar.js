@@ -191,13 +191,14 @@ const LowerNavbar = () => {
                         >
                             Learn
                         </MiscButtons>
-                        <MiscButtons
-                            href="/share"
-                            style={{textDecoration: "none"}}
-                            disableRipple
-                        >
-                            Share your story
-                        </MiscButtons>
+                        <Link href='/share' passHref>
+                            <MiscButtons
+                                style={{textDecoration: "none"}}
+                                disableRipple
+                            >
+                                Share your story
+                            </MiscButtons>
+                        </Link>
                     </Grid>
                     <Grid item xs={6} sm={6} md={4}>
                         <Link href={'/account?tab=settings'} passHref>
