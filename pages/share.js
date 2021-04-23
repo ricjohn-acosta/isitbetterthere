@@ -40,8 +40,8 @@ export async function getServerSideProps(context) {
   };
 
   if (typeof window === "undefined" && context.res.writeHead) {
-    !session && signedOutRedirect();
-    session && (await signedInRedirect());
+    // !session && signedOutRedirect();
+    // session && (await signedInRedirect());
   }
 
   return {

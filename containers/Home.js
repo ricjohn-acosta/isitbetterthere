@@ -8,7 +8,6 @@ import LowerNavbar from "../components/Navigation/LowerNavbar";
 const Home = ({ session, contributionCount }) => {
   return (
     <>
-    {console.log(session)}
       <LowerNavbar session={session} />
       <MainSection />
       <QuoteSection />
