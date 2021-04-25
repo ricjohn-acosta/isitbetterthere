@@ -2,21 +2,18 @@ import React, {useEffect} from "react";
 import Layout from "../components/Layout/Layout";
 import Account from "../containers/Account";
 import {getSession} from "next-auth/client";
-import {
-    getUser,
-    getUserExperiences,
-    getUserRatedExperiences,
-} from "../server/db";
+import {getUserRatedExperiences,} from "../server/db";
 import {getUserBySessionId} from "../server/models/user";
 import {storeUserData} from "../store/actions/users";
 import {useDispatch} from "react-redux";
 import dbConnect from "../server/mongodbConnect";
+import {getUserExperiences} from "../server/models/experiences";
 
 const account = (props) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(storeUserData(props.user))
+        dispatch(storeUserData({experiences: props.userContributions}))
     }, [dispatch])
 
     return (
@@ -29,9 +26,10 @@ const account = (props) => {
 export async function getServerSideProps(context) {
     await dbConnect();
     const session = await getSession(context);
+    const userContributions = await getUserExperiences(session.id)
 
     let user = null;
-    let userContributions = null;
+    // let userContributions = null;
     let helpfulContributions = null;
 
     if (!session) {
@@ -57,7 +55,7 @@ export async function getServerSideProps(context) {
             context.res.end();
         } else {
             user = JSON.parse(JSON.stringify(fetchedUser));
-            userContributions = await getUserExperiences(session.id);
+            // userContributions = await getUserExperiences(session.id);
             helpfulContributions = await getUserRatedExperiences(session.id);
         }
     }

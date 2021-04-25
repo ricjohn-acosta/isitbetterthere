@@ -59,4 +59,8 @@ const ExperienceSchema = new mongoose.Schema({
     },
 })
 
-const experiencesCollection = mongoose.models.Experiences || mongoose.model('Experience', ExperienceSchema)
+const experiencesCollection = mongoose.models.Experiences || mongoose.model('Experiences', ExperienceSchema)
+
+export const getUserExperiences = async (uid) => {
+    return experiencesCollection.find({posted_by: uid});
+}
