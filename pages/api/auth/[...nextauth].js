@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import {session} from "next-auth/client";
 import dbConnect from "../../../server/mongodbConnect";
-import {getUserBySessionId} from "../../../server/user/userDb";
+import {getUserBySessionId} from "../../../server/models/user";
 
 // For more information on options, go to
 // https://next-auth.js.org/configuration/options

@@ -7,7 +7,7 @@ import {
     getUserExperiences,
     getUserRatedExperiences,
 } from "../server/db";
-import {getUserBySessionId} from "../server/user/userDb";
+import {getUserBySessionId} from "../server/models/user";
 import {storeUserData} from "../store/actions/users";
 import {useDispatch} from "react-redux";
 import dbConnect from "../server/mongodbConnect";

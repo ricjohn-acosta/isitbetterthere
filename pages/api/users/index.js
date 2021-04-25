@@ -1,6 +1,6 @@
-import User from "../../../models/User"
 import dbConnect from "../../../server/mongodbConnect";
 import {getSession} from "next-auth/client";
+import {createUser, getUserBySessionId} from "../../../server/models/user";
 
 export default async function users(req, res) {
 
@@ -15,9 +15,9 @@ export default async function users(req, res) {
             //     res.status(200).end();
             //     return resolve();
             // }
-            const user = await User.find({uid: req.body.uid});
-            if (user.length === 0) {
-                await User.create(req.body);
+            const user = await getUserBySessionId(req.body.uid);
+            if (!user) {
+                await createUser(req.body);
                 res.status(200).end();
                 return
             } else {

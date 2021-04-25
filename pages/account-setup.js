@@ -4,7 +4,7 @@ import { session, getSession } from "next-auth/client";
 import PageNotFound from "../containers/PageNotFound";
 import { getUsers } from "../server/db";
 import { useSelector, useDispatch } from 'react-redux'
-import {getUserBySessionId} from "../server/user/userDb";
+import {getUserBySessionId} from "../server/models/user";
 import dbConnect from "../server/mongodbConnect";
 
 // CLIENT SIDE
