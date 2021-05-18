@@ -3,6 +3,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 import reducers from './reducers'
+import {useDispatch} from "react-redux";
 
 let store
 
@@ -35,6 +36,8 @@ export const initializeStore = (preloadedState) => {
 
   return _store
 }
+
+export const useThunkDispatch = () => useDispatch();
 
 export function useStore(initialState) {
   const store = useMemo(() => initializeStore(initialState), [initialState])

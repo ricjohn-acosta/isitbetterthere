@@ -1,34 +1,6 @@
 import * as actions from "./types";
 import request from "superagent";
 
-// export const getUser = (uid) => {
-//   return (dispatch) => {
-//     dispatch({ type: actions.GET_USER_START });
-//     return (
-//         request
-//             .post(
-//                 process.env.NODE_ENV === "production"
-//                     ? process.env.prod + "/api/users"
-//                     : process.env.dev + "/api/users"
-//             )
-//             .send(user)
-//             .then((res) => {
-//               dispatch({ type: actions.GET_USER_SUCCESS });
-//             })
-//             .catch((res) => {
-//               console.log(res.status);
-//               if (res.status === 405) {
-//                 console.log("USER GET FLOW FAILED");
-//                 dispatch({ type: actions.GET_USER_FAIL });
-//               } else {
-//                 console.log("USER GET FLOW ENDED");
-//                 dispatch({ type: actions.GET_USER_END });
-//               }
-//             })
-//     );
-//   };
-// };
-
 export const STORE_USER_DATA = 'STORE_USER_DATA'
 export const storeUserData = (userData) => (dispatch) => {
     console.log('udata', userData)

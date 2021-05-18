@@ -12,9 +12,9 @@ import {getUserExperiences} from "../server/models/experiences";
 const account = (props) => {
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(storeUserData({experiences: props.userContributions}))
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(storeUserData({experiences: props.userContributions}))
+    // }, [dispatch])
 
     return (
         <Layout>
@@ -26,8 +26,11 @@ const account = (props) => {
 export async function getServerSideProps(context) {
     await dbConnect();
     const session = await getSession(context);
-    const userContributions = await getUserExperiences(session.id)
+    const userContributions = await getUserExperiences(session.id).then(data => {
+        return JSON.parse(JSON.stringify(data))
+    })
 
+    console.log(userContributions)
     let user = null;
     // let userContributions = null;
     let helpfulContributions = null;

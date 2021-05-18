@@ -47,7 +47,7 @@ const addUserEnd = (state) => {
   };
 };
 
-export const storeUserData = (state = initialState, { type, payload }) => {
+export const userStore = (state = initialState, { type, payload }) => {
   switch (type) {
     case STORE_USER_DATA:
       return {

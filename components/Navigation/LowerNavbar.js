@@ -159,6 +159,8 @@ const LowerNavbar = () => {
         });
     }, []);
 
+    console.log('lower navbar', session)
+
     return (
         <StyledLowerNavbar elevation={0} position="sticky" component="div">
             <Container>
@@ -205,9 +207,9 @@ const LowerNavbar = () => {
                             <UserButtons disableRipple>
                                 {session ? (
                                     <>
-                                        <StyledAvatar src={session.picture}>
-                                            <img src="user-32.png"/>
-                                        </StyledAvatar>
+                                        <StyledAvatar src={session.picture}/>
+                                        {/*    <img src="user-32.png"/>*/}
+                                        {/*</StyledAvatar>*/}
                                         &nbsp;{session.name}
                                     </>
                                 ) : (
