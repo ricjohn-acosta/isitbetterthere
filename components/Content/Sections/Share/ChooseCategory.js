@@ -7,7 +7,7 @@ import {
   countryCategory,
   cultureCategory,
   lifeCategory,
-  secondaryEducationCategory,
+  secondaryEducationCategory, careersCategory,
 } from "../../../../lib/categories";
 import Typography from "@material-ui/core/Typography";
 import Subheaders from "./common/Subheaders";

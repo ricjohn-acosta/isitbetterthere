@@ -45,7 +45,7 @@ const NewAccountStepperSection = ({ addUser, session }) => {
   const handleCreateUser = () => {
     setDisableSubmit(true);
     addUser({
-      user_id: session.id,
+      uid: session.id,
       profile_picture: session.picture,
       name: session.name,
       email: session.email,
@@ -60,8 +60,8 @@ const NewAccountStepperSection = ({ addUser, session }) => {
       hide_company: hideCompany,
       hide_location: hideLocation,
       comes_from: siteSource,
-      user_created: Math.floor(Date.now() / 1000),
-      permission: "user"
+      date_joined: Math.floor(Date.now() / 1000),
+      user_type: "user"
     });
   };
 

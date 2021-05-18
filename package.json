@@ -5,12 +5,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start -p $PORT",
-    "db:delete": "rm dev.sqlite3",
-    "db:migrate": "npx knex migrate:latest",
-    "db:seed": "npx knex seed:run",
-    "db:reset": "run-s db:delete db:migrate db:seed dev",
-    "heroku-postbuild": "npm run build",
-    "postinstall": "knex migrate:latest"
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.0",
@@ -51,10 +46,7 @@
     "styled-components": "^5.1.1",
     "superagent": "^5.2.2",
     "validator": "^13.1.1",
-    "mongoose": "^5.12.3",
-    "axios": "^0.21.1",
-    "joi": "^17.4.0",
-    "next-connect": "^0.10.1"
+    "mongoose": "^5.12.3"
   },
   "license": "ISC",
   "devDependencies": {

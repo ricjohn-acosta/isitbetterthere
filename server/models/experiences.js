@@ -4,34 +4,42 @@ const ExperienceSchema = new mongoose.Schema({
     posted_by: {
         type: String,
         required: [true, 'Please provide your name.'],
+        maxlength: [20, 'Name cannot be more than 20 characters'],
     },
     category: {
         type: String,
         required: [true, "Please provide a category."],
+        maxlength: [20],
     },
     from: {
         type: String,
         required: [true, 'Please specify where you are transitioning from'],
+        maxlength: [20],
     },
     to: {
         type: String,
         required: [true, 'Please specify where you are transitioning to.'],
+        maxlength: [20],
     },
     fulfillment: {
         type: String,
         required: [true, 'Please specify how fulfilling the transition was.'],
+        maxlength: [20],
     },
     ease_of_transition: {
         type: String,
         required: [true, 'Please specify how easy the transition was.'],
+        maxlength: [20],
     },
     regret: {
         type: String,
         required: [true, 'Please specify if you regret the transition.'],
+        maxlength: [20],
     },
     story: {
         type: String,
         required: [true, 'Please share your story.'],
+        maxlength: [10000]
     },
     helpful: {
         type: Number,
@@ -51,47 +59,8 @@ const ExperienceSchema = new mongoose.Schema({
     },
 })
 
-const experiencesCollection = mongoose.models && mongoose.models.Experiences || mongoose.model('Experiences', ExperienceSchema)
-
-export const dbAddExperience = async (formData) => {
-    return experiencesCollection.create(formData)
-}
+const experiencesCollection = mongoose.models.Experiences || mongoose.model('Experiences', ExperienceSchema)
 
 export const getUserExperiences = async (uid) => {
     return experiencesCollection.find({posted_by: uid});
 }
-
-export const getTransitionExperiencesTest = async (from, to) => {
-    // return experiencesCollection.find({from, to});
-    return experiencesCollection.aggregate([
-        {$match: {from, to}},
-        {
-            $lookup: {
-                from: 'users',
-                localField: 'posted_by',
-                foreignField: 'uid',
-                as: 'user'
-            }
-        }
-    ])
-}
-
-export const getTransitionExperiencesCount = async (from, to) => {
-    return experiencesCollection.find({from, to}).count();
-}
-
-export const getAllUsersExperiences = async () => {
-    return experiencesCollection.aggregate([{
-        $lookup: {
-            from: 'users',
-            localField: 'posted_by',
-            foreignField: 'uid',
-            as: 'user'
-        }
-    }])
-}
-
-export const getTotalNumberOfExperiences = async () => {
-    return experiencesCollection.count()
-}
-

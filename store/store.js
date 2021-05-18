@@ -3,42 +3,38 @@ import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 import reducers from './reducers'
-import {useDispatch} from "react-redux";
 
-// CREATING INITIAL STORE
-// export default function getStore(initialState) {
-//   const store = createStore(
-//     reducers,
-//     initialState,
-//     composeWithDevTools(applyMiddleware(thunkMiddleware))
-//   )
+let store
 
-//   // IF REDUCERS WERE CHANGED, RELOAD WITH INITIAL STATE
-//   if (module.hot) {
-//     module.hot.accept('./reducers/index', () => {
-//       const createNextReducer = require('./reducers/index').default
+function initStore(initialState) {
+  return createStore(
+      reducers,
+      initialState,
+      composeWithDevTools(applyMiddleware(thunkMiddleware))
+  )
+}
 
-//       store.replaceReducer(createNextReducer(initialState))
-//     })
-//   }
+export const initializeStore = (preloadedState) => {
+  let _store = store ?? initStore(preloadedState)
 
-//   return store
-// }
-
-const bindMiddleware = (middleware) => {
-  if (process.env.NODE_ENV !== "production") {
-    return composeWithDevTools(applyMiddleware(...middleware));
+  // After navigating to a page with an initial Redux state, merge that state
+  // with the current state in the store, and create a new store
+  if (preloadedState && store) {
+    _store = initStore({
+      ...store.getState(),
+      ...preloadedState,
+    })
+    // Reset the current store
+    store = undefined
   }
-  return applyMiddleware(...middleware);
-};
 
-const initStore = () => {
-  return createStore(reducers, bindMiddleware([thunkMiddleware]));
-};
+  // For SSG and SSR always create a new store
+  if (typeof window === 'undefined') return _store
+  // Create the store once in the client
+  if (!store) store = _store
 
-const wrapper = createWrapper(initStore);
-
-export const useThunkDispatch = () => useDispatch();
+  return _store
+}
 
 export function useStore(initialState) {
   const store = useMemo(() => initializeStore(initialState), [initialState])

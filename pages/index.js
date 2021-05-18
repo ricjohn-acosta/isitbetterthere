@@ -1,23 +1,15 @@
 import Home from "../containers/Home";
 import Layout from "../components/Layout/Layout";
 import { getSession } from "next-auth/client";
-import { getAllUserExperiences } from "../server/db";
+import { getTotalContributions } from "../server/db";
 import { useRouter } from "next/router";
 import {useSelector} from "react-redux";
-import {getTotalNumberOfExperiences} from "../server/models/experiences";
-import {useEffect} from "react";
-import {updateTotalNumOfExperiences} from "../store/actions/experiences";
-import {useDispatch} from 'react-redux'
 
 
 const Index = (props) => {
-  const dispatch = useDispatch()
+  const localUser = useSelector((state) => state.users.user)
 
-  useEffect(() => {
-    console.log('index', props.numberOfExperienceContributed)
-      dispatch(updateTotalNumOfExperiences(props.numberOfExperienceContributed))
-  }, [dispatch])
-
+  console.log('localUser', localUser);
   return (
     <Layout>
       <Home/>
@@ -26,6 +18,9 @@ const Index = (props) => {
 };
 
 export async function getServerSideProps(context) {
+
+  const allUserExperience = await getTotalContributions();
+  let contributionCount = allUserExperience.length;
 
   const numberOfExperienceContributed = await getTotalNumberOfExperiences();
 

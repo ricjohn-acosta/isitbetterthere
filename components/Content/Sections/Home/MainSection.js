@@ -16,6 +16,8 @@ import {
 import Router from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 import CategoryForm from "./CategoryForm";
+import Link from 'next/link'
+
 
 const useStyles = makeStyles((theme) => ({
   popper: { width: 400 },
@@ -114,6 +116,21 @@ const WelcomeMessage = styled(Typography)`
   }
   ${(props) => props.theme.breakpoints.between("sm", "1287")} {
     font-size: 2.2rem;
+  }
+`;
+
+const SeeStories = styled(Typography)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10vh;
+  margin-left: 25vw;
+
+  ${(props) => props.theme.breakpoints.down("md")} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1vw;
   }
 `;
 
@@ -229,6 +246,10 @@ const MainSection = () => {
             isSwapping={isSwapping}
             isEmptyField={isEmptyField}
           />
+          <br/>
+          <Link href="/stories" passHref>
+          <SeeStories variant="body" component="a">OR see all stories..</SeeStories>
+          </Link>
         </InputContainer>
         <ImageContainer item xs={12} sm={12} md={12} lg={3}>
           <img

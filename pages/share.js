@@ -9,4 +9,16 @@ const share = () => {
   );
 };
 
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  const userExperiences = await getUserExperiences(session.id);
+
+  return {
+    props: {
+      session,
+      userExperiences,
+    },
+  };
+}
+
 export default share;

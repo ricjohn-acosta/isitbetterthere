@@ -1,10 +1,13 @@
 import styled, { keyframes } from "styled-components";
 import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import HelpfulStoryModal from "./HelpfulStoryModal";
-import NoData from "./common/NoData"
+import moment from "moment";
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-const Wrapper = styled(Paper)``;
+const Wrapper = styled(Paper)`
+  margin: 2.5% 20% 2.5% 20%;
+`;
 
 const TopContent = styled(Grid)`
   padding: 2.5% 2.5% 2% 2.5%;
@@ -28,7 +31,7 @@ const Transition = styled(Typography)`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: large;
+  font-size: 3em;
 
   ${(props) => props.theme.breakpoints.down("md")} {
     font-size: 2em;
@@ -40,14 +43,35 @@ const Transition = styled(Typography)`
 `;
 
 const ReadButton = styled(Button)`
-  float: right;
+  // float: right;
 `;
-const HelpfulStory = ({ name, story, helpfulCount, from, to, hideName }) => {
+const HelpfulStory = ({
+  name,
+  story,
+  eid,
+  uid,
+  helpfulCount,
+  from,
+  to,
+  hideName,
+  datePosted,
+}) => {
   const [modalView, setModalView] = React.useState(false);
+
+  const router = useRouter()
 
   const handleOpen = () => {
     setModalView(true);
   };
+
+  const handleRouter = (e, uid, eid) => {
+    router.push({
+      pathname: `/user/${uid}`,
+      query: {
+        story: eid
+      }
+    })
+  }
 
   return (
     <Wrapper variant="outlined">
@@ -59,43 +83,52 @@ const HelpfulStory = ({ name, story, helpfulCount, from, to, hideName }) => {
             <TopContent item container xs={12} sm={12}>
               <Grid item xs={12} sm={12} md={6}>
                 <Typography variant="subtitle1">
-                  <b>{hideName === 1 || hideName === true ? "Anon" : name}'s</b> story
+                  <b>{hideName === 1 || hideName === true ? "Anon" : name}'s</b>{" "}
+                  story
                 </Typography>
               </Grid>
               <HelpedPeopleCount item xs={12} sm={12} md={6}>
                 <Typography variant="subtitle1">
-                  <b>{helpfulCount !== 0 ? helpfulCount - 1 : helpfulCount}</b>{" "}
-                  other {helpfulCount - 1 === 1 ? "person" : "people"} found
-                  this helpful
+                  <b>{helpfulCount}</b>{" "}
+                  {helpfulCount === 1 ? "person" : "people"} found this helpful
+                </Typography>
+                <Typography variant="subtitle1">
+                  {" "}
+                  {moment.unix(datePosted).format("DD MMM YYYY")}
                 </Typography>
               </HelpedPeopleCount>
             </TopContent>
             <TransitionContainer item xs={12} sm={12}>
-              <Transition variant="h5">
+              <Transition variant="h6">
+                {" "}
                 {from}&nbsp;
                 <ArrowForwardIcon fontSize="small" />
                 &nbsp;{to}
               </Transition>
             </TransitionContainer>
-            <BottomContent item xs={12} sm={12}>
-              <ReadButton
-              style={{color: "white"}}
-                disableElevation
-                onClick={handleOpen}
-                color="primary"
-                variant="contained"
-              >
-                VIEW
-              </ReadButton>
+            <BottomContent container item xs={12} sm={12} spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <Button fullWidth disableRipple variant="outlined">
+                  View stories related to this transition
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                {/* <Link href="/user/[id]" as={`/user/${uid}?story=${eid}`} passHref> */}
+                <ReadButton
+                  fullWidth
+                  style={{ color: "white" }}
+                  disableElevation
+                  disableRipple
+                  onClick={(e) => {handleRouter(e, uid, eid);}}
+                  color="primary"
+                  variant="contained"
+                >
+                  Read {name}'s story
+                </ReadButton>
+                {/* </Link> */}
+              </Grid>
             </BottomContent>
           </Grid>
-          <HelpfulStoryModal
-            name={name}
-            story={story}
-            hideName={hideName}
-            modalView={modalView}
-            setModalView={setModalView}
-          />
         </>
       )}
     </Wrapper>

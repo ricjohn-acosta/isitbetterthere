@@ -2,7 +2,7 @@ import dbConnect from "../../../server/mongodbConnect";
 import {getSession} from "next-auth/client";
 import {createUser, getUserBySessionId} from "../../../server/models/user";
 
-export default async (req, res) => {
+export default async function users(req, res) {
 
     const session = await getSession({req});
     if (!session) return;
@@ -10,7 +10,7 @@ export default async (req, res) => {
     await dbConnect();
 
     switch (req.method) {
-        case 'POST':
+        case "POST":
             // if (!isValid(req.body, "new-user")) {
             //     res.status(200).end();
             //     return resolve();

@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
     user_type: {type: String, required: true},
 })
 
-const userCollection = mongoose.models && mongoose.models.User || mongoose.model('User', UserSchema)
+const userCollection = mongoose.models.User || mongoose.model('User', UserSchema)
 
 export const createUser = async (data) => {
     return await userCollection.create(data);

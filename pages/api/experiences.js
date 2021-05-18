@@ -12,15 +12,17 @@ export const axiosAddExperience = (formData) => {
     return axios.post(API_SERVER + '/api/experiences', formData)
 }
 
-const handler = nc()
+      const userExperience = await getUserExperience({
+        posted_by: req.body.posted_by,
+        category: req.body.category,
+        from: req.body.from,
+        to: req.body.to,
+      });
 
-handler
-    .use(alreadySubmitted)
-    .use(validRequestPayload)
-    .post(async (req, res) => {
-        console.log(res)
-        await dbConnect();
-        await dbAddExperience(req.body)
+      if (userExperience.length === 0) {
+        addExperience(req.body).then((experience) => {
+          console.log("EXPERIENCE ADDED TO DB");
+        });
         res.status(200).end();
     })
 export default handler

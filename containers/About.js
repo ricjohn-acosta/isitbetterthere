@@ -37,6 +37,8 @@ const About = ({ session }) => {
             Isitbetterthere is a website where people who are looking to
             transition to the next phase of their life can easily find
             information regarding the transition they are about to undertake.
+            Isitbetterthere is also a website for people who are wanting to share their
+            transition stories and give advice, direction or wisdom to those who need it!
             <br/>
             <br/>
             Our platform offers a variety of categories for every aspect of life

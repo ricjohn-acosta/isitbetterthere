@@ -4,28 +4,28 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
-import { addUser } from "../../store/actions/users";
-import { connect } from "react-redux";
-import { useRouter, Router } from "next/router";
+import {addUser} from "../../store/actions/users";
+import {connect} from "react-redux";
+import {useRouter, Router} from "next/router";
 import BrandLogo from "./BrandLogo";
-import { signout } from "next-auth/client";
+import {signout} from "next-auth/client";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { getProviders } from "next-auth/client";
-import { useEffect } from "react";
+import {getProviders} from "next-auth/client";
+import {useEffect} from "react";
 import Link from "next/link";
-import { Paper, Box } from "@material-ui/core";
+import {Paper, Box} from "@material-ui/core";
 import HeaderDivider from "../Content/Sections/Share/common/HeaderDivider";
 import Avatar from "@material-ui/core/Avatar";
 import Popper from "@material-ui/core/Popper";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import { signIn } from "next-auth/client";
-import { useSession } from 'next-auth/client'
+import {signIn} from "next-auth/client";
+import {useSession} from 'next-auth/client'
 
 const useStyles = makeStyles((theme) => ({
-  label: { justifyContent: "normal" },
+    label: {justifyContent: "normal"},
 }));
 
 // Main wrapper
@@ -33,9 +33,10 @@ const StyledLowerNavbar = styled(AppBar)`
   background-color: white;
   color: black
   display: flex;
+
   ${(props) => props.theme.breakpoints.down("sm")} {
-    background: rgb(91,184,209);
-    background: linear-gradient(270deg, rgba(91,184,209,1) 0%, rgba(21,215,215,1) 100%);
+    background: rgb(91, 184, 209);
+    background: linear-gradient(270deg, rgba(91, 184, 209, 1) 0%, rgba(21, 215, 215, 1) 100%);
     padding-left: 1vw
   }
 `;
@@ -59,6 +60,7 @@ const DrawerContainer = styled.div`
   position: relative;
   float: right;
   height: 50%;
+
   ${(props) => props.theme.breakpoints.up("md")} {
     display: none;
   }
@@ -83,6 +85,7 @@ const Container = styled.div`
   margin-left: 10vw;
   margin-right: 15vw;
   color: black;
+
   ${(props) => props.theme.breakpoints.down(1300)} {
     margin-left: 10px;
     margin-right: 10px;
@@ -104,6 +107,7 @@ const ModalContent = styled(Paper)`
   width: 25vw;
   height: 100%;
   overflow: auto;
+
   ${(props) => props.theme.breakpoints.down(1147)} {
     padding: 10% 0 10% 0;
     width: 60vw;
@@ -132,30 +136,28 @@ const SigninIcon = styled.img`
 `;
 
 const LowerNavbar = () => {
-  const [providers, setProviders] = React.useState(null);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [open, setOpen] = React.useState(false);
-  const [ session, loading ] = useSession()
-  const router = useRouter();
-  const classes = useStyles();
+    const [providers, setProviders] = React.useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [open, setOpen] = React.useState(false);
+    const [session, loading] = useSession()
+    const router = useRouter();
+    const classes = useStyles();
 
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-    setOpen(!open);
-  };
+    const handleClick = (event) => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+        setOpen(!open);
+    };
 
-  const handleClickAway = () => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-    setOpen(false);
-  };
+    const handleClickAway = () => {
+        setAnchorEl(anchorEl ? null : event.currentTarget);
+        setOpen(false);
+    };
 
-  useEffect(() => {
-    getProviders().then((data) => {
-      setProviders(data);
-    });
-  }, []);
-
-    console.log('lower navbar', session)
+    useEffect(() => {
+        getProviders().then((data) => {
+            setProviders(data);
+        });
+    }, []);
 
     return (
         <StyledLowerNavbar elevation={0} position="sticky" component="div">
@@ -203,9 +205,9 @@ const LowerNavbar = () => {
                             <UserButtons disableRipple>
                                 {session ? (
                                     <>
-                                        <StyledAvatar src={session.picture}/>
-                                        {/*    <img src="user-32.png"/>*/}
-                                        {/*</StyledAvatar>*/}
+                                        <StyledAvatar src={session.picture}>
+                                            <img src="user-32.png"/>
+                                        </StyledAvatar>
                                         &nbsp;{session.name}
                                     </>
                                 ) : (
@@ -243,48 +245,48 @@ const LowerNavbar = () => {
                 </Grid>
             </Container>
 
-      <Popper placement="bottom-start" open={open} anchorEl={anchorEl}>
-        <ClickAwayListener onClickAway={handleClickAway}>
-          <PopperPaper variant="outlined">
-            {providers !== null &&
-              Object.values(providers).map((provider) => (
-                <p key={provider.name}>
-                  <ProviderButtons
-                    classes={{
-                      label: classes.label,
-                    }}
-                    startIcon={
-                      <SigninIcon
-                        src={`/${provider.name.toLowerCase()}-signin.png`}
-                      />
-                    }
-                    fullWidth
-                    variant="text"
-                    onClick={() =>
-                      signIn(provider.name.toLowerCase(), {
-                        callbackUrl:
-                          process.env.NODE_ENV === "production"
-                            ? process.env.prod
-                            : process.env.dev,
-                      })
-                    }
-                  >
-                    Sign in with {provider.name}
-                  </ProviderButtons>
-                </p>
-              ))}
-          </PopperPaper>
-        </ClickAwayListener>
-      </Popper>
-      {console.log(providers)}
-    </StyledLowerNavbar>
-  );
+            <Popper placement="bottom-start" open={open} anchorEl={anchorEl}>
+                <ClickAwayListener onClickAway={handleClickAway}>
+                    <PopperPaper variant="outlined">
+                        {providers !== null &&
+                        Object.values(providers).map((provider) => (
+                            <p key={provider.name}>
+                                <ProviderButtons
+                                    classes={{
+                                        label: classes.label,
+                                    }}
+                                    startIcon={
+                                        <SigninIcon
+                                            src={`/${provider.name.toLowerCase()}-signin.png`}
+                                        />
+                                    }
+                                    fullWidth
+                                    variant="text"
+                                    onClick={() =>
+                                        signIn(provider.name.toLowerCase(), {
+                                            callbackUrl:
+                                                process.env.NODE_ENV === "production"
+                                                    ? process.env.prod
+                                                    : process.env.dev,
+                                        })
+                                    }
+                                >
+                                    Sign in with {provider.name}
+                                </ProviderButtons>
+                            </p>
+                        ))}
+                    </PopperPaper>
+                </ClickAwayListener>
+            </Popper>
+            {console.log(providers)}
+        </StyledLowerNavbar>
+    );
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    addUser: (user) => dispatch(addUser(user)),
-  };
+    return {
+        addUser: (user) => dispatch(addUser(user)),
+    };
 };
 
 export default connect(null, mapDispatchToProps)(LowerNavbar);
