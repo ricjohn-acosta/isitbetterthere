@@ -26,7 +26,7 @@
     "next-auth": "3.19.8",
     "next-images": "^1.4.0",
     "next-redux-wrapper": "^6.0.2",
-    "nodemailer": "^6.4.10",
+    "nodemailer": "^6.4.16",
     "npm-run-all": "^4.1.5",
     "nprogress": "^0.2.0",
     "pg": "^8.2.1",
