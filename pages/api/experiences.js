@@ -5,7 +5,7 @@ import {
   getUserExperience,
 } from "../../server/db";
 import { getSession } from "next-auth/client";
-import validator from "validator";
+import { isValid } from "../../server/utils/validateInputs";
 
 export default async function experiences(req, res) {
   return new Promise(async (resolve) => {
@@ -13,6 +13,12 @@ export default async function experiences(req, res) {
     let test = "test";
 
     if (req.method === "POST" && session) {
+      if (!isValid(req.body, "new-experience")) {
+        res.status(200).end();
+        return resolve();
+      }
+
+      console.log("kjhsdfiuhs", req.body)
 
       const userExperience = await getUserExperience({
         posted_by: req.body.posted_by,
@@ -20,7 +26,7 @@ export default async function experiences(req, res) {
         from: req.body.from,
         to: req.body.to,
       });
-      console.log("ASDAWFAWF", userExperience);
+
       if (userExperience.length === 0) {
         addExperience(req.body).then((experience) => {
           console.log("EXPERIENCE ADDED TO DB");

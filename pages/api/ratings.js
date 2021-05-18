@@ -29,7 +29,7 @@ export default async function ratings(req, res) {
       }
 
       // only allow a helpful rating if user has not rated an experience as helpful before
-      if (req.body.is_helpful === true && ratedExperience.is_helpful === 0) {
+      if (req.body.is_helpful === true && (ratedExperience.is_helpful === 0 || ratedExperience.is_helpful === false)) {
         addRating(req.body).then((rating) => {
           console.log("EXPERIENCE RATING ADDED TO DB");
         });
@@ -41,7 +41,7 @@ export default async function ratings(req, res) {
       }
 
       // only allow an unhelpful rating if user has not rated an experience as unhelpful before
-      if (req.body.is_helpful === false && ratedExperience.is_helpful === 1) {
+      if (req.body.is_helpful === false && (ratedExperience.is_helpful === 1 || ratedExperience.is_helpful === true)) {
         addRating(req.body).then((rating) => {
           console.log("EXPERIENCE RATING ADDED TO DB");
         });

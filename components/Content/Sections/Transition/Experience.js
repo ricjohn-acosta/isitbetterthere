@@ -59,9 +59,12 @@ const HelpfulButton = styled(Button)`
   color: black;
   background-color: ${(props) => {
     // Check if experience has been rated
-    if (props.ratetype !== false) {
+    if (!props.ratetype || (props.ratetype === 1 || props.ratetype === true)) {
       // Check if no button has been clicked yet, use db data if so.
-      if (props.ratetype === 1 && props.buttonClicked === "") {
+      if (
+        (props.ratetype === 1 || props.ratetype === true) &&
+        props.buttonClicked === ""
+      ) {
         return "#CCFFCC";
       }
 
@@ -80,9 +83,12 @@ const HelpfulButton = styled(Button)`
 const UnhelpfulButton = styled(Button)`
   background-color: ${(props) => {
     // Check if experience has been rated
-    if (props.ratetype !== false) {
+    if (!props.ratetype || (props.ratetype === 0 || props.ratetype === false)) {
       // Check if no button has been clicked yet, use db data if so.
-      if (props.ratetype === 0 && props.buttonClicked === "") {
+      if (
+        (props.ratetype === 0 || props.ratetype === false) &&
+        props.buttonClicked === ""
+      ) {
         return "#FF9999";
       }
 
@@ -192,7 +198,7 @@ const Experience = ({
 
   const handleHelpful = () => {
     if (isRated && buttonClicked === "") {
-      if (isRated.is_helpful === 1) {
+      if (isRated.is_helpful === 1 || isRated.is_helpful === true) {
         return true;
       }
     }
@@ -204,7 +210,7 @@ const Experience = ({
 
   const handleNotHelpful = () => {
     if (isRated && buttonClicked === "") {
-      if (isRated.is_helpful === 0) {
+      if (isRated.is_helpful === 0 || isRated.is_helpful === false) {
         return true;
       }
     }
@@ -218,8 +224,10 @@ const Experience = ({
     return session ? session.id : false;
   };
 
+  // if experience hasn't been rated yet by the user return false
   const getRateType = () => {
-    return !isRated ? false : isRated.is_helpful;
+    // return !isRated ? false : isRated.is_helpful;
+    return !isRated ? null : isRated.is_helpful;
   };
 
   const renderJobDetails = (position, company) => {
@@ -267,7 +275,7 @@ const Experience = ({
     }
   };
 
-  console.log(experienceId);
+  console.log(getSessionId());
   return (
     <Wrapper id={"/" + experienceId} userId={userId} sessionId={getSessionId()}>
       <Grid container drection="column">
@@ -287,12 +295,19 @@ const Experience = ({
             </IconContainer>
           )}
           <ProfileDetails>
-            <StyledAvatar src={profilePicture} />
+            <StyledAvatar
+              src={
+                hideName === 1 || hideName === true
+                  ? "/user.png"
+                  : profilePicture
+              }
+            />
             <UserInfoContainer>
               <UserInfo>
                 <PersonIcon style={{ color: "#1a8cff" }} fontSize="small" />
-                &nbsp;{hideName === 1 ? "Anon" : name}&nbsp;
-                {hideLocation === 1 ? null : (
+                &nbsp;{hideName === 1 || hideName === true ? "Anon" : name}
+                &nbsp;
+                {hideLocation === 1 || hideLocation === true ? null : (
                   <>
                     <LocationOnRoundedIcon
                       style={{ color: "#1a8cff" }}
@@ -303,7 +318,7 @@ const Experience = ({
                   </>
                 )}
               </UserInfo>
-              {hideEmail === 1 ? null : (
+              {hideEmail === 1 || hideEmail === true ? null : (
                 <UserInfo>
                   <EmailIcon style={{ color: "#1a8cff" }} fontSize="small" />
                   &nbsp;{email}
@@ -311,7 +326,9 @@ const Experience = ({
               )}
               {isWhiteSpaceOrEmpty(position) ||
                 (isWhiteSpaceOrEmpty(company) ||
-                (hideCompany === 1 && hideOccupation === 1) ? null : (
+                hideCompany === 1 ||
+                (hideCompany === true && hideOccupation === 1) ||
+                hideOccupation === true ? null : (
                   <UserInfo>
                     <WorkIcon style={{ color: "#1a8cff" }} fontSize="small" />
                     &nbsp;{renderJobDetails(position, company)}
@@ -337,6 +354,7 @@ const Experience = ({
               ? "Thanks for rating!"
               : helpfulCount + " people found this helpful"}
           </HelpfulCount>
+          {console.log("UHAUIWDAD", getRateType())}
           {getSessionId() === userId ? (
             <EditButton href="/account?tab=contributions" target="_blank">
               EDIT
@@ -382,7 +400,10 @@ const Experience = ({
         uid={session && session.id}
         eid={experienceId}
       />
-      <SuccessDialog hasReported={hasReported} handleReportSuccessClose={handleReportSuccessClose}/>
+      <SuccessDialog
+        hasReported={hasReported}
+        handleReportSuccessClose={handleReportSuccessClose}
+      />
     </Wrapper>
   );
 };

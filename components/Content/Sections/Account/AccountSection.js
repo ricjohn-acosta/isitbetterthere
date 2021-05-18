@@ -76,18 +76,20 @@ const AccountSection = ({
 }) => {
   const router = useRouter();
   const [view, setView] = React.useState("settings");
-  const [hideName, setHideName] = React.useState(user.hide_name === 1 && true);
+  const [hideName, setHideName] = React.useState(
+    user.hide_name === 1 || user.hide_name === true ? true : false
+  );
   const [hideEmail, setHideEmail] = React.useState(
-    user.hide_email === 1 && true
+    user.hide_email === 1 || user.hide_email === true ? true : false
   );
   const [hideOccupation, setHideOccupation] = React.useState(
-    user.hide_occupation === 1 && true
+    user.hide_occupation === 1 || user.hide_occupation === true ? true : false
   );
   const [hideCompany, setHideCompany] = React.useState(
-    user.hide_company === 1 && true
+    user.hide_company === 1 || user.hide_company === true ? true : false
   );
   const [hideLocation, setHideLocation] = React.useState(
-    user.hide_location === 1 && true
+    user.hide_location === 1 || user.hide_location === true ? true : false
   );
 
   console.log(userContributions);
@@ -102,8 +104,9 @@ const AccountSection = ({
     });
   };
 
-  console.log(hideEmail);
-  console.log(hideOccupation);
+  console.log("USER", user);
+  console.log("HIDE EMAIL", hideEmail);
+  console.log("HIDE OCCUPATION", hideOccupation);
 
   const renderView = () => {
     switch (router.query.tab) {
@@ -136,7 +139,7 @@ const AccountSection = ({
     }
   };
 
-  console.log("HELPFUL", helpfulContributions)
+  console.log("HELPFUL", helpfulContributions);
   return (
     <Wrapper>
       <DashboardContainer elevation={0}>
@@ -216,7 +219,7 @@ const AccountSection = ({
               <Button
                 color="primary"
                 variant="contained"
-                style={{ float: "right", color: "white"}}
+                style={{ float: "right", color: "white" }}
                 disableElevation
                 onClick={handleSubmit}
               >
