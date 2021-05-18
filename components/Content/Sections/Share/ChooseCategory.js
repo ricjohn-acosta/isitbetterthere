@@ -14,6 +14,7 @@ import Subheaders from "./common/Subheaders";
 import PaperWrapper from "./common/PaperWrapper";
 import HeaderDivider from "./common/HeaderDivider";
 import Header from "../../../Navigation/Header";
+import {useSession} from "next-auth/client";
 
 const Wrapper = styled.div`
   margin: 5%;
@@ -42,6 +43,9 @@ const ChooseCategory = ({
   isEmptyField,
   setEmptyFields,
 }) => {
+
+  const [session, loading] = useSession();
+
   const handleForm = (e) => {
     e.preventDefault();
     if (fromValue === null || toValue === null) {
@@ -108,7 +112,9 @@ const ChooseCategory = ({
       <HeaderDivider />
       <Wrapper>
         <StyledDiv>
+          {/*{console.log('session', session)}*/}
           <CategoryForm
+            experiences={session ? session.userData.userExperiences : {}}
             categories={categories}
             currentCategory={currentCategory}
             handleCategories={handleCategories}

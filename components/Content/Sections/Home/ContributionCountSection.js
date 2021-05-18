@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Typography } from "@material-ui/core";
+import {useSelector} from "react-redux";
 
 const Wrapper = styled.div`
   padding: 1%;
@@ -33,11 +34,15 @@ const StyledLink = styled.a`
   }
 `;
 
-const ContributionCountSection = ({ contributionCount }) => {
+const ContributionCountSection = () => {
+  const numberOfExperienceContributed = useSelector((state) => state.experiences.experiences.totalExperiences)
+
+  console.log('num', numberOfExperienceContributed)
+
   return (
     <Wrapper>
       <StyledTypography variant="h4">
-        <b>{contributionCount}</b>&nbsp;stories have been contributed so far!
+        <b>{numberOfExperienceContributed}</b>&nbsp;stories have been contributed so far!
         &nbsp;
         <StyledLink href="/share">Share your story!</StyledLink>
       </StyledTypography>

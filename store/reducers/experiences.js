@@ -1,10 +1,15 @@
 import * as actions from "../actions/types";
 import { HYDRATE } from "next-redux-wrapper";
+import {STORE_USER_DATA} from "../actions/users";
+import {UPDATE_TOTAL_NUM_OF_EXPERIENCES} from "../actions/experiences";
+import experiences from "../../pages/api/experiences";
 
 const initialState = {
   error: null,
   loading: false,
-  experiences: null,
+  experiences: {
+    totalExperiences: null,
+  },
 };
 
 // ADD EXPERIENCE
@@ -91,6 +96,21 @@ const getExperiencesEnd = (state) => {
     loading: false,
   };
 };
+
+export const experienceStore = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case UPDATE_TOTAL_NUM_OF_EXPERIENCES:
+
+      console.log('redux store', payload)
+
+      return {
+        ...state,
+        experiences: {...state.experiences, totalExperiences: payload}
+      }
+    default:
+      return state
+  }
+}
 
 export default (state = initialState, { type, payload }, action) => {
   switch (type) {

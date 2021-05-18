@@ -7,8 +7,8 @@ const Share = ({session, userExperiences}) => {
 
   return (
     <div>
-      <LowerNavbar session={session} />
-      <ShareStepperSection session={session} userExperiences={userExperiences}/>
+      <LowerNavbar/>
+      <ShareStepperSection/>
     </div>
   );
 };

@@ -1,6 +1,15 @@
 import * as actions from "./types";
 import request from "superagent";
 
+export const STORE_USER_DATA = 'STORE_USER_DATA'
+export const storeUserData = (userData) => (dispatch) => {
+    console.log('udata', userData)
+    dispatch({
+        type: STORE_USER_DATA,
+        payload: userData
+    })
+}
+
 export const addUser = (user) => {
   return (dispatch) => {
     dispatch({ type: actions.ADD_USER_START });

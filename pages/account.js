@@ -9,28 +9,30 @@ import {
 } from "../server/db";
 
 const account = (props) => {
-  return (
-    <Layout>
-      <Account {...props} />
-    </Layout>
-  );
+    const dispatch = useDispatch()
+
+    // useEffect(() => {
+    //     dispatch(storeUserData({experiences: props.userContributions}))
+    // }, [dispatch])
+
+    return (
+        <Layout>
+            <Account {...props} />
+        </Layout>
+    );
 };
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  let user = null;
-  let userContributions = null;
-  let helpfulContributions = null;
+    await dbConnect();
+    const session = await getSession(context);
+    const userContributions = await getUserExperiences(session.id).then(data => {
+        return JSON.parse(JSON.stringify(data))
+    })
 
-  if (!session) {
-    context.res.writeHead(302, {
-      Location:
-        process.env.NODE_ENV === "production"
-          ? process.env.prod + "/signup"
-          : process.env.dev + "/signup",
-    });
-    context.res.end();
-  }
+    console.log(userContributions)
+    let user = null;
+    // let userContributions = null;
+    let helpfulContributions = null;
 
   if (session) {
     if (!(await getUser(session.id))) {

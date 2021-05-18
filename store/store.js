@@ -1,8 +1,9 @@
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { createWrapper } from "next-redux-wrapper";
-import thunkMiddleware from "redux-thunk";
-import reducers from "./reducers/index";
+import { useMemo } from 'react'
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunkMiddleware from 'redux-thunk'
+import reducers from './reducers'
+import {useDispatch} from "react-redux";
 
 // CREATING INITIAL STORE
 // export default function getStore(initialState) {
@@ -37,4 +38,9 @@ const initStore = () => {
 
 const wrapper = createWrapper(initStore);
 
-export default wrapper;
+export const useThunkDispatch = () => useDispatch();
+
+export function useStore(initialState) {
+  const store = useMemo(() => initializeStore(initialState), [initialState])
+  return store
+}

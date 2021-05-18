@@ -172,7 +172,7 @@ const ExperienceSection = ({
     setViolationType(e.target.value);
   };
 
-  console.log(experiences)
+  console.log('experience section', experiences)
   const displayExperiences = () => {
     return (
       <>
@@ -187,13 +187,13 @@ const ExperienceSection = ({
                 key={i}
                 experienceId={e.eid}
                 userId={e.uid}
-                name={e.name}
-                profilePicture={e.profile_picture}
-                location={e.location}
-                email={e.email}
-                position={e.position}
-                company={e.company}
-                bio={e.bio}
+                name={e.user[0].name}
+                profilePicture={e.user[0].profile_picture}
+                location={e.user[0].location}
+                email={e.user[0].email}
+                position={e.user[0].position}
+                company={e.user[0].company}
+                bio={e.user[0].bio}
                 fulfillment={e.fulfillment}
                 easeOfTransition={e.ease_of_transition}
                 regret={e.regret}

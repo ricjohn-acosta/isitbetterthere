@@ -45,6 +45,18 @@ const addUserEnd = (state) => {
   };
 };
 
+export const userStore = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case STORE_USER_DATA:
+      return {
+        ...state,
+        user: payload
+      }
+    default:
+      return state
+  }
+}
+
 export default (state = initialState, { type, payload }, action) => {
   switch (type) {
     case actions.ADD_USER_START:

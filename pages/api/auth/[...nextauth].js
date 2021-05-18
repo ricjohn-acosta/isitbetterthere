@@ -1,6 +1,11 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
-import { session } from "next-auth/client";
+import {session} from "next-auth/client";
+import dbConnect from "../../../server/mongodbConnect";
+import {getUserBySessionId} from "../../../server/models/user";
+import {getUserExperiences} from "../../../server/models/experiences";
+import {storeUserData} from "../../../store/actions/users";
+import {useDispatch} from "react-redux";
 
 // For more information on options, go to
 // https://next-auth.js.org/configuration/options
@@ -116,13 +121,34 @@ const options = {
       });
     },
 
-    jwt: async (token, profile, isNewUser) => {
-      console.log("JWT TOKEN", profile);
-      const isSignIn = profile ? true : false;
-      if (isSignIn) {
-        token.id = profile.id;
-      }
-      return Promise.resolve(token);
+    // Callbacks are asynchronous functions you can use to control what happens
+    // when an action is performed.
+    // https://next-auth.js.org/configuration/callbacks
+    callbacks: {
+        session: async (session, token) => {
+            await dbConnect();
+
+            const userDetails = await getUserBySessionId(token.id)
+            const userExperiences = await getUserExperiences(token.id)
+
+            session.userData = {userDetails, userExperiences}
+
+            return Promise.resolve({
+                ...session,
+                ...token,
+            });
+        },
+
+        jwt: async (token, profile) => {
+
+
+
+            const isSignIn = !!profile;
+            if (isSignIn) {
+                token.id = profile.id;
+            }
+            return Promise.resolve(token);
+        },
     },
   },
 

@@ -155,89 +155,93 @@ const LowerNavbar = () => {
     });
   }, []);
 
-  return (
-    <StyledLowerNavbar elevation={0} position="sticky" component="div">
-      {console.log(router)}
-      <Container>
-        <Grid container direction="row">
-          <Grid item container xs={6} sm={6} md={8}>
-            <BrandLogo>IsItBetterThere</BrandLogo>
-            <MiscButtons
-              href={
-                router.pathname === "/"
-                  ? "#/howitworks"
-                  : process.env.NODE_ENV === "production"
-                  ? process.env.prod + "/#/howitworks"
-                  : process.env.dev + "/#/howitworks"
-              }
-              style={{ textDecoration: "none" }}
-              disableRipple
-            >
-              How it works
-            </MiscButtons>
-            <MiscButtons
-              href={
-                router.pathname === "/"
-                  ? "#/learn"
-                  : process.env.NODE_ENV === "production"
-                  ? process.env.prod + "/#/learn"
-                  : process.env.dev + "/#/learn"
-              }
-              style={{ textDecoration: "none" }}
-              disableRipple
-            >
-              Learn
-            </MiscButtons>
-            <MiscButtons
-              href="/share"
-              style={{ textDecoration: "none" }}
-              disableRipple
-            >
-              Share your story
-            </MiscButtons>
-          </Grid>
-          <Grid item xs={6} sm={6} md={4}>
-            <UserButtons href={"/account?tab=settings"} disableRipple>
-              {session ? (
-                <>
-                  <StyledAvatar src={session.picture}>
-                    <img src="user-32.png" />
-                  </StyledAvatar>
-                  &nbsp;{session.name}
-                </>
-              ) : (
-                "Account"
-              )}
-            </UserButtons>
-            {session ? (
-              <UserButtons
-                disableRipple
-                onClick={(e) => {
-                  signout({
-                    callbackUrl:
-                      process.env.NODE_ENV === "production"
-                        ? process.env.prod + "/"
-                        : process.env.dev + "/",
-                  });
-                }}
-              >
-                Sign out
-              </UserButtons>
-            ) : (
-              <UserButtons
-                style={{ textDecoration: "none" }}
-                disableRipple
-                onClick={handleClick}
-              >
-                Sign up | Login
-              </UserButtons>
-            )}
-            <DrawerContainer>
-              <Drawer />
-            </DrawerContainer>
-          </Grid>
-        </Grid>
-      </Container>
+    console.log('lower navbar', session)
+
+    return (
+        <StyledLowerNavbar elevation={0} position="sticky" component="div">
+            <Container>
+                <Grid container direction="row">
+                    <Grid item container xs={6} sm={6} md={8}>
+                        <BrandLogo>IsItBetterThere</BrandLogo>
+                        <MiscButtons
+                            href={
+                                router.pathname === "/"
+                                    ? "#/howitworks"
+                                    : process.env.NODE_ENV === "production"
+                                    ? process.env.prod + "/#/howitworks"
+                                    : process.env.dev + "/#/howitworks"
+                            }
+                            style={{textDecoration: "none"}}
+                            disableRipple
+                        >
+                            How it works
+                        </MiscButtons>
+                        <MiscButtons
+                            href={
+                                router.pathname === "/"
+                                    ? "#/learn"
+                                    : process.env.NODE_ENV === "production"
+                                    ? process.env.prod + "/#/learn"
+                                    : process.env.dev + "/#/learn"
+                            }
+                            style={{textDecoration: "none"}}
+                            disableRipple
+                        >
+                            Learn
+                        </MiscButtons>
+                        <Link href='/share' passHref>
+                            <MiscButtons
+                                style={{textDecoration: "none"}}
+                                disableRipple
+                            >
+                                Share your story
+                            </MiscButtons>
+                        </Link>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={4}>
+                        <Link href={'/account?tab=settings'} passHref>
+                            <UserButtons disableRipple>
+                                {session ? (
+                                    <>
+                                        <StyledAvatar src={session.picture}/>
+                                        {/*    <img src="user-32.png"/>*/}
+                                        {/*</StyledAvatar>*/}
+                                        &nbsp;{session.name}
+                                    </>
+                                ) : (
+                                    "Account"
+                                )}
+                            </UserButtons>
+                        </Link>
+                        {session ? (
+                            <UserButtons
+                                disableRipple
+                                onClick={(e) => {
+                                    signout({
+                                        callbackUrl:
+                                            process.env.NODE_ENV === "production"
+                                                ? process.env.prod + "/"
+                                                : process.env.dev + "/",
+                                    });
+                                }}
+                            >
+                                Sign out
+                            </UserButtons>
+                        ) : (
+                            <UserButtons
+                                style={{textDecoration: "none"}}
+                                disableRipple
+                                onClick={handleClick}
+                            >
+                                Sign up | Login
+                            </UserButtons>
+                        )}
+                        <DrawerContainer>
+                            <Drawer/>
+                        </DrawerContainer>
+                    </Grid>
+                </Grid>
+            </Container>
 
       <Popper placement="bottom-start" open={open} anchorEl={anchorEl}>
         <ClickAwayListener onClickAway={handleClickAway}>

@@ -5,14 +5,13 @@ import LearnSection from "../components/Content/Sections/Home/LearnSection";
 import ContributionCountSection from "../components/Content/Sections/Home/ContributionCountSection";
 import LowerNavbar from "../components/Navigation/LowerNavbar";
 
-const Home = ({ session, contributionCount }) => {
+const Home = () => {
   return (
     <>
-    {console.log(session)}
-      <LowerNavbar session={session} />
+      <LowerNavbar/>
       <MainSection />
       <QuoteSection />
-      <ContributionCountSection contributionCount={contributionCount} />
+      <ContributionCountSection/>
       <TutorialSection />
       <LearnSection />
     </>
