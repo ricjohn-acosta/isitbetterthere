@@ -15,10 +15,10 @@ const Stories = ({ allContributions }) => {
       <HeaderText variant="h3">Recent stories</HeaderText>
       {allContributions.map((e) => (
         <StoryCard
-          name={e.name}
+          name={e.user[0].name}
           story={e.story}
-          uid={e.uid}
-          eid={e.eid}
+          uid={e.posted_by}
+          eid={e._id}
           from={e.from}
           to={e.to}
           helpfulCount={e.helpful}

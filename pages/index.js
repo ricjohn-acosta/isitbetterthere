@@ -8,6 +8,7 @@ import {getTotalNumberOfExperiences} from "../server/models/experiences";
 import {useEffect} from "react";
 import {updateTotalNumOfExperiences} from "../store/actions/experiences";
 import {useDispatch} from 'react-redux'
+import dbConnect from "../server/mongodbConnect";
 
 
 
@@ -27,14 +28,9 @@ const Index = (props) => {
 };
 
 export async function getServerSideProps(context) {
+  await dbConnect();
 
   const numberOfExperienceContributed = await getTotalNumberOfExperiences();
-
-  console.log(numberOfExperienceContributed)
-
-  const numberOfExperienceContributed = await getTotalNumberOfExperiences();
-
-  console.log(numberOfExperienceContributed)
 
   return {
     props: {

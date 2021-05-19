@@ -15,10 +15,10 @@ const stories = ({allContributions}) => {
 export async function getServerSideProps(context) {
     await dbConnect();
 
-    const allContributions = await getAllExperiences();
-    const test = await getAllUsersExperiences()
-    console.log('all user experiences', test[0].user);
-  
+    const allContributions = await getAllUsersExperiences().then(data => {
+        return JSON.parse(JSON.stringify(data))
+    });
+
     return {
       props: {
         allContributions,

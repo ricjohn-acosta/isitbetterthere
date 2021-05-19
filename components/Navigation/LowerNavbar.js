@@ -207,7 +207,7 @@ const LowerNavbar = () => {
                             <UserButtons disableRipple>
                                 {session ? (
                                     <>
-                                        <StyledAvatar src={session.picture}/>
+                                        <StyledAvatar src={session.picture} imgProps={{referrerPolicy: 'no-referrer'}}/>
                                         {/*    <img src="user-32.png"/>*/}
                                         {/*</StyledAvatar>*/}
                                         &nbsp;{session.name}

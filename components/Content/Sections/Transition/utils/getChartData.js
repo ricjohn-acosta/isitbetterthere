@@ -90,7 +90,7 @@ export const getChartData = (quality, allExperiences) => {
 
     case "location":
       // get location labels from experience object
-      const locations = allExperiences.map((e) => e.location);
+      const locations = allExperiences.map((e) => e.user[0].location);
       const locationSet = new Set(locations);
       const locationLabels = [...locationSet];
       const backgroundColor = [];
