@@ -8,7 +8,6 @@ const HeaderText = styled(Typography)`
 
 
 const Stories = ({ allContributions }) => {
-    console.log(allContributions)
   return (
     <>
       <LowerNavbar />

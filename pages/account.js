@@ -3,7 +3,7 @@ import Layout from "../components/Layout/Layout";
 import Account from "../containers/Account";
 import {getSession} from "next-auth/client";
 import {getUserRatedExperiences,} from "../server/db";
-import {getUserBySessionId} from "../server/models/user";
+import {getUserById} from "../server/models/user";
 import {storeUserData} from "../store/actions/users";
 import {useDispatch} from "react-redux";
 import dbConnect from "../server/mongodbConnect";
@@ -46,7 +46,7 @@ export async function getServerSideProps(context) {
         context.res.end();
     } else {
         // Get user data if there is session
-        const fetchedUser = await getUserBySessionId(session.id)
+        const fetchedUser = await getUserById(session.id)
 
         if (!fetchedUser) {
             context.res.writeHead(302, {

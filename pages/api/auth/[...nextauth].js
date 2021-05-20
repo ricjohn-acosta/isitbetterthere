@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import {session} from "next-auth/client";
 import dbConnect from "../../../server/mongodbConnect";
-import {getUserBySessionId} from "../../../server/models/user";
+import {getUserById} from "../../../server/models/user";
 import {getUserExperiences} from "../../../server/models/experiences";
 import {storeUserData} from "../../../store/actions/users";
 import {useDispatch} from "react-redux";
@@ -117,7 +117,7 @@ const options = {
         session: async (session, token) => {
             await dbConnect();
 
-            const userDetails = await getUserBySessionId(token.id)
+            const userDetails = await getUserById(token.id)
             const userExperiences = await getUserExperiences(token.id)
 
             session.userData = {userDetails, userExperiences}

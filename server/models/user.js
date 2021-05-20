@@ -26,6 +26,6 @@ export const createUser = async (data) => {
     return await userCollection.create(data);
 }
 
-export const getUserBySessionId = async (sessionId) => {
+export const getUserById = async (sessionId) => {
     return await userCollection.findOne({uid: sessionId}).exec()
 }

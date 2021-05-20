@@ -4,7 +4,7 @@ import { session, getSession } from "next-auth/client";
 import PageNotFound from "../containers/PageNotFound";
 import { getUsers } from "../server/db";
 import { useSelector, useDispatch } from 'react-redux'
-import {getUserBySessionId} from "../server/models/user";
+import {getUserById} from "../server/models/user";
 import dbConnect from "../server/mongodbConnect";
 
 // CLIENT SIDE
@@ -31,7 +31,7 @@ export async function getServerSideProps(context) {
   const users = await getUsers();
 
   if (typeof window === "undefined" && context.res.writeHead) {
-    const user = await getUserBySessionId(session.id)
+    const user = await getUserById(session.id)
 
     if (user) {
       context.res.writeHead(302, {

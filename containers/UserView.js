@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
 import draftToHtml from "draftjs-to-html";
+import BusinessRoundedIcon from "@material-ui/icons/BusinessRounded";
 
 const Wrapper = styled.div`
   min-height: 110vh;
@@ -116,8 +117,8 @@ const UserView = ({ user, userExperiences }) => {
 
   const [currentStory, setCurrentStory] = React.useState("");
 
-  const handleCurrentStory = (event, storyID) => {
-    event.preventDefault();
+  const handleCurrentStory = (storyID) => {
+    console.log('handleCurrentStory', storyID)
     router.push({
       pathname: `/user/${Router.router.query.id}`,
       query: { story: storyID },
@@ -155,7 +156,7 @@ const UserView = ({ user, userExperiences }) => {
                     size="small"
                     disableElevation
                     onClick={() => {
-                      handleCurrentStory(event, experience.id);
+                      handleCurrentStory(experience._id);
                     }}
                   >
                     VIEW STORY
@@ -173,7 +174,7 @@ const UserView = ({ user, userExperiences }) => {
   };
 
   const displayStory = (storyID) => {
-    const story = userExperiences.filter((e) => e.id == storyID);
+    const story = userExperiences.filter((e) => e._id === storyID);
 
     return htmlToReactParser.parse(draftToHtml(JSON.parse(story[0].story)));
   };
