@@ -1,11 +1,17 @@
 import * as actions from "./types";
 import request from "superagent";
-import {axiosAddExperience} from "../../pages/api/experiences";
+import {axiosAddExperience} from "../../pages/api/experiences/createNew";
+import {axiosRateHelpfulExperience} from "../../pages/api/experiences/rateHelpful";
 
 export const addExperience = (formData) => {
     return async () => {
-        const res = await axiosAddExperience(formData)
-        return res
+        return await axiosAddExperience(formData)
+    }
+}
+
+export const rateExperienceHelpful = (data) => {
+    return async () => {
+        return await axiosRateHelpfulExperience(data)
     }
 }
 

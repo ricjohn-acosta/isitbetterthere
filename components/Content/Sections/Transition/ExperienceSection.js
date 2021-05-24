@@ -185,7 +185,7 @@ const ExperienceSection = ({
             <React.Fragment key={i}>
               <Experience
                 key={i}
-                experienceId={e.eid}
+                experienceId={e._id}
                 userId={e.uid}
                 name={e.user[0].name}
                 profilePicture={e.user[0].profile_picture}

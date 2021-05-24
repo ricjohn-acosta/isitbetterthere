@@ -2,7 +2,7 @@ import * as actions from "../actions/types";
 import { HYDRATE } from "next-redux-wrapper";
 import {STORE_USER_DATA} from "../actions/users";
 import {UPDATE_TOTAL_NUM_OF_EXPERIENCES} from "../actions/experiences";
-import experiences from "../../pages/api/experiences";
+import experiences from "../../pages/api/experiences/createNew";
 
 const initialState = {
   error: null,

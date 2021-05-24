@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import {ObjectId} from "bson";
 
 const ExperienceSchema = new mongoose.Schema({
     posted_by: {
@@ -53,7 +54,7 @@ const ExperienceSchema = new mongoose.Schema({
 
 const experiencesCollection = mongoose.models && mongoose.models.Experiences || mongoose.model('Experiences', ExperienceSchema)
 
-export const dbAddExperience = async (formData) => {
+export const addExperience = async (formData) => {
     return experiencesCollection.create(formData)
 }
 
@@ -93,5 +94,13 @@ export const getAllUsersExperiences = async () => {
 
 export const getTotalNumberOfExperiences = async () => {
     return experiencesCollection.count()
+}
+
+export const rateHelpfulExperience = async (userID, experienceID) => {
+    return experiencesCollection.updateOne({_id: experienceID}, {$push: {users_helped: userID}, $inc: {helpful: 1}})
+}
+
+export const rateUnhelpfulExperience = async (userID, experienceID) => {
+    return experiencesCollection.updateOne({_id: experienceID}, {$inc: {not_helpful: 1}})
 }
 
