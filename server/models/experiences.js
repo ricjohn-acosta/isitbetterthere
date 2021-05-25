@@ -46,6 +46,10 @@ const ExperienceSchema = new mongoose.Schema({
         type: Array,
         required: true,
     },
+    users_notHelped: {
+        type: Array,
+        required: true
+    },
     date_posted: {
         type: Number,
         required: [true, 'Please specify the species of your pet.'],
@@ -97,10 +101,28 @@ export const getTotalNumberOfExperiences = async () => {
 }
 
 export const rateHelpfulExperience = async (userID, experienceID) => {
+    const experienceDoc = await experiencesCollection.findOne({_id: experienceID})
+
+    if (experienceDoc.users_notHelped.includes(userID)) {
+        await experiencesCollection.updateOne({_id: experienceID}, {
+            $pull: {users_notHelped: userID},
+            $inc: {not_helpful: -1}
+        })
+    }
+
     return experiencesCollection.updateOne({_id: experienceID}, {$push: {users_helped: userID}, $inc: {helpful: 1}})
 }
 
 export const rateUnhelpfulExperience = async (userID, experienceID) => {
-    return experiencesCollection.updateOne({_id: experienceID}, {$inc: {not_helpful: 1}})
+    const experienceDoc = await experiencesCollection.findOne({_id: experienceID})
+
+    if (experienceDoc.users_helped.includes(userID)) {
+        await experiencesCollection.updateOne({_id: experienceID}, {
+            $pull: {users_helped: userID},
+            $inc: {helpful: -1}
+        })
+    }
+
+    return experiencesCollection.updateOne({_id: experienceID}, {$push: {users_notHelped: userID}, $inc: {not_helpful: 1}})
 }
 

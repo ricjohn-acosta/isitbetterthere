@@ -20,7 +20,7 @@ import ReportForm from "./ReportForm";
 import SuccessDialog from "./SuccessDialog";
 import Popper from "@material-ui/core/Popper";
 import Paper from "@material-ui/core/Paper";
-import {rateExperienceHelpful} from "../../../../store/actions/experiences";
+import {rateExperienceHelpful, rateExperienceUnhelpful} from "../../../../store/actions/experiences";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -202,12 +202,11 @@ const Experience = ({
     };
 
     const handleRateHelpfulExperience = (userID, experienceID) => {
-        console.log('on helpful click', userID, experienceID)
         dispatch(rateExperienceHelpful({userID, experienceID}))
     }
 
-    const handleRateUnhelpfulExperience = () => {
-
+    const handleRateUnhelpfulExperience = (userID, experienceID) => {
+        dispatch(rateExperienceUnhelpful({userID, experienceID}))
     }
 
     const handleHelpful = () => {
@@ -392,7 +391,7 @@ const Experience = ({
                                 buttonClicked={buttonClicked}
                                 value="false"
                                 onClick={(e) => {
-                                    handleRating(e);
+                                    handleRateUnhelpfulExperience(session.id, experienceId)
                                     handleButtonClicked(e);
                                 }}
                             >

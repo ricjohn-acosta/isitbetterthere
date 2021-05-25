@@ -1,7 +1,6 @@
 import axios from "axios";
 import {API_SERVER} from "../../../lib/constants";
 import nc from "next-connect";
-import {alreadySubmitted, validRequestPayload} from "../../../middlewares/experienceValidator";
 import dbConnect from "../../../server/mongodbConnect";
 import {rateHelpfulExperience} from "../../../server/models/experiences";
 

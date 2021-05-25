@@ -2,6 +2,7 @@ import * as actions from "./types";
 import request from "superagent";
 import {axiosAddExperience} from "../../pages/api/experiences/createNew";
 import {axiosRateHelpfulExperience} from "../../pages/api/experiences/rateHelpful";
+import {axiosRateUnhelpfulExperience} from "../../pages/api/experiences/rateUnhelpful";
 
 export const addExperience = (formData) => {
     return async () => {
@@ -14,6 +15,13 @@ export const rateExperienceHelpful = (data) => {
         return await axiosRateHelpfulExperience(data)
     }
 }
+
+export const rateExperienceUnhelpful = (data) => {
+    return async () => {
+        return await axiosRateUnhelpfulExperience(data)
+    }
+}
+
 
 
 export const UPDATE_TOTAL_NUM_OF_EXPERIENCES = 'UPDATE_TOTAL_NUM_OF_EXPERIENCES'
