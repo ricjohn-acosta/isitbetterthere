@@ -74,11 +74,6 @@ export async function getServerSideProps(context) {
     //     context.query.filterBy
     // );
 
-    const allExperiences = await getTransitionExperiences(
-        context.query.from,
-        context.query.to
-    );
-
     if (session) {
         ratedExperiences = await getRatedExperiences(session.id);
         reportedExperiences = await getReportedExperiences(session.id);
