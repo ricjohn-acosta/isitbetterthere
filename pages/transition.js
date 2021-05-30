@@ -54,8 +54,8 @@ const transition = ({
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
-    let ratedExperiences = null;
-    let reportedExperiences = null;
+    // let ratedExperiences = null;
+    // let reportedExperiences = null;
 
     const experiences = await getTransitionExperiencesTest(context.query.from, context.query.to).then(data => {
         return JSON.parse(JSON.stringify(data))
@@ -74,10 +74,10 @@ export async function getServerSideProps(context) {
     //     context.query.filterBy
     // );
 
-    if (session) {
-        ratedExperiences = await getRatedExperiences(session.id);
-        reportedExperiences = await getReportedExperiences(session.id);
-    }
+    // if (session) {
+    //     ratedExperiences = await getRatedExperiences(session.id);
+    //     reportedExperiences = await getReportedExperiences(session.id);
+    // }
 
     console.log(experiences)
     return {
@@ -86,8 +86,8 @@ export async function getServerSideProps(context) {
             experiences: experiences,
             totalExperiences,
             allExperiences: experiences,
-            ratedExperiences,
-            reportedExperiences,
+            // ratedExperiences,
+            // reportedExperiences,
         },
     };
 }
