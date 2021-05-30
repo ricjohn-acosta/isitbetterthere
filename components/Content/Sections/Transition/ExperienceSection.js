@@ -172,6 +172,16 @@ const ExperienceSection = ({
     setViolationType(e.target.value);
   };
 
+  const getStoryRating = (story) => {
+    if (!session) return null
+
+    if (story.users_helped.includes(session.id)) {
+      return 'HELPED'
+    } else if (story.users_notHelped.includes(session.id)) {
+      return 'NOT_HELPED'
+    }
+  }
+
   console.log('experience section', experiences)
   const displayExperiences = () => {
     return (
@@ -201,11 +211,12 @@ const ExperienceSection = ({
                 helpfulCount={e.helpful}
                 date_posted={e.date_posted}
                 isRated={
-                  ratedExperiences &&
-                  ratedExperiences.find(
-                    ({ experience_id }) =>
-                      experience_id === e.eid
-                  )
+                  // ratedExperiences &&
+                  // ratedExperiences.find(
+                  //   ({ experience_id }) =>
+                  //     experience_id === e.eid
+                  // )
+                  getStoryRating(e)
                 }
                 handleOptions={handleOptions}
                 setCurrentId={setCurrentId}

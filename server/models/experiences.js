@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import {ObjectId} from "bson";
 
 const ExperienceSchema = new mongoose.Schema({
     posted_by: {

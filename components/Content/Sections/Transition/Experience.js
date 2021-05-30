@@ -60,10 +60,12 @@ const HelpfulButton = styled(Button)`
   color: black;
   background-color: ${(props) => {
     // Check if experience has been rated
-    if (!props.ratetype || (props.ratetype === 1 || props.ratetype === true)) {
+    // if (!props.ratetype || (props.ratetype === 1 || props.ratetype === true)) {
+    if (!props.ratetype || (props.ratetype === 'HELPED')) {
       // Check if no button has been clicked yet, use db data if so.
       if (
-              (props.ratetype === 1 || props.ratetype === true) &&
+              // (props.ratetype === 1 || props.ratetype === true) &&
+              (props.ratetype === 'HELPED') &&
               props.buttonClicked === ""
       ) {
         return "#CCFFCC";
@@ -84,10 +86,12 @@ const HelpfulButton = styled(Button)`
 const UnhelpfulButton = styled(Button)`
   background-color: ${(props) => {
     // Check if experience has been rated
-    if (!props.ratetype || (props.ratetype === 0 || props.ratetype === false)) {
+    // if (!props.ratetype || (props.ratetype === 0 || props.ratetype === false)) {
+    if (!props.ratetype || (props.ratetype === 'NOT_HELPED')) {
       // Check if no button has been clicked yet, use db data if so.
       if (
-              (props.ratetype === 0 || props.ratetype === false) &&
+              // (props.ratetype === 0 || props.ratetype === false) &&
+              (props.ratetype === 'NOT_HELPED') &&
               props.buttonClicked === ""
       ) {
         return "#FF9999";
@@ -240,7 +244,9 @@ const Experience = ({
     // if experience hasn't been rated yet by the user return false
     const getRateType = () => {
         // return !isRated ? false : isRated.is_helpful;
-        return !isRated ? null : isRated.is_helpful;
+        // return !isRated ? null : isRated.is_helpful;
+
+        return isRated
     };
 
     const renderJobDetails = (position, company) => {
@@ -364,7 +370,7 @@ const Experience = ({
                     <HelpfulCount component="span" variant="caption">
                         {rated
                             ? "Thanks for rating!"
-                            : helpfulCount + " people found this helpful"}
+                            : helpfulCount + (helpfulCount === 1 ? ' person' : ' people') + " found this helpful"}
                     </HelpfulCount>
                     {getSessionId() === userId ? (
                         <EditButton href="/account?tab=contributions" target="_blank">
@@ -406,7 +412,7 @@ const Experience = ({
                 handleReportClose={handleReportClose}
                 violationType={violationType}
                 handleViolationType={handleViolationType}
-                handleReportSubmit={handleReportSubmit}
+                handleReportSubmit={handleReportSubmit} a
                 reportedExperiences={reportedExperiences}
                 currentId={currentId}
                 uid={session && session.id}
