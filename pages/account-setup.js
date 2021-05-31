@@ -28,7 +28,6 @@ const accountSetup = ({ session, users }) => {
 export async function getServerSideProps(context) {
   await dbConnect();
   const session = await getSession(context);
-  const users = await getUsers();
 
   if (typeof window === "undefined" && context.res.writeHead) {
     const user = await getUserById(session.id)
@@ -55,7 +54,6 @@ export async function getServerSideProps(context) {
   return {
     props: {
       session,
-      users,
     },
   };
 }
