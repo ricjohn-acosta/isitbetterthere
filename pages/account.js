@@ -26,13 +26,8 @@ const account = (props) => {
 export async function getServerSideProps(context) {
     await dbConnect();
     const session = await getSession(context);
-    const userContributions = await getUserExperiences(session.id).then(data => {
-        return JSON.parse(JSON.stringify(data))
-    })
-
-    console.log(userContributions)
+    let userContributions = null;
     let user = null;
-    // let userContributions = null;
     let helpfulContributions = null;
 
     if (!session) {
@@ -58,7 +53,9 @@ export async function getServerSideProps(context) {
             context.res.end();
         } else {
             user = JSON.parse(JSON.stringify(fetchedUser));
-            // userContributions = await getUserExperiences(session.id);
+            userContributions = await getUserExperiences(session.id).then(data => {
+                return JSON.parse(JSON.stringify(data))
+            })
             helpfulContributions = await getUserRatedExperiences(session.id);
         }
     }
