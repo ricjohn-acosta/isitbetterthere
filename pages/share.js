@@ -15,6 +15,9 @@ const share = () => {
 export async function getServerSideProps(context) {
     const session = await getSession(context);
     let userExperiences = null;
+    const test = await getUserById(session.id)
+
+    console.log('SHARE TEST', test && test[0])
 
     const signedOutRedirect = () => {
         context.res.writeHead(302, {

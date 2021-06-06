@@ -27,5 +27,23 @@ export const createUser = async (data) => {
 }
 
 export const getUserById = async (sessionId) => {
-    return await userCollection.findOne({uid: sessionId}).exec()
+    return userCollection.aggregate([
+        {$match: {'uid': sessionId}},
+        {
+            $lookup: {
+                from: 'experiences',
+                localField: 'uid',
+                foreignField: 'posted_by',
+                as: 'my_stories'
+            }
+        },
+        {
+            $lookup: {
+                from: "experiences",
+                pipeline: [{$match: {$expr: {$in: [sessionId, "$users_helped"]}}}],
+                as: "helpful_stories"
+            }
+        },
+    ])
+
 }

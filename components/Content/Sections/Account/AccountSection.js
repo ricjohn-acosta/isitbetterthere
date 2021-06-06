@@ -13,6 +13,7 @@ import ReactImageFallback from "react-image-fallback";
 import {editUser} from "../../../../store/actions/users";
 import {connect, useSelector} from "react-redux";
 import {useRouter} from "next/router";
+import {useSession} from "next-auth/client";
 
 const Wrapper = styled.div`
   min-height: 110vh;
@@ -68,28 +69,28 @@ const BioContainer = styled(Typography)`
 `;
 
 const AccountSection = ({
-                            session,
-                            user,
+                            userData,
                             userContributions,
                             helpfulContributions,
                             editUser,
                         }) => {
     const router = useRouter();
+    const [session, loading] = useSession();
     const [view, setView] = React.useState("settings");
     const [hideName, setHideName] = React.useState(
-        user.hide_name === true
+        userData.hide_name === true
     );
     const [hideEmail, setHideEmail] = React.useState(
-        user.hide_email === true
+        userData.hide_email === true
     );
     const [hideOccupation, setHideOccupation] = React.useState(
-        user.hide_occupation === true
+        userData.hide_occupation === true
     );
     const [hideCompany, setHideCompany] = React.useState(
-        user.hide_company === true
+        userData.hide_company === true
     );
     const [hideLocation, setHideLocation] = React.useState(
-        user.hide_location === true
+        userData.hide_location === true
     );
 
     const localUser = useSelector((state) => state.users.user)
@@ -106,7 +107,7 @@ const AccountSection = ({
         });
     };
 
-    console.log("USER", user);
+    console.log("USER", userData);
     console.log("HIDE EMAIL", hideEmail);
     console.log("HIDE OCCUPATION", hideOccupation);
 
@@ -149,7 +150,7 @@ const AccountSection = ({
                     <LeftGrid item xs={12} sm={12} md={12} lg={3}>
                         <ImageContainer>
                             {/* <StyledImage
-                src={session.user.image}
+                src={session.userData.image}
 
                 onError={(e) => {
                   e.target.src = "/facebook.png";
@@ -158,14 +159,14 @@ const AccountSection = ({
 
                             <StyledImage
                                 src={session.picture}
-                                fallbackImage="/user.png"
+                                fallbackImage="/userData.png"
                                 alt={session.name}
                             />
                         </ImageContainer>
                         <ProfileDetails>
                             <NameContainer variant="h5">{session.name}</NameContainer>
                             <BioContainer style={{textAlign: "center"}} variant="subtitle1">
-                                "{user.bio}"
+                                "{userData.bio}"
                             </BioContainer>
                             <br/>
                             <StyledTypography variant="subtitle2">
@@ -173,7 +174,7 @@ const AccountSection = ({
                                     style={{color: "#1a8cff"}}
                                     fontSize="small"
                                 />
-                                {user.location}
+                                {userData.location}
                             </StyledTypography>
                             <br/>
                             <StyledTypography variant="subtitle2">
@@ -183,9 +184,9 @@ const AccountSection = ({
                             <br/>
                             <StyledTypography variant="subtitle2">
                                 <WorkIcon style={{color: "#1a8cff"}} fontSize="small"/>
-                                {user.occupation}
+                                {userData.occupation}
                             </StyledTypography>
-                            {user.company !== "" ? (
+                            {userData.company !== "" ? (
                                 <>
                                     <br/>
                                     <StyledTypography variant="subtitle2">
@@ -193,7 +194,7 @@ const AccountSection = ({
                                             style={{color: "#1a8cff"}}
                                             fontSize="small"
                                         />
-                                        {user.company}
+                                        {userData.company}
                                     </StyledTypography>
                                 </>
                             ) : null}

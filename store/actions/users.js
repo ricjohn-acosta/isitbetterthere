@@ -1,9 +1,16 @@
 import * as actions from "./types";
 import request from "superagent";
+import {axiosRateUnhelpfulExperience} from "../../pages/api/experiences/rateUnhelpful";
+import {axiosGetUserById} from "../../pages/api/users/[id]";
+
+export const getUser = (id) => {
+    return async () => {
+        return await axiosGetUserById(id)
+    }
+}
 
 export const STORE_USER_DATA = 'STORE_USER_DATA'
 export const storeUserData = (userData) => (dispatch) => {
-    console.log('udata', userData)
     dispatch({
         type: STORE_USER_DATA,
         payload: userData
