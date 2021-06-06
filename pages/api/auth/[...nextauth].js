@@ -115,13 +115,6 @@ const options = {
     // https://next-auth.js.org/configuration/callbacks
     callbacks: {
         session: async (session, token) => {
-            await dbConnect();
-
-            const userDetails = await getUserById(token.id)
-            const userExperiences = await getUserExperiences(token.id)
-
-            session.userData = {userDetails, userExperiences}
-
             return Promise.resolve({
                 ...session,
                 ...token,
@@ -129,9 +122,6 @@ const options = {
         },
 
         jwt: async (token, profile) => {
-
-
-
             const isSignIn = !!profile;
             if (isSignIn) {
                 token.id = profile.id;

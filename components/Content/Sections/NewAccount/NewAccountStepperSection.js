@@ -13,6 +13,7 @@ import ConfirmDetails from "./ConfirmDetails";
 import { addUser } from "../../../../store/actions/users";
 import { connect } from "react-redux";
 import Link from "@material-ui/core/Link";
+import {useSession} from "next-auth/client";
 
 const Wrapper = styled.div`
   min-height: 60vh;
@@ -24,7 +25,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const NewAccountStepperSection = ({ addUser, session }) => {
+const NewAccountStepperSection = () => {
+  const [session, loading] = useSession();
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [stepContent, setStepContent] = React.useState("");
   const [description, setDescription] = React.useState("");

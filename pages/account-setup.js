@@ -1,61 +1,46 @@
+import React, {useEffect, useState} from "react";
 import AccountSetup from "../containers/AccountSetup";
 import Layout from "../components/Layout/Layout";
-import { session, getSession } from "next-auth/client";
+import {useSession} from "next-auth/client";
 import PageNotFound from "../containers/PageNotFound";
-import { getUsers } from "../server/db";
-import { useSelector, useDispatch } from 'react-redux'
-import {getUserById} from "../server/models/user";
-import dbConnect from "../server/mongodbConnect";
+import {useDispatch} from 'react-redux'
+import {getUser} from "../store/actions/users";
+import {useRouter} from "next/router";
 
 // CLIENT SIDE
-const accountSetup = ({ session, users }) => {
-  if (!session) {
-    return (
-      <Layout>
-        <PageNotFound session={session} users={users} />
-      </Layout>
-    );
-  } else {
-    return (
-      <Layout>
-        <AccountSetup session={session} users={users} />
-      </Layout>
-    );
-  }
-};
+const accountSetup = () => {
+    const dispatch = useDispatch()
+    const router = useRouter()
+    const [session, loading] = useSession();
+    const [transitioning, setTransitioning] = useState(false);
 
-// SERVER SIDE
-export async function getServerSideProps(context) {
-  await dbConnect();
-  const session = await getSession(context);
+    useEffect(() => {
+        if (loading) return
 
-  if (typeof window === "undefined" && context.res.writeHead) {
-    const user = await getUserById(session.id)
+        if (!session) {
+            router.push('/account')
+        } else {
+            setTransitioning(true)
+            dispatch(getUser(session.id)).then(userData => {
+                userData.data !== 'Not found' && router.push('/account')
+                setTransitioning(false)
+            })
+        }
+    }, [session, loading, transitioning])
 
-    if (user) {
-      context.res.writeHead(302, {
-        Location:
-          process.env.NODE_ENV === "production"
-            ? process.env.prod
-            : process.env.dev,
-      });
-      context.res.end();
-    } else if (!session) {
-      context.res.writeHead(302, {
-        Location:
-          process.env.NODE_ENV === "production"
-            ? process.env.prod
-            : process.env.dev,
-      });
-      context.res.end();
+    if (!session || transitioning) {
+        return (
+            <Layout>
+                <PageNotFound/>
+            </Layout>
+        );
     }
-  }
 
-  return {
-    props: {
-      session,
-    },
-  };
-}
+    return (
+        <Layout>
+            <AccountSetup/>
+        </Layout>
+    );
+};
 
 export default accountSetup;

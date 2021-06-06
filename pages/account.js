@@ -13,14 +13,17 @@ const account = (props) => {
     const [userData, setUserData] = useState(null)
 
     useEffect(() => {
+        if (loading) return
+
         if (!session) {
             router.push("/signup")
         } else {
             dispatch(getUser(session.id)).then(userData => {
-                userData.data !== 'Not found' ? setUserData(userData) : router.push('/account-setup')
+                console.log('userdata', userData)
+                userData.data === 'Not found' ? router.push('/account-setup') : setUserData(userData)
             })
         }
-    }, [session])
+    }, [session, loading])
 
     if (!userData) return null
 
@@ -30,52 +33,5 @@ const account = (props) => {
         </Layout>
     );
 };
-
-// export async function getServerSideProps(context) {
-//     await dbConnect();
-//     const session = await getSession(context);
-//     let userContributions = null;
-//     let user = null;
-//     let helpfulContributions = null;
-//
-//     if (!session) {
-//         // Redirect to signup if no session
-//         context.res.writeHead(302, {
-//             Location:
-//                 process.env.NODE_ENV === "production"
-//                     ? process.env.prod + "/signup"
-//                     : process.env.dev + "/signup",
-//         });
-//         context.res.end();
-//     } else {
-//         // Get user data if there is session
-//         const fetchedUser = await getUserById(session.id)
-//
-//         if (!fetchedUser) {
-//             context.res.writeHead(302, {
-//                 Location:
-//                     process.env.NODE_ENV === "production"
-//                         ? process.env.prod + "/account-setup"
-//                         : process.env.dev + "/account-setup",
-//             });
-//             context.res.end();
-//         } else {
-//             user = JSON.parse(JSON.stringify(fetchedUser));
-//             userContributions = await getUserExperiences(session.id).then(data => {
-//                 return JSON.parse(JSON.stringify(data))
-//             })
-//             helpfulContributions = await getUserRatedExperiences(session.id);
-//         }
-//     }
-//
-//     return {
-//         props: {
-//             session,
-//             user,
-//             userContributions,
-//             helpfulContributions,
-//         },
-//     };
-// }
 
 export default account;
