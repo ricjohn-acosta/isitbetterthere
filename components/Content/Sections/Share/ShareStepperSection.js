@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -25,6 +25,7 @@ import {useDispatch} from 'react-redux'
 import {useSession} from "next-auth/client";
 import {useDialog} from "../../../../hooks/ui/useDialog";
 import {AlertDialog} from "../../../UI/Notifications/AlertDialog";
+import {getUser} from "../../../../store/actions/users";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -81,12 +82,7 @@ const htmlToReactParser = new HtmlToReactParser();
 
 const ShareStepperSection = () => {
     const [session, loading] = useSession();
-    // const [session, setSession] = useState(null)
     const [dialogOpen, setDialogOpen, toggleDialog] = useDialog();
-
-    const userExperiences = session && session.userData.userExperiences
-
-    console.log('userExperiences', userExperiences)
 
     const classes = useStyles();
     const dispatch = useDispatch()
@@ -111,16 +107,25 @@ const ShareStepperSection = () => {
     const [editorState, setEditorState] = React.useState(
         EditorState.createEmpty()
     );
+    const userData = useSelector((state) => state.users.user)
 
     const editorContent = convertToRaw(editorState.getCurrentContent());
     const story = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
     const steps = getSteps();
+
+    // useEffect(() => {
+    //     if (!session) return
+    //     dispatch(getUser(session.id)).then(userData => {
+    //         setUserData(userData.data[0])
+    //     })
+    // }, [session])
 
     const getStepContent = (step) => {
         switch (step) {
             case 0:
                 return (
                     <ChooseCategory
+                        stories={userData && userData.my_stories}
                         categories={categories}
                         setCategory={setCategory}
                         currentCategory={currentCategory}
@@ -198,7 +203,7 @@ const ShareStepperSection = () => {
 
     const handleNext = () => {
 
-        if (session && session.userData.userExperiences.find(experience => experience.from === fromInputValue && experience.to === toInputValue)) {
+        if (userData && userData.my_stories.find(experience => experience.from === fromInputValue && experience.to === toInputValue)) {
             toggleDialog()
             return
         }
@@ -207,7 +212,7 @@ const ShareStepperSection = () => {
             if (checkIfEmpty(0)) {
                 return;
             } else {
-                userExperiences.find(
+                userData.my_stories.find(
                     (e) => e.from === fromInputValue && e.to === toInputValue
                 )
                     ? setModalView(true)
@@ -369,7 +374,9 @@ const ShareStepperSection = () => {
                          close={() => setDialogOpen(false)}
                          title={'Thanks for contributing!'}
                          body={<>
-                             You have already shared your story about transitioning from <b>{fromInputValue}</b> to <b>{toInputValue}</b>! Would you like to add more to your story?
+                             You have already shared your story about transitioning
+                             from <b>{fromInputValue}</b> to <b>{toInputValue}</b>! Would you like to add more to your
+                             story?
                          </>}
                          actions={[
                              {action: 'Edit your story', handler: () => setDialogOpen(false)},

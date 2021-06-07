@@ -68,34 +68,27 @@ const BioContainer = styled(Typography)`
   text-align: center;
 `;
 
-const AccountSection = ({
-                            userData,
-                            userContributions,
-                            helpfulContributions,
-                            editUser,
-                        }) => {
+const AccountSection = () => {
     const router = useRouter();
+    const userData = useSelector((state) => state.users.user)
+
     const [session, loading] = useSession();
     const [view, setView] = React.useState("settings");
-    const [hideName, setHideName] = React.useState(
-        userData.hide_name === true
-    );
-    const [hideEmail, setHideEmail] = React.useState(
-        userData.hide_email === true
-    );
-    const [hideOccupation, setHideOccupation] = React.useState(
-        userData.hide_occupation === true
-    );
-    const [hideCompany, setHideCompany] = React.useState(
-        userData.hide_company === true
-    );
-    const [hideLocation, setHideLocation] = React.useState(
-        userData.hide_location === true
-    );
+    const [hideName, setHideName] = React.useState(null);
+    const [hideEmail, setHideEmail] = React.useState(null);
+    const [hideOccupation, setHideOccupation] = React.useState(null);
+    const [hideCompany, setHideCompany] = React.useState(null);
+    const [hideLocation, setHideLocation] = React.useState(null);
 
-    const localUser = useSelector((state) => state.users.user)
+    useEffect(() => {
+        if (!userData) return
+        setHideName(userData.hide_name)
+        setHideEmail(userData.hide_email)
+        setHideOccupation(userData.hide_occupation)
+        setHideCompany(userData.hide_company)
+        setHideLocation(userData.hide_location)
+    }, [userData])
 
-    console.log('localUser', localUser);
     const handleSubmit = () => {
         editUser({
             user_id: session.id,
@@ -106,10 +99,6 @@ const AccountSection = ({
             hide_location: hideLocation,
         });
     };
-
-    console.log("USER", userData);
-    console.log("HIDE EMAIL", hideEmail);
-    console.log("HIDE OCCUPATION", hideOccupation);
 
     const renderView = () => {
         switch (router.query.tab) {
@@ -130,11 +119,11 @@ const AccountSection = ({
                 );
 
             case "contributions":
-                return <ContributionTab userContributions={userContributions}/>;
+                return <ContributionTab userContributions={userData && userData.my_stories}/>;
 
             case "helpful-stories":
                 return (
-                    <HelpfulStoriesTab helpfulContributions={helpfulContributions}/>
+                    <HelpfulStoriesTab helpfulContributions={userData && userData.helpful_stories}/>
                 );
 
             default:
@@ -142,7 +131,6 @@ const AccountSection = ({
         }
     };
 
-    console.log("HELPFUL", helpfulContributions);
     return (
         <Wrapper>
             <DashboardContainer elevation={0}>
@@ -158,15 +146,15 @@ const AccountSection = ({
               ></StyledImage> */}
 
                             <StyledImage
-                                src={session.picture}
+                                src={session && session.picture}
                                 fallbackImage="/userData.png"
-                                alt={session.name}
+                                alt={session && session.name}
                             />
                         </ImageContainer>
                         <ProfileDetails>
-                            <NameContainer variant="h5">{session.name}</NameContainer>
+                            <NameContainer variant="h5">{session && session.name}</NameContainer>
                             <BioContainer style={{textAlign: "center"}} variant="subtitle1">
-                                "{userData.bio}"
+                                "{userData && userData.bio}"
                             </BioContainer>
                             <br/>
                             <StyledTypography variant="subtitle2">
@@ -174,19 +162,19 @@ const AccountSection = ({
                                     style={{color: "#1a8cff"}}
                                     fontSize="small"
                                 />
-                                {userData.location}
+                                {userData && userData.location}
                             </StyledTypography>
                             <br/>
                             <StyledTypography variant="subtitle2">
                                 <EmailIcon style={{color: "#1a8cff"}} fontSize="small"/>
-                                {session.email}
+                                {session && session.email}
                             </StyledTypography>
                             <br/>
                             <StyledTypography variant="subtitle2">
                                 <WorkIcon style={{color: "#1a8cff"}} fontSize="small"/>
-                                {userData.occupation}
+                                {userData && userData.occupation}
                             </StyledTypography>
-                            {userData.company !== "" ? (
+                            {userData && userData.company !== "" ? (
                                 <>
                                     <br/>
                                     <StyledTypography variant="subtitle2">
@@ -194,7 +182,7 @@ const AccountSection = ({
                                             style={{color: "#1a8cff"}}
                                             fontSize="small"
                                         />
-                                        {userData.company}
+                                        {userData && userData.company}
                                     </StyledTypography>
                                 </>
                             ) : null}

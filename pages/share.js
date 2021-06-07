@@ -1,52 +1,34 @@
+import React, {useEffect, useState} from "react";
 import Share from "../containers/Share";
 import Layout from "../components/Layout/Layout";
-import {getUserById} from "../server/models/user";
-import {getUserExperiences} from "../server/models/experiences";
-import {getSession} from "next-auth/client";
+import {useSession} from "next-auth/client";
+import {getUser, storeUserData} from "../store/actions/users";
+import {useDispatch} from "react-redux";
+import redirect from "nextjs-redirect";
 
 const share = () => {
-  return (
-    <Layout>
-      <Share/>
-    </Layout>
-  );
+    const dispatch = useDispatch()
+    const [session, loading] = useSession();
+    const [userData, setUserData] = useState(null)
+    const RedirectToAccountSetup = redirect('/account-setup')
+    const RedirectToSignup = redirect('/signup')
+
+    useEffect(() => {
+        if (!session) return
+        dispatch(getUser(session.id)).then(userData => {
+            setUserData(userData)
+            dispatch(storeUserData(userData.data[0]))
+        })
+    }, [session])
+
+    if (!session && (userData && userData.data === 'Not found')) return <RedirectToSignup/>
+    if (session && (userData && userData.data === 'Not found')) return <RedirectToAccountSetup/>
+
+    return (
+        <Layout>
+            <Share/>
+        </Layout>
+    );
 };
-
-export async function getServerSideProps(context) {
-    const session = await getSession(context);
-    let userExperiences = null;
-
-    const signedOutRedirect = () => {
-        context.res.writeHead(302, {
-            Location:
-                process.env.NODE_ENV === "production"
-                    ? process.env.prod + "/signup"
-                    : process.env.dev + "/signup",
-        });
-        context.res.end();
-    };
-
-    if (!session) {
-        signedOutRedirect()
-    } else {
-        if (!(await getUserById(session.id))) {
-            context.res.writeHead(302, {
-                Location:
-                    process.env.NODE_ENV === "production"
-                        ? process.env.prod + "/account-setup"
-                        : process.env.dev + "/account-setup",
-            });
-            context.res.end();
-        } else {
-            userExperiences = await getUserExperiences(session.id).then(data => {
-                return JSON.parse(JSON.stringify(data))
-            });
-            return {
-                props: {userExperiences}
-            }
-        }
-    }
-}
-
 
 export default share;

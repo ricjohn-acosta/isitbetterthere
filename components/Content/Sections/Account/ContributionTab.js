@@ -1,3 +1,4 @@
+import React, {useEffect} from "react";
 import styled, {keyframes} from "styled-components";
 import {Typography} from "@material-ui/core";
 import Contribution from "./Contribution";
@@ -9,10 +10,13 @@ const Wrapper = styled.div`
 `;
 
 const ContributionTab = ({userContributions}) => {
-    const [contributions, setContributions] = React.useState(userContributions);
-    const userContributionsTest = useSelector((state) => state.users)
+    const [contributions, setContributions] = React.useState(null);
 
-    console.log('user contributions', userContributionsTest)
+    useEffect(() => {
+        setContributions(userContributions)
+    }, [userContributions])
+
+    if (!contributions) return null
     return (
         <Wrapper>
             <Typography variant="h5">Your stories</Typography>

@@ -2,45 +2,31 @@ import React, {useEffect, useState} from "react";
 import AccountSetup from "../containers/AccountSetup";
 import Layout from "../components/Layout/Layout";
 import {useSession} from "next-auth/client";
-import PageNotFound from "../containers/PageNotFound";
 import {useDispatch} from 'react-redux'
 import {getUser} from "../store/actions/users";
-import {useRouter} from "next/router";
+import redirect from 'nextjs-redirect'
 
-// CLIENT SIDE
 const accountSetup = () => {
     const dispatch = useDispatch()
-    const router = useRouter()
     const [session, loading] = useSession();
-    const [transitioning, setTransitioning] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const RedirectToAccount = redirect('/account')
+    const RedirectToSignup = redirect('/signup')
 
     useEffect(() => {
-        if (loading) return
+        if (!session) return
+        dispatch(getUser(session.id)).then(userData => {
+            setUserData(userData)
+        })
+    }, [session])
 
-        if (!session) {
-            router.push('/account')
-        } else {
-            setTransitioning(true)
-            dispatch(getUser(session.id)).then(userData => {
-                userData.data !== 'Not found' && router.push('/account')
-                setTransitioning(false)
-            })
-        }
-    }, [session, loading, transitioning])
 
-    if (!session || transitioning) {
-        return (
-            <Layout>
-                <PageNotFound/>
-            </Layout>
-        );
-    }
+    if (!session && (userData && userData.data === 'Not found')) return <RedirectToSignup/>
+    if (session && (userData && userData.data !== 'Not found')) return <RedirectToAccount/>
 
-    return (
-        <Layout>
-            <AccountSetup/>
-        </Layout>
-    );
+    return <Layout>
+        <AccountSetup/>
+    </Layout>
 };
 
 export default accountSetup;

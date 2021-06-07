@@ -5,7 +5,7 @@ const AccountSetup = (props) => {
   return (
     <>
       <LowerNavbar {...props} />
-      <AccountSection {...props} />
+      <AccountSection/>
     </>
   );
 };
