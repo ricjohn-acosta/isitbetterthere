@@ -13,15 +13,13 @@ const handler = nc()
 
 handler
     .get(async (req, res) => {
-        console.log(req.query.id)
         await dbConnect();
         const data = await getUserById(req.query.id)
 
-        console.log(data)
         if (data.length === 0) {
-            res.send('Not found').end()
+            res.send('Not found')
         } else {
-            res.send(await getUserById(req.query.id)).end()
+            res.send(await getUserById(req.query.id))
         }
 
     })
