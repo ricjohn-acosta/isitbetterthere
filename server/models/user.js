@@ -39,6 +39,14 @@ export const getUserById = async (sessionId) => {
         },
         {
             $lookup: {
+                from: 'reportedexperiences',
+                localField: 'uid',
+                foreignField: 'reported_by',
+                as: 'reported_stories'
+            }
+        },
+        {
+            $lookup: {
                 from: "experiences",
                 pipeline: [{$match: {$expr: {$in: [sessionId, "$users_helped"]}}}],
                 as: "helpful_stories"

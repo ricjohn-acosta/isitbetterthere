@@ -1,3 +1,4 @@
+import {useEffect} from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,14 +15,15 @@ import {IconButton} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import {rateExperience} from "../../../../store/actions/ratings";
-import {connect, useDispatch} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {useSession} from "next-auth/client";
 import ReportForm from "./ReportForm";
 import SuccessDialog from "./SuccessDialog";
 import Popper from "@material-ui/core/Popper";
 import Paper from "@material-ui/core/Paper";
-import {rateExperienceHelpful, rateExperienceUnhelpful} from "../../../../store/actions/experiences";
+import {rateExperienceHelpful, rateExperienceUnhelpful, reportExperience} from "../../../../store/actions/experiences";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import {useRouter} from "next/router";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -61,24 +63,23 @@ const HelpfulButton = styled(Button)`
   color: black;
   background-color: ${(props) => {
     // Check if experience has been rated
-    // if (!props.ratetype || (props.ratetype === 1 || props.ratetype === true)) {
     if (!props.ratetype || (props.ratetype === 'HELPED')) {
       // Check if no button has been clicked yet, use db data if so.
       if (
               // (props.ratetype === 1 || props.ratetype === true) &&
               (props.ratetype === 'HELPED') &&
-              props.buttonClicked === ""
+              props.buttonClicked
       ) {
         return "#CCFFCC";
       }
 
       // Handle color change when button is clicked
-      if (props.buttonClicked === "Liked") {
+      if (props.buttonClicked) {
         return "#CCFFCC";
       }
     }
 
-    if (props.buttonClicked === "Liked") {
+    if (props.buttonClicked) {
       return "#CCFFCC";
     }
   }};
@@ -87,24 +88,23 @@ const HelpfulButton = styled(Button)`
 const UnhelpfulButton = styled(Button)`
   background-color: ${(props) => {
     // Check if experience has been rated
-    // if (!props.ratetype || (props.ratetype === 0 || props.ratetype === false)) {
     if (!props.ratetype || (props.ratetype === 'NOT_HELPED')) {
       // Check if no button has been clicked yet, use db data if so.
       if (
               // (props.ratetype === 0 || props.ratetype === false) &&
               (props.ratetype === 'NOT_HELPED') &&
-              props.buttonClicked === ""
+              props.buttonClicked
       ) {
         return "#FF9999";
       }
 
       // Handle color change when button is clicked
-      if (props.buttonClicked === "Disliked") {
+      if (props.buttonClicked) {
         return "#FF9999";
       }
     }
 
-    if (props.buttonClicked === "Disliked") {
+    if (props.buttonClicked) {
       return "#FF9999";
     }
   }};
@@ -170,18 +170,20 @@ const Experience = ({
                         hideLocation,
                         // reportView,
                         // handleReportClose,
-                        violationType,
-                        handleViolationType,
-                        handleReportSubmit,
+                        // violationType,
+                        // handleViolationType,
+                        // handleReportSubmit,
                         reportedExperiences,
                         currentId,
-                        hasReported,
-                        handleReportSuccessClose,
+                        // hasReported,
+                        // handleReportSuccessClose,
                     }) => {
     const dispatch = useDispatch()
+    const router = useRouter()
 
     const [session, loading] = useSession();
-    const [buttonClicked, setButtonClicked] = React.useState("");
+    const [clickedHelpful, setHelpfulClick] = React.useState(null);
+    const [clickedUnhelpful, setUnhelpfulClick] = React.useState(null);
     const [rated, setRated] = React.useState(false);
 
     const [reportView, setReportView] = React.useState(false);
@@ -189,19 +191,28 @@ const Experience = ({
     const [clickAway, setClickaway] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [placement, setPlacement] = React.useState();
+    const [hasReported, setHasReported] = React.useState(false);
+    const [violationType, setViolationType] = React.useState("");
 
+    useEffect(() => {
+        setHelpfulClick(isRated === 'HELPED')
+        setUnhelpfulClick(isRated === 'NOT_HELPED')
+    }, [isRated])
 
+    console.log(clickedHelpful, clickedUnhelpful)
     const isWhiteSpaceOrEmpty = (input) => {
         return !/[^\s]/.test(input);
     };
 
-    const handleButtonClicked = (e) => {
-        if (e.currentTarget.value === "true") {
-            setButtonClicked("Liked");
-        } else {
-            setButtonClicked("Disliked");
-        }
-    };
+    const handleHelpfulClick = () => {
+        setHelpfulClick(!clickedHelpful)
+        setUnhelpfulClick(false)
+    }
+
+    const handleUnhelpfulClick = () => {
+        setUnhelpfulClick(!clickedUnhelpful)
+        setHelpfulClick(false)
+    }
 
     const handleRateHelpfulExperience = (userID, experienceID) => {
         dispatch(rateExperienceHelpful({userID, experienceID})).then(res => {
@@ -214,30 +225,6 @@ const Experience = ({
         dispatch(rateExperienceUnhelpful({userID, experienceID}))
         setRated(true)
     }
-
-    const handleHelpful = () => {
-        if (isRated && buttonClicked === "") {
-            if (isRated.is_helpful === 1 || isRated.is_helpful === true) {
-                return true;
-            }
-        }
-
-        if (buttonClicked === "Liked") {
-            return true;
-        }
-    };
-
-    const handleNotHelpful = () => {
-        if (isRated && buttonClicked === "") {
-            if (isRated.is_helpful === 0 || isRated.is_helpful === false) {
-                return true;
-            }
-        }
-
-        if (buttonClicked === "Disliked") {
-            return true;
-        }
-    };
 
     const getSessionId = () => {
         return session ? session.id : false;
@@ -292,6 +279,17 @@ const Experience = ({
         }
     };
 
+    const handleReportSubmit = () => {
+        dispatch(reportExperience({
+            reported_by: session.id,
+            experience_id: currentId,
+            violation_type: violationType,
+            date_reported: Math.floor(Date.now() / 1000),
+            content: experience[0].props.children,
+        }))
+        setHasReported(true)
+    };
+
     const handleReportOpen = () => {
         if (session) {
             setReportView(true);
@@ -329,6 +327,14 @@ const Experience = ({
             setClickaway(true);
         }
     };
+
+    const handleViolationType = (e) => {
+        setViolationType(e.target.value);
+    };
+
+    const handleReportSuccessClose = () => {
+        setHasReported(false)
+    }
 
     return (
         <Wrapper id={"/" + experienceId} userId={userId} sessionId={getSessionId()}>
@@ -404,9 +410,10 @@ const Experience = ({
                     {experience}
                     <StyledHr/>
                     <HelpfulCount component="span" variant="caption">
-                        {rated
-                            ? "Thanks for rating!"
-                            : helpfulCount + (helpfulCount === 1 ? ' person' : ' people') + " found this helpful"}
+                        {/*{rated*/}
+                        {/*    ? "Thanks for rating!"*/}
+                        {/*    : helpfulCount + (helpfulCount === 1 ? ' person' : ' people') + " found this helpful"}*/}
+                        {helpfulCount + (helpfulCount === 1 ? ' person' : ' people') + " found this helpful"}
                     </HelpfulCount>
                     {getSessionId() === userId ? (
                         <EditButton href="/account?tab=contributions" target="_blank">
@@ -416,25 +423,24 @@ const Experience = ({
                         <ButtonGroup>
                             <HelpfulButton
                                 ratetype={getRateType()}
-                                disabled={handleHelpful()}
-                                buttonClicked={buttonClicked}
+                                // disabled={handleHelpful()}
+                                buttonClicked={clickedHelpful}
                                 value="true"
                                 onClick={(e) => {
-                                    // handleRating(e);
                                     handleRateHelpfulExperience(session.id, experienceId)
-                                    handleButtonClicked(e);
+                                    handleHelpfulClick()
                                 }}
                             >
                                 Helpful
                             </HelpfulButton>
                             <UnhelpfulButton
                                 ratetype={getRateType()}
-                                disabled={handleNotHelpful()}
-                                buttonClicked={buttonClicked}
+                                // disabled={handleNotHelpful()}
+                                buttonClicked={clickedUnhelpful}
                                 value="false"
                                 onClick={(e) => {
                                     handleRateUnhelpfulExperience(session.id, experienceId)
-                                    handleButtonClicked(e);
+                                    handleUnhelpfulClick()
                                 }}
                             >
                                 Not helpful

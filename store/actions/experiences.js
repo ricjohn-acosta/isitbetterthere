@@ -13,7 +13,7 @@ export const addExperience = (formData) => {
 
 export const reportExperience = (report) => {
     return async () => {
-        return await axiosReportExperience(formData)
+        return await axiosReportExperience(report)
     }
 }
 

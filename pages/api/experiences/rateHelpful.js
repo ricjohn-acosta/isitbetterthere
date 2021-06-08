@@ -15,9 +15,9 @@ handler
         const {experienceID, userID} = req.body
         console.log('rateHelpful api', req.body)
         await dbConnect();
-        const result = await rateHelpfulExperience(userID, experienceID)
+        await rateHelpfulExperience(userID, experienceID)
 
-        result ? res.status(200).end() : res.send('Failed')
+        res.status(200).end()
     })
 
 export default handler

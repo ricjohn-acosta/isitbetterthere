@@ -16,9 +16,9 @@ import PaginationLink from "./PaginationLink";
 import Popper from "@material-ui/core/Popper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import {connect, useDispatch} from "react-redux";
-import {addReport} from "../../../../store/actions/reports";
 import {useSession} from "next-auth/client";
 import Link from "next/link";
+import {reportExperience} from "../../../../store/actions/experiences";
 
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
@@ -99,7 +99,6 @@ const PopperContent = styled(Paper)`
 const ExperienceSection = ({
                                experiences,
                                totalExperiences,
-                               addReport,
                            }) => {
     const router = useRouter();
     const dispatch = useDispatch()
@@ -112,8 +111,8 @@ const ExperienceSection = ({
     const [open, setOpen] = React.useState(false);
     const [placement, setPlacement] = React.useState();
     // const [reportView, setReportView] = React.useState(false);
-    const [violationType, setViolationType] = React.useState("");
-    const [hasReported, setHasReported] = React.useState(false);
+    // const [violationType, setViolationType] = React.useState("");
+    // const [hasReported, setHasReported] = React.useState(false);
     const [session, loading] = useSession();
 
     // const handleOptions = (event) => {
@@ -153,29 +152,13 @@ const ExperienceSection = ({
     //     setReportView(false);
     // };
 
-    const handleReportSuccessClose = () => {
-        setHasReported(false)
-    }
+    // const handleReportSuccessClose = () => {
+    //     setHasReported(false)
+    // }
 
-    const handleReportSubmit = () => {
-        // addReport({
-        //     reported_by: session.id,
-        //     experience_id: currentId,
-        //     violation_type: violationType,
-        //     date_reported: Math.floor(Date.now() / 1000),
-        // });
-        dispatch({
-            reported_by: session.id,
-            experience_id: currentId,
-            violation_type: violationType,
-            date_reported: Math.floor(Date.now() / 1000),
-        })
-        setHasReported(true)
-    };
-
-    const handleViolationType = (e) => {
-        setViolationType(e.target.value);
-    };
+    // const handleViolationType = (e) => {
+    //     setViolationType(e.target.value);
+    // };
 
     const getStoryRating = (story) => {
         if (!session) return null
@@ -226,14 +209,14 @@ const ExperienceSection = ({
                                 hideLocation={e.hide_location}
                                 // reportView={reportView}
                                 // handleReportClose={handleReportClose}
-                                violationType={violationType}
-                                handleViolationType={handleViolationType}
-                                handleReportSubmit={handleReportSubmit}
+                                // violationType={violationType}
+                                // handleViolationType={handleViolationType}
+                                // handleReportSubmit={handleReportSubmit}
                                 reportedExperiences={null} //todo
                                 currentId={currentId}
                                 uid={session && session.id}
-                                hasReported={hasReported}
-                                handleReportSuccessClose={handleReportSuccessClose}
+                                // hasReported={hasReported}
+                                // handleReportSuccessClose={handleReportSuccessClose}
                             />
                             <br/>
                         </React.Fragment>

@@ -101,7 +101,13 @@ export const getTotalNumberOfExperiences = async () => {
 export const rateHelpfulExperience = async (userID, experienceID) => {
     const experienceDoc = await experiencesCollection.findOne({_id: experienceID})
 
-    if (experienceDoc.users_helped.includes(userID)) return false
+    // if (experienceDoc.users_helped.includes(userID)) return false
+    if (experienceDoc.users_helped.includes(userID)) {
+        return experiencesCollection.updateOne({_id: experienceID}, {
+            $pull: {users_helped: userID},
+            $inc: {helpful: -1}
+        })
+    }
 
     if (experienceDoc.users_notHelped.includes(userID)) {
         await experiencesCollection.updateOne({_id: experienceID}, {
@@ -116,7 +122,13 @@ export const rateHelpfulExperience = async (userID, experienceID) => {
 export const rateUnhelpfulExperience = async (userID, experienceID) => {
     const experienceDoc = await experiencesCollection.findOne({_id: experienceID})
 
-    if (experienceDoc.users_notHelped.includes(userID)) return false
+    // if (experienceDoc.users_notHelped.includes(userID)) return false
+    if (experienceDoc.users_notHelped.includes(userID)) {
+        return experiencesCollection.updateOne({_id: experienceID}, {
+            $pull: {users_notHelped: userID},
+            $inc: {not_helpful: -1}
+        })
+    }
 
     if (experienceDoc.users_helped.includes(userID)) {
         await experiencesCollection.updateOne({_id: experienceID}, {
@@ -125,6 +137,9 @@ export const rateUnhelpfulExperience = async (userID, experienceID) => {
         })
     }
 
-    return experiencesCollection.updateOne({_id: experienceID}, {$push: {users_notHelped: userID}, $inc: {not_helpful: 1}})
+    return experiencesCollection.updateOne({_id: experienceID}, {
+        $push: {users_notHelped: userID},
+        $inc: {not_helpful: 1}
+    })
 }
 

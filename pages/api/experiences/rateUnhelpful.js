@@ -16,9 +16,8 @@ handler
         const {experienceID, userID} = req.body
         await dbConnect();
         await rateUnhelpfulExperience(userID, experienceID)
-        const result = await rateUnhelpfulExperience(userID, experienceID)
 
-        result ? res.status(200).end() : res.send('Failed')
+        res.status(200).end()
     })
 
 export default handler
