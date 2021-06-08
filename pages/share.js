@@ -1,28 +1,18 @@
 import React, {useEffect, useState} from "react";
 import Share from "../containers/Share";
 import Layout from "../components/Layout/Layout";
-import {useSession} from "next-auth/client";
+import {getSession, useSession} from "next-auth/client";
 import {getUser, storeUserData} from "../store/actions/users";
 import {useDispatch} from "react-redux";
 import redirect from "nextjs-redirect";
+import {axiosGetUserById} from "./api/users/[id]";
 
-const share = () => {
+const share = ({userData}) => {
     const dispatch = useDispatch()
-    const [session, loading] = useSession();
-    const [userData, setUserData] = useState(null)
-    const RedirectToAccountSetup = redirect('/account-setup')
-    const RedirectToSignup = redirect('/signup')
 
     useEffect(() => {
-        if (!session) return
-        dispatch(getUser(session.id)).then(userData => {
-            setUserData(userData)
-            dispatch(storeUserData(userData.data[0]))
-        })
-    }, [session])
-
-    // if (!session && (userData && userData.data === 'Not found')) return <RedirectToSignup/>
-    // if (session && (userData && userData.data === 'Not found')) return <RedirectToAccountSetup/>
+        dispatch(storeUserData(userData))
+    }, [])
 
     return (
         <Layout>
@@ -30,5 +20,28 @@ const share = () => {
         </Layout>
     );
 };
+
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    const res = await axiosGetUserById(session.id)
+    const redirectToSignup = {
+        destination: '/signup',
+        permanent: false
+    }
+    const redirectToAccountSetup = {
+        destination: '/account-setup',
+        permanent: false
+    }
+
+    if (!session && res.data === 'Not found') return {redirect: redirectToSignup}
+
+    if (session && res.data === 'Not found') return {redirect: redirectToAccountSetup}
+
+    return {
+        props: {
+            userData: res.data[0]
+        },
+    };
+}
 
 export default share;
