@@ -3,10 +3,17 @@ import request from "superagent";
 import {axiosAddExperience} from "../../pages/api/experiences/createNew";
 import {axiosRateHelpfulExperience} from "../../pages/api/experiences/rateHelpful";
 import {axiosRateUnhelpfulExperience} from "../../pages/api/experiences/rateUnhelpful";
+import {axiosReportExperience} from "../../pages/api/experiences/report";
 
 export const addExperience = (formData) => {
     return async () => {
         return await axiosAddExperience(formData)
+    }
+}
+
+export const reportExperience = (report) => {
+    return async () => {
+        return await axiosReportExperience(formData)
     }
 }
 

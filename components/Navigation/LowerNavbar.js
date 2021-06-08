@@ -167,19 +167,14 @@ const LowerNavbar = () => {
                 <Grid container direction="row">
                     <Grid item container xs={6} sm={6} md={8}>
                         <BrandLogo>IsItBetterThere</BrandLogo>
-                        <MiscButtons
-                            href={
-                                router.pathname === "/"
-                                    ? "#/howitworks"
-                                    : process.env.NODE_ENV === "production"
-                                    ? process.env.prod + "/#/howitworks"
-                                    : process.env.dev + "/#/howitworks"
-                            }
-                            style={{textDecoration: "none"}}
-                            disableRipple
-                        >
-                            How it works
-                        </MiscButtons>
+                        <Link href='/#/howitworks' passHref>
+                            <MiscButtons
+                                style={{textDecoration: "none"}}
+                                disableRipple
+                            >
+                                How it works
+                            </MiscButtons>
+                        </Link>
                         <MiscButtons
                             href={
                                 router.pathname === "/"
@@ -208,8 +203,6 @@ const LowerNavbar = () => {
                                 {session ? (
                                     <>
                                         <StyledAvatar src={session.picture} imgProps={{referrerPolicy: 'no-referrer'}}/>
-                                        {/*    <img src="user-32.png"/>*/}
-                                        {/*</StyledAvatar>*/}
                                         &nbsp;{session.name}
                                     </>
                                 ) : (
@@ -280,7 +273,6 @@ const LowerNavbar = () => {
                     </PopperPaper>
                 </ClickAwayListener>
             </Popper>
-            {console.log(providers)}
         </StyledLowerNavbar>
     );
 };

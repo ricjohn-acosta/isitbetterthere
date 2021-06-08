@@ -65,8 +65,7 @@ export const getUserExperiences = async (uid) => {
     return experiencesCollection.find({posted_by: uid});
 }
 
-export const getTransitionExperiencesTest = async (from, to) => {
-    // return experiencesCollection.find({from, to});
+export const getTransitionExperiences = async (from, to) => {
     return experiencesCollection.aggregate([
         {$match: {from, to}},
         {
@@ -102,6 +101,8 @@ export const getTotalNumberOfExperiences = async () => {
 export const rateHelpfulExperience = async (userID, experienceID) => {
     const experienceDoc = await experiencesCollection.findOne({_id: experienceID})
 
+    if (experienceDoc.users_helped.includes(userID)) return false
+
     if (experienceDoc.users_notHelped.includes(userID)) {
         await experiencesCollection.updateOne({_id: experienceID}, {
             $pull: {users_notHelped: userID},
@@ -114,6 +115,8 @@ export const rateHelpfulExperience = async (userID, experienceID) => {
 
 export const rateUnhelpfulExperience = async (userID, experienceID) => {
     const experienceDoc = await experiencesCollection.findOne({_id: experienceID})
+
+    if (experienceDoc.users_notHelped.includes(userID)) return false
 
     if (experienceDoc.users_helped.includes(userID)) {
         await experiencesCollection.updateOne({_id: experienceID}, {

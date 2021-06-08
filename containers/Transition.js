@@ -4,34 +4,29 @@ import OverviewSection from "../components/Content/Sections/Transition/OverviewS
 import ExperienceSection from "../components/Content/Sections/Transition/ExperienceSection";
 
 const Transition = ({
-  from,
-  to,
-  category,
-  session,
-  experiences,
-  totalExperiences,
-  allExperiences,
-  ratedExperiences,
-  reportedExperiences,
-}) => {
-  return (
-    <>
-      <LowerNavbar session={session} />
-      <HeaderSection
-        from={from}
-        to={to}
-        category={category}
-        allExperiences={allExperiences}
-      />
-      <OverviewSection from={from} to={to} allExperiences={allExperiences} />
-      <ExperienceSection
-        experiences={experiences}
-        totalExperiences={totalExperiences}
-        ratedExperiences={ratedExperiences}
-        reportedExperiences={reportedExperiences}
-      />
-    </>
-  );
+                        from,
+                        to,
+                        category,
+                        experiences,
+                        totalExperiences,
+                        allExperiences,
+                    }) => {
+    return (
+        <>
+            <LowerNavbar/>
+            <HeaderSection
+                from={from}
+                to={to}
+                category={category}
+                allExperiences={allExperiences}
+            />
+            <OverviewSection from={from} to={to} allExperiences={allExperiences}/>
+            <ExperienceSection
+                experiences={experiences}
+                totalExperiences={totalExperiences}
+            />
+        </>
+    );
 };
 
 export default Transition;

@@ -82,7 +82,6 @@ const HeaderSection = ({ from, to, category, allExperiences }) => {
 
   return (
     <Wrapper>
-      {console.log(allExperiences)}
       <Container container direction="row">
         <FromText item xs={12} sm={12} md={5}>
           <Typography
@@ -112,7 +111,7 @@ const HeaderSection = ({ from, to, category, allExperiences }) => {
         <b>
           <CountUp start={0} end={allExperiences.length} />
         </b>
-        &nbsp;people have went through this transition
+        &nbsp;{allExperiences.length > 1 ? "people" : "person"} have went through this transition
       </OdometerContainer>
       {category === "secondaryEducation" ? null : (
         <LinkContainer>

@@ -10,7 +10,6 @@ export const alreadySubmitted = async (req, res, next) => {
     const experiences = await getUserExperiences(uid)
 
     if (experiences.find(experience => experience.from === from && experience.to === to)) {
-        // req.error = 'test'
         res.json(401).send({message: 'Already submitted'});
     }
     next()
@@ -34,7 +33,6 @@ const experienceSchema = Joi.object().keys({
 
 export const validRequestPayload = async (req, res, next) => {
     if (experienceSchema.validate(req.body).error !== null) {
-        // req.error = 'test'
         res.json(401).send({message: 'Invalid data'});
     }
     next()

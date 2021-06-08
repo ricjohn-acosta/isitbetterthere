@@ -21,8 +21,8 @@ const account = (props) => {
         })
     }, [session])
 
-    if (!session && (userData && userData.data === 'Not found')) return <RedirectToSignup/>
-    if (session && (userData && userData.data === 'Not found')) return <RedirectToAccountSetup/>
+    // if (!session && (userData && userData.data === 'Not found')) return <RedirectToSignup/>
+    // if (session && (userData && userData.data === 'Not found')) return <RedirectToAccountSetup/>
 
     return (
         <Layout>

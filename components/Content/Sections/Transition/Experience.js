@@ -21,6 +21,7 @@ import SuccessDialog from "./SuccessDialog";
 import Popper from "@material-ui/core/Popper";
 import Paper from "@material-ui/core/Paper";
 import {rateExperienceHelpful, rateExperienceUnhelpful} from "../../../../store/actions/experiences";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -136,6 +137,12 @@ const StyledAvatar = styled(Avatar)`
   margin-top: 5px;
 `;
 
+const PopperContent = styled(Paper)`
+  padding: 2.5%;
+  background-color: #f5f5f5;
+  width: 10vw;
+`;
+
 const Experience = ({
                         experience,
                         experienceId,
@@ -154,15 +161,15 @@ const Experience = ({
                         date_posted,
                         rateExperience,
                         isRated,
-                        handleOptions,
+                        // handleOptions,
                         setCurrentId,
                         hideName,
                         hideEmail,
                         hideCompany,
                         hideOccupation,
                         hideLocation,
-                        reportView,
-                        handleReportClose,
+                        // reportView,
+                        // handleReportClose,
                         violationType,
                         handleViolationType,
                         handleReportSubmit,
@@ -177,11 +184,16 @@ const Experience = ({
     const [buttonClicked, setButtonClicked] = React.useState("");
     const [rated, setRated] = React.useState(false);
 
+    const [reportView, setReportView] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [clickAway, setClickaway] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const [placement, setPlacement] = React.useState();
+
+
     const isWhiteSpaceOrEmpty = (input) => {
         return !/[^\s]/.test(input);
     };
-
-    console.log(experienceId)
 
     const handleButtonClicked = (e) => {
         if (e.currentTarget.value === "true") {
@@ -191,26 +203,16 @@ const Experience = ({
         }
     };
 
-    const handleRating = (e) => {
-        if (session) {
-            rateExperience({
-                user_id: session.id,
-                experience_id: experienceId,
-                is_helpful: e.currentTarget.value === "true" ? true : false,
-                date_rated: Math.floor(Date.now() / 1000),
-            });
-            setRated(true);
-        } else {
-            Router.push("/signup", undefined, {});
-        }
-    };
-
     const handleRateHelpfulExperience = (userID, experienceID) => {
-        dispatch(rateExperienceHelpful({userID, experienceID}))
+        dispatch(rateExperienceHelpful({userID, experienceID})).then(res => {
+            console.log('rateExperienceHelpful', res)
+        })
+        setRated(true)
     }
 
     const handleRateUnhelpfulExperience = (userID, experienceID) => {
         dispatch(rateExperienceUnhelpful({userID, experienceID}))
+        setRated(true)
     }
 
     const handleHelpful = () => {
@@ -241,11 +243,7 @@ const Experience = ({
         return session ? session.id : false;
     };
 
-    // if experience hasn't been rated yet by the user return false
     const getRateType = () => {
-        // return !isRated ? false : isRated.is_helpful;
-        // return !isRated ? null : isRated.is_helpful;
-
         return isRated
     };
 
@@ -291,6 +289,44 @@ const Experience = ({
 
         if (index === 2) {
             return "default";
+        }
+    };
+
+    const handleReportOpen = () => {
+        if (session) {
+            setReportView(true);
+        } else {
+            router.push("/signup", undefined, {});
+        }
+    };
+
+    const handleReportClose = () => {
+        setReportView(false);
+    };
+
+    const handleOptions = (event) => {
+        let target = event.currentTarget;
+        let targetValue = event.currentTarget.value
+        // setAnchorEl(event.currentTarget);
+        setAnchorEl(target)
+        setOpen((prev) => placement !== targetValue || !prev);
+        // setPlacement(event.currentTarget.value);
+        setPlacement(targetValue)
+        setClickaway(false);
+    };
+
+    const handleClickaway = (e) => {
+        if (
+
+            e.target.id === "icon-button" ||
+            e.target.parentElement.id === "icon-button-svg" ||
+            e.target.id === "icon-button-svg" ||
+            e.target.id === "icon-container"
+        ) {
+            setClickaway(false);
+        } else {
+            setOpen(false);
+            setClickaway(true);
         }
     };
 
@@ -412,7 +448,7 @@ const Experience = ({
                 handleReportClose={handleReportClose}
                 violationType={violationType}
                 handleViolationType={handleViolationType}
-                handleReportSubmit={handleReportSubmit} a
+                handleReportSubmit={handleReportSubmit}
                 reportedExperiences={reportedExperiences}
                 currentId={currentId}
                 uid={session && session.id}
@@ -422,6 +458,15 @@ const Experience = ({
                 hasReported={hasReported}
                 handleReportSuccessClose={handleReportSuccessClose}
             />
+            <Popper open={!!(open && !clickAway)} anchorEl={anchorEl}>
+                <ClickAwayListener onClickAway={handleClickaway}>
+                    <PopperContent>
+                        <Button onClick={handleReportOpen} fullWidth>
+                            Flag as inapproriate?
+                        </Button>
+                    </PopperContent>
+                </ClickAwayListener>
+            </Popper>
         </Wrapper>
     );
 };

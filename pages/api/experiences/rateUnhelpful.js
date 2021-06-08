@@ -14,10 +14,11 @@ const handler = nc()
 handler
     .post(async (req, res) => {
         const {experienceID, userID} = req.body
-        console.log('rateHelpful api', req.body)
         await dbConnect();
         await rateUnhelpfulExperience(userID, experienceID)
-        res.status(200).end();
+        const result = await rateUnhelpfulExperience(userID, experienceID)
+
+        result ? res.status(200).end() : res.send('Failed')
     })
 
 export default handler
