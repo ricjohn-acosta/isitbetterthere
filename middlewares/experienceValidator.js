@@ -17,8 +17,8 @@ export const alreadySubmitted = async (req, res, next) => {
 
 // Checks if form data has required data
 const experienceSchema = Joi.object().keys({
-    users_helped: Joi.array().items(Joi.string()),
-    posted_by: Joi.string().required(),
+    author: Joi.string().required(),
+    author_id: Joi.string().required(),
     category: Joi.string().required(),
     from: Joi.string().required(),
     to: Joi.string().required(),
@@ -32,7 +32,7 @@ const experienceSchema = Joi.object().keys({
 })
 
 export const validRequestPayload = async (req, res, next) => {
-    if (experienceSchema.validate(req.body).error !== null) {
+    if (experienceSchema.validate(req.body).error !== undefined) {
         res.json(401).send({message: 'Invalid data'});
     }
     next()

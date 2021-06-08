@@ -1,9 +1,11 @@
 import mongoose from 'mongoose'
 
 const ExperienceSchema = new mongoose.Schema({
-    posted_by: {
-        type: String,
-        required: [true, 'Please provide your name.'],
+    author: {
+        type: String
+    },
+    author_id: {
+        type: String
     },
     category: {
         type: String,
@@ -62,7 +64,7 @@ export const addExperience = async (formData) => {
 }
 
 export const getUserExperiences = async (uid) => {
-    return experiencesCollection.find({posted_by: uid});
+    return experiencesCollection.find({author_id: uid});
 }
 
 export const getTransitionExperiences = async (from, to) => {
@@ -71,7 +73,7 @@ export const getTransitionExperiences = async (from, to) => {
         {
             $lookup: {
                 from: 'users',
-                localField: 'posted_by',
+                localField: 'author_id',
                 foreignField: 'uid',
                 as: 'user'
             }
@@ -84,14 +86,16 @@ export const getTransitionExperiencesCount = async (from, to) => {
 }
 
 export const getAllUsersExperiences = async () => {
-    return experiencesCollection.aggregate([{
-        $lookup: {
-            from: 'users',
-            localField: 'posted_by',
-            foreignField: 'uid',
-            as: 'user'
-        }
-    }])
+    // return experiencesCollection.aggregate([{
+    //     $lookup: {
+    //         from: 'users',
+    //         localField: 'author_id',
+    //         foreignField: 'uid',
+    //         as: 'user'
+    //     }
+    // }])
+
+    return experiencesCollection.find()
 }
 
 export const getTotalNumberOfExperiences = async () => {

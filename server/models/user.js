@@ -33,7 +33,7 @@ export const getUserById = async (sessionId) => {
             $lookup: {
                 from: 'experiences',
                 localField: 'uid',
-                foreignField: 'posted_by',
+                foreignField: 'author_id',
                 as: 'my_stories'
             }
         },

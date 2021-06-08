@@ -8,15 +8,17 @@ const HeaderText = styled(Typography)`
 
 
 const Stories = ({ allContributions }) => {
+
+    console.log(allContributions)
   return (
     <>
       <LowerNavbar />
       <HeaderText variant="h3">Recent stories</HeaderText>
       {allContributions.map((e) => (
         <StoryCard
-          name={e.user[0].name}
+          name={e.author}
           story={e.story}
-          uid={e.posted_by}
+          uid={e.author_id}
           eid={e._id}
           from={e.from}
           to={e.to}

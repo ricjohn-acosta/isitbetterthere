@@ -23,7 +23,6 @@ const account = ({userData}) => {
 export async function getServerSideProps(context) {
     const session = await getSession(context);
     const res = await axiosGetUserById(session.id)
-    console.log(res)
     const redirectToSignup = {
         destination: '/signup',
         permanent: false

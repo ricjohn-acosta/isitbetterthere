@@ -173,11 +173,13 @@ const ShareStepperSection = () => {
         }
     };
 
+    console.log(session.user.name)
     const handleSubmit = (e) => {
         e.preventDefault();
         setDisableSubmit(true);
         dispatch(addExperience({
-            posted_by: session.id,
+            author: session.user.name,
+            author_id: session.id,
             category: currentCategory,
             from: fromInputValue,
             to: toInputValue,

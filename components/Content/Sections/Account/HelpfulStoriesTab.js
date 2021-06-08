@@ -2,22 +2,26 @@ import styled, {keyframes} from "styled-components";
 import {Typography} from "@material-ui/core";
 import HelpfulStory from "./HelpfulStory";
 import NoData from "./common/NoData"
+import {useSelector} from "react-redux";
 
 const Wrapper = styled.div`
   padding: 5%;
 `;
 
-const HelpfulStoriesTab = ({helpfulContributions}) => {
+const HelpfulStoriesTab = () => {
+    const userData = useSelector((state) => state.users.user)
 
-    if (!helpfulContributions) return null
+    // console.log(helpfulContributions && helpfulContributions.hide_email)
+    // if (!helpfulContributions) return null
+    console.log(userData && userData.helpful_stories)
     return (
         <Wrapper>
             <Typography variant="h5">Stories you found helpful</Typography>
             <br/>
-            {helpfulContributions.length !== 0 ? helpfulContributions.filter(e => e.is_helpful === 1 || e.is_helpful === true).map(e => (
+            {userData ? userData.helpful_stories.map(e => (
                 <>
                     <HelpfulStory
-                        name={e.name}
+                        name={e.author}
                         story={e.story}
                         from={e.from}
                         to={e.to}
@@ -27,7 +31,6 @@ const HelpfulStoriesTab = ({helpfulContributions}) => {
                     <br/>
                 </>
             )) : <NoData>YOU HAVEN'T FOUND ANY HELPFUL STORIES YET...</NoData>}
-            {console.log(helpfulContributions)}
         </Wrapper>
     );
 };
