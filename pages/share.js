@@ -23,7 +23,11 @@ const share = ({userData}) => {
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
-    const res = await axiosGetUserById(session.id)
+    let res = null;
+
+    if (session) {
+        res = await axiosGetUserById(session.id)
+    }
     const redirectToSignup = {
         destination: '/signup',
         permanent: false
@@ -33,7 +37,7 @@ export async function getServerSideProps(context) {
         permanent: false
     }
 
-    if (!session && res.data === 'Not found') return {redirect: redirectToSignup}
+    if (!session) return {redirect: redirectToSignup}
 
     if (session && res.data === 'Not found') return {redirect: redirectToAccountSetup}
 

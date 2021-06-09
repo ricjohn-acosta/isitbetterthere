@@ -173,7 +173,6 @@ const ShareStepperSection = () => {
         }
     };
 
-    console.log(session.user.name)
     const handleSubmit = (e) => {
         e.preventDefault();
         setDisableSubmit(true);
