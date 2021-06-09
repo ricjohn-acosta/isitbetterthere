@@ -4,6 +4,8 @@ import {axiosAddExperience} from "../../pages/api/experiences/createNew";
 import {axiosRateHelpfulExperience} from "../../pages/api/experiences/rateHelpful";
 import {axiosRateUnhelpfulExperience} from "../../pages/api/experiences/rateUnhelpful";
 import {axiosReportExperience} from "../../pages/api/experiences/report";
+import {getTransitionExperiencesCount} from "../../server/models/experiences";
+import {axiosGetTransitionExperiencesCount} from "../../pages/api/experiences/getTotalExperienceCount";
 
 export const addExperience = (formData) => {
     return async () => {
@@ -26,6 +28,12 @@ export const rateExperienceHelpful = (data) => {
 export const rateExperienceUnhelpful = (data) => {
     return async () => {
         return await axiosRateUnhelpfulExperience(data)
+    }
+}
+
+export const getTotalNumberOfExperiences = () => {
+    return async () => {
+        return await axiosGetTransitionExperiencesCount()
     }
 }
 

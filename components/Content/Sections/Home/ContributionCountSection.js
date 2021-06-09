@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { Typography } from "@material-ui/core";
 import {useSelector} from "react-redux";
+import {getTotalNumberOfExperiences} from "../../../../store/actions/experiences";
+import {useDispatch} from "react-redux";
+import {useEffect, useState} from "react";
 
 const Wrapper = styled.div`
   padding: 1%;
@@ -35,9 +38,15 @@ const StyledLink = styled.a`
 `;
 
 const ContributionCountSection = () => {
-  const numberOfExperienceContributed = useSelector((state) => state.experiences.experiences.totalExperiences)
+  const dispatch = useDispatch()
+  const [numberOfExperienceContributed, setNumberOfExperienceContributed] = useState()
 
-  console.log('num', numberOfExperienceContributed)
+
+  useEffect(() => {
+    dispatch(getTotalNumberOfExperiences()).then(res => {
+      setNumberOfExperienceContributed(res.data)
+    })
+  }, [])
 
   return (
     <Wrapper>

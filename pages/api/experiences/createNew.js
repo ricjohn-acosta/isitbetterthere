@@ -1,11 +1,9 @@
-import {getSession} from "next-auth/client";
 import dbConnect from "../../../server/mongodbConnect";
 import {addExperience} from "../../../server/models/experiences";
 import axios from "axios";
 import {API_SERVER} from "../../../lib/constants";
 import nc from 'next-connect';
-import next from 'next-connect'
-import experienceValidator, {alreadySubmitted, validRequestPayload} from "../../../middlewares/experienceValidator";
+import {alreadySubmitted, validRequestPayload} from "../../../middlewares/experienceValidator";
 
 
 export const axiosAddExperience = (formData) => {
