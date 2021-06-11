@@ -11,10 +11,6 @@ export default async (req, res) => {
 
     switch (req.method) {
         case 'POST':
-            // if (!isValid(req.body, "new-user")) {
-            //     res.status(200).end();
-            //     return resolve();
-            // }
             const user = await getUserById(req.body.uid);
             if (!user) {
                 await createUser(req.body);

@@ -11,7 +11,7 @@ import PersonalDetails from "./PersonalDetails";
 import PrivacyDetails from "./PrivacyDetails";
 import ConfirmDetails from "./ConfirmDetails";
 import { addUser } from "../../../../store/actions/users";
-import { connect } from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import Link from "@material-ui/core/Link";
 import {useSession} from "next-auth/client";
 
@@ -26,6 +26,7 @@ const Wrapper = styled.div`
 `;
 
 const NewAccountStepperSection = () => {
+  const dispatch = useDispatch()
   const [session, loading] = useSession();
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -47,7 +48,7 @@ const NewAccountStepperSection = () => {
 
   const handleCreateUser = () => {
     setDisableSubmit(true);
-    addUser({
+    dispatch(addUser({
       uid: session.id,
       profile_picture: session.picture,
       name: session.name,
@@ -65,7 +66,7 @@ const NewAccountStepperSection = () => {
       comes_from: siteSource,
       date_joined: Math.floor(Date.now() / 1000),
       user_type: "user"
-    });
+    })).then(res => console.log(res));
   };
 
   const getSteps = () => {
@@ -144,20 +145,16 @@ const NewAccountStepperSection = () => {
       location === ""
     ) {
       if (location !== null) {
-        console.log("test");
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setEmptyFields(findEmptyFields());
       } else {
-        console.log("test");
         setEmptyFields(findEmptyFields());
       }
     } else if (activeStep === 2 && siteSource === "") {
       setEmptyFields(["siteSource"]);
-      console.log(emptyFields);
     } else {
       // setCompany("");
       // setPosition("");
-      console.log("test");
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setEmptyFields(findEmptyFields());
     }
