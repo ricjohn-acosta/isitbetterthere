@@ -4,6 +4,10 @@ import Layout from "../components/Layout/Layout";
 import PageNotFound from "../containers/PageNotFound";
 import {getSession} from "next-auth/client";
 import {getTransitionExperiences, getTransitionExperiencesCount} from "../server/models/experiences";
+import {axiosGetUserById} from "./api/users/[id]";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
+import {storeUserData} from "../store/actions/users";
 
 const transition = ({
                         session,
@@ -12,9 +16,17 @@ const transition = ({
                         allExperiences,
                         ratedExperiences,
                         reportedExperiences,
+                        userData
                     }) => {
     const router = useRouter();
     const {from, to, category} = router.query;
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(storeUserData(userData))
+    }, [])
+
     if (Object.keys(router.query).length === 0) {
         return (
             <Layout>
@@ -43,6 +55,12 @@ const transition = ({
 };
 
 export async function getServerSideProps(context) {
+    const session = await getSession(context);
+    let res = null;
+
+    if (session) {
+        res = await axiosGetUserById(session.id)
+    }
 
     const experiences = await getTransitionExperiences(context.query.from, context.query.to).then(data => {
         return JSON.parse(JSON.stringify(data))
@@ -55,6 +73,7 @@ export async function getServerSideProps(context) {
             experiences: experiences,
             totalExperiences,
             allExperiences: experiences,
+            userData: res.data[0]
         },
     };
 }

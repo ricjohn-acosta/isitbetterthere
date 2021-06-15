@@ -15,10 +15,11 @@ import PaginationItem from "@material-ui/lab/PaginationItem";
 import PaginationLink from "./PaginationLink";
 import Popper from "@material-ui/core/Popper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import {connect, useDispatch} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {useSession} from "next-auth/client";
 import Link from "next/link";
 import {reportExperience} from "../../../../store/actions/experiences";
+import {useEffect} from "react";
 
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
@@ -102,6 +103,7 @@ const ExperienceSection = ({
                            }) => {
     const router = useRouter();
     const dispatch = useDispatch()
+    const userData = useSelector((state) => state.users.user)
 
     const isSM = useMediaQuery("(max-width:600px)");
     const isMD = useMediaQuery("(max-width:1199px)");
@@ -114,7 +116,19 @@ const ExperienceSection = ({
     // const [violationType, setViolationType] = React.useState("");
     // const [hasReported, setHasReported] = React.useState(false);
     const [session, loading] = useSession();
+    const [cachedExperiences, setCachedExperiences] = React.useState(null)
 
+
+    console.log('experience section', userData)
+    useEffect(() => {
+        if (!experiences || !userData) return
+        const validExperiences = experiences.filter((experience) => {
+            return userData.reported_stories.find(rs => rs.experience_id === experience._id && rs.reported_by === userData.uid) === undefined
+        })
+
+        console.log('valid')
+        setCachedExperiences(validExperiences)
+    }, [experiences, userData])
     // const handleOptions = (event) => {
     //     let target = event.currentTarget;
     //     let targetValue = event.currentTarget.value
@@ -171,14 +185,16 @@ const ExperienceSection = ({
     }
 
     const displayExperiences = () => {
+        if (!cachedExperiences) return null
+
         return (
             <>
-                {experiences.length === 0 ? (
+                {cachedExperiences.length === 0 ? (
                     <>
                         <NoData/>
                     </>
                 ) : (
-                    experiences.map((e, i) => (
+                    cachedExperiences.map((e, i) => (
                         <React.Fragment key={i}>
                             <Experience
                                 key={i}
@@ -215,6 +231,8 @@ const ExperienceSection = ({
                                 reportedExperiences={null} //todo
                                 currentId={currentId}
                                 uid={session && session.id}
+                                cachedExperiences={cachedExperiences}
+                                setCachedExperiences={setCachedExperiences}
                                 // hasReported={hasReported}
                                 // handleReportSuccessClose={handleReportSuccessClose}
                             />
@@ -251,14 +269,14 @@ const ExperienceSection = ({
                         {isMD ? <SearchToolsMobileContainer/> : null}
                     </ShareExperienceBtnContainer>
                     <ExperienceContainer>{displayExperiences()}</ExperienceContainer>
-                    {experiences.length !== 0 ? (
+                    {cachedExperiences && cachedExperiences.length !== 0 ? (
                         <PaginationWrapper
                             page={parseInt(router.query.page)}
                             count={
                                 router.query.filterBy === "none" ||
                                 !router.query.hasOwnProperty("filterBy")
                                     ? Math.ceil(totalExperiences / 5)
-                                    : Math.ceil(experiences.length / 5)
+                                    : Math.ceil(cachedExperiences.length / 5)
                             }
                             renderItem={(item) => (
                                 <PaginationItem

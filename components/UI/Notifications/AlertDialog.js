@@ -4,9 +4,7 @@ import {useDialog} from "../../../hooks/ui/useDialog";
 import {DialogActions, DialogContent, DialogContentText, DialogTitle, Button} from "@material-ui/core";
 
 export const AlertDialog = (props) => {
-    const [dialogOpen, setDialogOpen, toggleDialog] = useDialog();
-
-    const {source, open, close, title, body, actions} = props
+    const {open, close, title, body, actions} = props
 
     return (
         <Dialog open={open} onClose={close}>

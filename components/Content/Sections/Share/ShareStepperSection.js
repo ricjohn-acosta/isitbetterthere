@@ -25,7 +25,9 @@ import {useDispatch} from 'react-redux'
 import {useSession} from "next-auth/client";
 import {useDialog} from "../../../../hooks/ui/useDialog";
 import {AlertDialog} from "../../../UI/Notifications/AlertDialog";
-import {getUser} from "../../../../store/actions/users";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import {ArrowBack, ArrowForward, Done} from "@material-ui/icons";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -55,9 +57,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
         backgroundColor: grey,
-    },
-    button: {
-        marginRight: theme.spacing(1),
     },
 }));
 
@@ -236,7 +235,6 @@ const ShareStepperSection = () => {
         }
     };
 
-    console.log(activeStep);
     const checkIfEmpty = (step) => {
         switch (step) {
             case 0:
@@ -309,61 +307,42 @@ const ShareStepperSection = () => {
                         );
                     })}
                 </Stepper>
-                <div>
-                    {activeStep === steps.length ? (
-                        <div>
-                            <div>
-                                <Preview editorState={editorState}/>
-                            </div>
-                            <Button
-                                disableElevation
-                                disabled={disableSubmit}
-                                color="primary"
-                                variant="contained"
-                                style={{float: "right"}}
-                                onClick={handleSubmit}
-                                className={classes.button}
-                            >
-                                Submit
-                            </Button>
-                            <Button
-                                disableElevation
-                                style={{float: "right"}}
-                                onClick={handleReset}
-                                className={classes.button}
-                            >
-                                Reset
-                            </Button>
-                        </div>
-                    ) : (
-                        <div>
-                            <div className={classes.instructions}>
-                                {getStepContent(activeStep)}
-                            </div>
-                            <div>
-                                <Button
-                                    disableElevation
-                                    style={{float: "right"}}
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={handleNext}
-                                    className={classes.button}
-                                >
-                                    {activeStep === steps.length - 1 ? "Confirm" : "Next"}
-                                </Button>
-                                <Button
-                                    disableElevation
-                                    style={{float: "right"}}
+                <Grid container direction={'row'}>
+                    <Grid style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} item xs={1}>
+                        <IconButton style={{borderRadius: '50%'}}
                                     disabled={activeStep === 0}
                                     onClick={handleBack}
-                                    className={classes.button}
-                                >
-                                    Back
-                                </Button>
-                            </div>
+                                    color={"primary"}>
+                            <ArrowBack fontSize={"large"}/>
+                        </IconButton>
+                    </Grid>
+                    <Grid item xs={10} justify={'center'} alignItems={'center'}>
+                        <div>
+                            {activeStep === steps.length ? (
+                                <div>
+                                    <div>
+                                        <Preview editorState={editorState}/>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div>
+                                    <div className={classes.instructions}>
+                                        {getStepContent(activeStep)}
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
+                    </Grid>
+                    <Grid style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                          item xs={1}>
+                        {activeStep === steps.length ? <Button onClick={handleSubmit} color={'primary'} size={'large'}
+                                                               endIcon={<Done/>}>Submit</Button> :
+                            <IconButton style={{borderRadius: '50%'}} onClick={handleNext}
+                                        color={"primary"}>
+                                <ArrowForward fontSize={"large"}/>
+                            </IconButton>}
+                    </Grid>
+                </Grid>
             </div>
             <ContributionWarningModal
                 modalView={modalView}

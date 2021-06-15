@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
@@ -24,6 +24,8 @@ import Paper from "@material-ui/core/Paper";
 import {rateExperienceHelpful, rateExperienceUnhelpful, reportExperience} from "../../../../store/actions/experiences";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import {useRouter} from "next/router";
+import {useDialog} from "../../../../hooks/ui/useDialog";
+import {AlertDialog} from "../../../UI/Notifications/AlertDialog";
 
 const Wrapper = styled.div`
   min-height: 25vh;
@@ -62,6 +64,7 @@ const Content = styled(Grid)`
 const HelpfulButton = styled(Button)`
   color: black;
   background-color: ${(props) => {
+    '&:hover {background: red}'
     // Check if experience has been rated
     if (!props.ratetype || (props.ratetype === 'HELPED')) {
       // Check if no button has been clicked yet, use db data if so.
@@ -175,11 +178,14 @@ const Experience = ({
                         // handleReportSubmit,
                         reportedExperiences,
                         currentId,
+                        cachedExperiences,
+                        setCachedExperiences
                         // hasReported,
                         // handleReportSuccessClose,
                     }) => {
     const dispatch = useDispatch()
     const router = useRouter()
+    const [dialogOpen, setDialogOpen, toggleDialog] = useDialog();
 
     const [session, loading] = useSession();
     const [clickedHelpful, setHelpfulClick] = React.useState(null);
@@ -287,7 +293,16 @@ const Experience = ({
             date_reported: Math.floor(Date.now() / 1000),
             content: experience[0].props.children,
         }))
+        setCachedExperiences((prevCachedExperiences) => {
+            const newCachedExperiences = prevCachedExperiences.filter(e => {
+                return e._id !== experienceId
+            })
+
+            console.log(newCachedExperiences)
+            return newCachedExperiences
+        })
         setHasReported(true)
+        toggleDialog()
     };
 
     const handleReportOpen = () => {
@@ -460,10 +475,21 @@ const Experience = ({
                 uid={session && session.id}
                 eid={experienceId}
             />
-            <SuccessDialog
-                hasReported={hasReported}
-                handleReportSuccessClose={handleReportSuccessClose}
-            />
+            {/*<SuccessDialog*/}
+            {/*    open={dialogOpen}*/}
+            {/*    close={() => setDialogOpen(false)}*/}
+            {/*    // hasReported={hasReported}*/}
+            {/*    // handleReportSuccessClose={handleReportSuccessClose}*/}
+            {/*/>*/}
+            <AlertDialog open={dialogOpen}
+                         close={() => setDialogOpen(false)}
+                         title={'Your report has been sent.'}
+                         body={<>
+                             Thanks for submitting a report. We will take a look at your report as swiftly as we can and
+                             take the appropriate action.
+                         </>}
+                         actions={[
+                             {action: 'Close', handler: () => setDialogOpen(false)}]}/>
             <Popper open={!!(open && !clickAway)} anchorEl={anchorEl}>
                 <ClickAwayListener onClickAway={handleClickaway}>
                     <PopperContent>

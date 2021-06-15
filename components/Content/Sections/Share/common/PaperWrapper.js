@@ -6,12 +6,13 @@ import styled from "styled-components";
 }
 
 const StyledPaper = styled(Paper)`
-  margin: 0 10% 0 10%;
-  padding: 5% 10% 10% 10%;
+  display: inline-block;
+  padding: 0 10% 10% 10%;
+  width: 100%;
 
   ${(props) => props.theme.breakpoints.down(441)} {
     margin: 0; 
-    padding: 5% 10% 10% 10%;
+    padding: 0 10% 10% 10%;
   }
 `;
 

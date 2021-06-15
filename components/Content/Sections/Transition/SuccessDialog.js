@@ -1,13 +1,17 @@
 import Dialog from "@material-ui/core/Dialog";
 
-const SuccessDialog = ({ hasReported, handleReportSuccessClose }) => {
+const SuccessDialog = (props) => {
+  const {open, close, hasReported, handleReportSuccessClose} = props
+
   return (
     <Dialog
-      open={hasReported}
-      onClose={handleReportSuccessClose}
+        open={open}
+        onClose={close}
+      // open={hasReported}
+      // onClose={handleReportSuccessClose}
       aria-labelledby="form-dialog-title"
     >
-      test
+      Your report has been submitted and will be looked at.
     </Dialog>
   );
 };

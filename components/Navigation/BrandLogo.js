@@ -8,7 +8,7 @@ import {default as NextLink} from 'next/link'
 const StyledBrand = styled(MuiLink)`
   color: #484848;
   margin-right: 1.5vw;
-  margin-top: 1.5vh;
+  margin-top: 1.6vh;
   font-weight: bold;
 `;
 
