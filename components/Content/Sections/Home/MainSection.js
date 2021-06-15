@@ -126,21 +126,28 @@ const SeeStories = styled(Button)`
   justify-content: center;
   align-items: center;
   margin-bottom: 10vh;
-  margin-left: 28vw;
+  margin-left: 48vw;
 
-  
+
   ${(props) => props.theme.breakpoints.down(1280)} {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 0;
+    margin-left: 46vw;
   }
 
   ${(props) => props.theme.breakpoints.down(960)} {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 0;
+    margin-left: 42vw;
+  }
+
+  ${(props) => props.theme.breakpoints.down(820)} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30vw;
   }
 `;
 
@@ -257,9 +264,9 @@ const MainSection = () => {
                         isEmptyField={isEmptyField}
                     />
                     <br/>
-                    <Link href={"/stories"} passHref>
-                        <SeeStories fullWidth={false} variant={'text'}>OR see all stories</SeeStories>
-                    </Link>
+                    {/*<Link href="/stories" passHref>*/}
+                    <SeeStories onClick={() => {Router.push('/stories')}} fullWidth={false} variant={'text'}>OR see all stories</SeeStories>
+                    {/*</Link>*/}
                 </InputContainer>
                 <ImageContainer item xs={12} sm={12} md={12} lg={3}>
                     <img
