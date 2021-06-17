@@ -4,6 +4,7 @@ import { Typography } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import {enableBeforeUnload} from "./utils/unsavedFormWarning";
 
 const Wrapper = styled.div`
   min-height: 15vh;
@@ -26,7 +27,11 @@ const ConfirmDetails = ({ setSiteSource, siteSource, emptyFields }) => {
             : false
         }
         value={siteSource}
-        onChange={(e) => setSiteSource(e.target.value)}
+        onChange={(e) => {
+            setSiteSource(e.target.value)
+            enableBeforeUnload()
+        }}
+        onKeyDown={enableBeforeUnload}
         fullWidth
         variant="outlined"
       >
