@@ -1,15 +1,17 @@
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
-import {Typography} from "@material-ui/core";
+import {FormHelperText, Typography} from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {countries} from "./utils/countries";
 import {enableBeforeUnload} from "./utils/unsavedFormWarning";
+import {useForm, Controller} from "react-hook-form";
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   min-height: 50vh;
   margin: 5vh 0 2.5vh 2.5vw;
 `;
@@ -52,6 +54,9 @@ const PersonalDetails = ({
                              inputLocation,
                              emptyFields,
                          }) => {
+    const {register, handleSubmit, watch, control, formState: {errors}} = useForm();
+    const fieldStore = watch()
+
     const [occupation, setOccupation] = React.useState("");
 
     const handleValues = (value) => {
@@ -66,8 +71,19 @@ const PersonalDetails = ({
         }
     };
 
+    const onSubmit = data => {
+        console.log(data);
+    };
+
+    const getOpObj = option => {
+        if (!option.name) option = options.find(op => op.name === option);
+        return option;
+    };
+
+
     return (
-        <Wrapper>
+        <Wrapper onSubmit={handleSubmit(onSubmit)}>
+            {console.log(fieldStore, errors)}
             <SectionMessage variant="h5">
                 This information will be shown in your profile dashboard and in your
                 contributed stories
@@ -79,15 +95,51 @@ const PersonalDetails = ({
                         Short description about you: &nbsp;
                     </Labels>
                     <Grid item xs={12} sm={12} md={4}>
-                        <TextField
-                            value={description}
-                            onChange={(e) => {
-                                setDescription(e.target.value)
-                                enableBeforeUnload()
-                            }}
-                            onKeyUp={enableBeforeUnload}
-                            fullWidth
-                            variant="outlined"
+                        {/*<TextField*/}
+                        {/*    {...register("description", {required: true})}*/}
+                        {/*    value={description}*/}
+                        {/*    onChange={(e) => {*/}
+                        {/*        setDescription(e.target.value)*/}
+                        {/*        enableBeforeUnload()*/}
+                        {/*    }}*/}
+                        {/*    onKeyUp={enableBeforeUnload}*/}
+                        {/*    fullWidth*/}
+                        {/*    variant="outlined"*/}
+                        {/*/>*/}
+
+                        {/*<Controller control={control}*/}
+                        {/*            render={*/}
+                        {/*                ({field: onChange, value}) => <TextField*/}
+                        {/*                    {...register("description", {required: true})}*/}
+                        {/*                    value={description}*/}
+                        {/*                    onChange={onChange}*/}
+                        {/*                    onKeyUp={enableBeforeUnload}*/}
+                        {/*                    fullWidth*/}
+                        {/*                    variant="outlined"*/}
+                        {/*                />*/}
+                        {/*            }*/}
+                        {/*>*/}
+
+                        {/*</Controller>*/}
+
+                        <Controller
+                            name="description"
+                            control={control}
+                            defaultValue=""
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <>
+                                    <TextField
+                                        label="description"
+                                        variant="outlined"
+                                        value={value}
+                                        onChange={onChange}
+                                        onKeyUp={enableBeforeUnload}
+                                        error={!!error}
+                                    />
+                                    <FormHelperText error={!!error}>{error ? error.message : null}</FormHelperText>
+                                </>
+                            )}
+                            rules={{required: 'Last name required'}}
                         />
                     </Grid>
                 </Grid>
@@ -97,33 +149,59 @@ const PersonalDetails = ({
                         Occupation:* &nbsp;
                     </Labels>
                     <Grid item xs={12} sm={12} md={2}>
-                        <Select
-                            fullWidth
-                            variant="outlined"
-                            onChange={(e) => {
-                                e.target.value === "Unemployed"
-                                    ? handleValues(e.target.value)
-                                    : handleValues(e.target.value);
-                                enableBeforeUnload()
-                            }}
-                            onKeyDown={enableBeforeUnload}
-                            value={occupationState}
-                            error={
-                                emptyFields
-                                    ? emptyFields.find((e) => e === "occupation") !== undefined
-                                    ? true
-                                    : false
-                                    : false
-                            }
-                        >
-                            <MenuItem value="Student">Student</MenuItem>
-                            <MenuItem value="Employed">Employed</MenuItem>
-                            <MenuItem value="Unemployed">Unemployed</MenuItem>
-                        </Select>
+                        {/*<Select*/}
+                        {/*    fullWidth*/}
+                        {/*    variant="outlined"*/}
+                        {/*    onChange={(e) => {*/}
+                        {/*        e.target.value === "Unemployed"*/}
+                        {/*            ? handleValues(e.target.value)*/}
+                        {/*            : handleValues(e.target.value);*/}
+                        {/*        enableBeforeUnload()*/}
+                        {/*    }}*/}
+                        {/*    onKeyDown={enableBeforeUnload}*/}
+                        {/*    value={occupationState}*/}
+                        {/*    error={*/}
+                        {/*        emptyFields*/}
+                        {/*            ? emptyFields.find((e) => e === "occupation") !== undefined*/}
+                        {/*            ? true*/}
+                        {/*            : false*/}
+                        {/*            : false*/}
+                        {/*    }*/}
+                        {/*>*/}
+
+                        <Controller
+                            name="occupation"
+                            control={control}
+                            defaultValue=""
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <>
+                                    <Select
+                                        value={value}
+                                        fullWidth
+                                        variant="outlined"
+                                        onChange={onChange}
+                                        onKeyDown={enableBeforeUnload}
+                                        defaultValue={occupationState}
+                                        error={!!error}
+                                    >
+                                        <MenuItem value="Student">Student</MenuItem>
+                                        <MenuItem value="Employed">Employed</MenuItem>
+                                        <MenuItem value="Unemployed">Unemployed</MenuItem>
+                                    </Select>
+                                    <FormHelperText error={!!error}>{error ? error.message : null}</FormHelperText>
+                                </>
+                            )}
+                            rules={{required: 'Please choose your occupation'}}
+                        />
+
+                        {/*    <MenuItem value="Student">Student</MenuItem>*/}
+                        {/*    <MenuItem value="Employed">Employed</MenuItem>*/}
+                        {/*    <MenuItem value="Unemployed">Unemployed</MenuItem>*/}
+                        {/*</Select>*/}
                     </Grid>
                 </Grid>
 
-                {occupationState === "Unemployed" ? null : (
+                {fieldStore.occupation === "Unemployed" ? null : (
                     <Grid item container direction="row">
                         <Labels item xs={12} sm={12} md={3}>
                             Company: &nbsp;
@@ -150,7 +228,7 @@ const PersonalDetails = ({
                     </Grid>
                 )}
 
-                {occupationState === "Unemployed" ? null : (
+                {fieldStore.occupation === "Unemployed" ? null : (
                     <Grid item container direction="row">
                         <Labels item xs={12} sm={12} md={3}>
                             Position: &nbsp;
@@ -182,41 +260,39 @@ const PersonalDetails = ({
                         Country:* &nbsp;
                     </Labels>
                     <Grid item xs={12} sm={12} md={2}>
-                        <Autocomplete
-                            value={location}
-                            inputValue={inputLocation}
-                            options={countries}
-                            getOptionLabel={(option) => (option.name ? option.name : option)}
-                            getOptionSelected={(option, value) => option.name === value}
-                            style={{width: 300}}
-                            onChange={(e, newValue) => {
-                                newValue !== null
-                                    ? setLocation(newValue.name)
-                                    : setLocation(null)
-                                enableBeforeUnload()
-                            }}
-
-                            onKeyUp={enableBeforeUnload}
-                            onInputChange={(event, newInputValue) => {
-                                setInputLocation(newInputValue);
-                            }}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    variant="outlined"
-                                    error={
-                                        emptyFields
-                                            ? emptyFields.find((e) => e === "location") !== undefined
-                                            ? true
-                                            : false
-                                            : false
-                                    }
-                                />
+                        <Controller
+                            render={({field: {onChange, value}, fieldState: {error}, ...props}) => (
+                                <>
+                                    <Autocomplete
+                                        options={countries}
+                                        getOptionLabel={option => option.name}
+                                        renderOption={option => (
+                                            <span>{option.name}</span>
+                                        )}
+                                        renderInput={params => (
+                                            <TextField
+                                                {...params}
+                                                label="Choose a country"
+                                                variant="outlined"
+                                                error={!!error}
+                                            />
+                                        )}
+                                        onChange={(e, data) => onChange(data)}
+                                        {...props}
+                                    />
+                                    <FormHelperText error={!!error}>{error ? error.message : null}</FormHelperText>
+                                </>
                             )}
+                            onChange={([, data]) => data}
+                            defaultValue={null}
+                            name="country"
+                            control={control}
+                            rules={{required: 'Please choose a country'}}
                         />
                     </Grid>
                 </Grid>
             </FormContainer>
+            <Button type={"submit"}>submit</Button>
         </Wrapper>
     );
 };

@@ -175,10 +175,7 @@ const NewAccountStepperSection = () => {
 
 
     return (
-        <Wrapper action={"/"} method={"POST"} onSubmit={() => {
-            handleCreateUser()
-            disableBeforeUnload()
-        }}>
+        <Wrapper>
             <Typography
                 variant="h3"
                 style={{marginBottom: "5vh", fontWeight: "bold"}}
