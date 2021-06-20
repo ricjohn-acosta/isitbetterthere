@@ -39,13 +39,14 @@ const InputForm = styled.form`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: ${(props) =>
-            props.source === "ChooseCategory" ? "0px" : "33.5%"};
+
   }
 `;
 
 const StyledAutocomplete = styled(Autocomplete)`
   width: 200px;
+  background: #e4ffff;
+  z-index: 10000;
 `;
 
 const CategoryForm = ({
@@ -58,7 +59,7 @@ const CategoryForm = ({
                           setToInputValue,
                           setFromValue,
                           setFromInputValue,
-                          setSelected,
+                          // setSelected,
                           setSwapping,
                           setCategory,
                           toValue,
@@ -82,7 +83,7 @@ const CategoryForm = ({
                 onChange={(e) => {
                     setCategory(e.target.value);
                     handleCategories(e.target.value);
-                    setSelected(true);
+                    // setSelected(true);
                     setToValue(null);
                     setFromValue(null);
                     setToInputValue("");
@@ -90,7 +91,7 @@ const CategoryForm = ({
                     setSwapping(false);
                 }}
                 onOpen={(e) => {
-                    setSelected(false);
+                    // setSelected(false);
                 }}
                 value={currentCategory}
                 variant="standard"
