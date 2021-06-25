@@ -9,12 +9,13 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import PersonalDetails from "./PersonalDetails";
 import PrivacyDetails from "./PrivacyDetails";
-import ConfirmDetails from "./ConfirmDetails";
+import ExtraDetails from "./ExtraDetails";
 import {addUser} from "../../../../store/actions/users";
-import {connect, useDispatch} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import Link from "@material-ui/core/Link";
 import {useSession} from "next-auth/client";
 import {disableBeforeUnload} from "./utils/unsavedFormWarning";
+import StepNavigator from "./StepNavigator";
 
 const Wrapper = styled.form`
   min-height: 60vh;
@@ -30,7 +31,7 @@ const NewAccountStepperSection = () => {
     const dispatch = useDispatch()
     const [session, loading] = useSession();
 
-    const [activeStep, setActiveStep] = React.useState(0);
+    // const [activeStep, setActiveStep] = React.useState(0);
     const [stepContent, setStepContent] = React.useState("");
     const [description, setDescription] = React.useState("");
     const [occupation, setOccupation] = React.useState("");
@@ -46,6 +47,7 @@ const NewAccountStepperSection = () => {
     const [siteSource, setSiteSource] = React.useState("");
     const [emptyFields, setEmptyFields] = React.useState(null);
     const [disableSubmit, setDisableSubmit] = React.useState(false);
+    const activeStep = useSelector((state) => state.shareStory.activeStepIndex)
 
     const handleCreateUser = () => {
         console.log('submit')
@@ -79,6 +81,7 @@ const NewAccountStepperSection = () => {
         ];
     };
 
+    console.log(activeStep)
     const getStepContent = (step) => {
         switch (step) {
             case 1:
@@ -95,11 +98,12 @@ const NewAccountStepperSection = () => {
                         hideCompany={hideCompany}
                         hideLocation={hideLocation}
                         emptyFields={emptyFields}
+                        source={"account-setup"}
                     />
                 );
             case 2:
                 return (
-                    <ConfirmDetails
+                    <ExtraDetails
                         emptyFields={emptyFields}
                         setSiteSource={setSiteSource}
                         siteSource={siteSource}
@@ -206,45 +210,32 @@ const NewAccountStepperSection = () => {
                             ) : (
                                 getStepContent(index)
                             )}
-                            <div>
-                                <div>
-                                    <Button disabled={activeStep === 0} onClick={handleBack}>
-                                        Back
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={handleNext}
-                                    >
-                                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                                    </Button>
-                                </div>
-                            </div>
                         </StepContent>
                     </Step>
                 ))}
             </Stepper>
-            {activeStep === steps.length && (
-                <Paper square elevation={0}>
-                    <Typography>All steps completed - you&apos;re finished</Typography>
-                    <Button onClick={handleReset}>Reset</Button>
-                    <Button type={"submit"}>Submit</Button>
+            <StepNavigator source={'container'}/>
+            {/*{activeStep === steps.length && (*/}
+            {/*    <Paper square elevation={0}>*/}
+            {/*        <Typography>All steps completed - you&apos;re finished</Typography>*/}
+            {/*        <Button onClick={handleReset}>Reset</Button>*/}
+            {/*        <Button type={"submit"}>Submit</Button>*/}
 
-                    {/*<Link*/}
-                    {/*    type={"submit"}*/}
-                    {/*    component={Button}*/}
-                    {/*    disabled={disableSubmit}*/}
-                    {/*    href={*/}
-                    {/*        process.env.NODE_ENV === "production"*/}
-                    {/*            ? process.env.prod*/}
-                    {/*            : process.env.dev*/}
-                    {/*    }*/}
-                    {/*    style={{textDecoration: "none"}}*/}
-                    {/*>*/}
-                    {/*    Create account*/}
-                    {/*</Link>*/}
-                </Paper>
-            )}
+            {/*        /!*<Link*!/*/}
+            {/*        /!*    type={"submit"}*!/*/}
+            {/*        /!*    component={Button}*!/*/}
+            {/*        /!*    disabled={disableSubmit}*!/*/}
+            {/*        /!*    href={*!/*/}
+            {/*        /!*        process.env.NODE_ENV === "production"*!/*/}
+            {/*        /!*            ? process.env.prod*!/*/}
+            {/*        /!*            : process.env.dev*!/*/}
+            {/*        /!*    }*!/*/}
+            {/*        /!*    style={{textDecoration: "none"}}*!/*/}
+            {/*        /!*>*!/*/}
+            {/*        /!*    Create account*!/*/}
+            {/*        /!*</Link>*!/*/}
+            {/*    </Paper>*/}
+            {/*)}*/}
         </Wrapper>
     );
 };

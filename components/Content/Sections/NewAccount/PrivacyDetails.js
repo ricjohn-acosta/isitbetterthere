@@ -1,9 +1,15 @@
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
-import { Typography } from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
+import StepNavigator from "./StepNavigator";
+import {Controller, useForm} from "react-hook-form";
+import React, {useState, useEffect, useMemo} from "react";
+import {useSelector} from "react-redux";
+import {enableBeforeUnload} from "./utils/unsavedFormWarning";
+import Select from "@material-ui/core/Select";
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   min-height: 50vh;
   margin: 5vh 0 2.5vh 2.5vw;
 `;
@@ -20,124 +26,151 @@ const Labels = styled(Grid)`
 `;
 
 const PrivacyDetails = ({
-  setHideName,
-  setHideEmail,
-  setHideOccupation,
-  setHideCompany,
-  setHideLocation,
-  hideName,
-  hideEmail,
-  hideOccupation,
-  hideCompany,
-  hideLocation,
-}) => {
-  const handleChange = (target) => {
-    switch (target) {
-      case "name":
-        // setChecked(!isChecked);
-        setHideName(!hideName);
-        break;
+                            source
+                        }) => {
+    const {register, watch, control, trigger, setValue, formState: {errors}} = useForm({mode: "all"});
+    const fieldStore = watch()
+    const privacyDetails = useSelector((state) => state.shareStory.privacyDetailsData)
+    const userData = useSelector((state) => state.users.user)
 
-      case "email":
-        // setChecked(!isChecked);
-        setHideEmail(!hideEmail);
-        break;
+    // const [hideEmail, setHideEmail] = React.useState(userData && userData.hide_email)
 
-      case "occupation":
-        // setChecked(!isChecked);
-        setHideOccupation(!hideOccupation);
-        break;
+    useEffect(() => {
+        console.log(userData)
+        if (!userData) return
+        console.log('USEEFFECT FIRED', userData)
+        setValue('hideEmail', userData.hide_email)
 
-      case "company":
-        // setChecked(!isChecked);
-        setHideCompany(!hideCompany);
-        break;
+    }, [userData])
 
-      case "location":
-        // setChecked(!isChecked);
-        setHideLocation(!hideLocation);
-        break;
+    console.log('USER DATA', userData)
+    console.log('privacy details', privacyDetails, fieldStore)
+    return (
+        <Wrapper>
+            <Typography variant="h5">
+                Hide your information when you share your experience in the experience
+                section
+            </Typography>
 
-      default:
-        break;
-    }
-  };
+            <FormContainer container direction="column" spacing={4}>
+                <Grid item container direction="row">
+                    <Labels item xs={6} sm={6} md={3}>
+                        Hide name? &nbsp;
+                    </Labels>
+                    <Grid item xs={6} sm={6} md={2}>
+                        <Controller
+                            name="hideName"
+                            control={control}
+                            // defaultValue={false || (privacyDetails && privacyDetails.hideName)}
+                            defaultValue={(userData && userData.hide_name) || (privacyDetails && privacyDetails.hideName) || false}
 
-  return (
-    <Wrapper>
-      <Typography variant="h5">
-        Hide your information when you share your experience in the experience
-        section
-      </Typography>
+                            render={({field: {onChange, value}}) => (
+                                <>
+                                    <Checkbox
+                                        checked={value}
+                                        onChange={onChange}
+                                        color="default"
+                                    />
+                                </>
+                            )}
+                        />
 
-      <FormContainer container direction="column" spacing={4}>
-        <Grid item container direction="row">
-          <Labels item xs={6} sm={6} md={3}>
-            Hide name? &nbsp;
-          </Labels>
-          <Grid item xs={6} sm={6} md={2}>
-            <Checkbox
-              checked={hideName}
-              onChange={(e) => handleChange("name")}
-              color="default"
+                    </Grid>
+                </Grid>
+
+                <Grid item container direction="row">
+                    <Labels item xs={6} sm={6} md={3}>
+                        Hide email? &nbsp;
+                    </Labels>
+                    <Grid item xs={6} sm={6} md={2}>
+                        <Controller
+                            name="hideEmail"
+                            control={control}
+                            defaultValue={(userData && userData.hide_email) || (privacyDetails && privacyDetails.hideEmail) || false}
+                            render={({field: {onChange, value}}) => (
+                                <>
+                                    <Checkbox
+                                        checked={value}
+                                        onChange={onChange}
+                                        color="default"
+                                    />
+                                </>
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+
+                <Grid item container direction="row">
+                    <Labels item xs={6} sm={6} md={3}>
+                        Hide occupation? &nbsp;
+                    </Labels>
+                    <Controller
+                        name="hideOccupation"
+                        control={control}
+                        defaultValue={(userData && userData.hide_location) || (privacyDetails && privacyDetails.hideOccupation) || false}
+                        render={({field: {onChange, value}}) => (
+                            <>
+                                <Checkbox
+                                    checked={value}
+                                    onChange={onChange}
+                                    color="default"
+                                />
+                            </>
+                        )}
+                    />
+                </Grid>
+
+                <Grid item container direction="row">
+                    <Labels item xs={6} sm={6} md={3}>
+                        Hide company? &nbsp;
+                    </Labels>
+                    <Grid item xs={6} sm={6} md={2}>
+                        <Controller
+                            name="hideCompany"
+                            control={control}
+                            defaultValue={(userData && userData.hide_company) || (privacyDetails && privacyDetails.hideCompany) || false}
+                            render={({field: {onChange, value}}) => (
+                                <>
+                                    <Checkbox
+                                        checked={value}
+                                        onChange={onChange}
+                                        color="default"
+                                    />
+                                </>
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+
+                <Grid item container direction="row">
+                    <Labels item xs={6} sm={6} md={3}>
+                        Hide location? &nbsp;
+                    </Labels>
+                    <Grid item xs={6} sm={6} md={2}>
+                        <Controller
+                            name="hideLocation"
+                            control={control}
+                            defaultValue={(userData && userData.hide_location || (privacyDetails && privacyDetails.hideLocation) || false)}
+                            render={({field: {onChange, value}}) => (
+                                <>
+                                    <Checkbox
+                                        checked={value}
+                                        onChange={onChange}
+                                        color="default"
+                                    />
+                                </>
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+            </FormContainer>
+            {console.log('source', source)}
+            <StepNavigator fieldData={Object.keys(fieldStore).length === 0 ? privacyDetails : fieldStore}
+                           needsValidation={false}
+                           source={source}
             />
-          </Grid>
-        </Grid>
-
-        <Grid item container direction="row">
-          <Labels item xs={6} sm={6} md={3}>
-            Hide email? &nbsp;
-          </Labels>
-          <Grid item xs={6} sm={6} md={2}>
-            <Checkbox
-              checked={hideEmail}
-              onChange={(e) => handleChange("email")}
-              color="default"
-            />
-          </Grid>
-        </Grid>
-
-        <Grid item container direction="row">
-          <Labels item xs={6} sm={6} md={3}>
-            Hide occupation? &nbsp;
-          </Labels>
-          <Grid item xs={6} sm={6} md={2}>
-            <Checkbox
-              checked={hideOccupation}
-              onChange={(e) => handleChange("occupation")}
-              color="default"
-            />
-          </Grid>
-        </Grid>
-
-        <Grid item container direction="row">
-          <Labels item xs={6} sm={6} md={3}>
-            Hide company? &nbsp;
-          </Labels>
-          <Grid item xs={6} sm={6} md={2}>
-            <Checkbox
-              checked={hideCompany}
-              onChange={(e) => handleChange("company")}
-              color="default"
-            />
-          </Grid>
-        </Grid>
-
-        <Grid item container direction="row">
-          <Labels item xs={6} sm={6} md={3}>
-            Hide location? &nbsp;
-          </Labels>
-          <Grid item xs={6} sm={6} md={2}>
-            <Checkbox
-              checked={hideLocation}
-              onChange={(e) => handleChange("location")}
-              color="default"
-            />
-          </Grid>
-        </Grid>
-      </FormContainer>
-    </Wrapper>
-  );
+        </Wrapper>
+    );
 };
 
 export default PrivacyDetails;
