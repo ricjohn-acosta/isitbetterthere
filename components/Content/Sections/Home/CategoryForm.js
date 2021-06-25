@@ -45,8 +45,8 @@ const InputForm = styled.form`
 
 const StyledAutocomplete = styled(Autocomplete)`
   width: 200px;
-  background: #e4ffff;
-  z-index: 10000;
+  background: white;
+  z-index: 2;
 `;
 
 const CategoryForm = ({

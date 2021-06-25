@@ -1,15 +1,19 @@
+import React from "react";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
-import {Typography} from "@material-ui/core";
+import {FormHelperText, InputLabel, Typography} from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {countries} from "./utils/countries";
 import {enableBeforeUnload} from "./utils/unsavedFormWarning";
+import {Controller, useForm} from "react-hook-form";
+import StepNavigator from "./StepNavigator";
+import {useSelector} from "react-redux";
+import FormControl from "@material-ui/core/FormControl";
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   min-height: 50vh;
   margin: 5vh 0 2.5vh 2.5vw;
 `;
@@ -37,37 +41,14 @@ const SectionMessage = styled(Typography)`
   }
 `;
 
-const PersonalDetails = ({
-                             setDescription,
-                             setOccupationState,
-                             setCompany,
-                             setPosition,
-                             setInputLocation,
-                             setLocation,
-                             description,
-                             occupationState,
-                             company,
-                             position,
-                             location,
-                             inputLocation,
-                             emptyFields,
-                         }) => {
-    const [occupation, setOccupation] = React.useState("");
-
-    const handleValues = (value) => {
-        if (value !== "Unemployed") {
-            setOccupation(value);
-            setOccupationState(value);
-        } else {
-            setOccupation(value);
-            setPosition("");
-            setCompany("");
-            setOccupationState(value);
-        }
-    };
+const PersonalDetails = () => {
+    const {watch, control, trigger, formState: {errors}} = useForm({mode: "all"});
+    const fieldStore = watch()
+    const personalDetails = useSelector((state) => state.shareStory.personalDetailsData)
 
     return (
         <Wrapper>
+            {console.log(fieldStore, personalDetails, errors)}
             <SectionMessage variant="h5">
                 This information will be shown in your profile dashboard and in your
                 contributed stories
@@ -76,147 +57,160 @@ const PersonalDetails = ({
             <FormContainer container direction="column" spacing={4}>
                 <Grid item container direction="row">
                     <Labels item xs={12} sm={12} md={3}>
-                        Short description about you: &nbsp;
+                        Country:* &nbsp;
                     </Labels>
-                    <Grid item xs={12} sm={12} md={4}>
-                        <TextField
-                            value={description}
-                            onChange={(e) => {
-                                setDescription(e.target.value)
-                                enableBeforeUnload()
-                            }}
-                            onKeyUp={enableBeforeUnload}
-                            fullWidth
-                            variant="outlined"
+                    <Grid item xs={12} sm={12} md={2}>
+                        <Controller
+                            render={({field: {onChange, value}, fieldState: {error}, ...props}) => (
+                                <>
+                                    <Autocomplete
+                                        // value={value || (personalDetails && personalDetails.country)}
+                                        value={value}
+                                        options={countries}
+                                        getOptionLabel={option => option.name}
+                                        renderOption={option => (
+                                            <span>{option.name}</span>
+                                        )}
+                                        renderInput={params => (
+                                            <TextField
+                                                {...params}
+                                                value={value}
+                                                label="choose a country"
+                                                variant="outlined"
+                                                error={!!error}
+                                            />
+                                        )}
+                                        onChange={(e, data) => {
+                                            onChange(data)
+                                            enableBeforeUnload()
+                                        }}
+                                        {...props}
+                                    />
+                                    <FormHelperText error={!!error}>{error ? error.message : null}</FormHelperText>
+                                </>
+                            )}
+                            onChange={([, data]) => data}
+                            defaultValue={(personalDetails && personalDetails.country) || ""}
+                            name="country"
+                            control={control}
+                            rules={{required: 'Please choose a country'}}
                         />
                     </Grid>
                 </Grid>
-
                 <Grid item container direction="row">
                     <Labels item xs={12} sm={12} md={3}>
                         Occupation:* &nbsp;
                     </Labels>
                     <Grid item xs={12} sm={12} md={2}>
-                        <Select
-                            fullWidth
-                            variant="outlined"
-                            onChange={(e) => {
-                                e.target.value === "Unemployed"
-                                    ? handleValues(e.target.value)
-                                    : handleValues(e.target.value);
-                                enableBeforeUnload()
-                            }}
-                            onKeyDown={enableBeforeUnload}
-                            value={occupationState}
-                            error={
-                                emptyFields
-                                    ? emptyFields.find((e) => e === "occupation") !== undefined
-                                    ? true
-                                    : false
-                                    : false
-                            }
-                        >
-                            <MenuItem value="Student">Student</MenuItem>
-                            <MenuItem value="Employed">Employed</MenuItem>
-                            <MenuItem value="Unemployed">Unemployed</MenuItem>
-                        </Select>
+                        <Controller
+                            name="occupation"
+                            control={control}
+                            defaultValue={(personalDetails && personalDetails.occupation) || ""}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <>
+                                    <FormControl variant={"outlined"} fullWidth>
+                                        <InputLabel error={!!error}>occupation</InputLabel>
+                                        <Select
+                                            value={value}
+                                            onChange={(e, data) => {
+                                                onChange(data.props.value)
+                                                enableBeforeUnload()
+                                            }}
+                                            error={!!error}
+                                            label={'occupation'}
+                                        >
+                                            <MenuItem value="Student">Student</MenuItem>
+                                            <MenuItem value="Employed">Employed</MenuItem>
+                                            <MenuItem value="Unemployed">Unemployed</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    <FormHelperText error={!!error}>{error ? error.message : null}</FormHelperText>
+                                </>
+                            )}
+                            rules={{required: 'Please choose your occupation'}}
+                        />
                     </Grid>
                 </Grid>
 
-                {occupationState === "Unemployed" ? null : (
+                {fieldStore.occupation || (personalDetails && personalDetails.occupation) === "Unemployed" ? null : (
                     <Grid item container direction="row">
                         <Labels item xs={12} sm={12} md={3}>
                             Company: &nbsp;
                         </Labels>
                         <Grid item xs={12} sm={12} md={2}>
-                            <TextField
-                                value={company}
-                                fullWidth
-                                variant="outlined"
-                                onChange={(e) => {
-                                    setCompany(e.target.value)
-                                    enableBeforeUnload()
-                                }}
-                                onKeyUp={enableBeforeUnload}
-                                error={
-                                    emptyFields
-                                        ? emptyFields.find((e) => e === "company") !== undefined
-                                        ? true
-                                        : false
-                                        : false
-                                }
+                            <Controller
+                                name="company"
+                                control={control}
+                                defaultValue={(personalDetails && personalDetails.company) || ""}
+                                render={({field: {onChange, value}, fieldState: {error}}) => (
+                                    <>
+                                        <TextField
+                                            label="company"
+                                            variant="outlined"
+                                            value={value}
+                                            onChange={onChange}
+                                            onKeyUp={enableBeforeUnload}
+                                            error={!!error}
+                                        />
+                                    </>
+                                )}
                             />
                         </Grid>
                     </Grid>
                 )}
-
-                {occupationState === "Unemployed" ? null : (
+                {fieldStore.occupation || (personalDetails && personalDetails.occupation)  === "Unemployed" ? null : (
                     <Grid item container direction="row">
                         <Labels item xs={12} sm={12} md={3}>
                             Position: &nbsp;
                         </Labels>
                         <Grid item xs={12} sm={12} md={2}>
-                            <TextField
-                                value={position}
-                                fullWidth
-                                variant="outlined"
-                                onChange={(e) => {
-                                    setPosition(e.target.value)
-                                    enableBeforeUnload()
-                                }}
-                                onKeyUp={enableBeforeUnload}
-                                error={
-                                    emptyFields
-                                        ? emptyFields.find((e) => e === "position") !== undefined
-                                        ? true
-                                        : false
-                                        : false
-                                }
+                            <Controller
+                                name="position"
+                                control={control}
+                                defaultValue={(personalDetails && personalDetails.position) || ""}
+                                render={({field: {onChange, value}, fieldState: {error}}) => (
+                                    <>
+                                        <TextField
+                                            label="position"
+                                            variant="outlined"
+                                            value={value}
+                                            onChange={onChange}
+                                            onKeyUp={enableBeforeUnload}
+                                            error={!!error}
+                                        />
+                                    </>
+                                )}
                             />
                         </Grid>
                     </Grid>
                 )}
-
                 <Grid item container direction="row">
                     <Labels item xs={12} sm={12} md={3}>
-                        Country:* &nbsp;
+                        Bio: &nbsp;
                     </Labels>
-                    <Grid item xs={12} sm={12} md={2}>
-                        <Autocomplete
-                            value={location}
-                            inputValue={inputLocation}
-                            options={countries}
-                            getOptionLabel={(option) => (option.name ? option.name : option)}
-                            getOptionSelected={(option, value) => option.name === value}
-                            style={{width: 300}}
-                            onChange={(e, newValue) => {
-                                newValue !== null
-                                    ? setLocation(newValue.name)
-                                    : setLocation(null)
-                                enableBeforeUnload()
-                            }}
-
-                            onKeyUp={enableBeforeUnload}
-                            onInputChange={(event, newInputValue) => {
-                                setInputLocation(newInputValue);
-                            }}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    variant="outlined"
-                                    error={
-                                        emptyFields
-                                            ? emptyFields.find((e) => e === "location") !== undefined
-                                            ? true
-                                            : false
-                                            : false
-                                    }
-                                />
+                    <Grid item xs={12} sm={12} md={4}>
+                        <Controller
+                            name="description"
+                            control={control}
+                            defaultValue={(personalDetails && personalDetails.description) || ""}
+                            render={({field: {onChange, value}, fieldState: {error}}) => (
+                                <>
+                                    <TextField
+                                        label="description"
+                                        variant="outlined"
+                                        value={value}
+                                        onChange={onChange}
+                                        onKeyUp={enableBeforeUnload}
+                                        error={!!error}
+                                    />
+                                </>
                             )}
                         />
                     </Grid>
                 </Grid>
+
             </FormContainer>
+            <StepNavigator fieldData={Object.keys(fieldStore).length === 0 ? personalDetails : fieldStore} validate={trigger} needsValidation={true}/>
         </Wrapper>
     );
 };

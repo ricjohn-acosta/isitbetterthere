@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import styled, {keyframes} from "styled-components";
 import {Paper, Grid, Typography, Button} from "@material-ui/core";
 import AccountTab from "./AccountTab";
@@ -105,16 +105,7 @@ const AccountSection = () => {
             case "settings":
                 return (
                     <PrivacyDetails
-                        setHideName={setHideName}
-                        setHideEmail={setHideEmail}
-                        setHideOccupation={setHideOccupation}
-                        setHideCompany={setHideCompany}
-                        setHideLocation={setHideLocation}
-                        hideName={hideName}
-                        hideEmail={hideEmail}
-                        hideOccupation={hideOccupation}
-                        hideCompany={hideCompany}
-                        hideLocation={hideLocation}
+                        source={"account"}
                     />
                 );
 
@@ -127,9 +118,39 @@ const AccountSection = () => {
                 );
 
             default:
-                break;
+                return (
+                    <PrivacyDetails
+                        source={"account"}
+                    />
+                );
         }
     };
+
+    const tabContent = useMemo(() => {
+        switch (router.query.tab) {
+            case "settings":
+                return (
+                    <PrivacyDetails
+                        source={"account"}
+                    />
+                );
+
+            case "contributions":
+                return <ContributionTab userContributions={userData && userData.my_stories}/>;
+
+            case "helpful-stories":
+                return (
+                    <HelpfulStoriesTab helpfulContributions={userData && userData.helpful_stories}/>
+                );
+
+            default:
+                return (
+                    <PrivacyDetails
+                        source={"account"}
+                    />
+                );
+        }
+    }, [userData, router])
 
     return (
         <Wrapper>
@@ -137,14 +158,6 @@ const AccountSection = () => {
                 <Grid container direction={"row"}>
                     <LeftGrid item xs={12} sm={12} md={12} lg={3}>
                         <ImageContainer>
-                            {/* <StyledImage
-                src={session.userData.image}
-
-                onError={(e) => {
-                  e.target.src = "/facebook.png";
-                }}
-              ></StyledImage> */}
-
                             <StyledImage
                                 src={session && session.picture}
                                 fallbackImage="/userData.png"
@@ -190,21 +203,13 @@ const AccountSection = () => {
                     </LeftGrid>
                     <Grid item xs={12} sm={12} md={12} lg={9}>
                         <AccountTab view={view} setView={setView}/>
-                        {router.query.hasOwnProperty("tab") ? null : (
-                            <PrivacyDetails
-                                setHideName={setHideName}
-                                setHideEmail={setHideEmail}
-                                setHideOccupation={setHideOccupation}
-                                setHideCompany={setHideCompany}
-                                setHideLocation={setHideLocation}
-                                hideName={hideName}
-                                hideEmail={hideEmail}
-                                hideOccupation={hideOccupation}
-                                hideCompany={hideCompany}
-                                hideLocation={hideLocation}
-                            />
-                        )}
-                        <div>{renderView()}</div>
+                        {/*{router.query.hasOwnProperty("tab") ? null : (*/}
+                        {/*    <PrivacyDetails*/}
+                        {/*        source={"accsount"}*/}
+                        {/*    />*/}
+                        {/*)}*/}
+                        {/*<div>{renderView()}</div>*/}
+                        {tabContent}
                         {!router.query.hasOwnProperty("tab") ||
                         router.query.tab === "settings" ? (
                             <Button

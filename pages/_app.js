@@ -14,12 +14,11 @@ import {Provider as ReduxProvider} from 'react-redux'
 import {useEffect} from "react";
 
 
-
 const generateClassName = createGenerateClassName({
     productionPrefix: "myclasses-",
 });
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({Component, pageProps}) {
 
     NProgress.configure({
         showSpinner: false,
@@ -56,6 +55,7 @@ export default function MyApp({ Component, pageProps }) {
             }}
             session={pageProps.session}
         >
+            {console.log('initial state', pageProps.session)}
             <StylesProvider injectFirst>
                 <MuiProvider theme={theme}>
                     <ThemeProvider theme={theme}>

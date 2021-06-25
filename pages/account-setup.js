@@ -19,12 +19,6 @@ const accountSetup = ({userData}) => {
 };
 
 export async function getServerSideProps(context) {
-    const session = await getSession(context);
-    let res = null;
-
-    if (session) {
-        res = await axiosGetUserById(session.id)
-    }
     const redirectToSignup = {
         destination: '/signup',
         permanent: false
@@ -33,14 +27,17 @@ export async function getServerSideProps(context) {
         destination: '/account',
         permanent: false
     }
+    const session = await getSession(context);
 
     if (!session) return {redirect: redirectToSignup}
 
-    if (session && res.data !== 'Not found') return {redirect: redirectToAccount}
+    const res = await axiosGetUserById(session.id)
+
+    if (res.data !== 'Not found') return {redirect: redirectToAccount}
 
     return {
         props: {
-            userData: res.data[0]
+            userData: res.data === 'Not found' ? null : res.data[0]
         },
     };
 }
