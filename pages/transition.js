@@ -73,7 +73,7 @@ export async function getServerSideProps(context) {
             experiences: experiences,
             totalExperiences,
             allExperiences: experiences,
-            userData: res.data[0]
+            userData: res ? res.data[0] : null
         },
     };
 }

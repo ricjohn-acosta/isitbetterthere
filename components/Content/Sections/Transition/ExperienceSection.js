@@ -185,7 +185,7 @@ const ExperienceSection = ({
     }
 
     const displayExperiences = () => {
-        if (!cachedExperiences) return null
+        if (!cachedExperiences) return <NoData/>
 
         return (
             <>
