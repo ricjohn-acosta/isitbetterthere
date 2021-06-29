@@ -53,7 +53,7 @@ export async function getServerSideProps(context) {
 
     if (session) {
         user = await axiosGetUserById(session.id)
-        user && serverRedirect(context.res, "/signup")
+        user.data === 'Not found'  && serverRedirect(context.res, "/account-setup")
     }
 
 

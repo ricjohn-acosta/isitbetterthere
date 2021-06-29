@@ -18,6 +18,15 @@ const Container = styled.div`
   margin-top: 50px;
 `;
 
+const defaultPrivacySettings = {
+    hideName: false,
+    hideEmail: false,
+    hideOccupation: false,
+    hideCompany: false,
+    hideLocation: false,
+}
+
+
 const getSteps = () => {
     return [
         <Typography variant="h4">Tell us more about yourself</Typography>,
@@ -25,6 +34,10 @@ const getSteps = () => {
         <Typography variant="h4">Extras</Typography>,
     ];
 };
+
+const isFieldDataEmpty = (fieldData) => {
+    return Object.keys(fieldData).length === 0
+}
 
 const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
     const dispatch = useDispatch()
@@ -47,9 +60,8 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
                 return
             // privacy details
             case 1:
-                console.log('set privacy details data', fieldData)
                 dispatch(setStep(activeStep + 1))
-                dispatch(setPrivacyDetailsData(fieldData))
+                dispatch(setPrivacyDetailsData(isFieldDataEmpty(fieldData) ? defaultPrivacySettings : fieldData))
                 return
             // extra details
             case 2:

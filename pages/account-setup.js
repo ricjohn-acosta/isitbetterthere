@@ -5,6 +5,7 @@ import {getSession} from "next-auth/client";
 import {useDispatch} from 'react-redux'
 import {storeUserData} from "../store/actions/api/users";
 import {axiosGetUserById} from "./api/users/[id]";
+import serverRedirect from "../utils/serverRedirect";
 
 const accountSetup = ({userData}) => {
     const dispatch = useDispatch()
@@ -19,31 +20,20 @@ const accountSetup = ({userData}) => {
 };
 
 export async function getServerSideProps(context) {
-    const redirectToSignup = {
-        destination: '/signup',
-        permanent: false
-    }
-    const redirectToAccount = {
-        destination: '/account',
-        permanent: false
-    }
     const session = await getSession(context);
-
+    let user = null;
     if (!session) {
-        context.res.end()
-        return {redirect: redirectToSignup}
+        serverRedirect(context.res, "/signup")
     }
 
-    const res = await axiosGetUserById(session.id)
-
-    if (res.data !== 'Not found') {
-        context.res.end()
-        return {redirect: redirectToAccount}
+    if (session) {
+        user = await axiosGetUserById(session.id)
+        user.data !== 'Not found' && serverRedirect(context.res, "/account")
     }
 
     return {
         props: {
-            userData: res.data === 'Not found' ? null : res.data[0]
+            userData: (!user || user.data === 'Not found') ? null : user.data[0]
         },
     };
 }

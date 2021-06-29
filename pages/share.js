@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import Share from "../containers/Share";
 import Layout from "../components/Layout/Layout";
-import {getSession, useSession} from "next-auth/client";
-import {getUser, storeUserData} from "../store/actions/api/users";
+import {getSession} from "next-auth/client";
+import {storeUserData} from "../store/actions/api/users";
 import {useDispatch} from "react-redux";
-import redirect from "nextjs-redirect";
 import {axiosGetUserById} from "./api/users/[id]";
+import serverRedirect from "../utils/serverRedirect";
 
 const share = ({userData}) => {
     const dispatch = useDispatch()
@@ -22,33 +22,20 @@ const share = ({userData}) => {
 };
 
 export async function getServerSideProps(context) {
-    const redirectToSignup = {
-        destination: '/signup',
-        permanent: false
-    }
-    const redirectToAccountSetup = {
-        destination: '/account-setup',
-        permanent: false
-    }
     const session = await getSession(context);
-
+    let user = null;
     if (!session) {
-        context.res.end()
-        return {redirect: redirectToSignup}
+        serverRedirect(context.res, "/signup")
     }
 
-    const res = await axiosGetUserById(session.id)
-
-    if (res.data === 'Not found') {
-        context.res.end()
-        return {redirect: redirectToAccountSetup}
+    if (session) {
+        user = await axiosGetUserById(session.id)
+        user.data === 'Not found' && serverRedirect(context.res, "/account-setup")
     }
-
-    context.res.end()
 
     return {
         props: {
-            userData: res.data === 'Not found' ? null : res.data[0]
+            userData: (!user || user.data === 'Not found') ? null : user.data[0]
         },
     };
 }
