@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import Layout from "../components/Layout/Layout";
 import Account from "../containers/Account";
 import {getSession} from "next-auth/client";
-import {storeUserData} from "../store/actions/users";
+import {storeUserData} from "../store/actions/api/users";
 import {useDispatch} from "react-redux";
 import {axiosGetUserById} from "./api/users/[id]";
 
@@ -31,11 +31,19 @@ export async function getServerSideProps(context) {
     }
     const session = await getSession(context);
 
-    if (!session) return {redirect: redirectToSignup}
+    if (!session) {
+        context.res.end()
+        return {redirect: redirectToSignup}
+    }
 
     const res = await axiosGetUserById(session.id)
 
-    if (res.data === 'Not found') return {redirect: redirectToAccountSetup}
+    if (res.data === 'Not found') {
+        context.res.end()
+        return {redirect: redirectToAccountSetup}
+    }
+
+    context.res.end()
 
     return {
         props: {

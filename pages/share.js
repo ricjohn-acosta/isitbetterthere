@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Share from "../containers/Share";
 import Layout from "../components/Layout/Layout";
 import {getSession, useSession} from "next-auth/client";
-import {getUser, storeUserData} from "../store/actions/users";
+import {getUser, storeUserData} from "../store/actions/api/users";
 import {useDispatch} from "react-redux";
 import redirect from "nextjs-redirect";
 import {axiosGetUserById} from "./api/users/[id]";
@@ -32,11 +32,19 @@ export async function getServerSideProps(context) {
     }
     const session = await getSession(context);
 
-    if (!session) return {redirect: redirectToSignup}
+    if (!session) {
+        context.res.end()
+        return {redirect: redirectToSignup}
+    }
 
     const res = await axiosGetUserById(session.id)
 
-    if (res.data === 'Not found') return {redirect: redirectToAccountSetup}
+    if (res.data === 'Not found') {
+        context.res.end()
+        return {redirect: redirectToAccountSetup}
+    }
+
+    context.res.end()
 
     return {
         props: {

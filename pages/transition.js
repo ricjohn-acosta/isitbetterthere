@@ -7,7 +7,7 @@ import {getTransitionExperiences, getTransitionExperiencesCount} from "../server
 import {axiosGetUserById} from "./api/users/[id]";
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
-import {storeUserData} from "../store/actions/users";
+import {storeUserData} from "../store/actions/api/users";
 
 const transition = ({
                         session,
@@ -67,6 +67,8 @@ export async function getServerSideProps(context) {
     });
 
     const totalExperiences = await getTransitionExperiencesCount(context.query.from, context.query.to)
+
+    context.res.end()
 
     return {
         props: {
