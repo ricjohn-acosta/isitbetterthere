@@ -1,4 +1,4 @@
-const URL = process.env.environment || "http://localhost:3000"
+const URL = process.env.URL || "http://localhost:3000"
 
 const serverRedirect = (res, route) => {
     res.writeHead(302, {
