@@ -15,6 +15,7 @@ import PaperWrapper from "./common/PaperWrapper";
 import HeaderDivider from "./common/HeaderDivider";
 import Header from "../../../Navigation/Header";
 import {useSession} from "next-auth/client";
+import {useDispatch} from "react-redux";
 
 const Wrapper = styled.div`
   margin: 5%;
@@ -46,16 +47,20 @@ const ChooseCategory = ({
                         }) => {
 
     const [session, loading] = useSession();
+    const dispatch = useDispatch()
 
-    const handleForm = (e) => {
-        e.preventDefault();
-        if (fromValue === null || toValue === null) {
-            setEmptyFields(true);
-            return console.log("ERROR");
-        } else {
-            setEmptyFields(false);
-            return console.log("NO ERROR");
-        }
+    const handleForm = (fieldStore) => {
+        // e.preventDefault();
+        // if (fromValue === null || toValue === null) {
+        //     setEmptyFields(true);
+
+        //     return console.log("ERROR");
+        // } else {
+        //     setEmptyFields(false);
+        //     return console.log("NO ERROR");
+        // }
+
+        console.log(fieldStore)
     };
 
     const handleCategories = (value) => {

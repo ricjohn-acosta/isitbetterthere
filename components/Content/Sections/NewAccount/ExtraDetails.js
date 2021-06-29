@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 
 const ExtraDetails = ({setSiteSource, siteSource, emptyFields}) => {
     const {register, watch, control, trigger, formState: {errors}} = useForm({mode: "all"});
-    const extraDetails = useSelector((state) => state.shareStory.extraDetailsData)
+    const extraDetails = useSelector((state) => state.newAccountSetup.extraDetailsData)
     const fieldStore = watch()
 
     console.log(extraDetails, fieldStore)

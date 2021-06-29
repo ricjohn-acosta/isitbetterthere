@@ -3,7 +3,7 @@ import {
     SET_PERSONAL_DETAILS_DATA,
     SET_PRIVACY_DETAILS_DATA,
     SET_STEP
-} from "../actions/shareStory";
+} from "../../actions/ui/newAccountSetup";
 
 const initialState = {
     activeStepIndex: 0,
@@ -12,7 +12,7 @@ const initialState = {
     extraDetailsData: null,
 };
 
-export const shareStoryStore = (state = initialState, { type, payload }) => {
+export const newAccountSetupStore = (state = initialState, { type, payload }) => {
     switch (type) {
         case SET_STEP:
             return {

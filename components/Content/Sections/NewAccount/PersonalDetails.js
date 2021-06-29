@@ -44,7 +44,7 @@ const SectionMessage = styled(Typography)`
 const PersonalDetails = () => {
     const {watch, control, trigger, formState: {errors}} = useForm({mode: "all"});
     const fieldStore = watch()
-    const personalDetails = useSelector((state) => state.shareStory.personalDetailsData)
+    const personalDetails = useSelector((state) => state.newAccountSetup.personalDetailsData)
 
     return (
         <Wrapper>

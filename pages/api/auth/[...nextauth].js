@@ -4,7 +4,7 @@ import {session} from "next-auth/client";
 import dbConnect from "../../../server/mongodbConnect";
 import {getUserById} from "../../../server/models/user";
 import {getUserExperiences} from "../../../server/models/experiences";
-import {storeUserData} from "../../../store/actions/users";
+import {storeUserData} from "../../../store/actions/api/users";
 import {useDispatch} from "react-redux";
 
 // For more information on options, go to

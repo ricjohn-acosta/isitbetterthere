@@ -9,7 +9,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { Paper, Typography, Button } from "@material-ui/core";
 import HeaderDivider from "../common/HeaderDivider";
-import { editExperience } from "../../../../store/actions/experiences";
+import { editExperience } from "../../../../store/actions/api/experiences";
 import "../../../../public/editor.css";
 import { useSession } from "next-auth/client";
 const HtmlToReactParser = require("html-to-react").Parser;

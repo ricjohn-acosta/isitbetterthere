@@ -30,7 +30,7 @@ const PrivacyDetails = ({
                         }) => {
     const {register, watch, control, trigger, setValue, formState: {errors}} = useForm({mode: "all"});
     const fieldStore = watch()
-    const privacyDetails = useSelector((state) => state.shareStory.privacyDetailsData)
+    const privacyDetails = useSelector((state) => state.newAccountSetup.privacyDetailsData)
     const userData = useSelector((state) => state.users.user)
 
     // const [hideEmail, setHideEmail] = React.useState(userData && userData.hide_email)

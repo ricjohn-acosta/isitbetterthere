@@ -18,7 +18,7 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import {connect, useDispatch, useSelector} from "react-redux";
 import {useSession} from "next-auth/client";
 import Link from "next/link";
-import {reportExperience} from "../../../../store/actions/experiences";
+import {reportExperience} from "../../../../store/actions/api/experiences";
 import {useEffect} from "react";
 
 const HtmlToReactParser = require("html-to-react").Parser;

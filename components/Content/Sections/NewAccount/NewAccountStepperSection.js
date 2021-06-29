@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import PersonalDetails from "./PersonalDetails";
 import PrivacyDetails from "./PrivacyDetails";
 import ExtraDetails from "./ExtraDetails";
-import {addUser} from "../../../../store/actions/users";
+import {addUser} from "../../../../store/actions/api/users";
 import {connect, useDispatch, useSelector} from "react-redux";
 import Link from "@material-ui/core/Link";
 import {useSession} from "next-auth/client";
@@ -47,7 +47,7 @@ const NewAccountStepperSection = () => {
     const [siteSource, setSiteSource] = React.useState("");
     const [emptyFields, setEmptyFields] = React.useState(null);
     const [disableSubmit, setDisableSubmit] = React.useState(false);
-    const activeStep = useSelector((state) => state.shareStory.activeStepIndex)
+    const activeStep = useSelector((state) => state.newAccountSetup.activeStepIndex)
 
     const handleCreateUser = () => {
         console.log('submit')

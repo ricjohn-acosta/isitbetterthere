@@ -14,7 +14,7 @@ import {careersCategory} from "../../../../lib/categories";
 import {EditorState} from "draft-js";
 import {convertToRaw} from "draft-js";
 import {grey} from "@material-ui/core/colors";
-import {addExperience} from "../../../../store/actions/experiences";
+import {addExperience} from "../../../../store/actions/api/experiences";
 import draftToHtml from "draftjs-to-html";
 import ExtraInformation from "./ExtraInformation";
 import Preview from "./Preview";

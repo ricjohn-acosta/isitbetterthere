@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
-import {addUser} from "../../store/actions/users";
+import {addUser} from "../../store/actions/api/users";
 import {connect} from "react-redux";
 import {useRouter, Router} from "next/router";
 import BrandLogo from "./BrandLogo";

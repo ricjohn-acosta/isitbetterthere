@@ -45,6 +45,11 @@ const Wrapper = styled(Box)`
     background-position: center right;
     background-size: contain;
   }
+
+  ${(props) => props.theme.breakpoints.down("md")} {
+    height: 90vh;
+  }
+
 `;
 
 const GridWrapper = styled(Grid)`
@@ -94,7 +99,8 @@ const WelcomeMessage = styled(Typography)`
   ${(props) => props.theme.breakpoints.down("md")} {
 
     align-items: center;
-    font-size: 2.2rem;
+    font-size: 1.5rem;
+    white-space: nowrap;
   }
 
   ${(props) => props.theme.breakpoints.between("1287", "1870")} {
@@ -102,7 +108,7 @@ const WelcomeMessage = styled(Typography)`
   }
 
   ${(props) => props.theme.breakpoints.between("sm", "1287")} {
-    font-size: 2.2rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -120,26 +126,17 @@ const MainSection = () => {
     const [fromValue, setFromValue] = React.useState(null);
     const [fromInputValue, setFromInputValue] = React.useState("");
     const [isSwapping, setSwapping] = React.useState(false);
-    const [isEmptyField, setEmptyFields] = React.useState(false);
 
-    const handleForm = (e) => {
-        e.preventDefault();
-        if (fromValue === null || toValue === null) {
-            setEmptyFields(true);
-            return console.log("ERROR");
-        } else {
-            Router.push({
-                pathname: "/transition",
-                query: {
-                    category: currentCategory,
-                    from: fromInputValue,
-                    to: toInputValue,
-                    page: 1,
-                },
-            });
-            setEmptyFields(false);
-            return console.log("NO ERROR");
-        }
+    const handleForm = () => {
+        Router.push({
+            pathname: "/transition",
+            query: {
+                category: currentCategory,
+                from: fromInputValue,
+                to: toInputValue,
+                page: 1,
+            },
+        });
     };
 
     const handleCategories = (value) => {
@@ -214,7 +211,6 @@ const MainSection = () => {
                     fromValue={fromValue}
                     fromInputValue={fromInputValue}
                     isSwapping={isSwapping}
-                    isEmptyField={isEmptyField}
                 />
                 <br/>
                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

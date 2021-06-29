@@ -7,9 +7,9 @@ import {
     setPersonalDetailsData,
     setPrivacyDetailsData,
     setStep
-} from "../../../../store/actions/shareStory";
+} from "../../../../store/actions/ui/newAccountSetup";
 import styled from "styled-components";
-import {addUser} from "../../../../store/actions/users";
+import {addUser} from "../../../../store/actions/api/users";
 import {useSession} from "next-auth/client";
 import Paper from "@material-ui/core/Paper";
 import Router, {useRouter} from "next/router";
@@ -26,18 +26,13 @@ const getSteps = () => {
     ];
 };
 
-const hideFromSource = [
-    'container',
-    'account'
-]
-
 const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
     const dispatch = useDispatch()
     const router = useRouter();
-    const activeStep = useSelector((state) => state.shareStory.activeStepIndex)
-    const personalDetails = useSelector((state) => state.shareStory.personalDetailsData)
-    const privacyDetails = useSelector((state) => state.shareStory.privacyDetailsData)
-    const extraDetails = useSelector((state) => state.shareStory.extraDetailsData)
+    const activeStep = useSelector((state) => state.newAccountSetup.activeStepIndex)
+    const personalDetails = useSelector((state) => state.newAccountSetup.personalDetailsData)
+    const privacyDetails = useSelector((state) => state.newAccountSetup.privacyDetailsData)
+    const extraDetails = useSelector((state) => state.newAccountSetup.extraDetailsData)
     const [session, loading] = useSession();
 
     const initialStep = 0;
@@ -74,13 +69,10 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
         if (needsValidation) {
             validate().then(isValidated => {
                 if (isValidated) {
-                    // dispatch(setStep(activeStep + 1))
-                    // dispatch(setPersonalDetailsData(fieldData))
                     nextStepAction(activeStep)
                 }
             })
         } else {
-            // dispatch(setStep(activeStep + 1))
             nextStepAction(activeStep)
         }
     }

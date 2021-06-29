@@ -1,7 +1,7 @@
-import * as actions from "./types";
+import * as actions from "../types";
 import request from "superagent";
-import {axiosGetUserById} from "../../pages/api/users/[id]";
-import {axiosCreateNewUser} from "../../pages/api/users/createNew";
+import {axiosGetUserById} from "../../../pages/api/users/[id]";
+import {axiosCreateNewUser} from "../../../pages/api/users/createNew";
 
 export const addUser = (data) => {
     return async () => {

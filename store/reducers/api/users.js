@@ -1,6 +1,6 @@
-import * as actions from "../actions/types";
+import * as actions from "../../actions/types";
 import { HYDRATE } from "next-redux-wrapper";
-import {STORE_USER_DATA} from "../actions/users";
+import {STORE_USER_DATA} from "../../actions/api/users";
 
 const initialState = {
   user: null,

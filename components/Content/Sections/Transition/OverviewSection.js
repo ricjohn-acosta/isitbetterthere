@@ -7,7 +7,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Charts from "./Charts";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { getExperiences } from "../../../../store/actions/experiences";
+import { getExperiences } from "../../../../store/actions/api/experiences";
 import { connect } from "react-redux";
 import NoData from "./common/NoData";
 

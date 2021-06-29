@@ -13,8 +13,10 @@ const TutorialHeader = styled(Typography)`
   padding-top: 6.5vh;
   padding-bottom: 5vh;
   font-weight: bold;
+  text-align: center;
   ${(props) => props.theme.breakpoints.down("sm")} {
-    padding: 5%;
+    margin-left: 7.5vw;
+    margin-right: 7.5vw;
   }
 `;
 

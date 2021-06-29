@@ -1,11 +1,11 @@
-import * as actions from "./types";
+import * as actions from "../types";
 import request from "superagent";
-import {axiosAddExperience} from "../../pages/api/experiences/createNew";
-import {axiosRateHelpfulExperience} from "../../pages/api/experiences/rateHelpful";
-import {axiosRateUnhelpfulExperience} from "../../pages/api/experiences/rateUnhelpful";
-import {axiosReportExperience} from "../../pages/api/experiences/report";
-import {getTransitionExperiencesCount} from "../../server/models/experiences";
-import {axiosGetTransitionExperiencesCount} from "../../pages/api/experiences/getTotalExperienceCount";
+import {axiosAddExperience} from "../../../pages/api/experiences/createNew";
+import {axiosRateHelpfulExperience} from "../../../pages/api/experiences/rateHelpful";
+import {axiosRateUnhelpfulExperience} from "../../../pages/api/experiences/rateUnhelpful";
+import {axiosReportExperience} from "../../../pages/api/experiences/report";
+import {getTransitionExperiencesCount} from "../../../server/models/experiences";
+import {axiosGetTransitionExperiencesCount} from "../../../pages/api/experiences/getTotalExperienceCount";
 
 export const addExperience = (formData) => {
     return async () => {

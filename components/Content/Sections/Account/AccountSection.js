@@ -10,7 +10,7 @@ import PrivacyDetails from "../NewAccount/PrivacyDetails";
 import ContributionTab from "./ContributionTab";
 import HelpfulStoriesTab from "./HelpfulStoriesTab";
 import ReactImageFallback from "react-image-fallback";
-import {editUser} from "../../../../store/actions/users";
+import {editUser} from "../../../../store/actions/api/users";
 import {connect, useSelector} from "react-redux";
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/client";

@@ -21,7 +21,7 @@ import ReportForm from "./ReportForm";
 import SuccessDialog from "./SuccessDialog";
 import Popper from "@material-ui/core/Popper";
 import Paper from "@material-ui/core/Paper";
-import {rateExperienceHelpful, rateExperienceUnhelpful, reportExperience} from "../../../../store/actions/experiences";
+import {rateExperienceHelpful, rateExperienceUnhelpful, reportExperience} from "../../../../store/actions/api/experiences";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import {useRouter} from "next/router";
 import {useDialog} from "../../../../hooks/ui/useDialog";

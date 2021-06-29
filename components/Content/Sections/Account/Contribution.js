@@ -5,7 +5,7 @@ import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import ContributionExperienceModal from "./ContributionExperienceModal";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { connect } from "react-redux";
-import { deleteExperience } from "../../../../store/actions/experiences";
+import { deleteExperience } from "../../../../store/actions/api/experiences";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
