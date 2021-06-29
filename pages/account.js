@@ -48,12 +48,12 @@ export async function getServerSideProps(context) {
     // context.res.end()
 
     if (!session) {
-        serverRedirect("/signup")
+        serverRedirect(context.res, "/signup")
     }
 
     if (session) {
         user = await axiosGetUserById(session.id)
-        user && serverRedirect("/signup")
+        user && serverRedirect(context.res, "/signup")
     }
 
 

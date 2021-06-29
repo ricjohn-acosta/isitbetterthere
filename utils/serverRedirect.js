@@ -1,8 +1,8 @@
-const serverRedirect = (route) => {
-    context.res.writeHead(302, {
+const serverRedirect = (res, route) => {
+    res.writeHead(302, {
         Location: process.env.environment + route
     });
-    context.res.end();
+    res.end();
 }
 
 export default serverRedirect
