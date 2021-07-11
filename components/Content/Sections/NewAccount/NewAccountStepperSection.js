@@ -15,7 +15,7 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import Link from "@material-ui/core/Link";
 import {useSession} from "next-auth/client";
 import {disableBeforeUnload} from "./utils/unsavedFormWarning";
-import StepNavigator from "./StepNavigator";
+import NewAccountStepNavigator from "./NewAccountStepNavigator";
 
 const Wrapper = styled.form`
   min-height: 60vh;
@@ -50,7 +50,6 @@ const NewAccountStepperSection = () => {
     const activeStep = useSelector((state) => state.newAccountSetup.activeStepIndex)
 
     const handleCreateUser = () => {
-        console.log('submit')
         setDisableSubmit(true);
         dispatch(addUser({
             uid: session.id,
@@ -81,7 +80,6 @@ const NewAccountStepperSection = () => {
         ];
     };
 
-    console.log(activeStep)
     const getStepContent = (step) => {
         switch (step) {
             case 1:
@@ -214,7 +212,7 @@ const NewAccountStepperSection = () => {
                     </Step>
                 ))}
             </Stepper>
-            <StepNavigator source={'container'}/>
+            <NewAccountStepNavigator source={'container'}/>
             {/*{activeStep === steps.length && (*/}
             {/*    <Paper square elevation={0}>*/}
             {/*        <Typography>All steps completed - you&apos;re finished</Typography>*/}

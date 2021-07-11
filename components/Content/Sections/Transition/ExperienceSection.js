@@ -118,15 +118,12 @@ const ExperienceSection = ({
     const [session, loading] = useSession();
     const [cachedExperiences, setCachedExperiences] = React.useState(null)
 
-
-    console.log('experience section', userData)
     useEffect(() => {
         if (!experiences || !userData) return
         const validExperiences = experiences.filter((experience) => {
             return userData.reported_stories.find(rs => rs.experience_id === experience._id && rs.reported_by === userData.uid) === undefined
         })
 
-        console.log('valid')
         setCachedExperiences(validExperiences)
     }, [experiences, userData])
     // const handleOptions = (event) => {

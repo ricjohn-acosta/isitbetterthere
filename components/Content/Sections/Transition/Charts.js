@@ -6,7 +6,6 @@ import { getChartData } from "./utils/getChartData";
 const Charts = ({ allExperiences }) => {
   return (
     <Grid container direction="column" spacing={10}>
-      {console.log(getChartData("fulfillment", allExperiences))}
       <Grid item container direction="row">
         <Grid
           item

@@ -6,12 +6,10 @@ export default async function ratings(req, res) {
     const session = await getSession({ req });
 
     if (req.method === "POST" && session) {
-      console.log("WAAAA", req.body.experience_id)
       const userReport = await getReport({reported_by: req.body.reported_by, experience_id: req.body.experience_id});
 
       if (userReport.length === 0) {
         addReport(req.body).then((report) => {
-          console.log("EXPERIENCE REPORTED");
         });
         res.status(200).end();
       } else {

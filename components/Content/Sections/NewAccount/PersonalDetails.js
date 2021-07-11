@@ -9,7 +9,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import {countries} from "./utils/countries";
 import {enableBeforeUnload} from "./utils/unsavedFormWarning";
 import {Controller, useForm} from "react-hook-form";
-import StepNavigator from "./StepNavigator";
+import NewAccountStepNavigator from "./NewAccountStepNavigator";
 import {useSelector} from "react-redux";
 import FormControl from "@material-ui/core/FormControl";
 
@@ -48,7 +48,6 @@ const PersonalDetails = () => {
 
     return (
         <Wrapper>
-            {console.log(fieldStore, personalDetails, errors)}
             <SectionMessage variant="h5">
                 This information will be shown in your profile dashboard and in your
                 contributed stories
@@ -210,7 +209,7 @@ const PersonalDetails = () => {
                 </Grid>
 
             </FormContainer>
-            <StepNavigator fieldData={Object.keys(fieldStore).length === 0 ? personalDetails : fieldStore} validate={trigger} needsValidation={true}/>
+            <NewAccountStepNavigator fieldData={Object.keys(fieldStore).length === 0 ? personalDetails : fieldStore} validate={trigger} needsValidation={true}/>
         </Wrapper>
     );
 };

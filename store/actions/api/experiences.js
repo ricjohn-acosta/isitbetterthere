@@ -61,12 +61,9 @@ export const editExperience = (experience) => {
                 dispatch({type: actions.ADD_EXPERIENCE_SUCCESS});
             })
             .catch((res) => {
-                console.log(res.status);
                 if (res.status === 405) {
-                    console.log("EXPERIENCE EDIT FLOW FAILED");
                     dispatch({type: actions.ADD_EXPERIENCE_FAIL});
                 } else {
-                    console.log("EXPERIENCE EDIT FLOW ENDED");
                     dispatch({type: actions.ADD_EXPERIENCE_END});
                 }
             });
@@ -87,12 +84,9 @@ export const deleteExperience = (experience) => {
                 dispatch({type: actions.ADD_EXPERIENCE_SUCCESS});
             })
             .catch((res) => {
-                console.log(res.status);
                 if (res.status === 405) {
-                    console.log("EXPERIENCE DELETE FLOW FAILED");
                     dispatch({type: actions.ADD_EXPERIENCE_FAIL});
                 } else {
-                    console.log("EXPERIENCE DELETE FLOW ENDED");
                     dispatch({type: actions.ADD_EXPERIENCE_END});
                 }
             });
@@ -106,16 +100,12 @@ export const getExperiences = (from, to) => {
             .get("/api/experiences")
             .query({from, to})
             .then((res) => {
-                console.log("req");
                 dispatch({type: actions.GET_EXPERIENCES_SUCCESS, payload: "test"});
             })
             .catch((res) => {
-                console.log(res.status);
                 if (res.status === 405) {
-                    console.log("GET EXPERIENCE FLOW FAILED");
                     dispatch({type: actions.GET_EXPERIENCES_FAIL});
                 } else {
-                    console.log("GET EXPERIENCE FLOW ENDED");
                     dispatch({type: actions.GET_EXPERIENCES_END});
                 }
             });

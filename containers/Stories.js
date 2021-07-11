@@ -13,7 +13,6 @@ const Wrapper = styled(Box)`
 
 const Stories = ({ allContributions }) => {
 
-    console.log(allContributions)
   return (
     <Wrapper>
       <LowerNavbar />

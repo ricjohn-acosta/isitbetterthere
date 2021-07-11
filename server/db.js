@@ -211,7 +211,6 @@ function getUserExperiences(user, db = connection) {
 }
 
 function getUserRatedExperiences(userId, db = connection) {
-  console.log("USERRR IDD", typeof userId);
   return db("experience_rating")
     .from("experience_rating AS exr")
     .leftJoin("experiences AS ex", "ex.id", "exr.experience_id")
@@ -234,7 +233,6 @@ async function addRating(rating, db = connection) {
     experience_id: rating.experience_id,
   });
 
-  console.log("RATING EXISTS", ratingExists);
   if (ratingExists.length !== 0) {
     return db("experience_rating")
       .where({ experience_id: rating.experience_id })
@@ -270,7 +268,6 @@ function addExperience(experience, db = connection) {
 
 function editExperience(experience, db = connection) {
   let { id: experienceId, ...story } = experience;
-  console.log("TESTOOOO", experienceId);
   return db("experiences").where({ id: experienceId }).update(story);
 }
 

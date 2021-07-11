@@ -118,7 +118,6 @@ const UserView = ({ user, userExperiences }) => {
   const [currentStory, setCurrentStory] = React.useState("");
 
   const handleCurrentStory = (storyID) => {
-    console.log('handleCurrentStory', storyID)
     router.push({
       pathname: `/user/${Router.router.query.id}`,
       query: { story: storyID },
@@ -178,9 +177,6 @@ const UserView = ({ user, userExperiences }) => {
 
     return htmlToReactParser.parse(draftToHtml(JSON.parse(story[0].story)));
   };
-
-  console.log(Router);
-  console.log(userExperiences);
 
   return (
     <>
@@ -251,7 +247,6 @@ const UserView = ({ user, userExperiences }) => {
             </ProfileDetails>
           </LeftGrid>
           <RightGrid item xs={12} sm={12} md={12} lg={9}>
-            {console.log(userExperiences)}
             {router.query.story
               ? displayStory(router.query.story)
               : displayStories()}

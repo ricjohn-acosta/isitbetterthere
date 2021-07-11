@@ -101,8 +101,6 @@ export const experienceStore = (state = initialState, { type, payload }) => {
   switch (type) {
     case UPDATE_TOTAL_NUM_OF_EXPERIENCES:
 
-      console.log('redux store', payload)
-
       return {
         ...state,
         experiences: {...state.experiences, totalExperiences: payload}

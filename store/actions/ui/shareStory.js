@@ -14,3 +14,18 @@ export const setCategoryFormData = (formData) => (dispatch) => {
     })
 }
 
+export const SET_EDITOR_DATA = 'SET_EDITOR_DATA'
+export const setEditorData = (formData) => (dispatch) => {
+    dispatch({
+        type: SET_EDITOR_DATA,
+        payload: formData
+    })
+}
+
+export const SET_EXTRA_INFORMATION = 'SET_EXTRA_INFORMATION'
+export const setExtraInformation = (formData) => (dispatch) => {
+    dispatch({
+        type: SET_EXTRA_INFORMATION,
+        payload: formData
+    })
+}

@@ -100,8 +100,6 @@ const OverviewSection = ({ from, to, getExperiences, allExperiences }) => {
   return (
     <>
       <Wrapper>
-        {console.log(allExperiences)}
-
         <Container container direction="row">
           <GridItems item xs={12} sm={12} md={4} align="center">
             <StyledImage src="fulfillment.png" />

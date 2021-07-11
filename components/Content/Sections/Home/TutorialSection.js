@@ -81,7 +81,6 @@ const TutorialSection = () => {
   return (
     <>
       <Wrapper id="/howitworks">
-        {console.log(matches)}
         <br />
         <TutorialHeaderContainer elevation={1}>
           <TutorialHeader variant="h6">

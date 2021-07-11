@@ -39,7 +39,7 @@ const isFieldDataEmpty = (fieldData) => {
     return !fieldData || Object.keys(fieldData).length === 0
 }
 
-const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
+const NewAccountStepNavigator = ({needsValidation, validate, fieldData, source}) => {
     const dispatch = useDispatch()
     const router = useRouter();
     const activeStep = useSelector((state) => state.newAccountSetup.activeStepIndex)
@@ -150,4 +150,4 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
     );
 };
 
-export default StepNavigator;
+export default NewAccountStepNavigator;

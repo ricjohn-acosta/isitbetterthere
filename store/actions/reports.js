@@ -16,12 +16,9 @@ export const addReport = (report) => {
           dispatch({ type: actions.ADD_EXPERIENCE_SUCCESS });
         })
         .catch((res) => {
-          console.log(res.status);
           if (res.status === 405) {
-            console.log("EXPERIENCE ADD FLOW FAILED");
             dispatch({ type: actions.ADD_EXPERIENCE_FAIL });
           } else {
-            console.log("EXPERIENCE ADD FLOW ENDED");
             dispatch({ type: actions.ADD_EXPERIENCE_END });
           }
         })

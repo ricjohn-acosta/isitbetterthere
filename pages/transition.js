@@ -68,8 +68,6 @@ export async function getServerSideProps(context) {
 
     const totalExperiences = await getTransitionExperiencesCount(context.query.from, context.query.to)
 
-    context.res.end()
-
     return {
         props: {
             experiences: experiences,

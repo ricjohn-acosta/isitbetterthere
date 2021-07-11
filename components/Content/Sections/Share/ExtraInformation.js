@@ -9,8 +9,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Subheaders from "./common/Subheaders";
 import PaperWrapper from "./common/PaperWrapper";
 import HeaderDivider from "./common/HeaderDivider";
-import {ButtonGroup} from "@material-ui/core";
+import {ButtonGroup, FormHelperText} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import React from "react";
+import {BackButton, NextButton} from "./ShareStepperNavigator";
+import {useForm} from "react-hook-form";
+import {useSelector} from "react-redux";
+import {useEffect} from "react";
 
 
 const StyledGrid = styled(Grid)`
@@ -22,6 +27,7 @@ const ToggleButtonStyle = styled(Button)`
   &:hover {
     background-color: #8cc2bd;
   }
+
   background-color: ${(props) => {
     if (props.group === 'fulfillment') {
       if (props.state === 'Fulfilled' && props.value === 'Fulfilled') {
@@ -61,7 +67,7 @@ const ToggleButtonStyle = styled(Button)`
       }
     }
   }
-}
+  }
 `;
 
 const QuestionText = styled(Typography)`
@@ -79,210 +85,138 @@ const ExtraInformation = ({
                               regret,
                               extraInfoEmptyState,
                           }) => {
+
+    const {watch, control, trigger, setError, setValue, register, formState: {errors}} = useForm({mode: "all"});
+    const extraInformation = useSelector((state) => state.shareStory.extraInformation)
+    const fieldStore = watch()
+
+    useEffect(() => {
+        if (Object.keys(fieldStore).length === 0) {
+            setValue('fulfillment', null)
+            setValue('difficulty', null)
+            setValue('regret', null)
+        } else if (extraInformation) {
+            setValue('fulfillment', extraInformation.fulfillment)
+            setValue('difficulty', extraInformation.difficulty)
+            setValue('regret', extraInformation.regret)
+        }
+    }, [extraInformation, fieldStore])
+
     const handleFulfillment = (fullfilment) => {
         setFulfillment(fullfilment);
+        setValue('fulfillment', fullfilment)
     };
 
     const handleEaseOfTransition = (difficulty) => {
         setEaseOfTransition(difficulty);
+        setValue('difficulty', difficulty);
     };
 
     const handleRegret = (regret) => {
         setRegret(regret);
+        setValue('regret', regret);
     };
 
+    console.log(errors)
     return (
-        <PaperWrapper>
-            <Subheaders icon={"/review.png"} variant="h4">
-                Extra information{" "}
-            </Subheaders>
-            <HeaderDivider/>
+        <Grid container direction={'row'}>
+            <BackButton/>
+            <Grid item xs={10} justify={'center'} alignItems={'center'}>
+                <PaperWrapper>
+                    <Subheaders icon={"/review.png"} variant="h4">
+                        Extra information{" "}
+                    </Subheaders>
+                    <HeaderDivider/>
 
-            <StyledGrid container direction="column" spacing={3}>
-                <QuestionText variant="h4">
-                    How fulfilling was the transition?{" "}
-                    {extraInfoEmptyState ? (
-                        <Typography
-                            style={{color: "red"}}
-                            component="span"
-                            variant="subtitle2"
-                        >
-                            (required)
-                        </Typography>
-                    ) : null}
-                </QuestionText>
-                <Grid style={{width: '100%'}} item container direction="row">
-                    <ButtonGroup fullWidth disableRipple a size="large" color="secondary"
-                                 aria-label="large outlined primary button group">
-                        <ToggleButtonStyle group={'fulfillment'} value={"Fulfilled"} state={fulfillment}
-                                           onClick={() => handleFulfillment("Fulfilled")}>Fulfilled</ToggleButtonStyle>
-                        <ToggleButtonStyle group={'fulfillment'} value={"Mixed"} state={fulfillment}
-                                           onClick={() => handleFulfillment("Mixed")}>Mixed</ToggleButtonStyle>
-                        <ToggleButtonStyle group={'fulfillment'} value={"Not fulfilled"} state={fulfillment}
-                                           onClick={() => handleFulfillment("Not fulfilled")}>Not
-                            fulfilled</ToggleButtonStyle>
-                    </ButtonGroup>
-                    {/*<Grid align="center" xs={4} sm={4} item>*/}
-                    {/*  <FormControlLabel*/}
-                    {/*    control={*/}
-                    {/*      <Radio*/}
-                    {/*        color="primary"*/}
-                    {/*        onChange={() => handleFulfillment("Fulfilled")}*/}
-                    {/*        checked={fulfillment === "Fulfilled"}*/}
-                    {/*      />*/}
-                    {/*    }*/}
-                    {/*    label="Fulfilled"*/}
-                    {/*    labelPlacement="bottom"*/}
-                    {/*  />*/}
-                    {/*</Grid>*/}
-                    {/*<Grid align="center" xs={4} sm={4} item>*/}
-                    {/*  <FormControlLabel*/}
-                    {/*    control={*/}
-                    {/*      <Radio*/}
-                    {/*        color="primary"*/}
-                    {/*        onChange={() => handleFulfillment("Mixed")}*/}
-                    {/*        checked={fulfillment === "Mixed"}*/}
-                    {/*      />*/}
-                    {/*    }*/}
-                    {/*    label="Mixed"*/}
-                    {/*    labelPlacement="bottom"*/}
-                    {/*  />*/}
-                    {/*</Grid>*/}
-                    {/*<Grid align="center" xs={4} sm={4} item>*/}
-                    {/*  <FormControlLabel*/}
-                    {/*    control={*/}
-                    {/*      <Radio*/}
-                    {/*        color="primary"*/}
-                    {/*        onChange={() => handleFulfillment("Not fulfilled")}*/}
-                    {/*        checked={fulfillment === "Not fulfilled"}*/}
-                    {/*      />*/}
-                    {/*    }*/}
-                    {/*    label="Not fulfilled"*/}
-                    {/*    labelPlacement="bottom"*/}
-                    {/*  />*/}
-                    {/*</Grid>*/}
-                </Grid>
-                <br/>
-                <QuestionText variant="h4">
-                    How easy was the transition?{" "}
-                    {extraInfoEmptyState ? (
-                        <Typography
-                            style={{color: "red"}}
-                            component="span"
-                            variant="subtitle2"
-                        >
-                            (required)
-                        </Typography>
-                    ) : null}
-                </QuestionText>
+                    <StyledGrid container direction="column" spacing={3}>
+                        <QuestionText variant="h4">
+                            How fulfilling was the transition?{" "}
+                            {extraInfoEmptyState ? (
+                                <Typography
+                                    style={{color: "red"}}
+                                    component="span"
+                                    variant="subtitle2"
+                                >
+                                    (required)
+                                </Typography>
+                            ) : null}
+                        </QuestionText>
+                        <Grid style={{width: '100%'}} item container direction="row">
+                            <FormHelperText
+                                error={!!errors}>{errors.fulfillment ? errors.fulfillment.message : null}</FormHelperText>
+                            <ButtonGroup {...register('fulfillment')} fullWidth disableRipple a size="large"
+                                         color="secondary"
+                                         aria-label="large outlined primary button group">
+                                <ToggleButtonStyle group={'fulfillment'} value={"Fulfilled"} state={fulfillment}
+                                                   onClick={() => handleFulfillment("Fulfilled")}>Fulfilled</ToggleButtonStyle>
+                                <ToggleButtonStyle group={'fulfillment'} value={"Mixed"} state={fulfillment}
+                                                   onClick={() => handleFulfillment("Mixed")}>Mixed</ToggleButtonStyle>
+                                <ToggleButtonStyle group={'fulfillment'} value={"Not fulfilled"} state={fulfillment}
+                                                   onClick={() => handleFulfillment("Not fulfilled")}>Not
+                                    fulfilled</ToggleButtonStyle>
+                            </ButtonGroup>
+                        </Grid>
+                        <br/>
+                        <QuestionText variant="h4">
+                            How easy was the transition?{" "}
+                            {extraInfoEmptyState ? (
+                                <Typography
+                                    style={{color: "red"}}
+                                    component="span"
+                                    variant="subtitle2"
+                                >
+                                    (required)
+                                </Typography>
+                            ) : null}
+                        </QuestionText>
 
-                <Grid item container direction="row">
-                    <ButtonGroup fullWidth size="large" color="secondary"
-                                 aria-label="large outlined primary button group">
-                        <ToggleButtonStyle group={'difficulty'} value={"Easy"} state={easeOfTransition}
-                                           onClick={() => handleEaseOfTransition("Easy")}>Easy</ToggleButtonStyle>
-                        <ToggleButtonStyle group={'difficulty'} value={"Medium"} state={easeOfTransition}
-                                           onClick={() => handleEaseOfTransition("Medium")}>Medium</ToggleButtonStyle>
-                        <ToggleButtonStyle group={'difficulty'} value={"Hard"} state={easeOfTransition}
-                                           onClick={() => handleEaseOfTransition("Hard")}>Hard</ToggleButtonStyle>
-                    </ButtonGroup>
-                    {/*<Grid align="center" xs={4} sm={4} item>*/}
-                    {/*  <FormControlLabel*/}
-                    {/*    value="bottom"*/}
-                    {/*    control={*/}
-                    {/*      <Radio*/}
-                    {/*        color="primary"*/}
-                    {/*        onChange={() => handleEaseOfTransition("Easy")}*/}
-                    {/*        checked={easeOfTransition === "Easy"}*/}
-                    {/*      />*/}
-                    {/*    }*/}
-                    {/*    label="Easy"*/}
-                    {/*    labelPlacement="bottom"*/}
-                    {/*  />*/}
-                    {/*</Grid>*/}
-                    {/*<Grid align="center" xs={4} sm={4} item>*/}
-                    {/*  <FormControlLabel*/}
-                    {/*    value="bottom"*/}
-                    {/*    control={*/}
-                    {/*      <Radio*/}
-                    {/*        color="primary"*/}
-                    {/*        onChange={() => handleEaseOfTransition("Medium")}*/}
-                    {/*        checked={easeOfTransition === "Medium"}*/}
-                    {/*      />*/}
-                    {/*    }*/}
-                    {/*    label="Medium"*/}
-                    {/*    labelPlacement="bottom"*/}
-                    {/*  />*/}
-                    {/*</Grid>*/}
-                    {/*<Grid align="center" xs={4} sm={4} item>*/}
-                    {/*  <FormControlLabel*/}
-                    {/*    value="bottom"*/}
-                    {/*    control={*/}
-                    {/*      <Radio*/}
-                    {/*        color="primary"*/}
-                    {/*        onChange={() => handleEaseOfTransition("Hard")}*/}
-                    {/*        checked={easeOfTransition === "Hard"}*/}
-                    {/*      />*/}
-                    {/*    }*/}
-                    {/*    label="Hard"*/}
-                    {/*    labelPlacement="bottom"*/}
-                    {/*  />*/}
-                    {/*</Grid>*/}
-                </Grid>
-                <br/>
-                <QuestionText variant="h4">
-                    Did you regret transitioning?{" "}
-                    {extraInfoEmptyState ? (
-                        <Typography
-                            style={{color: "red"}}
-                            component="span"
-                            variant="subtitle2"
-                        >
-                            (required)
-                        </Typography>
-                    ) : null}
-                </QuestionText>
-                <Grid item container direction="row">
-                    <ButtonGroup fullWidth size="large" color="secondary"
-                                 aria-label="large outlined primary button group">
-                        <ToggleButtonStyle group={'regret'} value={"Did not regret"} state={regret}
-                                           onClick={() => handleRegret("Did not regret")}>Did not
-                            regret</ToggleButtonStyle>
-                        <ToggleButtonStyle group={'regret'} value={"Did regret"} state={regret}
-                                           onClick={() => handleRegret("Did regret")}>Did
-                            regret</ToggleButtonStyle>
-                    </ButtonGroup>
-                    {/*<Grid align="center" xs={4} sm={4} item>*/}
-                    {/*  <FormControlLabel*/}
-                    {/*    value="bottom"*/}
-                    {/*    control={*/}
-                    {/*      <Radio*/}
-                    {/*        color="primary"*/}
-                    {/*        onChange={() => handleRegret("Did not regret")}*/}
-                    {/*        checked={regret === "Did not regret"}*/}
-                    {/*      />*/}
-                    {/*    }*/}
-                    {/*    label="Did not regret"*/}
-                    {/*    labelPlacement="bottom"*/}
-                    {/*  />*/}
-                    {/*</Grid>*/}
-                    {/*<Grid align="center" xs={4} sm={4} item>*/}
-                    {/*  <FormControlLabel*/}
-                    {/*    value="bottom"*/}
-                    {/*    control={*/}
-                    {/*      <Radio*/}
-                    {/*        color="primary"*/}
-                    {/*        onChange={() => handleRegret("Did regret")}*/}
-                    {/*        checked={regret === "Did regret"}*/}
-                    {/*      />*/}
-                    {/*    }*/}
-                    {/*    label="Did regret"*/}
-                    {/*    labelPlacement="bottom"*/}
-                    {/*  />*/}
-                    {/*</Grid>*/}
-                </Grid>
-            </StyledGrid>
-        </PaperWrapper>
+                        <Grid item container direction="row">
+                            <FormHelperText
+                                error={!!errors}>{errors.difficulty ? errors.difficulty.message : null}</FormHelperText>
+                            <ButtonGroup {...register('difficulty')} fullWidth size="large" color="secondary"
+                                         aria-label="large outlined primary button group">
+                                <ToggleButtonStyle group={'difficulty'} value={"Easy"} state={easeOfTransition}
+                                                   onClick={() => handleEaseOfTransition("Easy")}>Easy</ToggleButtonStyle>
+                                <ToggleButtonStyle group={'difficulty'} value={"Medium"} state={easeOfTransition}
+                                                   onClick={() => handleEaseOfTransition("Medium")}>Medium</ToggleButtonStyle>
+                                <ToggleButtonStyle group={'difficulty'} value={"Hard"} state={easeOfTransition}
+                                                   onClick={() => handleEaseOfTransition("Hard")}>Hard</ToggleButtonStyle>
+                            </ButtonGroup>
+                        </Grid>
+                        <br/>
+                        <QuestionText variant="h4">
+                            Did you regret transitioning?{" "}
+                            {extraInfoEmptyState ? (
+                                <Typography
+                                    style={{color: "red"}}
+                                    component="span"
+                                    variant="subtitle2"
+                                >
+                                    (required)
+                                </Typography>
+                            ) : null}
+                        </QuestionText>
+                        <Grid item container direction="row">
+                            <FormHelperText
+                                error={!!errors}>{errors.regret ? errors.regret.message : null}</FormHelperText>
+                            <ButtonGroup {...register('regret')} fullWidth size="large" color="secondary"
+                                         aria-label="large outlined primary button group">
+                                <ToggleButtonStyle group={'regret'} value={"Did not regret"} state={regret}
+                                                   onClick={() => handleRegret("Did not regret")}>Did not
+                                    regret</ToggleButtonStyle>
+                                <ToggleButtonStyle group={'regret'} value={"Did regret"} state={regret}
+                                                   onClick={() => handleRegret("Did regret")}>Did
+                                    regret</ToggleButtonStyle>
+                            </ButtonGroup>
+                        </Grid>
+                    </StyledGrid>
+                </PaperWrapper>
+            </Grid>
+            <NextButton fieldData={Object.keys(fieldStore).length === 0 ? extraInformation : fieldStore}
+                        validator={trigger}
+                        extraValidator={setError}
+            />
+        </Grid>
     );
 };
 

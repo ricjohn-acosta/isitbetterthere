@@ -66,12 +66,9 @@ export const editUser = (userData) => {
                     dispatch({type: actions.ADD_USER_SUCCESS});
                 })
                 .catch((res) => {
-                    console.log(res.status);
                     if (res.status === 405) {
-                        console.log("USER EDIT FLOW FAILED");
                         dispatch({type: actions.ADD_USER_FAIL});
                     } else {
-                        console.log("USER EDIT FLOW ENDED");
                         dispatch({type: actions.ADD_USER_END});
                     }
                 })

@@ -16,6 +16,8 @@ import Router from "next/router";
 import {makeStyles} from "@material-ui/core/styles";
 import CategoryForm from "./CategoryForm";
 import Button from "@material-ui/core/Button";
+import React from "react";
+import {useForm} from "react-hook-form";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -119,6 +121,9 @@ const SeeStories = styled(Button)`
 `;
 
 const MainSection = () => {
+    const {watch, control, trigger, handleSubmit, formState: {errors}} = useForm({mode: "all"});
+    const fieldStore = watch()
+
     const [categories, setCategory] = React.useState(careersCategory);
     const [currentCategory, setCurrentCategory] = React.useState("careers");
     const [toValue, setToValue] = React.useState(null);
@@ -128,15 +133,19 @@ const MainSection = () => {
     const [isSwapping, setSwapping] = React.useState(false);
 
     const handleForm = () => {
-        Router.push({
-            pathname: "/transition",
-            query: {
-                category: currentCategory,
-                from: fromInputValue,
-                to: toInputValue,
-                page: 1,
-            },
-        });
+        trigger().then(isValidated => {
+            if (isValidated) {
+                Router.push({
+                    pathname: "/transition",
+                    query: {
+                        category: currentCategory,
+                        from: fromInputValue,
+                        to: toInputValue,
+                        page: 1,
+                    },
+                });
+            }
+        })
     };
 
     const handleCategories = (value) => {
@@ -194,24 +203,47 @@ const MainSection = () => {
                         <FadeIn>Know your destination</FadeIn>
                     </FadeInAnimation>
                 </WelcomeMessage>
-                <CategoryForm
-                    categories={categories}
-                    currentCategory={currentCategory}
-                    handleCategories={handleCategories}
-                    handleForm={handleForm}
-                    setCategory={setCategory}
-                    setToValue={setToValue}
-                    setToInputValue={setToInputValue}
-                    setFromValue={setFromValue}
-                    setFromInputValue={setFromInputValue}
-                    // setSelected={setSelected}
-                    setSwapping={setSwapping}
-                    toValue={toValue}
-                    toInputValue={toInputValue}
-                    fromValue={fromValue}
-                    fromInputValue={fromInputValue}
-                    isSwapping={isSwapping}
-                />
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <CategoryForm
+                        control={control}
+                        fieldStore={fieldStore}
+
+                        categories={categories}
+                        currentCategory={currentCategory}
+                        handleCategories={handleCategories}
+                        handleForm={handleForm}
+                        setCategory={setCategory}
+                        setToValue={setToValue}
+                        setToInputValue={setToInputValue}
+                        setFromValue={setFromValue}
+                        setFromInputValue={setFromInputValue}
+                        // setSelected={setSelected}
+                        setSwapping={setSwapping}
+                        toValue={toValue}
+                        toInputValue={toInputValue}
+                        fromValue={fromValue}
+                        fromInputValue={fromInputValue}
+                        isSwapping={isSwapping}
+                    />
+                    &nbsp;
+                    <Button
+                        onClick={handleForm}
+                        type="submit"
+                        color="secondary"
+                        variant="contained"
+                        size="large"
+                        disableElevation
+                        disabled={
+                            toValue === fromValue &&
+                            toValue !== "" &&
+                            fromValue !== "" &&
+                            toValue !== null &&
+                            fromValue !== null
+                        }
+                    >
+                        GO
+                    </Button>
+                </div>
                 <br/>
                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <SeeStories onClick={() => {

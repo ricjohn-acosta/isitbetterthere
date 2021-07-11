@@ -16,12 +16,9 @@ export const rateExperience = (experience) => {
           dispatch({ type: actions.ADD_EXPERIENCE_SUCCESS });
         })
         .catch((res) => {
-          console.log(res.status);
           if (res.status === 405) {
-            console.log("EXPERIENCE RATING FAILED");
             dispatch({ type: actions.ADD_EXPERIENCE_FAIL });
           } else {
-            console.log("EXPERIENCE RATING ENDED");
             dispatch({ type: actions.ADD_EXPERIENCE_END });
           }
         })

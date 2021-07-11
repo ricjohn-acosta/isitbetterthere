@@ -11,12 +11,10 @@ export const isValid = (request, source) => {
       }
 
       if (validator.isEmpty(JSON.parse(request.story).blocks[0].text)) {
-        console.log("json");
         return false;
       }
 
       if (Object.values(request).find((e) => e === false || e === null)) {
-        console.log("request");
         return false;
       }
 

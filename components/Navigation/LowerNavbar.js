@@ -159,8 +159,6 @@ const LowerNavbar = () => {
         });
     }, []);
 
-    console.log('lower navbar', session)
-
     return (
         <StyledLowerNavbar elevation={0} position="sticky" component="div">
             <Container>

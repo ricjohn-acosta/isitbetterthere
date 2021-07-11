@@ -6,14 +6,14 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import IconButton from "@material-ui/core/IconButton";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
-import Button from "@material-ui/core/Button";
 import {options, uniDirectionFrom, uniDirectionTo} from "../../../utils";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import TextField from "@material-ui/core/TextField";
-import {Controller, useForm} from "react-hook-form";
+import {Controller} from "react-hook-form";
 import {countries} from "../NewAccount/utils/countries";
 import {FormHelperText} from "@material-ui/core";
 import React from "react";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     popper: {width: 400},
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const InputForm = styled.form`
+const InputWrapper = styled.div`
   ${(props) => props.theme.breakpoints.down("sm")} {
     display: flex;
     justify-content: center;
@@ -57,7 +57,6 @@ const CategoryForm = ({
                           categories,
                           currentCategory,
                           handleCategories,
-                          handleForm,
                           setToValue,
                           setToInputValue,
                           setFromValue,
@@ -69,17 +68,17 @@ const CategoryForm = ({
                           fromValue,
                           fromInputValue,
                           isSwapping,
-                          source,
+
+                          control,
+                          fieldStore,
+                          source
                       }) => {
     const classes = useStyles();
     const downMD = useMediaQuery("(max-width:959px)");
-    const {watch, control, trigger, handleSubmit, formState: {errors}} = useForm({mode: "all"});
-    const fieldStore = watch()
+    const categoryFormData = useSelector((state) => state.shareStory.categoryFormData)
 
     return (
-        <InputForm onSubmit={() => {
-            handleSubmit(handleForm(fieldStore))
-        }} source={source}>
+        <InputWrapper>
             <div>Choose a category: &nbsp;</div>
             <br/>
             <Select
@@ -123,7 +122,6 @@ const CategoryForm = ({
                             value={value}
                             onChange={(e, data) => {
                                 onChange(data)
-                                // isSwapping ? setToValue(data.category) : setFromValue(data.category)
                             }}
                             onInputChange={(event, newInputValue) => {
                                 isSwapping
@@ -158,7 +156,7 @@ const CategoryForm = ({
                         <FormHelperText error={!!error}>{error ? error.message : null}</FormHelperText>
                     </div>
                 )}
-                defaultValue={null}
+                defaultValue={((source === "ChooseCategory") && (categoryFormData && categoryFormData.firstInput)) || ""}
                 name="firstInput"
                 control={control}
                 rules={{required: 'Please select an option'}}
@@ -204,7 +202,6 @@ const CategoryForm = ({
                             value={value}
                             onChange={(e, data) => {
                                 onChange(data)
-                                // !isSwapping ? setToValue(data.category) : setFromValue(data.category)
                             }}
                             onInputChange={(event, newInputValue) => {
                                 !isSwapping
@@ -239,31 +236,12 @@ const CategoryForm = ({
                         <FormHelperText error={!!error}>{error ? error.message : null}</FormHelperText>
                     </div>
                 )}
-                defaultValue={null}
+                defaultValue={((source === "ChooseCategory") && (categoryFormData && categoryFormData.secondInput)) || ""}
                 name="secondInput"
                 control={control}
                 rules={{required: 'Please select an option'}}
             />
-            &nbsp;
-            {source === "ChooseCategory" ? null : (
-                <Button
-                    type="submit"
-                    color="secondary"
-                    variant="contained"
-                    size="large"
-                    disableElevation
-                    disabled={
-                        toValue === fromValue &&
-                        toValue !== "" &&
-                        fromValue !== "" &&
-                        toValue !== null &&
-                        fromValue !== null
-                    }
-                >
-                    GO
-                </Button>
-            )}
-        </InputForm>
+        </InputWrapper>
     );
 };
 

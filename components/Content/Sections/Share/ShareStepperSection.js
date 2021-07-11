@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useMemo} from "react";
 import {connect, useSelector} from "react-redux";
 import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
@@ -28,6 +28,7 @@ import {AlertDialog} from "../../../UI/Notifications/AlertDialog";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import {ArrowBack, ArrowForward, Done} from "@material-ui/icons";
+import ShareStepperNavigator from "./ShareStepperNavigator";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -82,6 +83,7 @@ const htmlToReactParser = new HtmlToReactParser();
 const ShareStepperSection = () => {
     const [session, loading] = useSession();
     const [dialogOpen, setDialogOpen, toggleDialog] = useDialog();
+    const activeStep = useSelector((state) => state.shareStory.activeStepIndex)
 
     const classes = useStyles();
     const dispatch = useDispatch()
@@ -102,7 +104,7 @@ const ShareStepperSection = () => {
     const [regret, setRegret] = React.useState("");
     const [disableSubmit, setDisableSubmit] = React.useState(false);
     const [modalView, setModalView] = React.useState(false);
-    const [activeStep, setActiveStep] = React.useState(0);
+    // const [activeStep, setActiveStep] = React.useState(0);
     const [editorState, setEditorState] = React.useState(
         EditorState.createEmpty()
     );
@@ -111,13 +113,6 @@ const ShareStepperSection = () => {
     const editorContent = convertToRaw(editorState.getCurrentContent());
     const story = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
     const steps = getSteps();
-
-    // useEffect(() => {
-    //     if (!session) return
-    //     dispatch(getUser(session.id)).then(userData => {
-    //         setUserData(userData.data[0])
-    //     })
-    // }, [session])
 
     const getStepContent = (step) => {
         switch (step) {
@@ -188,9 +183,7 @@ const ShareStepperSection = () => {
             helpful: 0,
             not_helpful: 0,
             date_posted: Math.floor(Date.now() / 1000),
-        })).then(res => {
-            console.log('test', res)
-        })
+        })).then(res => {})
         Router.push({
             pathname: "/transition",
             query: {
@@ -307,42 +300,45 @@ const ShareStepperSection = () => {
                         );
                     })}
                 </Stepper>
-                <Grid container direction={'row'}>
-                    <Grid style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} item xs={1}>
-                        <IconButton style={{borderRadius: '50%'}}
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                    color={"primary"}>
-                            <ArrowBack fontSize={"large"}/>
-                        </IconButton>
-                    </Grid>
-                    <Grid item xs={10} justify={'center'} alignItems={'center'}>
-                        <div>
-                            {activeStep === steps.length ? (
-                                <div>
-                                    <div>
-                                        <Preview editorState={editorState}/>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div>
-                                    <div className={classes.instructions}>
-                                        {getStepContent(activeStep)}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </Grid>
-                    <Grid style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
-                          item xs={1}>
-                        {activeStep === steps.length ? <Button onClick={handleSubmit} color={'primary'} size={'large'}
-                                                               endIcon={<Done/>}>Submit</Button> :
-                            <IconButton style={{borderRadius: '50%'}} onClick={handleNext}
-                                        color={"primary"}>
-                                <ArrowForward fontSize={"large"}/>
-                            </IconButton>}
-                    </Grid>
-                </Grid>
+                {/*{stepContent}*/}
+                {getStepContent(activeStep)}
+                {/*<ShareStepperNavigator getStepContent={getStepContent} activeStep={activeStep} step={steps}/>*/}
+                {/*<Grid container direction={'row'}>*/}
+                {/*    <Grid style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} item xs={1}>*/}
+                {/*        <IconButton style={{borderRadius: '50%'}}*/}
+                {/*                    disabled={activeStep === 0}*/}
+                {/*                    onClick={handleBack}*/}
+                {/*                    color={"primary"}>*/}
+                {/*            <ArrowBack fontSize={"large"}/>*/}
+                {/*        </IconButton>*/}
+                {/*    </Grid>*/}
+                {/*    <Grid item xs={10} justify={'center'} alignItems={'center'}>*/}
+                {/*        <div>*/}
+                {/*            {activeStep === steps.length ? (*/}
+                {/*                <div>*/}
+                {/*                    <div>*/}
+                {/*                        <Preview editorState={editorState}/>*/}
+                {/*                    </div>*/}
+                {/*                </div>*/}
+                {/*            ) : (*/}
+                {/*                <div>*/}
+                {/*                    <div className={classes.instructions}>*/}
+                {/*                        {getStepContent(activeStep)}*/}
+                {/*                    </div>*/}
+                {/*                </div>*/}
+                {/*            )}*/}
+                {/*        </div>*/}
+                {/*    </Grid>*/}
+                {/*    <Grid style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}*/}
+                {/*          item xs={1}>*/}
+                {/*        {activeStep === steps.length ? <Button onClick={handleSubmit} color={'primary'} size={'large'}*/}
+                {/*                                               endIcon={<Done/>}>Submit</Button> :*/}
+                {/*            <IconButton style={{borderRadius: '50%'}} onClick={handleNext}*/}
+                {/*                        color={"primary"}>*/}
+                {/*                <ArrowForward fontSize={"large"}/>*/}
+                {/*            </IconButton>}*/}
+                {/*    </Grid>*/}
+                {/*</Grid>*/}
             </div>
             <ContributionWarningModal
                 modalView={modalView}

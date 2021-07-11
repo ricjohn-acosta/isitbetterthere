@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import {Typography} from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
-import StepNavigator from "./StepNavigator";
+import NewAccountStepNavigator from "./NewAccountStepNavigator";
 import {Controller, useForm} from "react-hook-form";
 import React from "react";
 import {useSelector} from "react-redux";
@@ -31,8 +31,6 @@ const PrivacyDetails = ({
     const privacyDetails = useSelector((state) => state.newAccountSetup.privacyDetailsData)
     const userData = useSelector((state) => state.users.user)
 
-    console.log('USER DATA', userData)
-    console.log('privacy details', privacyDetails, fieldStore)
     return (
         <Wrapper>
             <Typography variant="h5">
@@ -152,9 +150,9 @@ const PrivacyDetails = ({
                     </Grid>
                 </Grid>
             </FormContainer>
-            <StepNavigator fieldData={Object.keys(fieldStore).length === 0 ? privacyDetails : fieldStore}
-                           needsValidation={false}
-                           source={source}
+            <NewAccountStepNavigator fieldData={Object.keys(fieldStore).length === 0 ? privacyDetails : fieldStore}
+                                     needsValidation={false}
+                                     source={source}
             />
         </Wrapper>
     );

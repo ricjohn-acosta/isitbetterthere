@@ -13,7 +13,6 @@ const HelpfulStoriesTab = () => {
 
     // console.log(helpfulContributions && helpfulContributions.hide_email)
     // if (!helpfulContributions) return null
-    console.log(userData && userData.helpful_stories)
     return (
         <Wrapper>
             <Typography variant="h5">Stories you found helpful</Typography>

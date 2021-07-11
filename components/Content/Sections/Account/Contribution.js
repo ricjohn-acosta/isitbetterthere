@@ -79,7 +79,6 @@ const Contribution = ({
     setContributions(
       contributions.filter((experience) => experience.id !== id)
     );
-    console.log(id);
     deleteExperience({ id: id });
   };
 

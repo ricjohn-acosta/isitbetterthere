@@ -65,7 +65,6 @@ const SearchTools = () => {
     }
   };
 
-  console.log(byFulfillment);
   const handleCheckbox = (sortBy) => {
     switch (sortBy) {
       case "most-helpful":

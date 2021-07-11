@@ -205,7 +205,6 @@ const Experience = ({
         setUnhelpfulClick(isRated === 'NOT_HELPED')
     }, [isRated])
 
-    console.log(clickedHelpful, clickedUnhelpful)
     const isWhiteSpaceOrEmpty = (input) => {
         return !/[^\s]/.test(input);
     };
@@ -221,9 +220,7 @@ const Experience = ({
     }
 
     const handleRateHelpfulExperience = (userID, experienceID) => {
-        dispatch(rateExperienceHelpful({userID, experienceID})).then(res => {
-            console.log('rateExperienceHelpful', res)
-        })
+        dispatch(rateExperienceHelpful({userID, experienceID})).then(res => {})
         setRated(true)
     }
 

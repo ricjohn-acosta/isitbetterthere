@@ -16,7 +16,6 @@ handler
         await dbConnect();
         const data = await getUserById(req.query.id)
 
-        console.log('userData', data)
         if (data.length === 0) {
             res.send('Not found')
         } else {

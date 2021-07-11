@@ -12,8 +12,6 @@ const Container = styled.div`
 const Layout = (props) => {
     const router = useRouter()
 
-    console.log(router)
-
     return (
         <React.Fragment>
             <Head>

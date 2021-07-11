@@ -48,9 +48,7 @@ const Contact = ({ session }) => {
         )
         .send({ name, email, message })
         .then((res) => console.log(res));
-    } catch (error) {
-      console.log("SENDING CONTACT INFO FAILED", error);
-    }
+    } catch (error) {}
     document.getElementById("contact-form").reset()
   };
 

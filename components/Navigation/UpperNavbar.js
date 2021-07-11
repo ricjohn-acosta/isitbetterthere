@@ -34,13 +34,10 @@ const Container = styled.div`
 const StyledUpperNavbar = () => {
   const [session, loading] = useSession();
 
-  console.log('upper navbar', session)
-
   const router = useRouter();
   return (
     <UpperNavbar elevation={0} position="static">
       <Container>
-        {console.log(session)}
         {/* <Link href="/our-team" passHref>
           <StyledButton disableRipple>Meet the team</StyledButton>
         </Link> */}

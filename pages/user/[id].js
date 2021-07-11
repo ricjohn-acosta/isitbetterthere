@@ -25,7 +25,6 @@ export async function getServerSideProps(context) {
     return JSON.parse(JSON.stringify(data))
   });
 
-  console.log("[id]", userExperiences);
   return {
     props: {
       user,
