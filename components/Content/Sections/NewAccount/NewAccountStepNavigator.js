@@ -36,7 +36,7 @@ const getSteps = () => {
 };
 
 const isFieldDataEmpty = (fieldData) => {
-    return Object.keys(fieldData).length === 0
+    return !fieldData || Object.keys(fieldData).length === 0
 }
 
 const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
@@ -108,7 +108,6 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
 
     const showConfirmButtons = () => {
         return <Paper square elevation={0}>
-            {console.log('SHOW CONFIRM BUTTONS')}
             <Typography>All steps completed - you&apos;re finished</Typography>
             <Button onClick={() => {
                 dispatch(setStep(0))
@@ -142,7 +141,6 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
         </Paper>
     }
 
-    console.log(router)
     if (router.route === '/account') return null
 
     return (
