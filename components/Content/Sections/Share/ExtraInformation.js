@@ -83,7 +83,6 @@ const ExtraInformation = ({
                               easeOfTransition,
                               setRegret,
                               regret,
-                              extraInfoEmptyState,
                           }) => {
 
     const {watch, control, trigger, setError, setValue, register, formState: {errors}} = useForm({mode: "all"});
@@ -95,12 +94,17 @@ const ExtraInformation = ({
             setValue('fulfillment', null)
             setValue('difficulty', null)
             setValue('regret', null)
-        } else if (extraInformation) {
+        }
+    }, [fieldStore])
+
+    useEffect(() => {
+        if (!extraInformation) return
+        if (extraInformation.fulfillment && extraInformation.difficulty && extraInformation.regret) {
             setValue('fulfillment', extraInformation.fulfillment)
             setValue('difficulty', extraInformation.difficulty)
             setValue('regret', extraInformation.regret)
         }
-    }, [extraInformation, fieldStore])
+    }, [extraInformation])
 
     const handleFulfillment = (fullfilment) => {
         setFulfillment(fullfilment);
@@ -117,7 +121,6 @@ const ExtraInformation = ({
         setValue('regret', regret);
     };
 
-    console.log(errors)
     return (
         <Grid container direction={'row'}>
             <BackButton/>
@@ -131,15 +134,6 @@ const ExtraInformation = ({
                     <StyledGrid container direction="column" spacing={3}>
                         <QuestionText variant="h4">
                             How fulfilling was the transition?{" "}
-                            {extraInfoEmptyState ? (
-                                <Typography
-                                    style={{color: "red"}}
-                                    component="span"
-                                    variant="subtitle2"
-                                >
-                                    (required)
-                                </Typography>
-                            ) : null}
                         </QuestionText>
                         <Grid style={{width: '100%'}} item container direction="row">
                             <FormHelperText
@@ -159,15 +153,6 @@ const ExtraInformation = ({
                         <br/>
                         <QuestionText variant="h4">
                             How easy was the transition?{" "}
-                            {extraInfoEmptyState ? (
-                                <Typography
-                                    style={{color: "red"}}
-                                    component="span"
-                                    variant="subtitle2"
-                                >
-                                    (required)
-                                </Typography>
-                            ) : null}
                         </QuestionText>
 
                         <Grid item container direction="row">
@@ -186,15 +171,6 @@ const ExtraInformation = ({
                         <br/>
                         <QuestionText variant="h4">
                             Did you regret transitioning?{" "}
-                            {extraInfoEmptyState ? (
-                                <Typography
-                                    style={{color: "red"}}
-                                    component="span"
-                                    variant="subtitle2"
-                                >
-                                    (required)
-                                </Typography>
-                            ) : null}
                         </QuestionText>
                         <Grid item container direction="row">
                             <FormHelperText

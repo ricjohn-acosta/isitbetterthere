@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import {Controller} from "react-hook-form";
 import {countries} from "../NewAccount/utils/countries";
 import {FormHelperText} from "@material-ui/core";
-import React from "react";
+import React, {useEffect} from "react";
 import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -69,40 +69,66 @@ const CategoryForm = ({
                           fromInputValue,
                           isSwapping,
 
-                          control,
+                          resetFields,
                           fieldStore,
+                          formHelper,
+                          control,
                           source
                       }) => {
     const classes = useStyles();
     const downMD = useMediaQuery("(max-width:959px)");
     const categoryFormData = useSelector((state) => state.shareStory.categoryFormData)
 
+    useEffect(() => {
+        if (Object.keys(fieldStore).length === 0) {
+            formHelper('direction', "from/to")
+        }
+    }, [fieldStore])
+
+    useEffect(() => {
+        if (!categoryFormData) return
+        if (categoryFormData.direction) {
+            formHelper('direction', "from/to")
+        }
+    }, [categoryFormData])
+
     return (
         <InputWrapper>
             <div>Choose a category: &nbsp;</div>
             <br/>
-            <Select
-                onChange={(e) => {
-                    setCategory(e.target.value);
-                    handleCategories(e.target.value);
-                    setToValue(null);
-                    setFromValue(null);
-                    setToInputValue("");
-                    setFromInputValue("");
-                    setSwapping(false);
-                }}
-                value={currentCategory}
-                variant="standard"
-            >
-                <MenuItem value={"secondaryEducation"}>Secondary Education</MenuItem>
-                <MenuItem value={"tertiaryEducation"}>Tertiary Education</MenuItem>
-                <MenuItem value={"universities"}>Institutions</MenuItem>
-                <MenuItem value={"careers"}>Careers</MenuItem>
-                <MenuItem value={"jobs"}>Jobs</MenuItem>
-                <MenuItem value={"countries"}>Countries</MenuItem>
-                <MenuItem value={"cultures"}>Cultures</MenuItem>
-                <MenuItem value={"life"}>Life</MenuItem>
-            </Select>
+
+            <Controller
+                render={({field: {onChange, value}, fieldState: {error}, ...props}) => (
+                    <Select
+                        onChange={(e, data) => {
+                            resetFields({...fieldStore, firstInput: null, secondInput: null})
+                            onChange(data.props.value)
+                            setCategory(e.target.value);
+                            handleCategories(e.target.value);
+                            setToValue(null);
+                            setFromValue(null);
+                            setToInputValue("");
+                            setFromInputValue("");
+                            setSwapping(false);
+                        }}
+                        value={value}
+                        variant="standard"
+                    >
+                        <MenuItem value={"secondaryEducation"}>Secondary Education</MenuItem>
+                        <MenuItem value={"tertiaryEducation"}>Tertiary Education</MenuItem>
+                        <MenuItem value={"universities"}>Institutions</MenuItem>
+                        <MenuItem value={"careers"}>Careers</MenuItem>
+                        <MenuItem value={"jobs"}>Jobs</MenuItem>
+                        <MenuItem value={"countries"}>Countries</MenuItem>
+                        <MenuItem value={"cultures"}>Cultures</MenuItem>
+                        <MenuItem value={"life"}>Life</MenuItem>
+                    </Select>
+                )}
+                defaultValue={(categoryFormData && categoryFormData.category) || "careers"}
+                name="category"
+                control={control}
+                rules={{required: 'Please select an option'}}
+            />
             &nbsp;
             <div>
                 <b>TRANSITION</b>
@@ -171,6 +197,7 @@ const CategoryForm = ({
                             setFromInputValue(toInputValue);
                             setToInputValue(fromInputValue);
                             setSwapping(!isSwapping);
+                            formHelper('direction', isSwapping ? "to/from" : "from/to")
                         }}
                         disabled={currentCategory === "secondaryEducation"}
                     >
@@ -184,6 +211,7 @@ const CategoryForm = ({
                             setFromInputValue(toInputValue);
                             setToInputValue(fromInputValue);
                             setSwapping(!isSwapping);
+                            formHelper('direction', !isSwapping ? "to/from" : "from/to")
                         }}
                         disabled={currentCategory === "secondaryEducation"}
                     >

@@ -18,6 +18,8 @@ import CategoryForm from "./CategoryForm";
 import Button from "@material-ui/core/Button";
 import React from "react";
 import {useForm} from "react-hook-form";
+import {tabletView} from "../../../../utils/breakpoints";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -121,7 +123,9 @@ const SeeStories = styled(Button)`
 `;
 
 const MainSection = () => {
-    const {watch, control, trigger, handleSubmit, formState: {errors}} = useForm({mode: "all"});
+    const {watch, control, trigger, setValue, reset} = useForm({
+        mode: "all"
+    });
     const fieldStore = watch()
 
     const [categories, setCategory] = React.useState(careersCategory);
@@ -131,6 +135,7 @@ const MainSection = () => {
     const [fromValue, setFromValue] = React.useState(null);
     const [fromInputValue, setFromInputValue] = React.useState("");
     const [isSwapping, setSwapping] = React.useState(false);
+    const tablet = useMediaQuery(tabletView);
 
     const handleForm = () => {
         trigger().then(isValidated => {
@@ -147,6 +152,8 @@ const MainSection = () => {
             }
         })
     };
+
+    console.log(fieldStore)
 
     const handleCategories = (value) => {
         switch (value) {
@@ -203,11 +210,8 @@ const MainSection = () => {
                         <FadeIn>Know your destination</FadeIn>
                     </FadeInAnimation>
                 </WelcomeMessage>
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <div style={{display: tablet ? 'contents' : 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <CategoryForm
-                        control={control}
-                        fieldStore={fieldStore}
-
                         categories={categories}
                         currentCategory={currentCategory}
                         handleCategories={handleCategories}
@@ -224,25 +228,32 @@ const MainSection = () => {
                         fromValue={fromValue}
                         fromInputValue={fromInputValue}
                         isSwapping={isSwapping}
+
+                        resetFields={reset}
+                        fieldStore={fieldStore}
+                        formHelper={setValue}
+                        control={control}
                     />
                     &nbsp;
-                    <Button
-                        onClick={handleForm}
-                        type="submit"
-                        color="secondary"
-                        variant="contained"
-                        size="large"
-                        disableElevation
-                        disabled={
-                            toValue === fromValue &&
-                            toValue !== "" &&
-                            fromValue !== "" &&
-                            toValue !== null &&
-                            fromValue !== null
-                        }
-                    >
-                        GO
-                    </Button>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Button
+                            onClick={handleForm}
+                            type="submit"
+                            color="secondary"
+                            variant="contained"
+                            size="large"
+                            disableElevation
+                            disabled={
+                                toValue === fromValue &&
+                                toValue !== "" &&
+                                fromValue !== "" &&
+                                toValue !== null &&
+                                fromValue !== null
+                            }
+                        >
+                            GO
+                        </Button>
+                    </div>
                 </div>
                 <br/>
                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

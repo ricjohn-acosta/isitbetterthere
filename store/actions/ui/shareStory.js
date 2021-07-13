@@ -1,3 +1,10 @@
+export const RESET_FORM = 'RESET_FORM'
+export const resetForm = () => (dispatch) => {
+    dispatch({
+        type: RESET_FORM
+    })
+}
+
 export const SET_STEP = 'SET_STEP'
 export const setStep = (step) => (dispatch) => {
     dispatch({

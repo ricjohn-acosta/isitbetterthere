@@ -1,0 +1,1 @@
+export const tabletView = "(max-width:959px)"
