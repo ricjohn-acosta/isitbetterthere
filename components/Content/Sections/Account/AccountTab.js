@@ -1,8 +1,6 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import LinkTab from "./LinkTab"
+import {Paper, Tabs} from "@material-ui/core"
 
 const CenteredTabs = ({ view, setView }) => {
 

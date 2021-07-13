@@ -10,7 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import React from "react";
 import {BackButton, NextButton} from "./ShareStepperNavigator";
 import {useSelector} from "react-redux";
-import {FormHelperText} from "@material-ui/core";
+import {FormHelperText, TextField} from "@material-ui/core";
 
 const Wrapper = styled.div``;
 
@@ -51,6 +51,14 @@ const ShareStory = ({
                             someone's life 😊
                         </Typography>
                         <br/>
+                        <TextField
+                            placeholder={"Title"}
+                            style={{width: '100%'}}
+                            name="msg"
+                            size="small"
+                            fullwidth
+                            variant="outlined"
+                        />
                         <Controller
                             defaultValue={(editorData && editorData.editor) || ""}
                             name="editor"

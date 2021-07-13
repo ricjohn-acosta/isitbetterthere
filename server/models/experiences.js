@@ -7,6 +7,9 @@ const ExperienceSchema = new mongoose.Schema({
     author_id: {
         type: String
     },
+    title: {
+      type: String
+    },
     category: {
         type: String,
         required: [true, "Please provide a category."],
