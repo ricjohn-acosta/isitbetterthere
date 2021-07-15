@@ -1,9 +1,5 @@
 import styled from "styled-components";
-import AppBar from "@material-ui/core/AppBar";
-import Grid from "@material-ui/core/Grid";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import { Typography } from "@material-ui/core";
+import {Grid, List, ListItem, Typography} from "@material-ui/core";
 import Link from 'next/link'
 
 const Wrapper = styled.div`

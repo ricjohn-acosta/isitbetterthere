@@ -1,10 +1,6 @@
 import styled from "styled-components";
-import { Typography } from "@material-ui/core";
-import Icon from "@material-ui/core/Icon";
+import {Typography, Button, useMediaQuery} from "@material-ui/core";
 import LearnCards from "../../Cards/LearnCards";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const Wrapper = styled.div`
   overflow: hidden;

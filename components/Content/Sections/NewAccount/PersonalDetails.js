@@ -1,17 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import Grid from "@material-ui/core/Grid";
-import {FormHelperText, InputLabel, Typography} from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
+import {
+    FormControl,
+    FormHelperText,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {countries} from "./utils/countries";
 import {enableBeforeUnload} from "./utils/unsavedFormWarning";
 import {Controller, useForm} from "react-hook-form";
 import NewAccountStepNavigator from "./NewAccountStepNavigator";
 import {useSelector} from "react-redux";
-import FormControl from "@material-ui/core/FormControl";
 
 const Wrapper = styled.form`
   min-height: 50vh;

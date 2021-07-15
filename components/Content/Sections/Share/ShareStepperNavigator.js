@@ -132,6 +132,7 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
             toValue = categoryFormData.firstInput.category
         }
 
+        console.log(editorData)
         dispatch(addExperience({
             author: session.user.name,
             author_id: session.id,
@@ -141,6 +142,7 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
             fulfillment: extraInformation.fulfillment,
             ease_of_transition: extraInformation.difficulty,
             regret: extraInformation.regret,
+            title: editorData.title,
             story: JSON.stringify(convertToRaw(editorData.editor.getCurrentContent())),
             helpful: 0,
             not_helpful: 0,

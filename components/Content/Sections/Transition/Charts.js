@@ -1,6 +1,5 @@
 import { Pie } from "react-chartjs-2";
-import Grid from "@material-ui/core/Grid";
-import { Typography } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 import { getChartData } from "./utils/getChartData";
 
 const Charts = ({ allExperiences }) => {

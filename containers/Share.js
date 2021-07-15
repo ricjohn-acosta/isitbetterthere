@@ -1,3 +1,4 @@
+import React from "react";
 import ShareStepperSection from "../components/Content/Sections/Share/ShareStepperSection";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import LowerNavbar from "../components/Navigation/LowerNavbar";

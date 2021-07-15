@@ -1,5 +1,4 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
 import {
     CardActionArea,
     CardActions,
@@ -9,7 +8,8 @@ import {
     Chip,
     Link,
     Typography,
-    Card
+    Card,
+    makeStyles
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

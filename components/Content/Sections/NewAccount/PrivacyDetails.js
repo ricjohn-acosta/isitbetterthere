@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import Grid from "@material-ui/core/Grid";
-import {Typography} from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
+import {Typography, Grid, Checkbox} from "@material-ui/core";
 import NewAccountStepNavigator from "./NewAccountStepNavigator";
 import {Controller, useForm} from "react-hook-form";
 import React from "react";

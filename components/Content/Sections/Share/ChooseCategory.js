@@ -15,7 +15,7 @@ import PaperWrapper from "./common/PaperWrapper";
 import HeaderDivider from "./common/HeaderDivider";
 import {useForm} from "react-hook-form";
 import Grid from "@material-ui/core/Grid";
-import React, {useEffect} from "react";
+import React from "react";
 import {BackButton, NextButton} from "./ShareStepperNavigator";
 import {useSelector} from "react-redux";
 import {AlertDialog} from "../../../UI/Notifications/AlertDialog";

@@ -1,13 +1,8 @@
 import styled from "styled-components";
-import Grid from "@material-ui/core/Grid";
-import {FormHelperText, InputLabel, Typography} from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import {FormControl, FormHelperText, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
 import {enableBeforeUnload} from "./utils/unsavedFormWarning";
 import NewAccountStepNavigator from "./NewAccountStepNavigator";
 import {Controller, useForm} from "react-hook-form";
-import FormControl from "@material-ui/core/FormControl";
 import React from "react";
 import {useSelector} from "react-redux";
 

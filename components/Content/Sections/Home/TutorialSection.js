@@ -1,8 +1,5 @@
-import styled, { keyframes } from "styled-components";
-import { Typography } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Link from 'next/link'
+import styled from "styled-components";
+import {Typography, Grid, useMediaQuery} from "@material-ui/core";
 
 const Wrapper = styled.div`
   background-color: #e6ffff;

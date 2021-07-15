@@ -1,7 +1,6 @@
-import React, {useEffect, useMemo} from 'react';
-import Button from "@material-ui/core/Button";
+import React from 'react';
+import {Button, Paper, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import Typography from "@material-ui/core/Typography";
 import {
     setExtraDetailsData,
     setPersonalDetailsData,
@@ -11,7 +10,6 @@ import {
 import styled from "styled-components";
 import {addUser} from "../../../../store/actions/api/users";
 import {useSession} from "next-auth/client";
-import Paper from "@material-ui/core/Paper";
 import Router, {useRouter} from "next/router";
 
 const Container = styled.div`

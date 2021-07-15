@@ -1,8 +1,8 @@
+import React from "react";
 import styled from "styled-components";
 import StoryCard from "../components/UI/StoryCard";
 import LowerNavbar from "../components/Navigation/LowerNavbar";
-import { Typography } from "@material-ui/core";
-import Box from "@material-ui/core/Box";
+import { Typography, Box } from "@material-ui/core";
 const HeaderText = styled(Typography)`
   padding: 2.5% 15% 0 15%;
 `;

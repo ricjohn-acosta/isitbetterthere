@@ -1,20 +1,12 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import StepContent from "@material-ui/core/StepContent";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import {Stepper, Step, StepLabel, StepContent, Typography} from "@material-ui/core";
 import PersonalDetails from "./PersonalDetails";
 import PrivacyDetails from "./PrivacyDetails";
 import ExtraDetails from "./ExtraDetails";
 import {addUser} from "../../../../store/actions/api/users";
 import {connect, useDispatch, useSelector} from "react-redux";
-import Link from "@material-ui/core/Link";
 import {useSession} from "next-auth/client";
-import {disableBeforeUnload} from "./utils/unsavedFormWarning";
 import NewAccountStepNavigator from "./NewAccountStepNavigator";
 
 const Wrapper = styled.form`

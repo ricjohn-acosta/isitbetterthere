@@ -1,14 +1,16 @@
 import styled from "styled-components";
-import { Typography } from "@material-ui/core";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import {
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  Grid,
+  makeStyles,
+  Typography
+} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Charts from "./Charts";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import { getExperiences } from "../../../../store/actions/api/experiences";
-import { connect } from "react-redux";
+import {getExperiences} from "../../../../store/actions/api/experiences";
+import {connect} from "react-redux";
 import NoData from "./common/NoData";
 
 const useStyles = makeStyles({

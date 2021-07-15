@@ -1,7 +1,4 @@
 import styled, {keyframes} from "styled-components";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import {Typography} from "@material-ui/core";
 import {
     careersCategory,
     countryCategory,
@@ -13,13 +10,11 @@ import {
     uniCategory,
 } from "../../../../lib/categories";
 import Router from "next/router";
-import {makeStyles} from "@material-ui/core/styles";
 import CategoryForm from "./CategoryForm";
-import Button from "@material-ui/core/Button";
 import React from "react";
 import {useForm} from "react-hook-form";
 import {tabletView} from "../../../../utils/breakpoints";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import {Box, Button, Grid, Typography, useMediaQuery, makeStyles} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({

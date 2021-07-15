@@ -1,4 +1,3 @@
-import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import {default as MuiLink} from "@material-ui/core/Link";
 import {useRouter} from "next/router";

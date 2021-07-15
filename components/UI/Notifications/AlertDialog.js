@@ -1,7 +1,5 @@
 import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import {useDialog} from "../../../hooks/ui/useDialog";
-import {DialogActions, DialogContent, DialogContentText, DialogTitle, Button} from "@material-ui/core";
+import {Button, DialogActions, DialogContent, DialogContentText, DialogTitle, Dialog} from "@material-ui/core";
 
 export const AlertDialog = (props) => {
     const {open, close, title, body, actions} = props

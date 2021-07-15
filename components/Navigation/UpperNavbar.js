@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
+import {AppBar, Button} from "@material-ui/core";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {useSession} from "next-auth/client";

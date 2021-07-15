@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Typography } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import {Typography, Grid, useMediaQuery} from "@material-ui/core";
+import {ArrowForward, ArrowDownward} from "@material-ui/icons";
 import CountUp from "react-countup";
 import Link from "next/link";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 const Wrapper = styled.div`
   min-height: 45vh;
@@ -93,9 +90,9 @@ const HeaderSection = ({ from, to, category, allExperiences }) => {
         </FromText>
         <MiddleIcon item xs={12} sm={12} md={2}>
           {downMD ? (
-            <ArrowDownwardIcon fontSize="large" />
+            <ArrowDownward fontSize="large" />
           ) : (
-            <ArrowForwardIcon fontSize="large" />
+            <ArrowForward fontSize="large" />
           )}
         </MiddleIcon>
         <ToText item xs={12} sm={12} md={5}>

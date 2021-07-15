@@ -1,19 +1,14 @@
 import styled from "styled-components";
 import {makeStyles} from "@material-ui/core/styles";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import IconButton from "@material-ui/core/IconButton";
-import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
-import SwapVertIcon from "@material-ui/icons/SwapVert";
 import {options, uniDirectionFrom, uniDirectionTo} from "../../../utils";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import TextField from "@material-ui/core/TextField";
 import {Controller} from "react-hook-form";
 import {countries} from "../NewAccount/utils/countries";
-import {FormHelperText} from "@material-ui/core";
+import {FormHelperText, IconButton, MenuItem, Select, TextField, useMediaQuery} from "@material-ui/core";
+import {SwapHoriz, SwapVert} from "@material-ui/icons";
 import React, {useEffect} from "react";
 import {useSelector} from "react-redux";
+
 
 const useStyles = makeStyles((theme) => ({
     popper: {width: 400},
@@ -201,7 +196,7 @@ const CategoryForm = ({
                         }}
                         disabled={currentCategory === "secondaryEducation"}
                     >
-                        <SwapVertIcon fontSize="small"/>
+                        <SwapVert fontSize="small"/>
                     </IconButton>
                 ) : (
                     <IconButton
@@ -215,7 +210,7 @@ const CategoryForm = ({
                         }}
                         disabled={currentCategory === "secondaryEducation"}
                     >
-                        <SwapHorizIcon fontSize="small"/>
+                        <SwapHoriz fontSize="small"/>
                     </IconButton>
                 )}
             </div>

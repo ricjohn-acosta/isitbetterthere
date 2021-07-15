@@ -1,18 +1,7 @@
-import React, {useState} from "react";
-import {EditorState, convertToRaw} from "draft-js";
+import React from "react";
 import {Editor} from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
-import {useForm} from "react-hook-form";
 
 const EditorConvertToHTML = ({editorState, setEditorState}) => {
-    // const [editorState, setEditorState] = useState(null);
-    //
-    // const onEditorStateChange = (editorState) => {
-    //     setEditorState(editorState);
-    //     // return props.onChange(
-    //     //     draftToHtml(convertToRaw(editorState.getCurrentContent()))
-    //     // );
-    // };
 
     const onEditorStateChange = (editorState) => {
         setEditorState(editorState);

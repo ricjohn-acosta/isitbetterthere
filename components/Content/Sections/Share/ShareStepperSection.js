@@ -1,19 +1,16 @@
 import React from "react";
 import {useSelector} from "react-redux";
 import {makeStyles, withStyles} from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
 import styled from "styled-components";
 import ChooseCategory from "./ChooseCategory";
 import ShareStory from "./ShareStory";
-import StepConnector from "@material-ui/core/StepConnector";
 import {careersCategory} from "../../../../lib/categories";
 import {EditorState} from "draft-js";
 import {grey} from "@material-ui/core/colors";
 import ExtraInformation from "./ExtraInformation";
 import Preview from "./Preview";
 import ContributionWarningModal from "./ContributionWarningModal";
+import {Stepper, Step, StepLabel, StepConnector} from "@material-ui/core"
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({

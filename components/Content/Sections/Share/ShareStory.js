@@ -29,10 +29,11 @@ const ShareStory = ({
                         toValue,
                         fromValue,
                     }) => {
-    const {watch, control, trigger, setError, formState: {errors}} = useForm({mode: "all"});
+    const {register, watch, control, trigger, setError, formState: {errors}} = useForm({mode: "all"});
     const editorData = useSelector((state) => state.shareStory.editorData)
     const fieldStore = watch()
 
+    console.log(fieldStore)
     return (
         <Grid container direction={'row'}>
             <BackButton/>
@@ -51,13 +52,26 @@ const ShareStory = ({
                             someone's life 😊
                         </Typography>
                         <br/>
-                        <TextField
-                            placeholder={"Title"}
-                            style={{width: '100%'}}
-                            name="msg"
-                            size="small"
-                            fullwidth
-                            variant="outlined"
+                        <Controller
+                            defaultValue={(editorData && editorData.title) || ""}
+                            name="title"
+                            control={control}
+                            render={({field: {onChange, value, error}}) => (
+                                <>
+                                    <FormHelperText
+                                        error={!!errors}>{errors.title ? errors.title.message : null}</FormHelperText>
+                                    <TextField
+                                        onChange={onChange}
+                                        value={value}
+                                        placeholder={"Title"}
+                                        style={{width: '100%'}}
+                                        size="small"
+                                        fullwidth
+                                        variant="outlined"
+                                    />
+                                </>
+                            )}
+                            rules={{required: 'Please write a title'}}
                         />
                         <Controller
                             defaultValue={(editorData && editorData.editor) || ""}

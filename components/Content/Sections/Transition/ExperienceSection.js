@@ -1,24 +1,16 @@
 import styled from "styled-components";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import {Typography} from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
+import {Button, Grid, Paper, Typography, useMediaQuery} from "@material-ui/core";
 import Experience from "./Experience";
 import SearchTools from "./SearchTools";
-import Button from "@material-ui/core/Button";
 import SearchToolsMobile from "./SearchToolsMobile";
 import draftToHtml from "draftjs-to-html";
 import NoData from "./common/NoData";
 import {useRouter} from "next/router";
-import Pagination from "@material-ui/lab/Pagination";
-import PaginationItem from "@material-ui/lab/PaginationItem";
+import {Pagination, PaginationItem} from "@material-ui/lab";
 import PaginationLink from "./PaginationLink";
-import Popper from "@material-ui/core/Popper";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import {connect, useDispatch, useSelector} from "react-redux";
 import {useSession} from "next-auth/client";
 import Link from "next/link";
-import {reportExperience} from "../../../../store/actions/api/experiences";
 import {useEffect} from "react";
 
 const HtmlToReactParser = require("html-to-react").Parser;
