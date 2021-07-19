@@ -1,7 +1,7 @@
 import { getSession } from "next-auth/client";
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
-import { getUser } from "../server/db";
+// import { getUser } from "../server/db.txt";
 import request from "superagent";
 
 // delete experiences

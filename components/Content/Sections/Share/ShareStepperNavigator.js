@@ -4,7 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import {ArrowBack, ArrowForward} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import {
-    resetForm,
+    resetShareStoryForm,
     setCategoryFormData,
     setEditorData,
     setExtraInformation,
@@ -16,12 +16,28 @@ import {addExperience} from "../../../../store/actions/api/experiences";
 import {useSession} from "next-auth/client";
 import {convertToRaw} from "draft-js";
 
-export const BackButton = () => {
+const saveData = (fieldData, activeStep, dispatch) => {
+    switch(activeStep) {
+        case 0:
+            dispatch(setCategoryFormData(fieldData));
+            return
+        case 1:
+            dispatch(setEditorData(fieldData));
+            return;
+        case 2:
+            dispatch(setExtraInformation(fieldData));
+            return;
+    }
+}
+
+export const BackButton = ({fieldData}) => {
     const dispatch = useDispatch()
     const activeStep = useSelector((state) => state.shareStory.activeStepIndex)
 
     const previousStepAction = () => {
         if (activeStep <= 0) return
+
+        saveData(fieldData, activeStep, dispatch)
         dispatch(setStep(activeStep - 1))
     }
 
@@ -45,6 +61,12 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
     const userData = useSelector((state) => state.users.user)
     const finalStep = 3;
 
+
+    // TODO
+    // create saveData function when navigating
+    // gonext and goback should both invoke saveData
+    // go next should have validations
+
     const nextStepAction = (activeStep) => {
         switch (activeStep) {
             // category form data
@@ -66,7 +88,7 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
                 }
 
                 dispatch(setStep(activeStep + 1))
-                dispatch(setCategoryFormData(fieldData))
+                saveData(fieldData, activeStep, dispatch)
                 return
             // privacy details
             case 1:
@@ -75,7 +97,7 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
                     return
                 } else {
                     dispatch(setStep(activeStep + 1))
-                    dispatch(setEditorData(fieldData))
+                    saveData(fieldData, activeStep, dispatch)
                     return
                 }
 
@@ -95,7 +117,7 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
 
                 if (fieldData && (fieldData.fulfillment && fieldData.regret && fieldData.difficulty)) {
                     dispatch(setStep(activeStep + 1))
-                    dispatch(setExtraInformation(fieldData))
+                    saveData(fieldData, activeStep, dispatch)
                     return
                 }
 
@@ -157,7 +179,7 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
                         to: toValue,
                     },
                 });
-                dispatch(resetForm())
+                dispatch(resetShareStoryForm())
             }
         })
 
@@ -165,7 +187,7 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
 
     const submitButton = () => {
 
-        return <Button color={"primary"} onClick={handleSubmit}>Submit</Button>
+        return <Button color={"primary"} variant={'contained'} onClick={handleSubmit}>Submit</Button>
     }
 
     return <Grid style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}

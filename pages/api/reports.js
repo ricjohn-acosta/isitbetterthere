@@ -1,4 +1,4 @@
-import { addReport, getReport } from "../../server/db";
+// import { addReport, getReport } from "../../server/db.txt";
 import { getSession } from "next-auth/client";
 
 export default async function ratings(req, res) {

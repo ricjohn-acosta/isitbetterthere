@@ -1,5 +1,5 @@
 export const RESET_FORM = 'RESET_FORM'
-export const resetForm = () => (dispatch) => {
+export const resetShareStoryForm = () => (dispatch) => {
     dispatch({
         type: RESET_FORM
     })

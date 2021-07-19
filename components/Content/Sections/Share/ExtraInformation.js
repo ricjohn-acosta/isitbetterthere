@@ -117,7 +117,7 @@ const ExtraInformation = ({
 
     return (
         <Grid container direction={'row'}>
-            <BackButton/>
+            <BackButton fieldData={Object.keys(fieldStore).length === 0 ? extraInformation : fieldStore}/>
             <Grid item xs={10} justify={'center'} alignItems={'center'}>
                 <PaperWrapper>
                     <Subheaders icon={"/review.png"} variant="h4">

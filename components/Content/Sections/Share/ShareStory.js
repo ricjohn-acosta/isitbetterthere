@@ -33,10 +33,10 @@ const ShareStory = ({
     const editorData = useSelector((state) => state.shareStory.editorData)
     const fieldStore = watch()
 
-    console.log(fieldStore)
+    console.log(fieldStore, errors)
     return (
         <Grid container direction={'row'}>
-            <BackButton/>
+            <BackButton fieldData={Object.keys(fieldStore).length === 0 ? editorData : fieldStore}/>
             <Grid item xs={10} justify={'center'} alignItems={'center'}>
                 <PaperWrapper>
                     <Subheaders icon={"/shareExperience.png"}>Share your story!</Subheaders>
@@ -71,7 +71,7 @@ const ShareStory = ({
                                     />
                                 </>
                             )}
-                            rules={{required: 'Please write a title'}}
+                            rules={{required: 'Please write a title', maxLength: {value: 300, message: "Too many characters"}}}
                         />
                         <Controller
                             defaultValue={(editorData && editorData.editor) || ""}

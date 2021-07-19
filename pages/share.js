@@ -6,13 +6,19 @@ import {storeUserData} from "../store/actions/api/users";
 import {useDispatch} from "react-redux";
 import {axiosGetUserById} from "./api/users/[id]";
 import serverRedirect from "../utils/serverRedirect";
+import {resetShareStoryForm} from "../store/actions/ui/shareStory";
 
-const share = ({userData}) => {
+const share = ({userData, referer}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(storeUserData(userData))
     }, [])
+
+    useEffect(() => {
+        if (!referer) return
+        dispatch(resetShareStoryForm())
+    }, [referer])
 
     return (
         <Layout>
@@ -35,7 +41,8 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
-            userData: (!user || user.data === 'Not found') ? null : user.data[0]
+            userData: (!user || user.data === 'Not found') ? null : user.data[0],
+            referer: context.req.headers.referer
         },
     };
 }

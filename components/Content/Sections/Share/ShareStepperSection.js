@@ -11,6 +11,7 @@ import ExtraInformation from "./ExtraInformation";
 import Preview from "./Preview";
 import ContributionWarningModal from "./ContributionWarningModal";
 import {Stepper, Step, StepLabel, StepConnector} from "@material-ui/core"
+import {useRouter} from "next/router";
 
 // OVERRIDING DEFAULT MATERIAL-UI STYLING
 const StyledConnector = withStyles({
@@ -61,7 +62,7 @@ function getSteps() {
 
 const ShareStepperSection = () => {
     const activeStep = useSelector((state) => state.shareStory.activeStepIndex)
-
+    const router = useRouter();
     const classes = useStyles();
     const [categories, setCategory] = React.useState(careersCategory);
     const [currentCategory, setCurrentCategory] = React.useState("careers");
@@ -134,7 +135,7 @@ const ShareStepperSection = () => {
         }
     };
 
-
+    console.log(router)
     return (
         <Wrapper>
             <div className={classes.root}>

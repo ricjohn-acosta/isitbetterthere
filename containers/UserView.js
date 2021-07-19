@@ -121,7 +121,7 @@ const UserView = ({user, userExperiences}) => {
     };
 
     const displayStories = () => {
-        const stories = userExperiences.map((experience) => {
+        return userExperiences.map((experience) => {
             return (
                 <>
                     <Grid container direction="row">
@@ -164,8 +164,6 @@ const UserView = ({user, userExperiences}) => {
                 </>
             );
         });
-
-        return stories;
     };
 
     const displayStory = (storyID) => {
@@ -174,6 +172,8 @@ const UserView = ({user, userExperiences}) => {
         return htmlToReactParser.parse(draftToHtml(JSON.parse(story[0].story)));
     };
 
+    console.log(user)
+    if (!user) return null
     return (
         <>
             <LowerNavbar/>

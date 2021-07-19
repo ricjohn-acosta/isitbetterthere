@@ -1,8 +1,8 @@
-import {
-  addRating,
-  rateExperience,
-  getRatedExperiences,
-} from "../../server/db";
+// import {
+//   addRating,
+//   rateExperience,
+//   getRatedExperiences,
+// } from "../../server/db.txt";
 import { getSession } from "next-auth/client";
 
 export default async function ratings(req, res) {
