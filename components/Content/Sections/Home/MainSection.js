@@ -45,10 +45,25 @@ const Wrapper = styled(Box)`
     background-size: contain;
   }
 
-  ${(props) => props.theme.breakpoints.down("md")} {
+  ${(props) => props.theme.breakpoints.down("sm")} {
     height: 90vh;
-  }
 
+    &:before {
+      content: ' ';
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 35%;
+      width: 50%;
+      height: 50%;
+      opacity: 0.6;
+      background-image: url('/decision.png');
+      background-repeat: no-repeat;
+      background-position: center right;
+      background-size: contain;
+    }
+    
+  }
 `;
 
 const GridWrapper = styled(Grid)`
@@ -106,8 +121,8 @@ const WelcomeMessage = styled(Typography)`
     font-size: 4rem;
   }
 
-  ${(props) => props.theme.breakpoints.between("sm", "1287")} {
-    font-size: 1.5rem;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    font-size: 1.8rem;
   }
 `;
 

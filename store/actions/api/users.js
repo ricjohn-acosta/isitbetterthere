@@ -29,9 +29,9 @@ export const storeUserData = (userData) => (dispatch) => {
 //         return (
 //             request
 //                 .post(
-//                     process.env.NODE_ENV === "production"
-//                         ? process.env.prod + '/api/users'
-//                         : process.env.dev + '/api/users'
+//                     process..env.NODE_ENV === "production"
+//                         ? process..env.prod + '/api/users'
+//                         : process..env.dev + '/api/users'
 //                 )
 //                 .send(user)
 //                 .then((res) => {

@@ -11,12 +11,12 @@ import {useDispatch} from "react-redux";
 // https://next-auth.js.org/configuration/options
 const options = {
     // site:
-    //   process.env.NODE_ENV === "production" ? process.env.prod : process.env.dev,
+    //   process..env.NODE_ENV === "production" ? process..env.prod : process..env.dev,
     providers: [
         // https://next-auth.js.org/providers/email
         // Providers.Email({
-        //   server: process.env.EMAIL_SERVER,
-        //   from: process.env.EMAIL_FROM,
+        //   server: process..env.EMAIL_SERVER,
+        //   from: process..env.EMAIL_FROM,
         // }),
         // https://next-auth.js.org/configuration/providers
         Providers.Google({
@@ -25,34 +25,34 @@ const options = {
         }),
 
         // Providers.Facebook({
-        //     clientId: process.env.FACEBOOK_ID,
-        //     clientSecret: process.env.FACEBOOK_SECRET,
+        //     clientId: process..env.FACEBOOK_ID,
+        //     clientSecret: process..env.FACEBOOK_SECRET,
         // }),
         // Providers.Twitter({
-        //     clientId: process.env.TWITTER_ID,
-        //     clientSecret: process.env.TWITTER_SECRET,
+        //     clientId: process..env.TWITTER_ID,
+        //     clientSecret: process..env.TWITTER_SECRET,
         // }),
         // Providers.GitHub({
-        //     clientId: process.env.GITHUB_ID,
-        //     clientSecret: process.env.GITHUB_SECRET,
+        //     clientId: process..env.GITHUB_ID,
+        //     clientSecret: process..env.GITHUB_SECRET,
         // }),
         // Providers.Discord({
-        //     clientId: process.env.DISCORD_CLIENT_ID,
-        //     clientSecret: process.env.DISCORD_CLIENT_SECRET,
+        //     clientId: process..env.DISCORD_CLIENT_ID,
+        //     clientSecret: process..env.DISCORD_CLIENT_SECRET,
         // }),
         // Providers.Slack({
-        //     clientId: process.env.SLACK_CLIENT_ID,
-        //     clientSecret: process.env.SLACK_CLIENT_SECRET,
+        //     clientId: process..env.SLACK_CLIENT_ID,
+        //     clientSecret: process..env.SLACK_CLIENT_SECRET,
         // }),
         // Providers.Twitch({
-        //     clientId: process.env.TWITCH_CLIENT_ID,
-        //     clientSecret: process.env.TWITCH_CLIENT_SECRET,
+        //     clientId: process..env.TWITCH_CLIENT_ID,
+        //     clientSecret: process..env.TWITCH_CLIENT_SECRET,
         // }),
 
         // Providers.Auth0({
-        //   clientId: process.env.AUTH0_ID,
-        //   clientSecret: process.env.AUTH0_SECRET,
-        //   domain: process.env.AUTH0_DOMAIN
+        //   clientId: process..env.AUTH0_ID,
+        //   clientSecret: process..env.AUTH0_SECRET,
+        //   domain: process..env.AUTH0_DOMAIN
         // })
     ],
     // Database optional. MySQL, Maria DB, Postgres and MongoDB are supported.
@@ -61,12 +61,12 @@ const options = {
     // Notes:
     // * You must to install an appropriate node_module for your database
     // * The Email provider requires a database (OAuth providers do not)
-    // database: process.env.DATABASE_URL,
+    // database: process..env.DATABASE_URL,
 
     // The secret should be set to a reasonably long random string.
     // It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
     // a seperate secret is defined explicitly for encrypting the JWT.
-    // secret: process.env.SECRET,
+    // secret: process..env.SECRET,
 
     session: {
         // Use JSON Web Tokens for session instead of database sessions.

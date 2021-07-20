@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import StoryCard from "../components/UI/StoryCard";
+import StoryCard from "../components/Content/Cards/StoryCard";
 import LowerNavbar from "../components/Navigation/LowerNavbar";
 import { Typography, Box } from "@material-ui/core";
 const HeaderText = styled(Typography)`
@@ -16,7 +16,7 @@ const Stories = ({ allContributions }) => {
   return (
     <Wrapper>
       <LowerNavbar />
-      <HeaderText variant="h3">Recent stories</HeaderText>
+      <HeaderText variant="h3">Stories</HeaderText>
       {allContributions.map((e) => (
         <StoryCard
           name={e.author}
@@ -28,6 +28,7 @@ const Stories = ({ allContributions }) => {
           helpfulCount={e.helpful}
           hideName={e.hide_name}
           datePosted={e.date_posted}
+          title={e.title}
         />
       ))}
     </Wrapper>

@@ -216,9 +216,9 @@ const NewAccountStepperSection = () => {
             {/*        /!*    component={Button}*!/*/}
             {/*        /!*    disabled={disableSubmit}*!/*/}
             {/*        /!*    href={*!/*/}
-            {/*        /!*        process.env.NODE_ENV === "production"*!/*/}
-            {/*        /!*            ? process.env.prod*!/*/}
-            {/*        /!*            : process.env.dev*!/*/}
+            {/*        /!*        process..env.NODE_ENV === "production"*!/*/}
+            {/*        /!*            ? process..env.prod*!/*/}
+            {/*        /!*            : process..env.dev*!/*/}
             {/*        /!*    }*!/*/}
             {/*        /!*    style={{textDecoration: "none"}}*!/*/}
             {/*        /!*>*!/*/}
