@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { Typography } from "@material-ui/core";
-import {useSelector} from "react-redux";
-import {getTotalNumberOfExperiences} from "../../../../store/actions/experiences";
+import {Typography} from "@material-ui/core";
 import {useDispatch} from "react-redux";
+import {getTotalNumberOfExperiences} from "../../../../store/actions/api/experiences";
 import {useEffect, useState} from "react";
 
 const Wrapper = styled.div`

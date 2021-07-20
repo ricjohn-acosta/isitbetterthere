@@ -5,7 +5,6 @@ import dbConnect from "../../../server/mongodbConnect";
 import {rateUnhelpfulExperience} from "../../../server/models/experiences";
 
 export const axiosRateUnhelpfulExperience = (data) => {
-    console.log('axiosRateHelpfulExperience', data)
     return axios.post(API_SERVER + '/api/experiences/rateUnhelpful', data)
 }
 

@@ -1,19 +1,18 @@
 import React, {useEffect, useMemo} from "react";
-import styled, {keyframes} from "styled-components";
-import {Paper, Grid, Typography, Button} from "@material-ui/core";
+import styled from "styled-components";
+import {Button, Grid, Paper, Typography} from "@material-ui/core";
 import AccountTab from "./AccountTab";
-import WorkIcon from "@material-ui/icons/Work";
-import BusinessRoundedIcon from "@material-ui/icons/BusinessRounded";
-import EmailIcon from "@material-ui/icons/Email";
-import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
 import PrivacyDetails from "../NewAccount/PrivacyDetails";
 import ContributionTab from "./ContributionTab";
 import HelpfulStoriesTab from "./HelpfulStoriesTab";
 import ReactImageFallback from "react-image-fallback";
-import {editUser} from "../../../../store/actions/users";
+import {editUser} from "../../../../store/actions/api/users";
 import {connect, useSelector} from "react-redux";
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/client";
+
+import {BusinessRounded, Email, LocationOnRounded, Work} from "@material-ui/icons";
+
 
 const Wrapper = styled.div`
   min-height: 110vh;
@@ -171,7 +170,7 @@ const AccountSection = () => {
                             </BioContainer>
                             <br/>
                             <StyledTypography variant="subtitle2">
-                                <LocationOnRoundedIcon
+                                <LocationOnRounded
                                     style={{color: "#1a8cff"}}
                                     fontSize="small"
                                 />
@@ -179,19 +178,19 @@ const AccountSection = () => {
                             </StyledTypography>
                             <br/>
                             <StyledTypography variant="subtitle2">
-                                <EmailIcon style={{color: "#1a8cff"}} fontSize="small"/>
+                                <Email style={{color: "#1a8cff"}} fontSize="small"/>
                                 {session && session.email}
                             </StyledTypography>
                             <br/>
                             <StyledTypography variant="subtitle2">
-                                <WorkIcon style={{color: "#1a8cff"}} fontSize="small"/>
+                                <Work style={{color: "#1a8cff"}} fontSize="small"/>
                                 {userData && userData.occupation}
                             </StyledTypography>
                             {userData && userData.company !== "" ? (
                                 <>
                                     <br/>
                                     <StyledTypography variant="subtitle2">
-                                        <BusinessRoundedIcon
+                                        <BusinessRounded
                                             style={{color: "#1a8cff"}}
                                             fontSize="small"
                                         />

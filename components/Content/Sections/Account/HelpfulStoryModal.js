@@ -1,12 +1,10 @@
-import styled, { keyframes } from "styled-components";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-import { Paper, Typography } from "@material-ui/core";
+import styled from "styled-components";
+import {Backdrop, Fade, Modal, Paper, Typography} from "@material-ui/core";
 import HeaderDivider from "../common/HeaderDivider";
+import draftToHtml from "draftjs-to-html";
+
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
-import draftToHtml from "draftjs-to-html";
 
 const StyledModal = styled(Modal)`
   display: flex;

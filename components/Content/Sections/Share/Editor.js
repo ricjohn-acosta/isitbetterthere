@@ -1,8 +1,5 @@
-import React, {Component} from "react";
-import {convertToRaw} from "draft-js";
+import React from "react";
 import {Editor} from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
-import {useForm} from "react-hook-form";
 
 const EditorConvertToHTML = ({editorState, setEditorState}) => {
 

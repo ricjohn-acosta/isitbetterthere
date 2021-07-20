@@ -7,7 +7,7 @@ import {getTransitionExperiences, getTransitionExperiencesCount} from "../server
 import {axiosGetUserById} from "./api/users/[id]";
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
-import {storeUserData} from "../store/actions/users";
+import {storeUserData} from "../store/actions/api/users";
 
 const transition = ({
                         session,

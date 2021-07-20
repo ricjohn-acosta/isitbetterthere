@@ -1,5 +1,5 @@
-import styled, { keyframes } from "styled-components";
-import { Typography } from "@material-ui/core";
+import styled from "styled-components";
+import {Typography} from "@material-ui/core";
 
 const StyledTypography = styled(Typography)`
   display: flex;

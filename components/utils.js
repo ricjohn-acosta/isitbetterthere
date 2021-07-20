@@ -88,7 +88,6 @@ export const options = (
 }
 
 export const uniDirectionFrom = (option, fromInputValue) => {
-    console.log(option);
     if (fromInputValue === "YEAR 10" && fromInputValue !== "") {
         return option.level <= 10;
     }
@@ -114,7 +113,6 @@ export const uniDirectionFrom = (option, fromInputValue) => {
 };
 
 export const uniDirectionTo = (option, toInputValue) => {
-    console.log(option);
     if (toInputValue === "YEAR 10" && toInputValue !== "") {
         return option.level > 10;
     }

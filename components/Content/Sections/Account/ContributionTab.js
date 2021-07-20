@@ -1,9 +1,8 @@
 import React, {useEffect} from "react";
-import styled, {keyframes} from "styled-components";
+import styled from "styled-components";
 import {Typography} from "@material-ui/core";
 import Contribution from "./Contribution";
 import NoData from "./common/NoData";
-import {useSelector} from "react-redux";
 
 const Wrapper = styled.div`
   padding: 5%;

@@ -1,13 +1,9 @@
 import styled from "styled-components";
-import Grid from "@material-ui/core/Grid";
-import {Typography} from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
-import StepNavigator from "./StepNavigator";
+import {Typography, Grid, Checkbox} from "@material-ui/core";
+import NewAccountStepNavigator from "./NewAccountStepNavigator";
 import {Controller, useForm} from "react-hook-form";
-import React, {useState, useEffect, useMemo} from "react";
+import React from "react";
 import {useSelector} from "react-redux";
-import {enableBeforeUnload} from "./utils/unsavedFormWarning";
-import Select from "@material-ui/core/Select";
 
 const Wrapper = styled.form`
   min-height: 50vh;
@@ -28,23 +24,11 @@ const Labels = styled(Grid)`
 const PrivacyDetails = ({
                             source
                         }) => {
-    const {register, watch, control, trigger, setValue, formState: {errors}} = useForm({mode: "all"});
+    const {watch, control} = useForm({mode: "all"});
     const fieldStore = watch()
-    const privacyDetails = useSelector((state) => state.shareStory.privacyDetailsData)
+    const privacyDetails = useSelector((state) => state.newAccountSetup.privacyDetailsData)
     const userData = useSelector((state) => state.users.user)
 
-    // const [hideEmail, setHideEmail] = React.useState(userData && userData.hide_email)
-
-    useEffect(() => {
-        console.log(userData)
-        if (!userData) return
-        console.log('USEEFFECT FIRED', userData)
-        setValue('hideEmail', userData.hide_email)
-
-    }, [userData])
-
-    console.log('USER DATA', userData)
-    console.log('privacy details', privacyDetails, fieldStore)
     return (
         <Wrapper>
             <Typography variant="h5">
@@ -164,10 +148,9 @@ const PrivacyDetails = ({
                     </Grid>
                 </Grid>
             </FormContainer>
-            {console.log('source', source)}
-            <StepNavigator fieldData={Object.keys(fieldStore).length === 0 ? privacyDetails : fieldStore}
-                           needsValidation={false}
-                           source={source}
+            <NewAccountStepNavigator fieldData={Object.keys(fieldStore).length === 0 ? privacyDetails : fieldStore}
+                                     needsValidation={false}
+                                     source={source}
             />
         </Wrapper>
     );

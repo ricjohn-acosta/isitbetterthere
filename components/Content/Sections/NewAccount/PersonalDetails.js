@@ -1,17 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import Grid from "@material-ui/core/Grid";
-import {FormHelperText, InputLabel, Typography} from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
+import {
+    FormControl,
+    FormHelperText,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {countries} from "./utils/countries";
 import {enableBeforeUnload} from "./utils/unsavedFormWarning";
 import {Controller, useForm} from "react-hook-form";
-import StepNavigator from "./StepNavigator";
+import NewAccountStepNavigator from "./NewAccountStepNavigator";
 import {useSelector} from "react-redux";
-import FormControl from "@material-ui/core/FormControl";
 
 const Wrapper = styled.form`
   min-height: 50vh;
@@ -44,11 +48,10 @@ const SectionMessage = styled(Typography)`
 const PersonalDetails = () => {
     const {watch, control, trigger, formState: {errors}} = useForm({mode: "all"});
     const fieldStore = watch()
-    const personalDetails = useSelector((state) => state.shareStory.personalDetailsData)
+    const personalDetails = useSelector((state) => state.newAccountSetup.personalDetailsData)
 
     return (
         <Wrapper>
-            {console.log(fieldStore, personalDetails, errors)}
             <SectionMessage variant="h5">
                 This information will be shown in your profile dashboard and in your
                 contributed stories
@@ -210,7 +213,7 @@ const PersonalDetails = () => {
                 </Grid>
 
             </FormContainer>
-            <StepNavigator fieldData={Object.keys(fieldStore).length === 0 ? personalDetails : fieldStore} validate={trigger} needsValidation={true}/>
+            <NewAccountStepNavigator fieldData={Object.keys(fieldStore).length === 0 ? personalDetails : fieldStore} validate={trigger} needsValidation={true}/>
         </Wrapper>
     );
 };

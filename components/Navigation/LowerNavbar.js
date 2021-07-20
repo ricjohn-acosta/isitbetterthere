@@ -1,28 +1,13 @@
 import styled from "styled-components";
-import AppBar from "@material-ui/core/AppBar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
 import Drawer from "./Drawer";
-import {addUser} from "../../store/actions/users";
+import {addUser} from "../../store/actions/api/users";
 import {connect} from "react-redux";
-import {useRouter, Router} from "next/router";
+import {useRouter} from "next/router";
 import BrandLogo from "./BrandLogo";
-import {signout} from "next-auth/client";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-import {getProviders} from "next-auth/client";
+import {getProviders, signIn, signout, useSession} from "next-auth/client";
 import {useEffect} from "react";
 import Link from "next/link";
-import {Paper, Box} from "@material-ui/core";
-import HeaderDivider from "../Content/Sections/Share/common/HeaderDivider";
-import Avatar from "@material-ui/core/Avatar";
-import Popper from "@material-ui/core/Popper";
-import {makeStyles} from "@material-ui/core/styles";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import {signIn} from "next-auth/client";
-import {useSession} from 'next-auth/client'
+import {AppBar, Button, Grid, Modal, Paper, Avatar, Popper, ClickAwayListener, makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     label: {justifyContent: "normal"},
@@ -158,8 +143,6 @@ const LowerNavbar = () => {
             setProviders(data);
         });
     }, []);
-
-    console.log('lower navbar', session)
 
     return (
         <StyledLowerNavbar elevation={0} position="sticky" component="div">

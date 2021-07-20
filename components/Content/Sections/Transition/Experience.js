@@ -1,29 +1,18 @@
 import React, {useEffect} from "react";
 import styled from "styled-components";
-import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
-import Chip from "@material-ui/core/Chip";
-import Button from "@material-ui/core/Button";
-import Router from "next/router";
-import WorkIcon from "@material-ui/icons/Work";
-import PersonIcon from "@material-ui/icons/Person";
-import EmailIcon from "@material-ui/icons/Email";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import LocationOnRoundedIcon from "@material-ui/icons/LocationOnRounded";
-import {IconButton} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import {Avatar, Button, Chip, ClickAwayListener, Grid, IconButton, Paper, Popper, Typography} from "@material-ui/core";
+import {useRouter} from "next/router";
+import {ChatBubble, Email, LocationOnRounded, MoreVert, Person, Work} from "@material-ui/icons";
 import moment from "moment";
 import {rateExperience} from "../../../../store/actions/ratings";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {useSession} from "next-auth/client";
 import ReportForm from "./ReportForm";
-import SuccessDialog from "./SuccessDialog";
-import Popper from "@material-ui/core/Popper";
-import Paper from "@material-ui/core/Paper";
-import {rateExperienceHelpful, rateExperienceUnhelpful, reportExperience} from "../../../../store/actions/experiences";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import {useRouter} from "next/router";
+import {
+    rateExperienceHelpful,
+    rateExperienceUnhelpful,
+    reportExperience
+} from "../../../../store/actions/api/experiences";
 import {useDialog} from "../../../../hooks/ui/useDialog";
 import {AlertDialog} from "../../../UI/Notifications/AlertDialog";
 
@@ -205,7 +194,6 @@ const Experience = ({
         setUnhelpfulClick(isRated === 'NOT_HELPED')
     }, [isRated])
 
-    console.log(clickedHelpful, clickedUnhelpful)
     const isWhiteSpaceOrEmpty = (input) => {
         return !/[^\s]/.test(input);
     };
@@ -221,9 +209,7 @@ const Experience = ({
     }
 
     const handleRateHelpfulExperience = (userID, experienceID) => {
-        dispatch(rateExperienceHelpful({userID, experienceID})).then(res => {
-            console.log('rateExperienceHelpful', res)
-        })
+        dispatch(rateExperienceHelpful({userID, experienceID})).then(res => {})
         setRated(true)
     }
 
@@ -365,7 +351,7 @@ const Experience = ({
                                     setCurrentId(experienceId);
                                 }}
                             >
-                                <MoreVertIcon id="icon-button-svg"/>
+                                <MoreVert id="icon-button-svg"/>
                             </IconButton>
                         </IconContainer>
                     )}
@@ -379,12 +365,12 @@ const Experience = ({
                         />
                         <UserInfoContainer>
                             <UserInfo>
-                                <PersonIcon style={{color: "#1a8cff"}} fontSize="small"/>
+                                <Person style={{color: "#1a8cff"}} fontSize="small"/>
                                 &nbsp;{hideName === 1 || hideName === true ? "Anon" : name}
                                 &nbsp;
                                 {hideLocation === 1 || hideLocation === true ? null : (
                                     <>
-                                        <LocationOnRoundedIcon
+                                        <LocationOnRounded
                                             style={{color: "#1a8cff"}}
                                             fontSize="small"
                                         />
@@ -395,7 +381,7 @@ const Experience = ({
                             </UserInfo>
                             {hideEmail === 1 || hideEmail === true ? null : (
                                 <UserInfo>
-                                    <EmailIcon style={{color: "#1a8cff"}} fontSize="small"/>
+                                    <Email style={{color: "#1a8cff"}} fontSize="small"/>
                                     &nbsp;{email}
                                 </UserInfo>
                             )}
@@ -405,13 +391,13 @@ const Experience = ({
                             (hideCompany === true && hideOccupation === 1) ||
                             hideOccupation === true ? null : (
                                 <UserInfo>
-                                    <WorkIcon style={{color: "#1a8cff"}} fontSize="small"/>
+                                    <Work style={{color: "#1a8cff"}} fontSize="small"/>
                                     &nbsp;{renderJobDetails(position, company)}
                                 </UserInfo>
                             ))}
 
                             <UserInfo>
-                                <ChatBubbleIcon style={{color: "#1a8cff"}} fontSize="small"/>
+                                <ChatBubble style={{color: "#1a8cff"}} fontSize="small"/>
                                 &nbsp;"{bio}"
                             </UserInfo>
                         </UserInfoContainer>

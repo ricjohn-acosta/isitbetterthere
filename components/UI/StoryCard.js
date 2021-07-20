@@ -1,9 +1,8 @@
-import styled, { keyframes } from "styled-components";
-import { Paper, Grid, Typography, Button } from "@material-ui/core";
+import styled from "styled-components";
+import {Button, Grid, Paper, Typography} from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import moment from "moment";
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 
 const Wrapper = styled(Paper)`
   margin: 2.5% 20% 2.5% 20%;

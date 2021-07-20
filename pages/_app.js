@@ -55,7 +55,6 @@ export default function MyApp({Component, pageProps}) {
             }}
             session={pageProps.session}
         >
-            {console.log('initial state', pageProps.session)}
             <StylesProvider injectFirst>
                 <MuiProvider theme={theme}>
                     <ThemeProvider theme={theme}>

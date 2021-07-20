@@ -1,7 +1,4 @@
 import styled, {keyframes} from "styled-components";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import {Typography} from "@material-ui/core";
 import {
     careersCategory,
     countryCategory,
@@ -13,9 +10,11 @@ import {
     uniCategory,
 } from "../../../../lib/categories";
 import Router from "next/router";
-import {makeStyles} from "@material-ui/core/styles";
 import CategoryForm from "./CategoryForm";
-import Button from "@material-ui/core/Button";
+import React from "react";
+import {useForm} from "react-hook-form";
+import {tabletView} from "../../../../utils/breakpoints";
+import {Box, Button, Grid, Typography, useMediaQuery, makeStyles} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +43,26 @@ const Wrapper = styled(Box)`
     background-repeat: no-repeat;
     background-position: center right;
     background-size: contain;
+  }
+
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    height: 90vh;
+
+    &:before {
+      content: ' ';
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 35%;
+      width: 50%;
+      height: 50%;
+      opacity: 0.6;
+      background-image: url('/decision.png');
+      background-repeat: no-repeat;
+      background-position: center right;
+      background-size: contain;
+    }
+    
   }
 `;
 
@@ -94,15 +113,16 @@ const WelcomeMessage = styled(Typography)`
   ${(props) => props.theme.breakpoints.down("md")} {
 
     align-items: center;
-    font-size: 2.2rem;
+    font-size: 1.5rem;
+    white-space: nowrap;
   }
 
   ${(props) => props.theme.breakpoints.between("1287", "1870")} {
     font-size: 4rem;
   }
 
-  ${(props) => props.theme.breakpoints.between("sm", "1287")} {
-    font-size: 2.2rem;
+  ${(props) => props.theme.breakpoints.down("sm")} {
+    font-size: 1.8rem;
   }
 `;
 
@@ -113,6 +133,11 @@ const SeeStories = styled(Button)`
 `;
 
 const MainSection = () => {
+    const {watch, control, trigger, setValue, reset} = useForm({
+        mode: "all"
+    });
+    const fieldStore = watch()
+
     const [categories, setCategory] = React.useState(careersCategory);
     const [currentCategory, setCurrentCategory] = React.useState("careers");
     const [toValue, setToValue] = React.useState(null);
@@ -120,27 +145,25 @@ const MainSection = () => {
     const [fromValue, setFromValue] = React.useState(null);
     const [fromInputValue, setFromInputValue] = React.useState("");
     const [isSwapping, setSwapping] = React.useState(false);
-    const [isEmptyField, setEmptyFields] = React.useState(false);
+    const tablet = useMediaQuery(tabletView);
 
-    const handleForm = (e) => {
-        e.preventDefault();
-        if (fromValue === null || toValue === null) {
-            setEmptyFields(true);
-            return console.log("ERROR");
-        } else {
-            Router.push({
-                pathname: "/transition",
-                query: {
-                    category: currentCategory,
-                    from: fromInputValue,
-                    to: toInputValue,
-                    page: 1,
-                },
-            });
-            setEmptyFields(false);
-            return console.log("NO ERROR");
-        }
+    const handleForm = () => {
+        trigger().then(isValidated => {
+            if (isValidated) {
+                Router.push({
+                    pathname: "/transition",
+                    query: {
+                        category: currentCategory,
+                        from: fromInputValue,
+                        to: toInputValue,
+                        page: 1,
+                    },
+                });
+            }
+        })
     };
+
+    console.log(fieldStore)
 
     const handleCategories = (value) => {
         switch (value) {
@@ -197,25 +220,51 @@ const MainSection = () => {
                         <FadeIn>Know your destination</FadeIn>
                     </FadeInAnimation>
                 </WelcomeMessage>
-                <CategoryForm
-                    categories={categories}
-                    currentCategory={currentCategory}
-                    handleCategories={handleCategories}
-                    handleForm={handleForm}
-                    setCategory={setCategory}
-                    setToValue={setToValue}
-                    setToInputValue={setToInputValue}
-                    setFromValue={setFromValue}
-                    setFromInputValue={setFromInputValue}
-                    // setSelected={setSelected}
-                    setSwapping={setSwapping}
-                    toValue={toValue}
-                    toInputValue={toInputValue}
-                    fromValue={fromValue}
-                    fromInputValue={fromInputValue}
-                    isSwapping={isSwapping}
-                    isEmptyField={isEmptyField}
-                />
+                <div style={{display: tablet ? 'contents' : 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <CategoryForm
+                        categories={categories}
+                        currentCategory={currentCategory}
+                        handleCategories={handleCategories}
+                        handleForm={handleForm}
+                        setCategory={setCategory}
+                        setToValue={setToValue}
+                        setToInputValue={setToInputValue}
+                        setFromValue={setFromValue}
+                        setFromInputValue={setFromInputValue}
+                        // setSelected={setSelected}
+                        setSwapping={setSwapping}
+                        toValue={toValue}
+                        toInputValue={toInputValue}
+                        fromValue={fromValue}
+                        fromInputValue={fromInputValue}
+                        isSwapping={isSwapping}
+
+                        resetFields={reset}
+                        fieldStore={fieldStore}
+                        formHelper={setValue}
+                        control={control}
+                    />
+                    &nbsp;
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Button
+                            onClick={handleForm}
+                            type="submit"
+                            color="secondary"
+                            variant="contained"
+                            size="large"
+                            disableElevation
+                            disabled={
+                                toValue === fromValue &&
+                                toValue !== "" &&
+                                fromValue !== "" &&
+                                toValue !== null &&
+                                fromValue !== null
+                            }
+                        >
+                            GO
+                        </Button>
+                    </div>
+                </div>
                 <br/>
                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <SeeStories onClick={() => {

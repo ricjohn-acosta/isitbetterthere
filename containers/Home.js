@@ -1,3 +1,4 @@
+import React from "react";
 import MainSection from "../components/Content/Sections/Home/MainSection";
 import QuoteSection from "../components/Content/Sections/Home/QuoteSection";
 import TutorialSection from "../components/Content/Sections/Home/TutorialSection";

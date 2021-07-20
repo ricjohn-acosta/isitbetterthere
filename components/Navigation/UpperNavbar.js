@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
+import {AppBar, Button} from "@material-ui/core";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {useSession} from "next-auth/client";
@@ -34,13 +33,10 @@ const Container = styled.div`
 const StyledUpperNavbar = () => {
   const [session, loading] = useSession();
 
-  console.log('upper navbar', session)
-
   const router = useRouter();
   return (
     <UpperNavbar elevation={0} position="static">
       <Container>
-        {console.log(session)}
         {/* <Link href="/our-team" passHref>
           <StyledButton disableRipple>Meet the team</StyledButton>
         </Link> */}

@@ -1,18 +1,24 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import Share from "../containers/Share";
 import Layout from "../components/Layout/Layout";
-import {getSession, useSession} from "next-auth/client";
-import {getUser, storeUserData} from "../store/actions/users";
+import {getSession} from "next-auth/client";
+import {storeUserData} from "../store/actions/api/users";
 import {useDispatch} from "react-redux";
-import redirect from "nextjs-redirect";
 import {axiosGetUserById} from "./api/users/[id]";
+import serverRedirect from "../utils/serverRedirect";
+import {resetShareStoryForm} from "../store/actions/ui/shareStory";
 
-const share = ({userData}) => {
+const share = ({userData, referer}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(storeUserData(userData))
     }, [])
+
+    useEffect(() => {
+        if (!referer) return
+        dispatch(resetShareStoryForm())
+    }, [referer])
 
     return (
         <Layout>
@@ -22,25 +28,21 @@ const share = ({userData}) => {
 };
 
 export async function getServerSideProps(context) {
-    const redirectToSignup = {
-        destination: '/signup',
-        permanent: false
-    }
-    const redirectToAccountSetup = {
-        destination: '/account-setup',
-        permanent: false
-    }
     const session = await getSession(context);
+    let user = null;
+    if (!session) {
+        serverRedirect(context.res, "/signup")
+    }
 
-    if (!session) return {redirect: redirectToSignup}
-
-    const res = await axiosGetUserById(session.id)
-
-    if (res.data === 'Not found') return {redirect: redirectToAccountSetup}
+    if (session) {
+        user = await axiosGetUserById(session.id)
+        user.data === 'Not found' && serverRedirect(context.res, "/account-setup")
+    }
 
     return {
         props: {
-            userData: res.data === 'Not found' ? null : res.data[0]
+            userData: (!user || user.data === 'Not found') ? null : user.data[0],
+            referer: context.req.headers.referer
         },
     };
 }

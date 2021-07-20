@@ -1,7 +1,7 @@
 import { getSession } from "next-auth/client";
 import Button from "@material-ui/core/Button";
 import { TextField } from "@material-ui/core";
-import { getUser } from "../server/db";
+// import { getUser } from "../server/db.txt";
 import request from "superagent";
 
 // delete experiences
@@ -11,7 +11,6 @@ const admin = ({ session, user }) => {
     let input = e.target[0].value;
     let id = input && parseInt(input);
 
-    console.log(id);
     if (session && user.permission === "admin") {
       try {
         request
@@ -29,7 +28,6 @@ const admin = ({ session, user }) => {
     document.getElementById("delete-form").reset();
   };
 
-  console.log(user);
   return (
     <form id="delete-form" onSubmit={handleSubmit}>
       <TextField type="text" />

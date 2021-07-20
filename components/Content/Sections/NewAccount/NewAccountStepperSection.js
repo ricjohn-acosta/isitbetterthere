@@ -1,21 +1,13 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import StepContent from "@material-ui/core/StepContent";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import {Stepper, Step, StepLabel, StepContent, Typography} from "@material-ui/core";
 import PersonalDetails from "./PersonalDetails";
 import PrivacyDetails from "./PrivacyDetails";
 import ExtraDetails from "./ExtraDetails";
-import {addUser} from "../../../../store/actions/users";
+import {addUser} from "../../../../store/actions/api/users";
 import {connect, useDispatch, useSelector} from "react-redux";
-import Link from "@material-ui/core/Link";
 import {useSession} from "next-auth/client";
-import {disableBeforeUnload} from "./utils/unsavedFormWarning";
-import StepNavigator from "./StepNavigator";
+import NewAccountStepNavigator from "./NewAccountStepNavigator";
 
 const Wrapper = styled.form`
   min-height: 60vh;
@@ -47,10 +39,9 @@ const NewAccountStepperSection = () => {
     const [siteSource, setSiteSource] = React.useState("");
     const [emptyFields, setEmptyFields] = React.useState(null);
     const [disableSubmit, setDisableSubmit] = React.useState(false);
-    const activeStep = useSelector((state) => state.shareStory.activeStepIndex)
+    const activeStep = useSelector((state) => state.newAccountSetup.activeStepIndex)
 
     const handleCreateUser = () => {
-        console.log('submit')
         setDisableSubmit(true);
         dispatch(addUser({
             uid: session.id,
@@ -81,7 +72,6 @@ const NewAccountStepperSection = () => {
         ];
     };
 
-    console.log(activeStep)
     const getStepContent = (step) => {
         switch (step) {
             case 1:
@@ -214,7 +204,7 @@ const NewAccountStepperSection = () => {
                     </Step>
                 ))}
             </Stepper>
-            <StepNavigator source={'container'}/>
+            <NewAccountStepNavigator source={'container'}/>
             {/*{activeStep === steps.length && (*/}
             {/*    <Paper square elevation={0}>*/}
             {/*        <Typography>All steps completed - you&apos;re finished</Typography>*/}
@@ -226,9 +216,9 @@ const NewAccountStepperSection = () => {
             {/*        /!*    component={Button}*!/*/}
             {/*        /!*    disabled={disableSubmit}*!/*/}
             {/*        /!*    href={*!/*/}
-            {/*        /!*        process.env.NODE_ENV === "production"*!/*/}
-            {/*        /!*            ? process.env.prod*!/*/}
-            {/*        /!*            : process.env.dev*!/*/}
+            {/*        /!*        process..env.NODE_ENV === "production"*!/*/}
+            {/*        /!*            ? process..env.prod*!/*/}
+            {/*        /!*            : process..env.dev*!/*/}
             {/*        /!*    }*!/*/}
             {/*        /!*    style={{textDecoration: "none"}}*!/*/}
             {/*        /!*>*!/*/}

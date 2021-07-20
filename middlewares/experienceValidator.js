@@ -26,6 +26,7 @@ const experienceSchema = Joi.object().keys({
     ease_of_transition: Joi.string().required(),
     regret: Joi.string().required(),
     story: Joi.string().required(),
+    title: Joi.string().required(),
     helpful: Joi.number(),
     not_helpful: Joi.number(),
     date_posted: Joi.number()

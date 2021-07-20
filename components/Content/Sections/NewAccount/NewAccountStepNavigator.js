@@ -1,22 +1,29 @@
-import React, {useEffect, useMemo} from 'react';
-import Button from "@material-ui/core/Button";
+import React from 'react';
+import {Button, Paper, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import Typography from "@material-ui/core/Typography";
 import {
     setExtraDetailsData,
     setPersonalDetailsData,
     setPrivacyDetailsData,
     setStep
-} from "../../../../store/actions/shareStory";
+} from "../../../../store/actions/ui/newAccountSetup";
 import styled from "styled-components";
-import {addUser} from "../../../../store/actions/users";
+import {addUser} from "../../../../store/actions/api/users";
 import {useSession} from "next-auth/client";
-import Paper from "@material-ui/core/Paper";
 import Router, {useRouter} from "next/router";
 
 const Container = styled.div`
   margin-top: 50px;
 `;
+
+const defaultPrivacySettings = {
+    hideName: false,
+    hideEmail: false,
+    hideOccupation: false,
+    hideCompany: false,
+    hideLocation: false,
+}
+
 
 const getSteps = () => {
     return [
@@ -26,18 +33,17 @@ const getSteps = () => {
     ];
 };
 
-const hideFromSource = [
-    'container',
-    'account'
-]
+const isFieldDataEmpty = (fieldData) => {
+    return !fieldData || Object.keys(fieldData).length === 0
+}
 
-const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
+const NewAccountStepNavigator = ({needsValidation, validate, fieldData, source}) => {
     const dispatch = useDispatch()
     const router = useRouter();
-    const activeStep = useSelector((state) => state.shareStory.activeStepIndex)
-    const personalDetails = useSelector((state) => state.shareStory.personalDetailsData)
-    const privacyDetails = useSelector((state) => state.shareStory.privacyDetailsData)
-    const extraDetails = useSelector((state) => state.shareStory.extraDetailsData)
+    const activeStep = useSelector((state) => state.newAccountSetup.activeStepIndex)
+    const personalDetails = useSelector((state) => state.newAccountSetup.personalDetailsData)
+    const privacyDetails = useSelector((state) => state.newAccountSetup.privacyDetailsData)
+    const extraDetails = useSelector((state) => state.newAccountSetup.extraDetailsData)
     const [session, loading] = useSession();
 
     const initialStep = 0;
@@ -52,9 +58,8 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
                 return
             // privacy details
             case 1:
-                console.log('set privacy details data', fieldData)
                 dispatch(setStep(activeStep + 1))
-                dispatch(setPrivacyDetailsData(fieldData))
+                dispatch(setPrivacyDetailsData(isFieldDataEmpty(fieldData) ? defaultPrivacySettings : fieldData))
                 return
             // extra details
             case 2:
@@ -74,13 +79,10 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
         if (needsValidation) {
             validate().then(isValidated => {
                 if (isValidated) {
-                    // dispatch(setStep(activeStep + 1))
-                    // dispatch(setPersonalDetailsData(fieldData))
                     nextStepAction(activeStep)
                 }
             })
         } else {
-            // dispatch(setStep(activeStep + 1))
             nextStepAction(activeStep)
         }
     }
@@ -104,7 +106,6 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
 
     const showConfirmButtons = () => {
         return <Paper square elevation={0}>
-            {console.log('SHOW CONFIRM BUTTONS')}
             <Typography>All steps completed - you&apos;re finished</Typography>
             <Button onClick={() => {
                 dispatch(setStep(0))
@@ -138,7 +139,6 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
         </Paper>
     }
 
-    console.log(router)
     if (router.route === '/account') return null
 
     return (
@@ -148,4 +148,4 @@ const StepNavigator = ({needsValidation, validate, fieldData, source}) => {
     );
 };
 
-export default StepNavigator;
+export default NewAccountStepNavigator;

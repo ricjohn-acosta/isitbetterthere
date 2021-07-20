@@ -13,7 +13,6 @@ const handler = nc()
 handler
     .post(async (req, res) => {
         const {experienceID, userID} = req.body
-        console.log('rateHelpful api', req.body)
         await dbConnect();
         await rateHelpfulExperience(userID, experienceID)
 

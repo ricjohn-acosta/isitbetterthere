@@ -1,13 +1,13 @@
 import Layout from "../../components/Layout/Layout";
 import UserView from "../../containers/UserView";
-import { getUser,  } from "../../server/db";
+// import { getUser,  } from "../../server/db.txt";
 import {getUserById} from "../../server/models/user";
 import {getUserExperiences} from "../../server/models/experiences";
 import dbConnect from "../../server/mongodbConnect";
 
 const User = ({ user, userExperiences }) => {
   return (
-    <Layout>
+    <Layout user={user}>
       <UserView user={user} userExperiences={userExperiences}/>
     </Layout>
   );
@@ -25,10 +25,9 @@ export async function getServerSideProps(context) {
     return JSON.parse(JSON.stringify(data))
   });
 
-  console.log("[id]", userExperiences);
   return {
     props: {
-      user,
+      user: user[0] || null,
       userExperiences
     },
   };

@@ -1,8 +1,8 @@
-import {
-  addRating,
-  rateExperience,
-  getRatedExperiences,
-} from "../../server/db";
+// import {
+//   addRating,
+//   rateExperience,
+//   getRatedExperiences,
+// } from "../../server/db.txt";
 import { getSession } from "next-auth/client";
 
 export default async function ratings(req, res) {
@@ -19,10 +19,8 @@ export default async function ratings(req, res) {
 
       if (!ratedExperience) {
         addRating(req.body).then((rating) => {
-          console.log("EXPERIENCE RATING ADDED TO DB");
         });
         rateExperience(req.body).then((rating) => {
-          console.log("RATED EXPERIENCE AS HELPFUL");
         });
         res.status(200).end();
         return resolve();
@@ -31,10 +29,8 @@ export default async function ratings(req, res) {
       // only allow a helpful rating if user has not rated an experience as helpful before
       if (req.body.is_helpful === true && (ratedExperience.is_helpful === 0 || ratedExperience.is_helpful === false)) {
         addRating(req.body).then((rating) => {
-          console.log("EXPERIENCE RATING ADDED TO DB");
         });
         rateExperience(req.body).then((rating) => {
-          console.log("RATED EXPERIENCE AS HELPFUL");
         });
         res.status(200).end();
         return resolve();
@@ -43,10 +39,8 @@ export default async function ratings(req, res) {
       // only allow an unhelpful rating if user has not rated an experience as unhelpful before
       if (req.body.is_helpful === false && (ratedExperience.is_helpful === 1 || ratedExperience.is_helpful === true)) {
         addRating(req.body).then((rating) => {
-          console.log("EXPERIENCE RATING ADDED TO DB");
         });
         rateExperience(req.body).then((rating) => {
-          console.log("RATED EXPERIENCE AS HELPFUL");
         });
         res.status(200).end();
         return resolve();

@@ -1,7 +1,5 @@
-import styled from "styled-components";
+import React from "react";
 import StyledUpperNavbar from "./UpperNavbar";
-import LowerNavbar from "./LowerNavbar";
-import {useSelector} from "react-redux";
 
 const Header = () => {
 

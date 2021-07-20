@@ -1,8 +1,5 @@
-import styled, { keyframes } from "styled-components";
-import { Typography } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Link from 'next/link'
+import styled from "styled-components";
+import {Typography, Grid, useMediaQuery} from "@material-ui/core";
 
 const Wrapper = styled.div`
   background-color: #e6ffff;
@@ -13,8 +10,10 @@ const TutorialHeader = styled(Typography)`
   padding-top: 6.5vh;
   padding-bottom: 5vh;
   font-weight: bold;
+  text-align: center;
   ${(props) => props.theme.breakpoints.down("sm")} {
-    padding: 5%;
+    margin-left: 7.5vw;
+    margin-right: 7.5vw;
   }
 `;
 
@@ -79,7 +78,6 @@ const TutorialSection = () => {
   return (
     <>
       <Wrapper id="/howitworks">
-        {console.log(matches)}
         <br />
         <TutorialHeaderContainer elevation={1}>
           <TutorialHeader variant="h6">

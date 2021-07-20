@@ -1,20 +1,25 @@
 import styled from "styled-components";
 import CategoryForm from "../Home/CategoryForm";
 import {
-    tertiaryEducationCategory,
-    jobCategory,
-    uniCategory,
+    careersCategory,
     countryCategory,
     cultureCategory,
+    jobCategory,
     lifeCategory,
-    secondaryEducationCategory, careersCategory,
+    secondaryEducationCategory,
+    tertiaryEducationCategory,
+    uniCategory,
 } from "../../../../lib/categories";
-import Typography from "@material-ui/core/Typography";
 import Subheaders from "./common/Subheaders";
 import PaperWrapper from "./common/PaperWrapper";
 import HeaderDivider from "./common/HeaderDivider";
-import Header from "../../../Navigation/Header";
-import {useSession} from "next-auth/client";
+import {useForm} from "react-hook-form";
+import Grid from "@material-ui/core/Grid";
+import React from "react";
+import {BackButton, NextButton} from "./ShareStepperNavigator";
+import {useSelector} from "react-redux";
+import {AlertDialog} from "../../../UI/Notifications/AlertDialog";
+import {useDialog} from "../../../../hooks/ui/useDialog";
 
 const Wrapper = styled.div`
   margin: 5%;
@@ -38,25 +43,16 @@ const ChooseCategory = ({
                             setFromValue,
                             fromInputValue,
                             setFromInputValue,
-                            setSelected,
                             isSwapping,
                             setSwapping,
                             isEmptyField,
-                            setEmptyFields,
                         }) => {
-
-    const [session, loading] = useSession();
-
-    const handleForm = (e) => {
-        e.preventDefault();
-        if (fromValue === null || toValue === null) {
-            setEmptyFields(true);
-            return console.log("ERROR");
-        } else {
-            setEmptyFields(false);
-            return console.log("NO ERROR");
-        }
-    };
+    const {watch, control, trigger, setValue, reset} = useForm({
+        mode: "all"
+    });
+    const [dialogOpen, setDialogOpen, toggleDialog] = useDialog();
+    const fieldStore = watch()
+    const categoryFormData = useSelector((state) => state.shareStory.categoryFormData)
 
     const handleCategories = (value) => {
         switch (value) {
@@ -106,39 +102,59 @@ const ChooseCategory = ({
     };
 
     return (
-        <PaperWrapper>
-            <Subheaders icon={"/swap.png"}>
-                What transition would you like to talk about?
-            </Subheaders>
-            <HeaderDivider/>
-            <Wrapper>
-                <StyledDiv>
-                    {/*{console.log('session', session)}*/}
-                    <CategoryForm
-                        // experiences={session ? session.userData.userExperiences : {}}
-                        experiences={stories}
-                        categories={categories}
-                        currentCategory={currentCategory}
-                        handleCategories={handleCategories}
-                        handleForm={handleForm}
-                        setCategory={setCategory}
-                        setToValue={setToValue}
-                        setToInputValue={setToInputValue}
-                        setFromValue={setFromValue}
-                        setFromInputValue={setFromInputValue}
-                        setSelected={setSelected}
-                        setSwapping={setSwapping}
-                        toValue={toValue}
-                        toInputValue={toInputValue}
-                        fromValue={fromValue}
-                        fromInputValue={fromInputValue}
-                        isSwapping={isSwapping}
-                        isEmptyField={isEmptyField}
-                        source={"ChooseCategory"}
-                    />
-                </StyledDiv>
-            </Wrapper>
-        </PaperWrapper>
+        <Grid container direction={'row'}>
+            <BackButton/>
+            <Grid item xs={10} justify={'center'} alignItems={'center'}>
+                <PaperWrapper>
+                    <Subheaders icon={"/swap.png"}>
+                        What transition would you like to talk about?
+                    </Subheaders>
+                    <HeaderDivider/>
+                    <Wrapper>
+                        <StyledDiv>
+                            <CategoryForm
+                                experiences={stories}
+                                categories={categories}
+                                currentCategory={currentCategory}
+                                handleCategories={handleCategories}
+                                setCategory={setCategory}
+                                setToValue={setToValue}
+                                setToInputValue={setToInputValue}
+                                setFromValue={setFromValue}
+                                setFromInputValue={setFromInputValue}
+                                setSwapping={setSwapping}
+                                toValue={toValue}
+                                toInputValue={toInputValue}
+                                fromValue={fromValue}
+                                fromInputValue={fromInputValue}
+                                isSwapping={isSwapping}
+                                isEmptyField={isEmptyField}
+
+                                resetFields={reset}
+                                fieldStore={fieldStore}
+                                formHelper={setValue}
+                                control={control}
+                                source={"ChooseCategory"}
+                            />
+                        </StyledDiv>
+                    </Wrapper>
+                </PaperWrapper>
+            </Grid>
+            <NextButton fieldData={Object.keys(fieldStore).length === 0 ? categoryFormData : fieldStore}
+                        toggleDialog={toggleDialog}
+                        validator={trigger}/>
+            <AlertDialog open={dialogOpen}
+                         close={() => setDialogOpen(false)}
+                         title={'Thanks for contributing!'}
+                         body={<>
+                             You have already shared your story about transitioning
+                             from <b>{fromInputValue}</b> to <b>{toInputValue}</b>! Would you like to add more to your
+                             story?
+                         </>}
+                         actions={[
+                             {action: 'Edit your story', handler: () => setDialogOpen(false)},
+                             {action: 'Close', handler: () => setDialogOpen(false)}]}/>
+        </Grid>
     );
 };
 

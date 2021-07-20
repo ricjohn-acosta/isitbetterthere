@@ -1,6 +1,5 @@
 import Layout from "../components/Layout/Layout";
 import Stories from "../containers/Stories";
-import { getAllExperiences } from "../server/db";
 import dbConnect from "../server/mongodbConnect";
 import {getAllUsersExperiences} from "../server/models/experiences";
 

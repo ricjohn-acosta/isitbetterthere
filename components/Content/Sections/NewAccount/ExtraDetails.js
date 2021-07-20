@@ -1,13 +1,8 @@
 import styled from "styled-components";
-import Grid from "@material-ui/core/Grid";
-import {FormHelperText, InputLabel, Typography} from "@material-ui/core";
-import Checkbox from "@material-ui/core/Checkbox";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import {FormControl, FormHelperText, InputLabel, MenuItem, Select, Typography} from "@material-ui/core";
 import {enableBeforeUnload} from "./utils/unsavedFormWarning";
-import StepNavigator from "./StepNavigator";
+import NewAccountStepNavigator from "./NewAccountStepNavigator";
 import {Controller, useForm} from "react-hook-form";
-import FormControl from "@material-ui/core/FormControl";
 import React from "react";
 import {useSelector} from "react-redux";
 
@@ -18,10 +13,9 @@ const Wrapper = styled.div`
 
 const ExtraDetails = ({setSiteSource, siteSource, emptyFields}) => {
     const {register, watch, control, trigger, formState: {errors}} = useForm({mode: "all"});
-    const extraDetails = useSelector((state) => state.shareStory.extraDetailsData)
+    const extraDetails = useSelector((state) => state.newAccountSetup.extraDetailsData)
     const fieldStore = watch()
 
-    console.log(extraDetails, fieldStore)
     return (
         <Wrapper>
             <Typography variant="h5">
@@ -79,7 +73,7 @@ const ExtraDetails = ({setSiteSource, siteSource, emptyFields}) => {
                 rules={{required: 'Please choose from one of the selections'}}
             />
 
-            <StepNavigator fieldData={Object.keys(fieldStore).length === 0 ? extraDetails : fieldStore} validate={trigger} needsValidation={true}/>
+            <NewAccountStepNavigator fieldData={Object.keys(fieldStore).length === 0 ? extraDetails : fieldStore} validate={trigger} needsValidation={true}/>
         </Wrapper>
     );
 };
