@@ -26,6 +26,7 @@ const Stories = ({allContributions}) => {
                 <StoryCard
                     name={e.author}
                     story={e.story}
+                    category={e.category}
                     uid={e.author_id}
                     eid={e._id}
                     from={e.from}

@@ -1,12 +1,11 @@
 import React from 'react';
-import {Paper, Grid, Typography, Box} from "@material-ui/core";
+import {Box, Button, Grid, Typography} from "@material-ui/core";
 import styled from "styled-components";
 import convertStoryBlockToRaw from "../../../lib/utils/converStoryBlockToRaw";
 import moment from "moment";
 import StyledHr from "../../UI/Dividers/StyledHr";
 import SeeMore from "../../UI/Typography/SeeMore";
-import {useRouter} from "next/router";
-import {Button} from "@material-ui/core";
+import Router, {useRouter} from "next/router";
 import {useSession} from "next-auth/client";
 import WarningButton from "../../UI/Buttons/WarningButton";
 
@@ -23,6 +22,7 @@ const StoryCard = (props) => {
         title,
         name,
         story,
+        category,
         eid,
         uid,
         helpfulCount,
@@ -32,7 +32,19 @@ const StoryCard = (props) => {
         datePosted,
     } = props
 
+    const router = useRouter()
     const [session, loading] = useSession();
+
+    const seeMoreStoriesRedirect = () => {
+        Router.push({
+            pathname: "/transition",
+            query: {
+                category: category,
+                from: from,
+                to: to,
+            },
+        })
+    }
 
     const showAuthenticatedButtons = () => {
         return <>
@@ -42,10 +54,18 @@ const StoryCard = (props) => {
         </>
     }
 
-    const showUnAuthenticateduttons = () => {
+    const showUnAuthenticatedButtons = () => {
         return <>
-            <Button variant={'contained'} size={'small'} color={'primary'} disableElevation>See more stories like
-                this</Button>
+            <Button
+                    onClick={() => {seeMoreStoriesRedirect()}}
+                    variant={'contained'}
+                    size={'small'}
+                    color={'primary'}
+                    disableElevation
+            >
+                See more stories like
+                this
+            </Button>
         </>
     }
 
@@ -87,7 +107,7 @@ const StoryCard = (props) => {
                         &nbsp;
                         ·
                         &nbsp;
-                        {session && session.id === uid ? showAuthenticatedButtons() : showUnAuthenticateduttons()}
+                        {session && session.id === uid ? showAuthenticatedButtons() : showUnAuthenticatedButtons()}
                     </Grid>
                 </Grid>
             </StyledDiv>
