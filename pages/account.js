@@ -11,7 +11,6 @@ const account = ({userData}) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(storeUserData(userData))
-
     }, [])
 
     return (
