@@ -8,6 +8,7 @@ import {getProviders, signIn, signout, useSession} from "next-auth/client";
 import {useEffect} from "react";
 import Link from "next/link";
 import {AppBar, Button, Grid, Modal, Paper, Avatar, Popper, ClickAwayListener, makeStyles} from "@material-ui/core";
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
     label: {justifyContent: "normal"},
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 // Main wrapper
 const StyledLowerNavbar = styled(AppBar)`
   background-color: white;
-  color: black
+  color: black;
   display: flex;
 
   ${(props) => props.theme.breakpoints.down("sm")} {

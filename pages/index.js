@@ -1,3 +1,4 @@
+import React from 'react';
 import Home from "../containers/Home";
 import Layout from "../components/Layout/Layout";
 

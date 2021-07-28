@@ -3,6 +3,7 @@ import {default as MuiLink} from "@material-ui/core/Link";
 import {useRouter} from "next/router";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import {default as NextLink} from 'next/link'
+import React from 'react';
 
 const StyledBrand = styled(MuiLink)`
   color: #484848;
