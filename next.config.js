@@ -30,6 +30,6 @@ module.exports = {
     },
     env: {
         prod: "https://www.isitbetterthere.com",
-        dev: "http://localhost:3000",
+        local: "http://localhost:3000",
     }
 }
