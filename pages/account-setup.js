@@ -23,12 +23,26 @@ export async function getServerSideProps(context) {
     const session = await getSession(context);
     let user = null;
     if (!session) {
-        serverRedirect(context.res, "/signup")
+        // serverRedirect(context.res, "/signup")
+        return {
+            redirect: {
+                destination: '/signup',
+                permanent: false,
+            },
+        }
     }
 
     if (session) {
         user = await axiosGetUserById(session.id)
-        user.data !== 'Not found' && serverRedirect(context.res, "/account")
+        // user.data !== 'Not found' && serverRedirect(context.res, "/account")
+        if (user.data !== 'Not found') {
+            return {
+                redirect: {
+                    destination: '/account',
+                    permanent: false,
+                },
+            }
+        }
     }
 
     return {
