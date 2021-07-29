@@ -48,14 +48,14 @@ export default function MyApp({Component, pageProps}) {
     const store = useStore(pageProps.initialReduxState)
 
     return (
-        <AuthProvider
-            options={{
-                clientMaxAge: 0,
-                keepAlive: 0,
-            }}
-            session={pageProps.session}
-        >
-            <StylesProvider injectFirst>
+        <StylesProvider injectFirst>
+            <AuthProvider
+                options={{
+                    clientMaxAge: 0,
+                    keepAlive: 0,
+                }}
+                session={pageProps.session}
+            >
                 <MuiProvider theme={theme}>
                     <ThemeProvider theme={theme}>
                         <CssBaseline/>
@@ -64,7 +64,7 @@ export default function MyApp({Component, pageProps}) {
                         </ReduxProvider>
                     </ThemeProvider>
                 </MuiProvider>
-            </StylesProvider>
-        </AuthProvider>
+            </AuthProvider>
+        </StylesProvider>
     )
 }

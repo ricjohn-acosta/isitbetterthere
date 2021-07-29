@@ -12,6 +12,7 @@ import Charts from "./Charts";
 import {getExperiences} from "../../../../store/actions/api/experiences";
 import {connect} from "react-redux";
 import NoData from "./common/NoData";
+import React from "react";
 
 const useStyles = makeStyles({
   expansionPanelSummaryContent: {

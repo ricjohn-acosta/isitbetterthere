@@ -12,6 +12,7 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import {useSession} from "next-auth/client";
 import Link from "next/link";
 import {useEffect} from "react";
+import React from "react";
 
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
