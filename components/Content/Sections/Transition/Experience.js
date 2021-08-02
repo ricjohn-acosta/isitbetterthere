@@ -208,13 +208,21 @@ const Experience = ({
         setHelpfulClick(false)
     }
 
-    const handleRateHelpfulExperience = (userID, experienceID) => {
-        dispatch(rateExperienceHelpful({userID, experienceID})).then(res => {})
+    const handleRateHelpfulExperience = (session, experienceID) => {
+        if (!session) {
+            router.push("/signup", undefined, {});
+            return
+        }
+        dispatch(rateExperienceHelpful({userID: session.id, experienceID})).then(res => {})
         setRated(true)
     }
 
-    const handleRateUnhelpfulExperience = (userID, experienceID) => {
-        dispatch(rateExperienceUnhelpful({userID, experienceID}))
+    const handleRateUnhelpfulExperience = (session, experienceID) => {
+        if (!session) {
+            router.push("/signup", undefined, {});
+            return
+        }
+        dispatch(rateExperienceUnhelpful({userID: session.id, experienceID}))
         setRated(true)
     }
 
@@ -415,6 +423,7 @@ const Experience = ({
                         {/*    ? "Thanks for rating!"*/}
                         {/*    : helpfulCount + (helpfulCount === 1 ? ' person' : ' people') + " found this helpful"}*/}
                         {helpfulCount + (helpfulCount === 1 ? ' person' : ' people') + " found this helpful"}
+                        {console.log('session', session)}
                     </HelpfulCount>
                     {getSessionId() === userId ? (
                         <EditButton href="/account?tab=contributions" target="_blank">
@@ -424,11 +433,10 @@ const Experience = ({
                         <ButtonGroup>
                             <HelpfulButton
                                 ratetype={getRateType()}
-                                // disabled={handleHelpful()}
                                 buttonClicked={clickedHelpful}
                                 value="true"
                                 onClick={(e) => {
-                                    handleRateHelpfulExperience(session.id, experienceId)
+                                    handleRateHelpfulExperience(session, experienceId)
                                     handleHelpfulClick()
                                 }}
                             >
@@ -436,11 +444,10 @@ const Experience = ({
                             </HelpfulButton>
                             <UnhelpfulButton
                                 ratetype={getRateType()}
-                                // disabled={handleNotHelpful()}
                                 buttonClicked={clickedUnhelpful}
                                 value="false"
                                 onClick={(e) => {
-                                    handleRateUnhelpfulExperience(session.id, experienceId)
+                                    handleRateUnhelpfulExperience(session, experienceId)
                                     handleUnhelpfulClick()
                                 }}
                             >
@@ -461,12 +468,6 @@ const Experience = ({
                 uid={session && session.id}
                 eid={experienceId}
             />
-            {/*<SuccessDialog*/}
-            {/*    open={dialogOpen}*/}
-            {/*    close={() => setDialogOpen(false)}*/}
-            {/*    // hasReported={hasReported}*/}
-            {/*    // handleReportSuccessClose={handleReportSuccessClose}*/}
-            {/*/>*/}
             <AlertDialog open={dialogOpen}
                          close={() => setDialogOpen(false)}
                          title={'Your report has been sent.'}

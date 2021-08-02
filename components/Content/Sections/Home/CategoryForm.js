@@ -44,7 +44,6 @@ const InputWrapper = styled.div`
 const StyledAutocomplete = styled(Autocomplete)`
   width: 200px;
   background: white;
-  z-index: 10000;
 `;
 
 const CategoryForm = ({
