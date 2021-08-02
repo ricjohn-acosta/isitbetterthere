@@ -8,7 +8,7 @@ import {axiosGetUserById} from "./api/users/[id]";
 import serverRedirect from "../utils/serverRedirect";
 import {resetShareStoryForm} from "../store/actions/ui/shareStory";
 
-const share = ({userData, referer}) => {
+const share = ({userData, hasRedirected}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -16,9 +16,9 @@ const share = ({userData, referer}) => {
     }, [])
 
     useEffect(() => {
-        if (!referer) return
+        if (!hasRedirected) return
         dispatch(resetShareStoryForm())
-    }, [referer])
+    }, [hasRedirected])
 
     return (
         <Layout>
@@ -30,8 +30,10 @@ const share = ({userData, referer}) => {
 export async function getServerSideProps(context) {
     const session = await getSession(context);
     let user = null;
+    let hasRedirected = false;
     if (!session) {
         // serverRedirect(context.res, "/signup")
+        hasRedirected = true;
         return {
             redirect: {
                 destination: '/signup',
@@ -43,6 +45,7 @@ export async function getServerSideProps(context) {
     if (session) {
         user = await axiosGetUserById(session.id)
         if (user.data === 'Not found') {
+            hasRedirected = true;
             return {
                 redirect: {
                     destination: '/account-setup',
@@ -56,7 +59,7 @@ export async function getServerSideProps(context) {
     return {
         props: {
             userData: (!user || user.data === 'Not found') ? null : user.data[0],
-            referer: context.req.headers.referer
+            hasRedirected: hasRedirected
         },
     };
 }

@@ -6,7 +6,6 @@ import {convertFromRaw, convertToRaw, EditorState} from "draft-js";
 import {Backdrop, Button, Fade, Modal, Paper, Typography} from "@material-ui/core";
 import HeaderDivider from "../common/HeaderDivider";
 import {editExperience} from "../../../../store/actions/api/experiences";
-import "../../../UI/editor.module.css";
 import {useSession} from "next-auth/client";
 
 const HtmlToReactParser = require("html-to-react").Parser;

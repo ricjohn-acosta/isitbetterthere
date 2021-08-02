@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-// import "../../../../public/editor.css";
-import "../../../UI/editor.module.css"
 import Typography from "@material-ui/core/Typography";
 import Subheaders from "./common/Subheaders";
 import PaperWrapper from "./common/PaperWrapper";
