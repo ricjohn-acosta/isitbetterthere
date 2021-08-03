@@ -180,7 +180,7 @@ const UserView = ({user, userExperiences}) => {
             <Wrapper>
         <span>
           <Typography variant="h5">
-            <b>{user.name}'s</b> profile
+            <b>{user.name}'s</b> story
           </Typography>
             {router.query.story && (
                 <Link href={`/user/${router.query.id}`} passHref>

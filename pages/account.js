@@ -11,7 +11,6 @@ const account = ({userData}) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(storeUserData(userData))
-
     }, [])
 
     return (
@@ -22,38 +21,30 @@ const account = ({userData}) => {
 };
 
 export async function getServerSideProps(context) {
-    // const redirectToSignup = {
-    //     destination: '/signup',
-    //     permanent: false
-    // }
-    // const redirectToAccountSetup = {
-    //     destination: '/account-setup',
-    //     permanent: false
-    // }
     const session = await getSession(context);
     let user = null;
-    //
-    // if (!session) {
-    //     context.res.end()
-    //     return {redirect: redirectToSignup}
-    // }
-    //
-    // const res = await axiosGetUserById(session.id)
-    //
-    // if (res.data === 'Not found') {
-    //     context.res.end()
-    //     return {redirect: redirectToAccountSetup}
-    // }
-    //
-    // context.res.end()
 
     if (!session) {
-        serverRedirect(context.res, "/signup")
+        // serverRedirect(context.res, "/signup")
+        return {
+            redirect: {
+                destination: '/signup',
+                permanent: false,
+            },
+        }
     }
 
     if (session) {
         user = await axiosGetUserById(session.id)
-        user.data === 'Not found'  && serverRedirect(context.res, "/account-setup")
+        // user.data === 'Not found'  && serverRedirect(context.res, "/account-setup")
+        if (user.data === 'Not found') {
+            return {
+                redirect: {
+                    destination: '/account-setup',
+                    permanent: false,
+                },
+            }
+        }
     }
 
 

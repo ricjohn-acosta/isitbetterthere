@@ -12,6 +12,7 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import {useSession} from "next-auth/client";
 import Link from "next/link";
 import {useEffect} from "react";
+import React from "react";
 
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();
@@ -94,23 +95,15 @@ const ExperienceSection = ({
                                totalExperiences,
                            }) => {
     const router = useRouter();
-    const dispatch = useDispatch()
     const userData = useSelector((state) => state.users.user)
 
-    const isSM = useMediaQuery("(max-width:600px)");
     const isMD = useMediaQuery("(max-width:1199px)");
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [clickAway, setClickaway] = React.useState(false);
     const [currentId, setCurrentId] = React.useState(0);
-    const [open, setOpen] = React.useState(false);
-    const [placement, setPlacement] = React.useState();
-    // const [reportView, setReportView] = React.useState(false);
-    // const [violationType, setViolationType] = React.useState("");
-    // const [hasReported, setHasReported] = React.useState(false);
     const [session, loading] = useSession();
     const [cachedExperiences, setCachedExperiences] = React.useState(null)
 
     useEffect(() => {
+        if (!session) setCachedExperiences(experiences)
         if (!experiences || !userData) return
         const validExperiences = experiences.filter((experience) => {
             return userData.reported_stories.find(rs => rs.experience_id === experience._id && rs.reported_by === userData.uid) === undefined
@@ -118,50 +111,6 @@ const ExperienceSection = ({
 
         setCachedExperiences(validExperiences)
     }, [experiences, userData])
-    // const handleOptions = (event) => {
-    //     let target = event.currentTarget;
-    //     let targetValue = event.currentTarget.value
-    //     // setAnchorEl(event.currentTarget);
-    //     setAnchorEl(target)
-    //     setOpen((prev) => placement !== targetValue || !prev);
-    //     // setPlacement(event.currentTarget.value);
-    //     setPlacement(targetValue)
-    //     setClickaway(false);
-    // };
-    //
-    // const handleClickaway = (e) => {
-    //     if (
-    //         e.srcElement.id === "icon-button" ||
-    //         e.srcElement.parentElement.id === "icon-button-svg" ||
-    //         e.srcElement.id === "icon-button-svg" ||
-    //         e.srcElement.id === "icon-container"
-    //     ) {
-    //         setClickaway(false);
-    //     } else {
-    //         setOpen(false);
-    //         setClickaway(true);
-    //     }
-    // };
-
-    // const handleReportOpen = () => {
-    //     if (session) {
-    //         setReportView(true);
-    //     } else {
-    //         router.push("/signup", undefined, {});
-    //     }
-    // };
-    //
-    // const handleReportClose = () => {
-    //     setReportView(false);
-    // };
-
-    // const handleReportSuccessClose = () => {
-    //     setHasReported(false)
-    // }
-
-    // const handleViolationType = (e) => {
-    //     setViolationType(e.target.value);
-    // };
 
     const getStoryRating = (story) => {
         if (!session) return null
@@ -205,25 +154,17 @@ const ExperienceSection = ({
                                 isRated={
                                     getStoryRating(e)
                                 }
-                                // handleOptions={handleOptions}
                                 setCurrentId={setCurrentId}
                                 hideName={e.hide_name}
                                 hideEmail={e.hide_email}
                                 hideCompany={e.hide_company}
                                 hideOccupation={e.hide_occupation}
                                 hideLocation={e.hide_location}
-                                // reportView={reportView}
-                                // handleReportClose={handleReportClose}
-                                // violationType={violationType}
-                                // handleViolationType={handleViolationType}
-                                // handleReportSubmit={handleReportSubmit}
                                 reportedExperiences={null} //todo
                                 currentId={currentId}
                                 uid={session && session.id}
                                 cachedExperiences={cachedExperiences}
                                 setCachedExperiences={setCachedExperiences}
-                                // hasReported={hasReported}
-                                // handleReportSuccessClose={handleReportSuccessClose}
                             />
                             <br/>
                         </React.Fragment>
@@ -287,23 +228,8 @@ const ExperienceSection = ({
                     </Grid>
                 )}
             </Grid>
-            {/*<Popper open={open && !clickAway ? true : false} anchorEl={anchorEl}>*/}
-            {/*    <ClickAwayListener onClickAway={handleClickaway}>*/}
-            {/*        <PopperContent>*/}
-            {/*            <Button onClick={handleReportOpen} fullWidth>*/}
-            {/*                Flag as inapproriate?*/}
-            {/*            </Button>*/}
-            {/*        </PopperContent>*/}
-            {/*    </ClickAwayListener>*/}
-            {/*</Popper>*/}
         </Wrapper>
     );
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addReport: (report) => dispatch(addReport(report)),
-    };
-};
-
-export default connect(null, mapDispatchToProps)(ExperienceSection);
+export default ExperienceSection

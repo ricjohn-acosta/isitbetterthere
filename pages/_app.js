@@ -1,18 +1,16 @@
-import PropTypes from "prop-types";
 import {Provider as AuthProvider} from "next-auth/client";
 import {ThemeProvider} from "styled-components";
 import {createGenerateClassName, StylesProvider,} from "@material-ui/core/styles";
 import {ThemeProvider as MuiProvider} from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../lib/theme";
-import App from "next/app";
 import {Router} from "next/dist/client/router";
 import NProgress from "nprogress";
 import "../public/nprogress.css";
 import {useStore} from '../store/store'
 import {Provider as ReduxProvider} from 'react-redux'
 import {useEffect} from "react";
-
+import '../public/editor.css'
 
 const generateClassName = createGenerateClassName({
     productionPrefix: "myclasses-",
@@ -48,14 +46,14 @@ export default function MyApp({Component, pageProps}) {
     const store = useStore(pageProps.initialReduxState)
 
     return (
-        <AuthProvider
-            options={{
-                clientMaxAge: 0,
-                keepAlive: 0,
-            }}
-            session={pageProps.session}
-        >
-            <StylesProvider injectFirst>
+        <StylesProvider injectFirst>
+            <AuthProvider
+                options={{
+                    clientMaxAge: 0,
+                    keepAlive: 0,
+                }}
+                session={pageProps.session}
+            >
                 <MuiProvider theme={theme}>
                     <ThemeProvider theme={theme}>
                         <CssBaseline/>
@@ -64,7 +62,7 @@ export default function MyApp({Component, pageProps}) {
                         </ReduxProvider>
                     </ThemeProvider>
                 </MuiProvider>
-            </StylesProvider>
-        </AuthProvider>
+            </AuthProvider>
+        </StylesProvider>
     )
 }

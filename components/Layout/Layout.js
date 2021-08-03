@@ -3,6 +3,7 @@ import Footer from "../Navigation/Footer";
 import styled from "styled-components";
 import Head from 'next/head'
 import {useRouter} from 'next/router'
+import React from 'react';
 
 const Container = styled.div`
   display: flex;

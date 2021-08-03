@@ -16,7 +16,6 @@ export async function getServerSideProps(context) {
 
   await dbConnect()
 
-  // const user = await getUser(context.query.id);
   const user = await getUserById(context.query.id).then(data => {
     return JSON.parse(JSON.stringify(data))
   })

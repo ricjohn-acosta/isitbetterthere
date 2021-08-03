@@ -62,7 +62,7 @@ const Wrapper = styled(Box)`
       background-position: center right;
       background-size: contain;
     }
-    
+
   }
 `;
 
@@ -109,16 +109,13 @@ const WelcomeMessage = styled(Typography)`
   justify-content: center;
   align-items: center;
   margin-bottom: 50px;
+  position: relative;
 
   ${(props) => props.theme.breakpoints.down("md")} {
 
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 3rem;
     white-space: nowrap;
-  }
-
-  ${(props) => props.theme.breakpoints.between("1287", "1870")} {
-    font-size: 4rem;
   }
 
   ${(props) => props.theme.breakpoints.down("sm")} {
@@ -162,8 +159,6 @@ const MainSection = () => {
             }
         })
     };
-
-    console.log(fieldStore)
 
     const handleCategories = (value) => {
         switch (value) {
@@ -213,13 +208,15 @@ const MainSection = () => {
     };
 
     return (
-        <Wrapper component="div">
+        <Wrapper>
             <InputContainer>
-                <WelcomeMessage variant="h1">
-                    <FadeInAnimation>
-                        <FadeIn>Know your destination</FadeIn>
-                    </FadeInAnimation>
-                </WelcomeMessage>
+                <div>
+                    <WelcomeMessage variant="h1">
+                        <FadeInAnimation>
+                            <FadeIn>Know your destination</FadeIn>
+                        </FadeInAnimation>
+                    </WelcomeMessage>
+                </div>
                 <div style={{display: tablet ? 'contents' : 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <CategoryForm
                         categories={categories}

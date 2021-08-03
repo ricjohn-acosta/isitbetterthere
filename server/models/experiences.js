@@ -98,7 +98,7 @@ export const getAllUsersExperiences = async () => {
     //     }
     // }])
 
-    return experiencesCollection.find()
+    return experiencesCollection.find({})
 }
 
 export const getTotalNumberOfExperiences = async () => {
