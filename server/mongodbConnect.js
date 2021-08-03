@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
 
 async function dbConnect() {
-    console.log(process.env.MONGODB_URI)
+    console.log('NODE_ENV:', process.env.NODE_ENV)
+    console.log('HEROKU_ENV:', process.env.HEROKU_ENV)
     // check if we have a connection to the database or if it's currently
     // connecting or disconnecting (readyState 1, 2 and 3)
     if (mongoose.connection.readyState >= 1) {
