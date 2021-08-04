@@ -8,7 +8,7 @@ const ExperienceSchema = new mongoose.Schema({
         type: String
     },
     title: {
-      type: String
+        type: String
     },
     category: {
         type: String,
@@ -70,7 +70,7 @@ export const getUserExperiences = async (uid) => {
     return experiencesCollection.find({author_id: uid});
 }
 
-export const getTransitionExperiences = async (from, to) => {
+export const getTransitionExperiences = async (from, to, page, limit) => {
     return experiencesCollection.aggregate([
         {$match: {from, to}},
         {
@@ -80,7 +80,10 @@ export const getTransitionExperiences = async (from, to) => {
                 foreignField: 'uid',
                 as: 'user'
             }
-        }
+        },
+        {$skip: (page - 1) * limit},// skips 6
+        {$limit: limit},
+
     ])
 }
 

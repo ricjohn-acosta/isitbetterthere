@@ -19,7 +19,7 @@ const Transition = ({
                 from={from}
                 to={to}
                 category={category}
-                allExperiences={allExperiences}
+                totalExperiences={totalExperiences}
             />
             <OverviewSection from={from} to={to} allExperiences={allExperiences}/>
             <ExperienceSection
