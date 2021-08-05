@@ -2,12 +2,14 @@ import React from 'react';
 import {Button} from "@material-ui/core";
 import {useRouter} from "next/router";
 import {Send} from '@material-ui/icons';
+import convertStoryBlockToPlainText from "../../../lib/utils/convertStoryBlockToPlainText";
 
 const SeeMore = (props) => {
 
     const {children, userId, experienceId} = props;
     const router = useRouter()
     const maxLength = 445;
+    const plainStory = convertStoryBlockToPlainText(children)
 
     const handleRouter = (userId, experienceId) => {
         router.push({
@@ -18,9 +20,9 @@ const SeeMore = (props) => {
         })
     }
 
-    if (children[0].props.children.length > maxLength) {
+    if (plainStory.length > maxLength) {
         return <span>
-            {children[0].props.children.substr(0, maxLength)}...
+            {plainStory.substr(0, maxLength)}...
             <Button onClick={() => handleRouter(userId, experienceId)}
                     size={'small'}
                     variant={'text'} color={'primary'}
