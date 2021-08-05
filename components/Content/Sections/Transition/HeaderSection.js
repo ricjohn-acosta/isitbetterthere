@@ -73,7 +73,7 @@ const LinkContainer = styled.div`
   margin-bottom: 2.5vh;
 `;
 
-const HeaderSection = ({ from, to, category, allExperiences }) => {
+const HeaderSection = ({ from, to, category, totalExperiences }) => {
   const isSM = useMediaQuery("(max-width:600px)");
   const downMD = useMediaQuery("(max-width:959px)");
 
@@ -106,9 +106,9 @@ const HeaderSection = ({ from, to, category, allExperiences }) => {
       </Container>
       <OdometerContainer>
         <b>
-          <CountUp start={0} end={allExperiences.length} />
+          <CountUp start={0} end={totalExperiences} />
         </b>
-        &nbsp;{allExperiences.length > 1 ? "people" : "person"} have went through this transition
+        &nbsp;{totalExperiences > 1 ? "people" : "person"} have went through this transition
       </OdometerContainer>
       {category === "secondaryEducation" ? null : (
         <LinkContainer>

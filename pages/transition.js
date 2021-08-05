@@ -56,17 +56,23 @@ const transition = ({
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
+    const from = context.query.from;
+    const to = context.query.to;
+    const page = context.query.page;
+    const limit = 6;
     let res = null;
 
     if (session) {
         res = await axiosGetUserById(session.id)
     }
 
-    const experiences = await getTransitionExperiences(context.query.from, context.query.to).then(data => {
+    const experiences = await getTransitionExperiences(from, to, page, limit).then(data => {
         return JSON.parse(JSON.stringify(data))
     });
 
-    const totalExperiences = await getTransitionExperiencesCount(context.query.from, context.query.to)
+    console.log(experiences)
+
+    const totalExperiences = await getTransitionExperiencesCount(from, to)
 
     return {
         props: {

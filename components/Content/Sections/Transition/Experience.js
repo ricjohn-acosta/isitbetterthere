@@ -194,6 +194,13 @@ const Experience = ({
         setUnhelpfulClick(isRated === 'NOT_HELPED')
     }, [isRated])
 
+    useEffect(() => {
+        if (router) {
+            setHelpfulClick(null)
+            setUnhelpfulClick(null)
+        }
+    }, [router])
+
     const isWhiteSpaceOrEmpty = (input) => {
         return !/[^\s]/.test(input);
     };
