@@ -7,11 +7,14 @@ import ContributionTab from "./ContributionTab";
 import HelpfulStoriesTab from "./HelpfulStoriesTab";
 import ReactImageFallback from "react-image-fallback";
 import {editUser} from "../../../../store/actions/api/users";
-import {connect, useSelector} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/client";
 
 import {BusinessRounded, Email, LocationOnRounded, Work} from "@material-ui/icons";
+import {useForm} from "react-hook-form";
+import Snackbar from "../../../UI/Notifications/Snackbar";
+import {usePopup} from "../../../../hooks/ui/usePopup";
 
 
 const Wrapper = styled.div`
@@ -68,61 +71,29 @@ const BioContainer = styled(Typography)`
 `;
 
 const AccountSection = () => {
+    const {watch, control} = useForm({mode: "all"});
+    const accountSectionFormObserver = watch()
+    const accountSectionFormControl = control
+
+    console.log(accountSectionFormObserver)
     const router = useRouter();
+    const dispatch = useDispatch();
     const userData = useSelector((state) => state.users.user)
+    const [snackbarOpen, setSnackbarOpen, toggleSnackbar] = usePopup();
 
     const [session, loading] = useSession();
     const [view, setView] = React.useState("settings");
-    const [hideName, setHideName] = React.useState(null);
-    const [hideEmail, setHideEmail] = React.useState(null);
-    const [hideOccupation, setHideOccupation] = React.useState(null);
-    const [hideCompany, setHideCompany] = React.useState(null);
-    const [hideLocation, setHideLocation] = React.useState(null);
-
-    useEffect(() => {
-        if (!userData) return
-        setHideName(userData.hide_name)
-        setHideEmail(userData.hide_email)
-        setHideOccupation(userData.hide_occupation)
-        setHideCompany(userData.hide_company)
-        setHideLocation(userData.hide_location)
-    }, [userData])
 
     const handleSubmit = () => {
-        editUser({
+        dispatch(editUser({
             user_id: session.id,
-            hide_name: hideName,
-            hide_email: hideEmail,
-            hide_occupation: hideOccupation,
-            hide_company: hideCompany,
-            hide_location: hideLocation,
-        });
-    };
-
-    const renderView = () => {
-        switch (router.query.tab) {
-            case "settings":
-                return (
-                    <PrivacyDetails
-                        source={"account"}
-                    />
-                );
-
-            case "contributions":
-                return <ContributionTab userContributions={userData && userData.my_stories}/>;
-
-            case "helpful-stories":
-                return (
-                    <HelpfulStoriesTab helpfulContributions={userData && userData.helpful_stories}/>
-                );
-
-            default:
-                return (
-                    <PrivacyDetails
-                        source={"account"}
-                    />
-                );
-        }
+            hide_name: accountSectionFormObserver.hideName,
+            hide_email: accountSectionFormObserver.hideEmail,
+            hide_occupation: accountSectionFormObserver.hideOccupation,
+            hide_company: accountSectionFormObserver.hideCompany,
+            hide_location: accountSectionFormObserver.hideLocation,
+        }));
+        toggleSnackbar()
     };
 
     const tabContent = useMemo(() => {
@@ -130,6 +101,8 @@ const AccountSection = () => {
             case "settings":
                 return (
                     <PrivacyDetails
+                        formControl={accountSectionFormControl}
+                        formObserver={accountSectionFormObserver}
                         source={"account"}
                     />
                 );
@@ -202,12 +175,6 @@ const AccountSection = () => {
                     </LeftGrid>
                     <Grid item xs={12} sm={12} md={12} lg={9}>
                         <AccountTab view={view} setView={setView}/>
-                        {/*{router.query.hasOwnProperty("tab") ? null : (*/}
-                        {/*    <PrivacyDetails*/}
-                        {/*        source={"accsount"}*/}
-                        {/*    />*/}
-                        {/*)}*/}
-                        {/*<div>{renderView()}</div>*/}
                         {tabContent}
                         {!router.query.hasOwnProperty("tab") ||
                         router.query.tab === "settings" ? (
@@ -224,14 +191,9 @@ const AccountSection = () => {
                     </Grid>
                 </Grid>
             </DashboardContainer>
+            <Snackbar message={'Settings updated'} open={snackbarOpen} close={() => setSnackbarOpen(false)}/>
         </Wrapper>
     );
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        editUser: (userData) => dispatch(editUser(userData)),
-    };
-};
-
-export default connect(null, mapDispatchToProps)(AccountSection);
+export default AccountSection;

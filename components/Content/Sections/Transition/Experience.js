@@ -13,7 +13,7 @@ import {
     rateExperienceUnhelpful,
     reportExperience
 } from "../../../../store/actions/api/experiences";
-import {useDialog} from "../../../../hooks/ui/useDialog";
+import {usePopup} from "../../../../hooks/ui/usePopup";
 import {AlertDialog} from "../../../UI/Notifications/AlertDialog";
 
 const Wrapper = styled.div`
@@ -174,7 +174,7 @@ const Experience = ({
                     }) => {
     const dispatch = useDispatch()
     const router = useRouter()
-    const [dialogOpen, setDialogOpen, toggleDialog] = useDialog();
+    const [dialogOpen, setDialogOpen, toggleDialog] = usePopup();
 
     const [session, loading] = useSession();
     const [clickedHelpful, setHelpfulClick] = React.useState(null);

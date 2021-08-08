@@ -1,14 +1,11 @@
 import styled from "styled-components";
 import Drawer from "./Drawer";
-import {addUser} from "../../store/actions/api/users";
-import {connect} from "react-redux";
 import {useRouter} from "next/router";
 import BrandLogo from "./BrandLogo";
 import {getProviders, signIn, signout, useSession} from "next-auth/client";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import Link from "next/link";
-import {AppBar, Button, Grid, Modal, Paper, Avatar, Popper, ClickAwayListener, makeStyles} from "@material-ui/core";
-import React from 'react';
+import {AppBar, Avatar, Button, ClickAwayListener, Grid, makeStyles, Modal, Paper, Popper} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     label: {justifyContent: "normal"},
@@ -75,29 +72,6 @@ const Container = styled.div`
   ${(props) => props.theme.breakpoints.down(1300)} {
     margin-left: 10px;
     margin-right: 10px;
-  }
-`;
-
-const StyledModal = styled(Modal)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10vh 0 10vh 0;
-`;
-
-const ModalContent = styled(Paper)`
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-  padding: 15vh 0 25vh 0;
-  width: 25vw;
-  height: 100%;
-  overflow: auto;
-
-  ${(props) => props.theme.breakpoints.down(1147)} {
-    padding: 10% 0 10% 0;
-    width: 60vw;
-    height: 70vh;
   }
 `;
 
@@ -261,10 +235,4 @@ const LowerNavbar = () => {
     );
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addUser: (user) => dispatch(addUser(user)),
-    };
-};
-
-export default connect(null, mapDispatchToProps)(LowerNavbar);
+export default LowerNavbar

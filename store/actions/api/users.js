@@ -2,10 +2,17 @@ import * as actions from "../types";
 import request from "superagent";
 import {axiosGetUserById} from "../../../pages/api/users/[id]";
 import {axiosCreateNewUser} from "../../../pages/api/users/createNew";
+import {axiosEditUser} from "../../../pages/api/users/edit";
 
 export const addUser = (data) => {
     return async () => {
         return await axiosCreateNewUser(data)
+    }
+}
+
+export const editUser = (data) => {
+    return async () => {
+        return await axiosEditUser(data)
     }
 }
 
@@ -51,28 +58,28 @@ export const storeUserData = (userData) => (dispatch) => {
 //     };
 // };
 
-export const editUser = (userData) => {
-    return (dispatch) => {
-        dispatch({type: actions.ADD_USER_START});
-        return (
-            request
-                .put(
-                    process.env.NODE_ENV === "production"
-                        ? process.env.prod + "/api/users"
-                        : process.env.dev + "/api/users"
-                )
-                .send(userData)
-                .then((res) => {
-                    dispatch({type: actions.ADD_USER_SUCCESS});
-                })
-                .catch((res) => {
-                    if (res.status === 405) {
-                        dispatch({type: actions.ADD_USER_FAIL});
-                    } else {
-                        dispatch({type: actions.ADD_USER_END});
-                    }
-                })
-        );
-    };
-};
+// export const editUser = (userData) => {
+//     return (dispatch) => {
+//         dispatch({type: actions.ADD_USER_START});
+//         return (
+//             request
+//                 .put(
+//                     process.env.NODE_ENV === "production"
+//                         ? process.env.prod + "/api/users"
+//                         : process.env.dev + "/api/users"
+//                 )
+//                 .send(userData)
+//                 .then((res) => {
+//                     dispatch({type: actions.ADD_USER_SUCCESS});
+//                 })
+//                 .catch((res) => {
+//                     if (res.status === 405) {
+//                         dispatch({type: actions.ADD_USER_FAIL});
+//                     } else {
+//                         dispatch({type: actions.ADD_USER_END});
+//                     }
+//                 })
+//         );
+//     };
+// };
 
