@@ -29,7 +29,7 @@ const PrivacyDetails = ({
     const privacyDetails = useSelector((state) => state.newAccountSetup.privacyDetailsData)
     const userData = useSelector((state) => state.users.user)
 
-    if (!userData) {
+    if (!userData && source !== 'account-setup') {
         return <CircularProgress/>
     }
     return (

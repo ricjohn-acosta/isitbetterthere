@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 import styled from "styled-components";
 import {
     FormControl,
@@ -15,7 +15,8 @@ import {countries} from "./utils/countries";
 import {enableBeforeUnload} from "./utils/unsavedFormWarning";
 import {Controller, useForm} from "react-hook-form";
 import NewAccountStepNavigator from "./NewAccountStepNavigator";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setPersonalDetailsData} from "../../../../store/actions/ui/newAccountSetup";
 
 const Wrapper = styled.form`
   min-height: 50vh;
@@ -48,7 +49,70 @@ const SectionMessage = styled(Typography)`
 const PersonalDetails = () => {
     const {watch, control, trigger, formState: {errors}} = useForm({mode: "all"});
     const fieldStore = watch()
+    const dispatch = useDispatch();
     const personalDetails = useSelector((state) => state.newAccountSetup.personalDetailsData)
+
+    const companyField = useMemo(() => {
+        if (!fieldStore.occupation && (personalDetails && personalDetails.occupation === 'Unemployed')) return null
+
+        return (fieldStore.occupation !== 'Unemployed' || personalDetails && personalDetails.occupation !== 'Unemployed' ? (
+            <Grid item container direction="row">
+                <Labels item xs={12} sm={12} md={3}>
+                    Company: &nbsp;
+                </Labels>
+                <Grid item xs={12} sm={12} md={2}>
+                    <Controller
+                        name="company"
+                        control={control}
+                        defaultValue={(personalDetails && personalDetails.company) || ""}
+                        render={({field: {onChange, value}, fieldState: {error}}) => (
+                            <>
+                                <TextField
+                                    label="company"
+                                    variant="outlined"
+                                    value={value}
+                                    onChange={onChange}
+                                    onKeyUp={enableBeforeUnload}
+                                    error={!!error}
+                                />
+                            </>
+                        )}
+                    />
+                </Grid>
+            </Grid>
+        ) : null)
+    }, [fieldStore, personalDetails])
+
+    const positionField = useMemo(() => {
+        if (!fieldStore.occupation && (personalDetails && personalDetails.occupation === 'Unemployed')) return null
+
+        return (fieldStore.occupation !== 'Unemployed' || personalDetails && personalDetails.occupation !== 'Unemployed' ? (
+            <Grid item container direction="row">
+                <Labels item xs={12} sm={12} md={3}>
+                    Position: &nbsp;
+                </Labels>
+                <Grid item xs={12} sm={12} md={2}>
+                    <Controller
+                        name="position"
+                        control={control}
+                        defaultValue={(personalDetails && personalDetails.position) || ""}
+                        render={({field: {onChange, value}, fieldState: {error}}) => (
+                            <>
+                                <TextField
+                                    label="position"
+                                    variant="outlined"
+                                    value={value}
+                                    onChange={onChange}
+                                    onKeyUp={enableBeforeUnload}
+                                    error={!!error}
+                                />
+                            </>
+                        )}
+                    />
+                </Grid>
+            </Grid>
+        ) : null)
+    }, [fieldStore, personalDetails])
 
     return (
         <Wrapper>
@@ -134,59 +198,8 @@ const PersonalDetails = () => {
                         />
                     </Grid>
                 </Grid>
-
-                {fieldStore.occupation || (personalDetails && personalDetails.occupation) === "Unemployed" ? null : (
-                    <Grid item container direction="row">
-                        <Labels item xs={12} sm={12} md={3}>
-                            Company: &nbsp;
-                        </Labels>
-                        <Grid item xs={12} sm={12} md={2}>
-                            <Controller
-                                name="company"
-                                control={control}
-                                defaultValue={(personalDetails && personalDetails.company) || ""}
-                                render={({field: {onChange, value}, fieldState: {error}}) => (
-                                    <>
-                                        <TextField
-                                            label="company"
-                                            variant="outlined"
-                                            value={value}
-                                            onChange={onChange}
-                                            onKeyUp={enableBeforeUnload}
-                                            error={!!error}
-                                        />
-                                    </>
-                                )}
-                            />
-                        </Grid>
-                    </Grid>
-                )}
-                {fieldStore.occupation || (personalDetails && personalDetails.occupation)  === "Unemployed" ? null : (
-                    <Grid item container direction="row">
-                        <Labels item xs={12} sm={12} md={3}>
-                            Position: &nbsp;
-                        </Labels>
-                        <Grid item xs={12} sm={12} md={2}>
-                            <Controller
-                                name="position"
-                                control={control}
-                                defaultValue={(personalDetails && personalDetails.position) || ""}
-                                render={({field: {onChange, value}, fieldState: {error}}) => (
-                                    <>
-                                        <TextField
-                                            label="position"
-                                            variant="outlined"
-                                            value={value}
-                                            onChange={onChange}
-                                            onKeyUp={enableBeforeUnload}
-                                            error={!!error}
-                                        />
-                                    </>
-                                )}
-                            />
-                        </Grid>
-                    </Grid>
-                )}
+                {companyField}
+                {positionField}
                 <Grid item container direction="row">
                     <Labels item xs={12} sm={12} md={3}>
                         Bio: &nbsp;
@@ -213,7 +226,8 @@ const PersonalDetails = () => {
                 </Grid>
 
             </FormContainer>
-            <NewAccountStepNavigator fieldData={Object.keys(fieldStore).length === 0 ? personalDetails : fieldStore} validate={trigger} needsValidation={true}/>
+            <NewAccountStepNavigator fieldData={Object.keys(fieldStore).length === 0 ? personalDetails : fieldStore}
+                                     validate={trigger} needsValidation={true}/>
         </Wrapper>
     );
 };
