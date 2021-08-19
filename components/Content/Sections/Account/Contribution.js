@@ -16,6 +16,7 @@ import ContributionExperienceModal from "./ContributionExperienceModal";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import {connect} from "react-redux";
 import {deleteExperience} from "../../../../store/actions/api/experiences";
+import React from "react";
 
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();

@@ -172,7 +172,6 @@ const UserView = ({user, userExperiences}) => {
         return htmlToReactParser.parse(draftToHtml(JSON.parse(story[0].story)));
     };
 
-    console.log(user)
     if (!user) return null
     return (
         <>

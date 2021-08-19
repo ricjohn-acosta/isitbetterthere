@@ -32,7 +32,6 @@ const ShareStory = ({
     const editorData = useSelector((state) => state.shareStory.editorData)
     const fieldStore = watch()
 
-    console.log(fieldStore, errors)
     return (
         <Grid container direction={'row'}>
             <BackButton fieldData={Object.keys(fieldStore).length === 0 ? editorData : fieldStore}/>

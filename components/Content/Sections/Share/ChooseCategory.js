@@ -19,7 +19,7 @@ import React from "react";
 import {BackButton, NextButton} from "./ShareStepperNavigator";
 import {useSelector} from "react-redux";
 import {AlertDialog} from "../../../UI/Notifications/AlertDialog";
-import {useDialog} from "../../../../hooks/ui/useDialog";
+import {usePopup} from "../../../../hooks/ui/usePopup";
 
 const Wrapper = styled.div`
   margin: 5%;
@@ -50,7 +50,7 @@ const ChooseCategory = ({
     const {watch, control, trigger, setValue, reset} = useForm({
         mode: "all"
     });
-    const [dialogOpen, setDialogOpen, toggleDialog] = useDialog();
+    const [dialogOpen, setDialogOpen, toggleDialog] = usePopup();
     const fieldStore = watch()
     const categoryFormData = useSelector((state) => state.shareStory.categoryFormData)
 

@@ -15,9 +15,11 @@ import Router from "next/router";
 import {addExperience} from "../../../../store/actions/api/experiences";
 import {useSession} from "next-auth/client";
 import {convertToRaw} from "draft-js";
+import {usePopup} from "../../../../hooks/ui/usePopup";
+import Snackbar from "../../../UI/Notifications/Snackbar";
 
 const saveData = (fieldData, activeStep, dispatch) => {
-    switch(activeStep) {
+    switch (activeStep) {
         case 0:
             dispatch(setCategoryFormData(fieldData));
             return
@@ -53,6 +55,7 @@ export const BackButton = ({fieldData}) => {
 
 export const NextButton = ({fieldData, validator, extraValidator, toggleDialog}) => {
     const [session, loading] = useSession();
+    const [snackbarOpen, setSnackbarOpen, toggleSnackbar] = usePopup();
     const dispatch = useDispatch()
     const activeStep = useSelector((state) => state.shareStory.activeStepIndex)
     const categoryFormData = useSelector((state) => state.shareStory.categoryFormData)
@@ -154,7 +157,6 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
             toValue = categoryFormData.firstInput.category
         }
 
-        console.log(editorData)
         dispatch(addExperience({
             author: session.user.name,
             author_id: session.id,
@@ -171,14 +173,14 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
             date_posted: Math.floor(Date.now() / 1000),
         })).then(res => {
             if (res.status === 200) {
-                Router.push({
-                    pathname: "/transition",
-                    query: {
-                        category: categoryFormData.category,
-                        from: fromValue,
-                        to: toValue,
-                    },
-                });
+                // Router.push({
+                //     pathname: "/transition",
+                //     query: {
+                //         category: categoryFormData.category,
+                //         from: fromValue,
+                //         to: toValue,
+                //     },
+                // });
                 dispatch(resetShareStoryForm())
             }
         })
@@ -186,12 +188,18 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
     }
 
     const submitButton = () => {
-
-        return <Button color={"primary"} variant={'contained'} onClick={handleSubmit}>Submit</Button>
+        return (
+            <>
+                <Button color={"primary"} variant={'contained'} onClick={handleSubmit}>Submit</Button>
+            </>
+        )
     }
 
-    return <Grid style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
-                 item xs={1}>
+    return <>
+        <Grid style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                   item xs={1}>
         {activeStep === finalStep ? submitButton() : nextButton()}
-    </Grid>
+        </Grid>
+        <Snackbar message={'Story submitted!'} open={snackbarOpen} close={() => setSnackbarOpen(false)}/>
+    </>
 }

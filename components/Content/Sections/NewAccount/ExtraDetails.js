@@ -22,28 +22,6 @@ const ExtraDetails = ({setSiteSource, siteSource, emptyFields}) => {
                 How did you find out about this website?*
             </Typography>
             <br/>
-            {/*<Select*/}
-            {/*    error={*/}
-            {/*        emptyFields*/}
-            {/*            ? emptyFields.find((e) => e === "siteSource") !== undefined*/}
-            {/*            ? true*/}
-            {/*            : false*/}
-            {/*            : false*/}
-            {/*    }*/}
-            {/*    value={siteSource}*/}
-            {/*    onChange={(e) => {*/}
-            {/*        setSiteSource(e.target.value)*/}
-            {/*        enableBeforeUnload()*/}
-            {/*    }}*/}
-            {/*    onKeyDown={enableBeforeUnload}*/}
-            {/*    fullWidth*/}
-            {/*    variant="outlined"*/}
-            {/*>*/}
-            {/*    <MenuItem value="Word of mouth">Word of mouth</MenuItem>*/}
-            {/*    <MenuItem value="Instagram">Instagram</MenuItem>*/}
-            {/*    <MenuItem value="LinkedIn">LinkedIn</MenuItem>*/}
-            {/*    <MenuItem value="Search Engine">Search Engine</MenuItem>*/}
-            {/*</Select>*/}
             <Controller
                 name="comesFrom"
                 control={control}

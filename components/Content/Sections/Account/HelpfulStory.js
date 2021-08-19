@@ -3,6 +3,7 @@ import {Button, Grid, Paper, Typography} from "@material-ui/core";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import HelpfulStoryModal from "./HelpfulStoryModal";
 import NoData from "./common/NoData"
+import React from "react";
 
 const Wrapper = styled(Paper)``;
 

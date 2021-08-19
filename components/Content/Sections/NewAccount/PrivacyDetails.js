@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Typography, Grid, Checkbox} from "@material-ui/core";
+import {Typography, Grid, Checkbox, CircularProgress} from "@material-ui/core";
 import NewAccountStepNavigator from "./NewAccountStepNavigator";
 import {Controller, useForm} from "react-hook-form";
 import React from "react";
@@ -22,13 +22,16 @@ const Labels = styled(Grid)`
 `;
 
 const PrivacyDetails = ({
+                            formObserver,
+                            formControl,
                             source
                         }) => {
-    const {watch, control} = useForm({mode: "all"});
-    const fieldStore = watch()
     const privacyDetails = useSelector((state) => state.newAccountSetup.privacyDetailsData)
     const userData = useSelector((state) => state.users.user)
 
+    if (!userData && source !== 'account-setup') {
+        return <CircularProgress/>
+    }
     return (
         <Wrapper>
             <Typography variant="h5">
@@ -44,8 +47,7 @@ const PrivacyDetails = ({
                     <Grid item xs={6} sm={6} md={2}>
                         <Controller
                             name="hideName"
-                            control={control}
-                            // defaultValue={false || (privacyDetails && privacyDetails.hideName)}
+                            control={formControl}
                             defaultValue={(userData && userData.hide_name) || (privacyDetails && privacyDetails.hideName) || false}
 
                             render={({field: {onChange, value}}) => (
@@ -69,7 +71,7 @@ const PrivacyDetails = ({
                     <Grid item xs={6} sm={6} md={2}>
                         <Controller
                             name="hideEmail"
-                            control={control}
+                            control={formControl}
                             defaultValue={(userData && userData.hide_email) || (privacyDetails && privacyDetails.hideEmail) || false}
                             render={({field: {onChange, value}}) => (
                                 <>
@@ -90,7 +92,7 @@ const PrivacyDetails = ({
                     </Labels>
                     <Controller
                         name="hideOccupation"
-                        control={control}
+                        control={formControl}
                         defaultValue={(userData && userData.hide_location) || (privacyDetails && privacyDetails.hideOccupation) || false}
                         render={({field: {onChange, value}}) => (
                             <>
@@ -111,7 +113,7 @@ const PrivacyDetails = ({
                     <Grid item xs={6} sm={6} md={2}>
                         <Controller
                             name="hideCompany"
-                            control={control}
+                            control={formControl}
                             defaultValue={(userData && userData.hide_company) || (privacyDetails && privacyDetails.hideCompany) || false}
                             render={({field: {onChange, value}}) => (
                                 <>
@@ -133,7 +135,7 @@ const PrivacyDetails = ({
                     <Grid item xs={6} sm={6} md={2}>
                         <Controller
                             name="hideLocation"
-                            control={control}
+                            control={formControl}
                             defaultValue={(userData && userData.hide_location || (privacyDetails && privacyDetails.hideLocation) || false)}
                             render={({field: {onChange, value}}) => (
                                 <>
@@ -148,7 +150,7 @@ const PrivacyDetails = ({
                     </Grid>
                 </Grid>
             </FormContainer>
-            <NewAccountStepNavigator fieldData={Object.keys(fieldStore).length === 0 ? privacyDetails : fieldStore}
+            <NewAccountStepNavigator fieldData={Object.keys(formObserver).length === 0 ? privacyDetails : formObserver}
                                      needsValidation={false}
                                      source={source}
             />

@@ -7,6 +7,7 @@ import {Backdrop, Button, Fade, Modal, Paper, Typography} from "@material-ui/cor
 import HeaderDivider from "../common/HeaderDivider";
 import {editExperience} from "../../../../store/actions/api/experiences";
 import {useSession} from "next-auth/client";
+import React from "react";
 
 const HtmlToReactParser = require("html-to-react").Parser;
 const htmlToReactParser = new HtmlToReactParser();

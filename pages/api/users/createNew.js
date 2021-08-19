@@ -13,7 +13,7 @@ const handler = nc()
 
 handler
     .post(async (req, res) => {
-        await dbConnect();
+        // await dbConnect();
         await createUser(req.body);
         res.status(200).end();
     })

@@ -13,7 +13,7 @@ import {
     rateExperienceUnhelpful,
     reportExperience
 } from "../../../../store/actions/api/experiences";
-import {useDialog} from "../../../../hooks/ui/useDialog";
+import {usePopup} from "../../../../hooks/ui/usePopup";
 import {AlertDialog} from "../../../UI/Notifications/AlertDialog";
 
 const Wrapper = styled.div`
@@ -35,6 +35,9 @@ const ProfileDetails = styled.div`
 `;
 
 const UserInfoContainer = styled.div`
+  display: block;
+  padding-top: ${(props) =>
+          (props.hideCompany === true || props.hideOccupation === true) && props.hideEmail === true ? "15px" : "0px"};
   margin-left: 2.5%;
   color: grey;
 `;
@@ -174,7 +177,7 @@ const Experience = ({
                     }) => {
     const dispatch = useDispatch()
     const router = useRouter()
-    const [dialogOpen, setDialogOpen, toggleDialog] = useDialog();
+    const [dialogOpen, setDialogOpen, toggleDialog] = usePopup();
 
     const [session, loading] = useSession();
     const [clickedHelpful, setHelpfulClick] = React.useState(null);
@@ -220,7 +223,8 @@ const Experience = ({
             router.push("/signup", undefined, {});
             return
         }
-        dispatch(rateExperienceHelpful({userID: session.id, experienceID})).then(res => {})
+        dispatch(rateExperienceHelpful({userID: session.id, experienceID})).then(res => {
+        })
         setRated(true)
     }
 
@@ -243,9 +247,9 @@ const Experience = ({
 
     const renderJobDetails = (position, company) => {
         if (!isWhiteSpaceOrEmpty(position) && !isWhiteSpaceOrEmpty(company)) {
-            if (hideOccupation === 1) {
+            if (hideOccupation === true) {
                 return company;
-            } else if (hideCompany === 1) {
+            } else if (hideCompany === true) {
                 return position;
             } else {
                 return position + " at " + company;
@@ -298,8 +302,6 @@ const Experience = ({
             const newCachedExperiences = prevCachedExperiences.filter(e => {
                 return e._id !== experienceId
             })
-
-            console.log(newCachedExperiences)
             return newCachedExperiences
         })
         setHasReported(true)
@@ -373,17 +375,18 @@ const Experience = ({
                     <ProfileDetails>
                         <StyledAvatar
                             src={
-                                hideName === 1 || hideName === true
+                                hideName === true
                                     ? "/user.png"
                                     : profilePicture
                             }
                         />
-                        <UserInfoContainer>
+                        <UserInfoContainer hideCompany={hideCompany} hideOccupation={hideOccupation}
+                                           hideEmail={hideEmail}>
                             <UserInfo>
                                 <Person style={{color: "#1a8cff"}} fontSize="small"/>
-                                &nbsp;{hideName === 1 || hideName === true ? "Anon" : name}
+                                &nbsp;{hideName === true ? "Anon" : name}
                                 &nbsp;
-                                {hideLocation === 1 || hideLocation === true ? null : (
+                                {hideLocation === true ? null : (
                                     <>
                                         <LocationOnRounded
                                             style={{color: "#1a8cff"}}
@@ -394,7 +397,7 @@ const Experience = ({
                                     </>
                                 )}
                             </UserInfo>
-                            {hideEmail === 1 || hideEmail === true ? null : (
+                            {hideEmail === true ? null : (
                                 <UserInfo>
                                     <Email style={{color: "#1a8cff"}} fontSize="small"/>
                                     &nbsp;{email}
@@ -402,8 +405,7 @@ const Experience = ({
                             )}
                             {isWhiteSpaceOrEmpty(position) ||
                             (isWhiteSpaceOrEmpty(company) ||
-                            hideCompany === 1 ||
-                            (hideCompany === true && hideOccupation === 1) ||
+                            (hideCompany === true) ||
                             hideOccupation === true ? null : (
                                 <UserInfo>
                                     <Work style={{color: "#1a8cff"}} fontSize="small"/>
@@ -411,10 +413,10 @@ const Experience = ({
                                 </UserInfo>
                             ))}
 
-                            <UserInfo>
+                            {bio !== "" && <UserInfo>
                                 <ChatBubble style={{color: "#1a8cff"}} fontSize="small"/>
                                 &nbsp;"{bio}"
-                            </UserInfo>
+                            </UserInfo>}
                         </UserInfoContainer>
                     </ProfileDetails>
                     <Typography variant="caption">
@@ -426,11 +428,7 @@ const Experience = ({
                     {experience}
                     <StyledHr/>
                     <HelpfulCount component="span" variant="caption">
-                        {/*{rated*/}
-                        {/*    ? "Thanks for rating!"*/}
-                        {/*    : helpfulCount + (helpfulCount === 1 ? ' person' : ' people') + " found this helpful"}*/}
                         {helpfulCount + (helpfulCount === 1 ? ' person' : ' people') + " found this helpful"}
-                        {console.log('session', session)}
                     </HelpfulCount>
                     {getSessionId() === userId ? (
                         <EditButton href="/account?tab=contributions" target="_blank">

@@ -26,6 +26,16 @@ export const createUser = async (data) => {
     return userCollection.create(data);
 }
 
+export const updateUser = async (data) => {
+    return userCollection.updateOne({uid: data.user_id}, {
+        hide_name: data.hide_name,
+        hide_email: data.hide_email,
+        hide_occupation: data.hide_occupation,
+        hide_company: data.hide_company,
+        hide_location: data.hide_location,
+    })
+}
+
 export const getUserById = async (sessionId) => {
     return userCollection.aggregate([
         {$match: {'uid': sessionId}},

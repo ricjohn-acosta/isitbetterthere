@@ -155,11 +155,11 @@ const ExperienceSection = ({
                                     getStoryRating(e)
                                 }
                                 setCurrentId={setCurrentId}
-                                hideName={e.hide_name}
-                                hideEmail={e.hide_email}
-                                hideCompany={e.hide_company}
-                                hideOccupation={e.hide_occupation}
-                                hideLocation={e.hide_location}
+                                hideName={e.user[0].hide_name}
+                                hideEmail={e.user[0].hide_email}
+                                hideCompany={e.user[0].hide_company}
+                                hideOccupation={e.user[0].hide_occupation}
+                                hideLocation={e.user[0].hide_location}
                                 reportedExperiences={null} //todo
                                 currentId={currentId}
                                 uid={session && session.id}
