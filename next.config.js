@@ -39,5 +39,7 @@ module.exports = {
         GOOGLE_SECRET: process.env.GOOGLE_SECRET,
         GOOGLE_USER: process.env.GOOGLE_USER,
         GOOGLE_PASSWORD: process.env.GOOGLE_PASSWORD,
+        GITHUB_ID: process.env.GITHUB_ID,
+        GITHUB_SECRET: process.env.GITHUB_SECRET,
     }
 }
