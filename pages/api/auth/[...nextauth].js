@@ -32,10 +32,10 @@ const options = {
         //     clientId: process..env.TWITTER_ID,
         //     clientSecret: process..env.TWITTER_SECRET,
         // }),
-        // Providers.GitHub({
-        //     clientId: process..env.GITHUB_ID,
-        //     clientSecret: process..env.GITHUB_SECRET,
-        // }),
+        Providers.GitHub({
+            clientId: process.env.GITHUB_ID,
+            clientSecret: process.env.GITHUB_SECRET,
+        }),
         // Providers.Discord({
         //     clientId: process..env.DISCORD_CLIENT_ID,
         //     clientSecret: process..env.DISCORD_CLIENT_SECRET,
