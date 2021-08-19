@@ -157,7 +157,6 @@ export const NextButton = ({fieldData, validator, extraValidator, toggleDialog})
             toValue = categoryFormData.firstInput.category
         }
 
-        console.log(editorData)
         dispatch(addExperience({
             author: session.user.name,
             author_id: session.id,

@@ -135,7 +135,6 @@ const ShareStepperSection = () => {
         }
     };
 
-    console.log(router)
     return (
         <Wrapper>
             <div className={classes.root}>

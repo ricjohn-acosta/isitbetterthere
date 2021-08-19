@@ -70,8 +70,6 @@ export async function getServerSideProps(context) {
         return JSON.parse(JSON.stringify(data))
     });
 
-    console.log(experiences)
-
     const totalExperiences = await getTransitionExperiencesCount(from, to)
 
     return {

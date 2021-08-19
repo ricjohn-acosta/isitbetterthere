@@ -75,7 +75,6 @@ const AccountSection = () => {
     const accountSectionFormObserver = watch()
     const accountSectionFormControl = control
 
-    console.log(accountSectionFormObserver)
     const router = useRouter();
     const dispatch = useDispatch();
     const userData = useSelector((state) => state.users.user)

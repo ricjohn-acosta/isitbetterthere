@@ -114,8 +114,8 @@ const CategoryForm = ({
                         <MenuItem value={"careers"}>Careers</MenuItem>
                         <MenuItem value={"jobs"}>Jobs</MenuItem>
                         <MenuItem value={"countries"}>Countries</MenuItem>
-                        <MenuItem value={"cultures"}>Cultures</MenuItem>
-                        <MenuItem value={"life"}>Life</MenuItem>
+                        <MenuItem value={"cultures"}>Sexuality</MenuItem>
+                        <MenuItem value={"life"}>Marital Status</MenuItem>
                     </Select>
                 )}
                 defaultValue={(categoryFormData && categoryFormData.category) || "careers"}
